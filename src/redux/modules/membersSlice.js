@@ -1,6 +1,7 @@
 import axios from "axios";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { ServerUrl } from "../../server";
+import { setCookie } from "./customCookies";
 
 // InitialState
 const initialState = {
@@ -12,19 +13,19 @@ const initialState = {
 // email 중복확인
 export const __emailCheck = createAsyncThunk(
   "users/idcheck",
-  async (email, thunkAPI) => {
+  async (payload, thunkAPI) => {
     try {
+      const email = payload;
       const data = await axios.get(`${ServerUrl}/members/check-email`, {
-        email: email,
+        params: { email },
       });
-      if (data.data.success === true) {
-        alert("사용 가능한 Email입니다.");
-      } else if (data.data.success === false) {
-        alert("사용 중인 Email입니다.");
+      if (data.status === 200) {
+        alert(`${data.data}`);
       }
-      return console.log(data.data);
+      return console.log(data);
     } catch (error) {
       console.log(error);
+      alert(`${error.response.data}`);
     }
   }
 );
@@ -33,15 +34,13 @@ export const __emailCheck = createAsyncThunk(
 export const __signup = createAsyncThunk(
   "users/signup",
   async (payload, thunkAPI) => {
+    // console.log(payload);
     try {
-      const data = await axios.post(`${ServerUrl}/members/signup`, {
-        email: payload.email,
-        name: payload.name,
-        password: payload.password,
-      });
-      if (data.data.success === true) {
-        alert("회원가입을 축하드립니다.");
+      const data = await axios.post(`${ServerUrl}/members/signup`, payload);
+      if (data.status === 200) {
+        alert(`${data.data}`);
       }
+      // console.log(data);
       return thunkAPI.fulfillWithValue(payload);
     } catch (error) {
       console.log(error);
@@ -50,18 +49,21 @@ export const __signup = createAsyncThunk(
 );
 
 // 로그인
-export const __signin = createAsyncThunk(
-  "users/signin",
+export const __login = createAsyncThunk(
+  "users/login",
   async (userInfo, thunkAPI) => {
     try {
-      const data = await axios.post(`${ServerUrl}/members/signin`, userInfo);
+      const data = await axios.post(`${ServerUrl}/members/login`, userInfo);
       localStorage.setItem("token", data.headers.authorization);
-      // setCookie("refreshToken", data.headers[`refresh-token`]);
-      if (data.data.success === true) {
-        alert(`환영합니다!`);
+      localStorage.setItem("refresh-token", data.headers[`refresh-token`]);
+      // axios.defaults.headers.common["Authorization"] = data.data.data.accessToken;
+      setCookie("refreshToken", data.headers[`refresh-token`]);
+      if (data.status === 200) {
+        alert(`${data.data}`);
         // window.location.reload();
       }
-      return thunkAPI.fulfillWithValue(data.data);
+      console.log(data);
+      return thunkAPI.fulfillWithValue(userInfo);
     } catch (error) {
       alert("이메일 혹은 비밀번호를 확인해주세요");
       return console.log(error);
@@ -76,6 +78,9 @@ export const membersSlice = createSlice({
   extraReducers: {
     [__signup.fulfilled]: (state, action) => {
       state.users.push(action.payload);
+    },
+    [__login.fulfilled]: (state, action) => {
+      state.isLogin = true;
     },
   },
 });

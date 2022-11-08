@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import { useInput } from "../../../hooks/useInput";
-import { __signin } from "../../../redux/modules/membersSlice";
+import { __login } from "../../../redux/modules/membersSlice";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -9,7 +9,7 @@ const Login = () => {
 
   const onLogin = (e) => {
     e.preventDefault();
-    dispatch(__signin({ email: email, password: password }));
+    dispatch(__login({ email: email, password: password }));
     resetEmail();
     resetPW();
   };
