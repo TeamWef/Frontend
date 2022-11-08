@@ -1,12 +1,13 @@
 // 작성 페이지
 
-import { useEffect, useState } from "react";
-import { MapMarker, Map } from "react-kakao-maps-sdk";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { __addSchedule } from "../../../redux/modules/scheduleSlice";
+import LandingPage from "./Landing";
 
 const ScheduleCreate = () => {
-  const [info, setInfo] = useState();
-  const [markers, setMarkers] = useState([]);
-  const [map, setMap] = useState();
+  const dispatch = useDispatch();
+
   const [schedule, setSchedule] = useState({
     title: "",
     content: "",
@@ -14,49 +15,18 @@ const ScheduleCreate = () => {
     date: "",
     place: "",
   });
-  const { kakao } = window;
 
-  console.log("ㅋㅋ =>", schedule);
+  console.log("스케쥴 안에 무엇이 담겨있나요? =>", schedule);
 
   const onAddScheduleHandler = (e) => {
     e.preventDefault();
-    setSchedule("");
+    dispatch(__addSchedule(schedule));
   };
 
   const onChangeHandler = (e) => {
     const { name, value } = e.target;
     setSchedule({ ...schedule, [name]: value });
   };
-
-  useEffect(() => {
-    if (!map) return;
-    const ps = new kakao.maps.services.Places();
-    ps.keywordSearch("롯데월드", (data, status, _pagination) => {
-      if (status === kakao.maps.services.Status.OK) {
-        // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
-        // LatLngBounds 객체에 좌표를 추가합니다
-        const bounds = new kakao.maps.LatLngBounds();
-        let markers = [];
-
-        for (let i = 0; i < data.length; i++) {
-          // @ts-ignore
-          markers.push({
-            position: {
-              lat: data[i].y,
-              lng: data[i].x,
-            },
-            content: data[i].place_name,
-          });
-          // @ts-ignore
-          bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
-        }
-        setMarkers(markers);
-
-        // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
-        map.setBounds(bounds);
-      }
-    });
-  }, [map]);
 
   return (
     <div>
@@ -78,30 +48,7 @@ const ScheduleCreate = () => {
         <input type="text" name="place" onChange={onChangeHandler} />
         <button type="submit">작성</button>
       </form>
-      <Map // 로드뷰를 표시할 Container
-        center={{
-          lat: 37.566826,
-          lng: 126.9786567,
-        }}
-        style={{
-          width: "100%",
-          height: "350px",
-        }}
-        level={3}
-        onCreate={setMap}
-      >
-        {markers.map((marker) => (
-          <MapMarker
-            key={`marker-${marker.content}-${marker.position.lat},${marker.position.lng}`}
-            position={marker.position}
-            onClick={() => setInfo(marker)}
-          >
-            {info && info.content === marker.content && (
-              <div style={{ color: "#000" }}>{marker.content}</div>
-            )}
-          </MapMarker>
-        ))}
-      </Map>
+      <LandingPage />
     </div>
   );
 };

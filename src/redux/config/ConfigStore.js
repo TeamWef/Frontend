@@ -1,8 +1,9 @@
 import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
+import schedule from "../modules/scheduleSlice";
 
 export const store = configureStore({
-  reducer: {},
-  //   middleware: getDefaultMiddleware({
-  //     serializableCheck: false,
-  //   }),
+  reducer: { schedule },
+  middleware: getDefaultMiddleware({
+    serializableCheck: false,
+  }),
 });
