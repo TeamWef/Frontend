@@ -13,7 +13,7 @@ const ScheduleCreate = () => {
     content: "",
     meetTime: "",
     date: "",
-    place: "",
+    place: { name: "", add: "" },
   });
 
   console.log("스케쥴 안에 무엇이 담겨있나요? =>", schedule);
@@ -48,7 +48,7 @@ const ScheduleCreate = () => {
         <input type="text" name="place" onChange={onChangeHandler} />
         <button type="submit">작성</button>
       </form>
-      <LandingPage />
+      <LandingPage setSchedule={setSchedule} schedule={schedule} />
     </div>
   );
 };

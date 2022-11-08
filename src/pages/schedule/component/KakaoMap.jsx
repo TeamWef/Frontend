@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
+
 const { kakao } = window;
 
-const KakaoMap = ({ searchPlace }) => {
+const KakaoMap = ({ searchPlace, setSchedule, schedule }) => {
   // 검색결과 배열에 담아줌
   const [Places, setPlaces] = useState([]);
+  console.log(Places);
 
   useEffect(() => {
     var infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
@@ -120,6 +122,17 @@ const KakaoMap = ({ searchPlace }) => {
                 <span>{item.address_name}</span>
               )}
               <span>{item.phone}</span>
+              <button
+                onClick={() => {
+                  setSchedule({
+                    ...schedule,
+                    place: { name: item.place_name, add: item.address_name },
+                  });
+                }}
+              >
+                선택하기
+              </button>
+              {/* 온클릭이벤트로 setSchedule 요놈한테 바로 넣어버린다 */}
             </div>
           </div>
         ))}
