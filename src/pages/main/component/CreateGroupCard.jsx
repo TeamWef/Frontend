@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { __addGroup } from "../../../redux/modules/groupSlice";
+import { __addGroup, __getGroup } from "../../../redux/modules/groupSlice";
 
 const CreateGroupCard = () => {
   const dispatch = useDispatch();
@@ -8,8 +8,6 @@ const CreateGroupCard = () => {
     partyName: "",
     partyIntroduction: "",
   });
-
-  console.log("group=>", group);
 
   const onChangeHandler = (e) => {
     const { name, value } = e.target;
@@ -19,6 +17,8 @@ const CreateGroupCard = () => {
   const onAddGroupHandler = (e) => {
     e.preventDefault();
     dispatch(__addGroup(group));
+    dispatch(__getGroup());
+    setGroup({ partyName: "", partyIntroduction: "" });
   };
 
   return (

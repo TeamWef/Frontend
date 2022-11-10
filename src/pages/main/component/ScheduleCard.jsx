@@ -1,5 +1,10 @@
 const ScheduleCard = () => {
-  return <div>Schedule Card</div>;
+  return (
+    <div>
+      <hr />
+      Schedule Card
+    </div>
+  );
 };
 
 export default ScheduleCard;

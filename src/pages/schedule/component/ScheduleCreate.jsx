@@ -45,7 +45,6 @@ const ScheduleCreate = () => {
         />
         <input type="time" name="meetTime" onChange={onChangeHandler} />
         <input type="date" name="date" onChange={onChangeHandler} />
-        <input type="text" name="place" onChange={onChangeHandler} />
         <button type="submit">작성</button>
       </form>
       <LandingPage setSchedule={setSchedule} schedule={schedule} />

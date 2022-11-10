@@ -108,7 +108,7 @@ const KakaoMap = ({ searchPlace, setSchedule, schedule }) => {
         }}
       ></div>
       <div id="result-list">
-        {Places.map((item, i) => (
+        {Places?.map((item, i) => (
           <div key={i} style={{ marginTop: "20px" }}>
             <span>{i + 1}</span>
             <div>
