@@ -1,6 +1,6 @@
 import React from "react";
 import GroupCard from "./component/GroupCard";
-import ScheduleCard from "./component/ScheduleCard";
+import MainScheduleCard from "./component/MainScheduleCard";
 import CreateGroupCard from "./component/CreateGroupCard";
 
 const Main = () => {
@@ -8,7 +8,7 @@ const Main = () => {
     <div>
       <CreateGroupCard />
       <GroupCard />
-      <ScheduleCard />
+      <MainScheduleCard />
     </div>
   );
 };

@@ -10,10 +10,9 @@ const initialState = {
 export const __addSchedule = createAsyncThunk(
   "post/addSchedule",
   async (payload, thunkAPI) => {
-    // console.log("postSchedule payload값", payload);
+    console.log("postSchedule payload값", payload);
     try {
       await addScheduleApi(payload);
-      // window.location.reload();
       return thunkAPI.fulfillWithValue(payload);
     } catch (err) {
       console.log("error");
@@ -46,6 +45,7 @@ export const scheduleSlice = createSlice({
     },
     [__addSchedule.fulfilled]: (state, action) => {
       state.isLoading = false;
+      console.log(action);
       state.schedule.data?.push(action.payload);
     },
     [__addSchedule.rejected]: (state, action) => {

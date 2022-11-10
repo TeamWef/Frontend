@@ -26,7 +26,7 @@ const EditGroupCard = ({ id, isModalOpen, setModalOpen, groups }) => {
     dispatch(__updateGroup({ id, editGroup }));
     dispatch(__getGroup());
     setEditGroup({ partyName: "", partyIntroduction: "" });
-    setModalOpen(!true);
+    setModalOpen(false);
   };
 
   return (
@@ -35,13 +35,13 @@ const EditGroupCard = ({ id, isModalOpen, setModalOpen, groups }) => {
         <input
           name="partyName"
           type="text"
-          placeholder="그룹명"
+          placeholder="그룹명을 수정하세요"
           onChange={onChangeHandler}
         />
         <input
           name="partyIntroduction"
           type="text"
-          placeholder="그룹을 소개해 주세요!"
+          placeholder="그룹을 다시 소개해 주세요!"
           onChange={onChangeHandler}
         />
         <button onClick={onAddGroupHandler}>수정하기</button>

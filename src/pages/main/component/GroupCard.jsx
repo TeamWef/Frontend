@@ -58,7 +58,12 @@ const GroupCard = () => {
               삭제하기
             </button>
             {isModalOpen && (
-              <EditGroupCard groups={groups} id={data?.partyId} />
+              <EditGroupCard
+                groups={groups}
+                id={data?.partyId}
+                isModalOpen={isModalOpen}
+                setModalOpen={setModalOpen}
+              />
             )}
           </div>
         );

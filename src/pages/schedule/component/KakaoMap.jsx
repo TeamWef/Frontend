@@ -126,7 +126,10 @@ const KakaoMap = ({ searchPlace, setSchedule, schedule }) => {
                 onClick={() => {
                   setSchedule({
                     ...schedule,
-                    place: { name: item.place_name, add: item.address_name },
+                    place: {
+                      placeName: item.place_name,
+                      address: item.address_name,
+                    },
                   });
                 }}
               >
