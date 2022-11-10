@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { __delGroup, __getGroup } from "../../../redux/modules/groupSlice";
+import EditGroupCard from "../component/EditGroupCard";
 
 const GroupCard = () => {
   const dispatch = useDispatch();
   const groups = useSelector((state) => state?.group.group.data);
-  // console.log("groups?? =>", groups);
+  console.log("groups?? =>", groups);
 
   useEffect(() => {
     dispatch(__getGroup());
@@ -13,10 +14,10 @@ const GroupCard = () => {
 
   // console.log("key를 찾아서 =>", groups);
 
-  const [isEdit, setIsEdit] = useState(false);
-  const handleOpen = () => {
-    setIsEdit(!isEdit);
-  };
+  const [isModalOpen, setModalOpen] = useState(false);
+  // const onClickModal = () => {
+  //   setModalOpen(!true);
+  // };
 
   // const [editInput, setEditInput] = useState("");
   // const handleOnChange = (e) => {
@@ -30,7 +31,11 @@ const GroupCard = () => {
     <div>
       {groups?.map((data) => {
         return (
-          <div key={data?.partyId}>
+          <div
+            key={data?.partyId}
+            isModalOpen={isModalOpen}
+            setModalOpen={setModalOpen}
+          >
             <ul>
               <li>{data?.partyId}</li>
               <li>
@@ -38,7 +43,13 @@ const GroupCard = () => {
               </li>
               <li>{data?.partyIntroduction}</li>
             </ul>
-            <button onClick={handleOpen}>수정하기</button>
+            <button
+              onClick={() => {
+                setModalOpen(true);
+              }}
+            >
+              수정하기
+            </button>
             <button
               onClick={() => {
                 dispatch(__delGroup(data?.partyId));
@@ -46,6 +57,9 @@ const GroupCard = () => {
             >
               삭제하기
             </button>
+            {isModalOpen && (
+              <EditGroupCard groups={groups} id={data?.partyId} />
+            )}
           </div>
         );
       })}

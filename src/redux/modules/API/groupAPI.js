@@ -30,3 +30,14 @@ export const delGroupApi = async (id) => {
     },
   });
 };
+
+//그룹 수정하기
+export const putGroupApi = async ({ id, editGroup }) => {
+  console.log(":::::", id);
+  console.log(":::::", editGroup);
+  await axios.put(`${ServerUrl}/party/${id}`, editGroup, {
+    headers: {
+      Authorization: localStorage.getItem("token"),
+    },
+  });
+};

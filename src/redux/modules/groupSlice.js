@@ -1,5 +1,10 @@
 import { createAsyncThunk, createSlice, current } from "@reduxjs/toolkit";
-import { addGroupApi, delGroupApi, getGroupApi } from "./API/groupAPI";
+import {
+  addGroupApi,
+  delGroupApi,
+  getGroupApi,
+  putGroupApi,
+} from "./API/groupAPI";
 
 const initialState = {
   group: [],
@@ -47,6 +52,21 @@ export const __delGroup = createAsyncThunk(
   }
 );
 
+export const __updateGroup = createAsyncThunk(
+  "put/updateGroup",
+  async (payload, thunkAPI) => {
+    console.log("put payload=>", payload);
+    try {
+      await putGroupApi(payload);
+      console.log("put payload2222=>", payload);
+      return thunkAPI.fulfillWithValue(payload);
+    } catch (err) {
+      console.log("error ::::::", err.response);
+      return thunkAPI.rejectWithValue("<<", err);
+    }
+  }
+);
+
 export const groupSlice = createSlice({
   name: "group",
   initialState,
@@ -65,6 +85,7 @@ export const groupSlice = createSlice({
       state.error = action.payload;
     },
 
+    //불러오기
     [__getGroup.pending]: (state) => {
       state.isLoading = true;
     },
@@ -77,18 +98,30 @@ export const groupSlice = createSlice({
       state.error = action.payload;
     },
 
+    //삭제하기
     [__delGroup.pending]: (state) => {
       state.isLoading = true;
     },
     [__delGroup.fulfilled]: (state, action) => {
       state.isLoading = false;
-      console.log("state=>", state);
-      console.log("action=>", action);
       state.group.data = state.group.data.filter(
         (item) => item.partyId !== action.payload
       );
     },
     [__delGroup.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+
+    //업데이트
+    [__updateGroup.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [__updateGroup.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.group?.data.push(action.payload?.editGroup);
+    },
+    [__updateGroup.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
     },
