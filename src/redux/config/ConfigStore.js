@@ -9,6 +9,7 @@ export const store = configureStore({
     schedule,
     album,
   },
-  //   middleware: getDefaultMiddleware({
-  //     serializableCheck: false,
+  middleware: getDefaultMiddleware({
+    serializableCheck: false,
+  }),
 });

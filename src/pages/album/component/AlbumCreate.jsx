@@ -7,7 +7,7 @@ const AlbumCreate = ({ openCreateModal }) => {
   const dispatch = useDispatch();
 
   // 파티 아이디 받아오기- 추후수정
-  const partyId = 1;
+  const partyId = 10;
 
   // 내용 State
   const [albumItem, onChangeAlbumItem, reset] = useInputs({
@@ -29,7 +29,6 @@ const AlbumCreate = ({ openCreateModal }) => {
     }
     reader.onload = () => {
       if (reader.result) {
-        setUploadImg(reader.result);
         setPreviewImage(reader.result);
       }
     };
@@ -37,10 +36,19 @@ const AlbumCreate = ({ openCreateModal }) => {
   const uploadHandler = () => {
     const newAlbum = { ...albumItem, imageUrl: uploadImg };
     // console.log(newAlbum, partyId);
-    // dispatch(__addAlbumItem({ newAlbum, partyId }));
+    if (!uploadImg) {
+      alert("사진을 추가해주세요!");
+      return null;
+    } else if (!albumItem.place) {
+      alert("장소를 입력해주세요!");
+      return null;
+    } else if (!albumItem.content) {
+      alert("내용을 입력해주세요!");
+      return null;
+    }
+    dispatch(__addAlbumItem({ newAlbum, partyId }));
     setUploadImg("");
     reset();
-    alert("등록이 완료되었습니다.");
     openCreateModal();
   };
 

@@ -4,6 +4,7 @@ import SignUp from "../pages/home/component/SignUp";
 import ScheduleMain from "../pages/schedule/ScheduleMain";
 import Main from "../pages/main/Main";
 import AlbumMain from "../pages/album/AlbumMain";
+import AlbumDetail from "../pages/album/component/AlbumDetail";
 
 const Page = () => {
   return (
@@ -14,6 +15,7 @@ const Page = () => {
         <Route path="/schedule" element={<ScheduleMain />} />
         <Route path="/main" element={<Main />} />
         <Route path="/album" element={<AlbumMain />} />
+        <Route path="/album/:id" element={<AlbumDetail />} />
       </Routes>
     </BrowserRouter>
   );
