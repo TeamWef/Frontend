@@ -10,9 +10,8 @@ const initialState = {
 export const __addSchedule = createAsyncThunk(
   "post/addSchedule",
   async (payload, thunkAPI) => {
-    console.log("postSchedule payload값", payload);
     try {
-      await addScheduleApi(payload);
+      const response = await addScheduleApi(payload);
       return thunkAPI.fulfillWithValue(payload);
     } catch (err) {
       console.log("error");
@@ -25,6 +24,7 @@ export const __getSchedule = createAsyncThunk(
   "get/getSchedule",
   async (payload, thunkAPI) => {
     try {
+      console.log(payload);
       const res = await getScheduleApi();
       return thunkAPI.fulfillWithValue(res);
     } catch (err) {

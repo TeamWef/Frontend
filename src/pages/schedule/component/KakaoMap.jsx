@@ -9,7 +9,7 @@ const KakaoMap = ({ searchPlace, setSchedule, schedule }) => {
   // 검색결과 배열에 담아줌
   const [Places, setPlaces] = useState([]);
   const dispatch = useDispatch();
-  const { id } = useParams();
+  const { partyId } = useParams();
 
   console.log("카카오맵 스케쥴", schedule);
 
@@ -137,7 +137,8 @@ const KakaoMap = ({ searchPlace, setSchedule, schedule }) => {
                       address: item.address_name,
                     },
                   });
-                  dispatch(__addSchedule({ schedule, id }));
+                  console.log({ schedule });
+                  dispatch(__addSchedule({ schedule, partyId }));
                 }}
               >
                 선택하기

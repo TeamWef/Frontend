@@ -15,7 +15,7 @@ const ScheduleCreate = () => {
     content: "",
     meetTime: "",
     date: "",
-    place: { name: "", add: "" },
+    place: { placeName: "", address: "" },
   });
 
   console.log("스케쥴 안에 무엇이 담겨있나요? =>", schedule);
