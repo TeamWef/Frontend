@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { addScheduleApi, getScheduleApi } from "../modules/API/scheduleAPI";
+import { addScheduleApi, getScheduleApi } from "./API/scheduleAPI";
 
 const initialState = {
   schedule: [],
