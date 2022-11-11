@@ -1,11 +1,17 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { __addSchedule } from "../../../redux/modules/scheduleSlice";
 
 const { kakao } = window;
 
 const KakaoMap = ({ searchPlace, setSchedule, schedule }) => {
   // 검색결과 배열에 담아줌
   const [Places, setPlaces] = useState([]);
-  console.log(Places);
+  const dispatch = useDispatch();
+  const { id } = useParams();
+
+  console.log("카카오맵 스케쥴", schedule);
 
   useEffect(() => {
     var infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
@@ -131,6 +137,7 @@ const KakaoMap = ({ searchPlace, setSchedule, schedule }) => {
                       address: item.address_name,
                     },
                   });
+                  dispatch(__addSchedule({ schedule, id }));
                 }}
               >
                 선택하기

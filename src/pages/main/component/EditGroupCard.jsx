@@ -18,7 +18,7 @@ const EditGroupCard = ({ id, isModalOpen, setModalOpen, groups }) => {
   //   const id = partyId?.partyId;
 
   console.log("id", id);
-  console.log(editGroup);
+  console.log("editGroup", editGroup);
   console.log("::::", groups);
 
   const onAddGroupHandler = (e) => {
@@ -30,23 +30,25 @@ const EditGroupCard = ({ id, isModalOpen, setModalOpen, groups }) => {
   };
 
   return (
-    <div>
-      <form onSubmit={onAddGroupHandler}>
-        <input
-          name="partyName"
-          type="text"
-          placeholder="그룹명을 수정하세요"
-          onChange={onChangeHandler}
-        />
-        <input
-          name="partyIntroduction"
-          type="text"
-          placeholder="그룹을 다시 소개해 주세요!"
-          onChange={onChangeHandler}
-        />
-        <button onClick={onAddGroupHandler}>수정하기</button>
-      </form>
-    </div>
+    <>
+      <div>
+        <form onSubmit={onAddGroupHandler}>
+          <input
+            name="partyName"
+            type="text"
+            placeholder="그룹명을 수정하세요"
+            onChange={onChangeHandler}
+          />
+          <input
+            name="partyIntroduction"
+            type="text"
+            placeholder="그룹을 다시 소개해 주세요!"
+            onChange={onChangeHandler}
+          />
+          <button onClick={onAddGroupHandler}>수정하기</button>
+        </form>
+      </div>
+    </>
   );
 };
 

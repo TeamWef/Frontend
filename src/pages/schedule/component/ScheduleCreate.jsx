@@ -1,12 +1,14 @@
 // 작성 페이지
 
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { __addSchedule } from "../../../redux/modules/scheduleSlice";
 import LandingPage from "./Landing";
 
 const ScheduleCreate = () => {
   const dispatch = useDispatch();
+  // const groupId = useSelector((state) => state);
+  // console.log("groupId===>", groupId);
 
   const [schedule, setSchedule] = useState({
     title: "",
