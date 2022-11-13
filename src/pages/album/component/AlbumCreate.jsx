@@ -3,11 +3,8 @@ import { useDispatch } from "react-redux";
 import { useInputs } from "../../../hooks/useInput";
 import { __addAlbumItem } from "../../../redux/modules/albumSlice";
 
-const AlbumCreate = ({ openCreateModal }) => {
+const AlbumCreate = ({ openCreateModal, partyId }) => {
   const dispatch = useDispatch();
-
-  // 파티 아이디 받아오기- 추후수정
-  const partyId = 10;
 
   // 내용 State
   const [albumItem, onChangeAlbumItem, reset] = useInputs({

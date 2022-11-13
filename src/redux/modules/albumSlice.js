@@ -10,12 +10,14 @@ import {
 const initialState = {
   album: [],
   albumItem: [],
+  commentList: [],
 };
 
 export const __getAlbumList = createAsyncThunk(
   "get/getAlbumList",
   async (payload, thunkAPI) => {
     try {
+      // console.log(payload);
       const data = await getAlbumListApi(payload);
       return thunkAPI.fulfillWithValue(data);
     } catch (err) {
@@ -41,7 +43,7 @@ export const __addAlbumItem = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const data = await addAlbumApi(payload);
-      console.log(data);
+      // console.log(data);
       return thunkAPI.fulfillWithValue(data);
     } catch (err) {
       return console.log(err);
@@ -65,13 +67,11 @@ export const __delAlbumItem = createAsyncThunk(
 export const __updateAlbumItem = createAsyncThunk(
   "patch/updateAlbumItem",
   async (payload, thunkAPI) => {
-    console.log(payload);
     try {
       const data = await updateAlbumApi(payload);
       if (data.status === 200) {
         alert(`${data.data}`);
       }
-      console.log(payload);
       return thunkAPI.fulfillWithValue(payload);
     } catch (err) {
       return console.log(err);
@@ -109,6 +109,7 @@ export const albumSlice = createSlice({
         if (item.id === action.payload.id) {
           return { ...item, content: editContent };
         }
+        return item;
       });
     },
   },

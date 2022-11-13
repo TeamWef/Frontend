@@ -1,9 +1,11 @@
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { useInput } from "../../../hooks/useInput";
 import { __login } from "../../../redux/modules/membersSlice";
 
 const Login = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [email, onChangeEmail, resetEmail] = useInput("");
   const [password, onChangePW, resetPW] = useInput("");
 
@@ -12,6 +14,7 @@ const Login = () => {
     dispatch(__login({ email: email, password: password }));
     resetEmail();
     resetPW();
+    window.location.reload();
   };
 
   return (
@@ -25,6 +28,8 @@ const Login = () => {
       <button type="submit" onClick={onLogin}>
         로그인
       </button>
+      <p>또는</p>
+      <button onClick={() => navigate("/signup")}>회원가입</button>
     </form>
   );
 };
