@@ -7,7 +7,6 @@ const ScheduleMain = () => {
   return (
     <>
       <ScheduleCreate />
-      <ScheduleCard />
     </>
   );
 };

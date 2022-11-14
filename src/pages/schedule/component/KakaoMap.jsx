@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
-import { __addSchedule } from "../../../redux/modules/scheduleSlice";
+import { useNavigate, useParams } from "react-router-dom";
+import {
+  __addSchedule,
+  __getSchedule,
+} from "../../../redux/modules/scheduleSlice";
 
 const { kakao } = window;
 
@@ -9,9 +12,10 @@ const KakaoMap = ({ searchPlace, setSchedule, schedule }) => {
   // 검색결과 배열에 담아줌
   const [Places, setPlaces] = useState([]);
   const dispatch = useDispatch();
-  const { partyId } = useParams();
+  // const { partyId } = useParams();
+  const navigate = useNavigate();
 
-  console.log("카카오맵 스케쥴", schedule);
+  // console.log("카카오맵 스케쥴", schedule);
 
   useEffect(() => {
     var infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
@@ -54,7 +58,7 @@ const KakaoMap = ({ searchPlace, setSchedule, schedule }) => {
         paginationEl.removeChild(paginationEl.lastChild);
       }
 
-      for (i = 1; i <= pagination.last; i++) {
+      for (i = 1; i <= 1; i++) {
         var el = document.createElement("a");
         el.href = "#";
         el.innerHTML = i;
@@ -106,13 +110,7 @@ const KakaoMap = ({ searchPlace, setSchedule, schedule }) => {
 
   return (
     <div>
-      <div
-        id="myMap"
-        style={{
-          width: "500px",
-          height: "500px",
-        }}
-      ></div>
+      <div id="myMap" style={{ display: "none" }}></div>
       <div id="result-list">
         {Places?.map((item, i) => (
           <div key={i} style={{ marginTop: "20px" }}>
@@ -138,7 +136,6 @@ const KakaoMap = ({ searchPlace, setSchedule, schedule }) => {
                     },
                   });
                   console.log({ schedule });
-                  dispatch(__addSchedule({ schedule, partyId }));
                 }}
               >
                 선택하기

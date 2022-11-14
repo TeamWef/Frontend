@@ -6,6 +6,9 @@ import Main from "../pages/main/Main";
 import AlbumMain from "../pages/album/AlbumMain";
 import AlbumDetail from "../pages/album/component/AlbumDetail";
 import { Home } from "../pages/home/Home";
+import ScheduleCard from "../pages/schedule/component/ScheduleCard";
+import ScheduleDetail from "../pages/schedule/component/ScheduleDetail";
+
 
 const Page = () => {
   return (
@@ -17,6 +20,11 @@ const Page = () => {
         <Route path="/main" element={<Main />} />
         <Route path="/:partyid/album" element={<AlbumMain />} />
         <Route path="/:partyid/album/:id" element={<AlbumDetail />} />
+        <Route path="/album" element={<AlbumMain />} />
+        <Route path="/album/:id" element={<AlbumDetail />} />
+        <Route path="/shedulelist/:partyId" element={<ScheduleCard />} />
+        <Route path="/sheduledetail/:scheduleId" element={<ScheduleDetail />} />
+
       </Routes>
     </BrowserRouter>
   );

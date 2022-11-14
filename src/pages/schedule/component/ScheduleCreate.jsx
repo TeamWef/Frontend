@@ -2,13 +2,16 @@
 
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
 import { __addSchedule } from "../../../redux/modules/scheduleSlice";
 import LandingPage from "./Landing";
 
 const ScheduleCreate = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   // const groupId = useSelector((state) => state);
   // console.log("groupId===>", groupId);
+  const { partyId } = useParams();
 
   const [schedule, setSchedule] = useState({
     title: "",
@@ -18,11 +21,12 @@ const ScheduleCreate = () => {
     place: { placeName: "", address: "" },
   });
 
-  console.log("스케쥴 안에 무엇이 담겨있나요? =>", schedule);
+  // console.log("스케쥴 안에 무엇이 담겨있나요? =>", schedule);
 
   const onAddScheduleHandler = (e) => {
     e.preventDefault();
-    dispatch(__addSchedule(schedule));
+    dispatch(__addSchedule({ schedule, partyId }));
+    navigate(`/shedulelist/${partyId}`);
   };
 
   const onChangeHandler = (e) => {
@@ -47,7 +51,7 @@ const ScheduleCreate = () => {
         />
         <input type="time" name="meetTime" onChange={onChangeHandler} />
         <input type="date" name="date" onChange={onChangeHandler} />
-        {/* <button type="submit">작성</button> */}
+        <button type="submit">작성</button>
       </form>
       <LandingPage setSchedule={setSchedule} schedule={schedule} />
     </div>
