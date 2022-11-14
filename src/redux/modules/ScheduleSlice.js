@@ -1,18 +1,26 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { addScheduleApi, getScheduleApi } from "./API/scheduleAPI";
+import {
+  addScheduleApi,
+  getScheduleApi,
+  getScheduleDetailApi,
+  delScheduleApi,
+} from "./API/scheduleAPI";
 
 const initialState = {
   schedule: [],
+  scheduieDetail: [],
   isLoading: false,
   error: null,
 };
 
+//일정 추가하기
 export const __addSchedule = createAsyncThunk(
   "post/addSchedule",
   async (payload, thunkAPI) => {
     try {
       const response = await addScheduleApi(payload);
-      return thunkAPI.fulfillWithValue(payload);
+      console.log(response);
+      return thunkAPI.fulfillWithValue(response.data);
     } catch (err) {
       console.log("error");
       return thunkAPI.rejectWithValue(err);
@@ -20,16 +28,45 @@ export const __addSchedule = createAsyncThunk(
   }
 );
 
+//그룹의 전체 일정 불러오기
 export const __getSchedule = createAsyncThunk(
   "get/getSchedule",
   async (payload, thunkAPI) => {
     try {
-      console.log(payload);
-      const res = await getScheduleApi();
-      return thunkAPI.fulfillWithValue(res);
+      const res = await getScheduleApi(payload);
+      return thunkAPI.fulfillWithValue(res.data);
     } catch (err) {
-      console.log("error");
+      console.log("error", err);
       return thunkAPI.rejectWithValue(err);
+    }
+  }
+);
+
+//그룹의 일정 상세 조회
+export const __getScheduleDetail = createAsyncThunk(
+  "get/getSchedule",
+  async (payload, thunkAPI) => {
+    try {
+      const res = await getScheduleDetailApi(payload);
+      return thunkAPI.fulfillWithValue(res.data);
+    } catch (err) {
+      console.log("error", err);
+      return thunkAPI.rejectWithValue(err);
+    }
+  }
+);
+
+export const __delSchedule = createAsyncThunk(
+  "delete/delSchedule",
+  async (payload, thunkAPI) => {
+    console.log("async=>", payload);
+    try {
+      await delScheduleApi(payload);
+      console.log("???????=>", payload);
+      return thunkAPI.fulfillWithValue(payload);
+    } catch (err) {
+      console.log("error ::::::", err.response);
+      return thunkAPI.rejectWithValue("<<", err);
     }
   }
 );
@@ -45,22 +82,58 @@ export const scheduleSlice = createSlice({
     },
     [__addSchedule.fulfilled]: (state, action) => {
       state.isLoading = false;
-      console.log(action);
-      state.schedule.data?.push(action.payload);
+      // console.log("하면된다===>", action);
+      // console.log("되면한다???", state);
+      state.schedule?.push(action.payload);
     },
     [__addSchedule.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
     },
 
+    // 그룹의 일정 전체 조회
+
     [__getSchedule.pending]: (state) => {
       state.isLoading = true;
     },
     [__getSchedule.fulfilled]: (state, action) => {
       state.isLoading = false;
+      // console.log("외않되===>", action);
+      // console.log("되???=>???", state);
       state.schedule = action.payload;
     },
     [__getSchedule.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+
+    //상세조회
+
+    [__getScheduleDetail.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [__getScheduleDetail.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      // console.log("외않되===>", action);
+      // console.log("되???=>???", state);
+      state.scheduieDetail = action.payload;
+    },
+    [__getScheduleDetail.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+
+    //삭제
+    [__delSchedule.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [__delSchedule.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.scheduieDetail.data = state.scheduieDetail.data.filter(
+        (item) => item.scheduleId !== action.payload
+      );
+    },
+    [__delSchedule.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
     },
