@@ -164,7 +164,7 @@ export const albumSlice = createSlice({
         return item;
       });
     },
-    /// Comments
+    // Comments
     //Add
     [__addComment.fulfilled]: (state, action) => {
       state.commentList.push(action.payload);

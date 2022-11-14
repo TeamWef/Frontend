@@ -20,7 +20,7 @@ export const addCommnetApi = async (payload) => {
 
 // 코멘트 삭제
 export const delCommentApi = async (payload) => {
-  // payload : 코멘트 아이디
+  // payload : 코멘트 아이디!
   await axios.delete(`${ServerUrl}/comments/${payload}`, {
     headers: {
       Authorization: localStorage.getItem("token"),
