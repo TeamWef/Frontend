@@ -38,8 +38,8 @@ export const getScheduleDetailApi = async (scheduleId) => {
 //삭제
 
 export const delScheduleApi = async (scheduleId) => {
-  console.log("API", scheduleId);
-  await axios.delete(`${ServerUrl}/party/${scheduleId}`, {
+  // console.log("API", scheduleId);
+  await axios.delete(`${ServerUrl}/schedules/${scheduleId}`, {
     headers: {
       Authorization: localStorage.getItem("token"),
     },

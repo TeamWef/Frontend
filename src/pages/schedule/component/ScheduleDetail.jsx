@@ -1,7 +1,7 @@
 // 게시글 하나당 보여지는 상세 페이지임 (수정/삭제 버튼 있어야 함)
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   __getScheduleDetail,
   __delSchedule,
@@ -15,6 +15,7 @@ const SchdeleDetail = ({ scheduleId }) => {
   useEffect(() => {
     dispatch(__getScheduleDetail(detailId));
   }, [dispatch, detailId]);
+  const navigate = useNavigate();
 
   // console.log("디테일 파람스 !!! schdeleId===>", detailId);
 
@@ -33,6 +34,7 @@ const SchdeleDetail = ({ scheduleId }) => {
       <button
         onClick={() => {
           dispatch(__delSchedule(detailId));
+          navigate(-1);
         }}
       >
         삭제하기
