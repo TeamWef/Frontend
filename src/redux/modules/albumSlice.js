@@ -6,6 +6,11 @@ import {
   getAlbumListApi,
   updateAlbumApi,
 } from "./API/albumAPI";
+import {
+  addCommnetApi,
+  delCommentApi,
+  updateCommentApi,
+} from "./API/commentAPI";
 
 const initialState = {
   album: [],
@@ -13,6 +18,7 @@ const initialState = {
   commentList: [],
 };
 
+// 앨범
 export const __getAlbumList = createAsyncThunk(
   "get/getAlbumList",
   async (payload, thunkAPI) => {
@@ -31,6 +37,7 @@ export const __getAlbumItem = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const data = await getAlbumDetailApi(payload);
+      // console.log(data);
       return thunkAPI.fulfillWithValue(data);
     } catch (err) {
       return console.log(err);
@@ -79,11 +86,56 @@ export const __updateAlbumItem = createAsyncThunk(
   }
 );
 
+// 댓글
+
+export const __addComment = createAsyncThunk(
+  "post/addCommnet",
+  async ({ id, comment }, thunkAPI) => {
+    try {
+      // console.log(id, comment);
+      const data = await addCommnetApi({ id, comment });
+      console.log(data);
+      return thunkAPI.fulfillWithValue(data);
+    } catch (err) {
+      return console.log(err);
+    }
+  }
+);
+
+export const __delComment = createAsyncThunk(
+  "delete/delComment",
+  async (payload, thunkAPI) => {
+    console.log(payload);
+    try {
+      await delCommentApi(payload);
+      return thunkAPI.fulfillWithValue(payload);
+    } catch (err) {
+      return console.log(err);
+    }
+  }
+);
+
+export const __updateComment = createAsyncThunk(
+  "patch/updateComment",
+  async (payload, thunkAPI) => {
+    try {
+      const data = await updateCommentApi(payload);
+      if (data.status === 200) {
+        alert(`${data.data}`);
+      }
+      return thunkAPI.fulfillWithValue(payload);
+    } catch (err) {
+      return console.log(err);
+    }
+  }
+);
+
 export const albumSlice = createSlice({
   name: "album",
   initialState,
   reducers: {},
   extraReducers: {
+    /// Album
     // Get
     [__getAlbumList.fulfilled]: (state, action) => {
       state.album = action.payload;
@@ -111,6 +163,17 @@ export const albumSlice = createSlice({
         }
         return item;
       });
+    },
+    // Comments
+    //Add
+    [__addComment.fulfilled]: (state, action) => {
+      state.commentList.push(action.payload);
+    },
+    //Delete
+    [__delComment.fulfilled]: (state, action) => {
+      state.commentList = state.commentList.filter(
+        (comment) => comment.id !== action.payload
+      );
     },
   },
 });

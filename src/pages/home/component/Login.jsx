@@ -14,7 +14,6 @@ const Login = () => {
     dispatch(__login({ email: email, password: password }));
     resetEmail();
     resetPW();
-    window.location.reload();
   };
 
   return (

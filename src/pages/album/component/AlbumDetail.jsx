@@ -9,6 +9,7 @@ import {
   __getAlbumItem,
   __updateAlbumItem,
 } from "../../../redux/modules/albumSlice";
+import AlbumComments from "./AlbumComments";
 
 const AlbumDetail = () => {
   const dispatch = useDispatch();
@@ -18,6 +19,7 @@ const AlbumDetail = () => {
 
   // 앨범 정보
   const albumItem = useSelector((state) => state.album.albumItem);
+  // console.log(albumItem);
   const { writer, place, profileImageUrl, imageUrl, beforeTime, content } =
     albumItem;
 
@@ -31,7 +33,7 @@ const AlbumDetail = () => {
   }, [dispatch, navigate]);
 
   const updateClick = () => {
-    console.log(id, contentInput);
+    // console.log(id, contentInput);
     if (!contentInput) {
       return alert("내용을 입력해주세요");
     }
@@ -85,6 +87,9 @@ const AlbumDetail = () => {
           >
             닫기
           </button>
+          <br />
+          <br />
+          <AlbumComments id={id} />
         </>
       )}
     </div>
