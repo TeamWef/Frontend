@@ -1,9 +1,11 @@
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { useInputs } from "../../../hooks/useInput";
 import { __emailCheck, __signup } from "../../../redux/modules/membersSlice";
 
 const SignUp = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [values, onChange, reset] = useInputs({
     email: "",
     name: "",
@@ -14,12 +16,16 @@ const SignUp = () => {
 
   const onSignup = (e) => {
     e.preventDefault();
-    if (password !== passwordCheck) {
+    if (!email || !name || !password || !passwordCheck) {
+      alert("모든 항목을 입력해주세요.");
+      return null;
+    } else if (password !== passwordCheck) {
       alert("password가 다릅니다");
       return null;
     }
     dispatch(__signup({ email, name, password }));
     reset();
+    navigate("/");
   };
 
   return (

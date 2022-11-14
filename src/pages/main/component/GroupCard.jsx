@@ -67,6 +67,13 @@ const GroupCard = () => {
               >
                 접속하기🌟
               </button>
+              <button
+                onClick={() => {
+                  navigate(`/${data.partyId}/album`);
+                }}
+              >
+                앨범보기
+              </button>
 
               {isModalOpen && (
                 <EditGroupCard

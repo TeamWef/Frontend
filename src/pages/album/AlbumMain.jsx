@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { useModal } from "../../hooks/useModal";
 import { __getAlbumList } from "../../redux/modules/albumSlice";
@@ -10,36 +10,36 @@ import AlbumDetail from "./component/AlbumDetail";
 const AlbumMain = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const partyId = useParams().partyid;
+
+  //모달 컨트롤
+  const [createModal, openCreateModal] = useModal();
 
   // 앨범 불러오기
   useEffect(() => {
-    dispatch(__getAlbumList(10));
-  }, [dispatch]);
+    dispatch(__getAlbumList(partyId));
+  }, [dispatch, openCreateModal]);
 
   const albumItems = useSelector((state) => state.album?.album);
   // console.log(albumItems);
 
-  //모달 컨트롤
-  const [createModal, openCreateModal] = useModal();
-  const [detailModal, openDetailModal] = useModal();
-
   return (
     <>
       <button onClick={openCreateModal}>사진 올리기</button>
+      <button onClick={() => navigate(`/`)}>메인 페이지로 돌아가기</button>
+      <br />
       {albumItems.map((albumItem) => (
         <Stimg
           onClick={() => {
-            navigate(`/album/${albumItem.id}`);
+            navigate(`/${partyId}/album/${albumItem.id}`);
           }}
           key={albumItem.id}
           src={albumItem.imageUrl}
         ></Stimg>
       ))}
-      {/* <img
-        alt=""
-        src="https://zero-to-one-bucket.s3.ap-northeast-2.amazonaws.com/podomarket1/efd1054a-4fad-4432-9500-429cec60235bmycat.jpg"
-      ></img> */}
-      {createModal && <AlbumCreate openCreateModal={openCreateModal} />}
+      {createModal && (
+        <AlbumCreate openCreateModal={openCreateModal} partyId={partyId} />
+      )}
     </>
   );
 };

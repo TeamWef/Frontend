@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { useInput } from "../../../hooks/useInput";
 import {
+  __changed,
   __delAlbumItem,
   __getAlbumItem,
   __updateAlbumItem,
@@ -12,6 +13,7 @@ import {
 const AlbumDetail = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const partyId = useParams().partyid;
   const id = useParams().id;
 
   // 앨범 정보
@@ -19,13 +21,25 @@ const AlbumDetail = () => {
   const { writer, place, profileImageUrl, imageUrl, beforeTime, content } =
     albumItem;
 
+  //수정시 state
+  const [updateMode, setUpdateMode] = useState(false);
+  const [contentInput, onChange, reset, setContentInput] = useInput(content);
+
   useEffect(() => {
     dispatch(__getAlbumItem(id));
-  }, [dispatch]);
+    setContentInput(content);
+  }, [dispatch, navigate]);
 
-  //수정시
-  const [updateMode, setUpdateMode] = useState(false);
-  const [contentInput, onChange, reset] = useInput(content);
+  const updateClick = () => {
+    console.log(id, contentInput);
+    if (!contentInput) {
+      return alert("내용을 입력해주세요");
+    }
+    dispatch(__updateAlbumItem({ id, contentInput }));
+    reset();
+    setContentInput(content);
+    setUpdateMode(false);
+  };
 
   return (
     <div>
@@ -42,21 +56,13 @@ const AlbumDetail = () => {
       )}
       <p>{beforeTime}</p>
       {updateMode ? (
-        <button
-          onClick={() => {
-            console.log(id, contentInput);
-            dispatch(__updateAlbumItem({ id, contentInput }));
-            reset();
-            setUpdateMode(false);
-          }}
-        >
-          수정완료
-        </button>
+        <button onClick={updateClick}>수정완료</button>
       ) : (
         <>
           <button
             onClick={() => {
               setUpdateMode(true);
+              setContentInput(content);
             }}
           >
             수정
@@ -66,7 +72,7 @@ const AlbumDetail = () => {
               if (window.confirm("정말 삭제하시겠습니까?")) {
                 dispatch(__delAlbumItem(id));
                 alert("삭제가 완료되었습니다.");
-                navigate("/album");
+                navigate(`/${partyId}/album`);
               }
             }}
           >
@@ -74,7 +80,7 @@ const AlbumDetail = () => {
           </button>
           <button
             onClick={() => {
-              navigate("/album");
+              navigate(`/${partyId}/album`);
             }}
           >
             닫기
