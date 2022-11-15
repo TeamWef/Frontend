@@ -1,21 +1,15 @@
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useInputs } from "../../../hooks/useInput";
-import {
-  __addAlbumItem,
-  __getAlbumItem,
-  __getAlbumList,
-} from "../../../redux/modules/albumSlice";
+import styled from "styled-components";
+import { __updateMypage } from "../../../redux/modules/mypageSlice";
+import { useModal } from "../../../hooks/useModal";
 
-const AlbumCreate = ({ openCreateModal, partyId, Change, setChange }) => {
+const EditMypage = ({ myProfile, openModal }) => {
   const dispatch = useDispatch();
 
-  // 내용 State
-  const [albumItem, onChangeAlbumItem, reset] = useInputs({
-    content: "",
-    place: "",
-  });
+  const { memberName, profileImageUrl } = myProfile;
 
+  const [edit, openEdit] = useModal();
   // 이미지 State
   const [uploadImg, setUploadImg] = useState(null);
   const [previewImage, setPreviewImage] = useState(null);
@@ -35,28 +29,16 @@ const AlbumCreate = ({ openCreateModal, partyId, Change, setChange }) => {
     };
   };
   const uploadHandler = () => {
-    const newAlbum = { ...albumItem, imageUrl: uploadImg };
-    // console.log(newAlbum, partyId);
     if (!uploadImg) {
-      alert("사진을 추가해주세요!");
-      return null;
-    } else if (!albumItem.place) {
-      alert("장소를 입력해주세요!");
-      return null;
-    } else if (!albumItem.content) {
-      alert("내용을 입력해주세요!");
-      return null;
+      return alert("수정할 내용이 없습니다");
     }
-    dispatch(__addAlbumItem({ newAlbum, partyId }));
+    dispatch(__updateMypage(uploadImg));
     setUploadImg("");
-    reset();
-    openCreateModal();
-    // setChange(!Change);
+    openEdit();
   };
 
   return (
-    <div>
-      <h1>AlbumCreate</h1>
+    <StDiv>
       {uploadImg ? (
         <div
           style={{
@@ -70,6 +52,16 @@ const AlbumCreate = ({ openCreateModal, partyId, Change, setChange }) => {
           이미지 미리보기
         </div>
       ) : (
+        <img
+          src={profileImageUrl}
+          alt="profileImg"
+          style={{
+            width: "100px",
+            height: "100px",
+          }}
+        />
+      )}
+      {edit ? (
         <>
           <input
             name="ImageUrl"
@@ -83,16 +75,32 @@ const AlbumCreate = ({ openCreateModal, partyId, Change, setChange }) => {
               imgInput.current.click();
             }}
           >
-            사진 추가하기
+            사진 등록
+          </button>
+          <button onClick={uploadHandler}>수정 완료</button>
+          <button
+            onClick={() => {
+              openEdit();
+              setUploadImg("");
+            }}
+          >
+            취소
           </button>
         </>
+      ) : (
+        <>
+          <button onClick={openEdit}>수정하기</button>
+          <button onClick={openModal}>닫기</button>
+        </>
       )}
-      장소 : <input name="place" onChange={onChangeAlbumItem} />
-      내용 : <input name="content" onChange={onChangeAlbumItem} />
-      <button onClick={uploadHandler}>등록완료</button>
-      <button onClick={openCreateModal}>닫기</button>
-    </div>
+      <p>{memberName}</p>
+    </StDiv>
   );
 };
 
-export default AlbumCreate;
+export default EditMypage;
+
+const StDiv = styled.div`
+  margin: 10px;
+  border: solid 1px;
+`;
