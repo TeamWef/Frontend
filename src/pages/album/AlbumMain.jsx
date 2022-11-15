@@ -5,7 +5,6 @@ import styled from "styled-components";
 import { useModal } from "../../hooks/useModal";
 import { __getAlbumList } from "../../redux/modules/albumSlice";
 import AlbumCreate from "../album/component/AlbumCreate";
-import AlbumDetail from "./component/AlbumDetail";
 
 const AlbumMain = () => {
   const dispatch = useDispatch();

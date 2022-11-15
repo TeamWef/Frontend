@@ -8,13 +8,10 @@ const GroupCard = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const groups = useSelector((state) => state?.group.group.data);
-  // console.log("groups?? =>", groups);
 
   useEffect(() => {
     dispatch(__getGroup());
   }, [dispatch]);
-
-  // console.log("key를 찾아서 =>", groups);
 
   const [isModalOpen, setModalOpen] = useState(false);
   // const onClickModal = () => {
@@ -39,13 +36,10 @@ const GroupCard = () => {
               isModalOpen={isModalOpen}
               setModalOpen={setModalOpen}
             >
-              <ul>
-                <li>{data?.partyId}</li>
-                <li>
-                  <h2>{data?.partyName}</h2>
-                </li>
-                <li>{data?.partyIntroduction}</li>
-              </ul>
+              <p>{data?.partyId}</p>
+              <h2>{data?.partyName}</h2>
+              <p>{data?.partyIntroduction}</p>
+
               <button
                 onClick={() => {
                   setModalOpen(true);
@@ -53,6 +47,7 @@ const GroupCard = () => {
               >
                 수정하기
               </button>
+
               <button
                 onClick={() => {
                   dispatch(__delGroup(data?.partyId));
@@ -60,6 +55,7 @@ const GroupCard = () => {
               >
                 삭제하기
               </button>
+
               <button
                 onClick={() => {
                   navigate(`/schedule/${data.partyId}`);
@@ -67,6 +63,7 @@ const GroupCard = () => {
               >
                 접속하기🌟
               </button>
+
               <button
                 onClick={() => {
                   navigate(`/${data.partyId}/album`);

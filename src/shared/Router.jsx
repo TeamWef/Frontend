@@ -9,7 +9,6 @@ import { Home } from "../pages/home/Home";
 import ScheduleCard from "../pages/schedule/component/ScheduleCard";
 import ScheduleDetail from "../pages/schedule/component/ScheduleDetail";
 
-
 const Page = () => {
   return (
     <BrowserRouter>
@@ -24,7 +23,6 @@ const Page = () => {
         <Route path="/album/:id" element={<AlbumDetail />} />
         <Route path="/shedulelist/:partyId" element={<ScheduleCard />} />
         <Route path="/sheduledetail/:scheduleId" element={<ScheduleDetail />} />
-
       </Routes>
     </BrowserRouter>
   );

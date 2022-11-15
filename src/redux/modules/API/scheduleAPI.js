@@ -38,22 +38,36 @@ export const getScheduleDetailApi = async (scheduleId) => {
 //삭제
 
 export const delScheduleApi = async (scheduleId) => {
-  console.log("API", scheduleId);
-  await axios.delete(`${ServerUrl}/party/${scheduleId}`, {
+  // console.log("API", scheduleId);
+  await axios.delete(`${ServerUrl}/schedules/${scheduleId}`, {
     headers: {
       Authorization: localStorage.getItem("token"),
     },
   });
 };
 
-// 수정
+// 가입된 전체 그룹의 일정 조회
+export const getGroupScheduleApi = async (payload) => {
+  const res = await axios.get(`${ServerUrl}/schedules`, {
+    headers: {
+      Authorization: localStorage.getItem("token"),
+    },
+  });
+  return res;
+};
 
-// export const putGroupApi = async ({ id, editGroup }) => {
-//   console.log(":::::", id);
-//   console.log(":::::", editGroup);
-//   await axios.put(`${ServerUrl}/party/${id}`, editGroup, {
-//     headers: {
-//       Authorization: localStorage.getItem("token"),
-//     },
-//   });
-// };
+//수정
+
+export const putScheduleEditApi = async (payload) => {
+  // console.log("API====>", payload);
+  // console.log("API edit====>", payload.editSchedule);
+  await axios.put(
+    `${ServerUrl}/schedules/${payload.detailId}`,
+    payload.editSchedule,
+    {
+      headers: {
+        Authorization: localStorage.getItem("token"),
+      },
+    }
+  );
+};

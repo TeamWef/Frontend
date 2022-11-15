@@ -4,11 +4,14 @@ import {
   getScheduleApi,
   getScheduleDetailApi,
   delScheduleApi,
+  getGroupScheduleApi,
+  putScheduleEditApi,
 } from "./API/scheduleAPI";
 
 const initialState = {
   schedule: [],
-  scheduieDetail: [],
+  scheduleDetail: {},
+  groupSchedule: [],
   isLoading: false,
   error: null,
 };
@@ -19,7 +22,6 @@ export const __addSchedule = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const response = await addScheduleApi(payload);
-      console.log(response);
       return thunkAPI.fulfillWithValue(response.data);
     } catch (err) {
       console.log("error");
@@ -44,11 +46,26 @@ export const __getSchedule = createAsyncThunk(
 
 //그룹의 일정 상세 조회
 export const __getScheduleDetail = createAsyncThunk(
-  "get/getSchedule",
+  "get/getScheduleDetail",
   async (payload, thunkAPI) => {
     try {
       const res = await getScheduleDetailApi(payload);
       return thunkAPI.fulfillWithValue(res.data);
+    } catch (err) {
+      console.log("error", err);
+      return thunkAPI.rejectWithValue(err);
+    }
+  }
+);
+
+//가입된 그룹의 일정 전체 조회(메인)
+export const __getGroupSchedule = createAsyncThunk(
+  "get/getGroupSchedule",
+  async (payload, thunkAPI) => {
+    try {
+      const res = await getGroupScheduleApi();
+      // console.log("axios??", res);
+      return thunkAPI.fulfillWithValue(res);
     } catch (err) {
       console.log("error", err);
       return thunkAPI.rejectWithValue(err);
@@ -71,6 +88,19 @@ export const __delSchedule = createAsyncThunk(
   }
 );
 
+export const __editSchedules = createAsyncThunk(
+  "put/editSchedules",
+  async (payload, thunkAPI) => {
+    try {
+      await putScheduleEditApi(payload);
+      return thunkAPI.fulfillWithValue(payload);
+    } catch (err) {
+      console.log("error ::::::", err.response);
+      return thunkAPI.rejectWithValue("<<", err);
+    }
+  }
+);
+
 export const scheduleSlice = createSlice({
   name: "schedule",
   initialState,
@@ -82,8 +112,6 @@ export const scheduleSlice = createSlice({
     },
     [__addSchedule.fulfilled]: (state, action) => {
       state.isLoading = false;
-      // console.log("하면된다===>", action);
-      // console.log("되면한다???", state);
       state.schedule?.push(action.payload);
     },
     [__addSchedule.rejected]: (state, action) => {
@@ -98,11 +126,24 @@ export const scheduleSlice = createSlice({
     },
     [__getSchedule.fulfilled]: (state, action) => {
       state.isLoading = false;
-      // console.log("외않되===>", action);
-      // console.log("되???=>???", state);
       state.schedule = action.payload;
     },
     [__getSchedule.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+
+    // 가입된 그룹의 일정 전체 조회
+
+    [__getGroupSchedule.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [__getGroupSchedule.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      // console.log("그룹 일정 전체조회===>", action);
+      state.groupSchedule = action.payload;
+    },
+    [__getGroupSchedule.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
     },
@@ -114,9 +155,7 @@ export const scheduleSlice = createSlice({
     },
     [__getScheduleDetail.fulfilled]: (state, action) => {
       state.isLoading = false;
-      // console.log("외않되===>", action);
-      // console.log("되???=>???", state);
-      state.scheduieDetail = action.payload;
+      state.scheduleDetail = action.payload;
     },
     [__getScheduleDetail.rejected]: (state, action) => {
       state.isLoading = false;
@@ -137,8 +176,22 @@ export const scheduleSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
+
+    //수정
+    [__editSchedules.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [__editSchedules.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      console.log("슬라이스 액션=>", action);
+      state.scheduleDetail = action.payload.editSchedule;
+    },
+    [__editSchedules.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
   },
 });
-//
+
 export const { schedule } = scheduleSlice.actions;
 export default scheduleSlice.reducer;

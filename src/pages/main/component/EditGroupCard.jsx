@@ -17,9 +17,9 @@ const EditGroupCard = ({ id, isModalOpen, setModalOpen, groups }) => {
   //   const partyId = useSelector((state) => state?.group.group.data);
   //   const id = partyId?.partyId;
 
-  console.log("id", id);
-  console.log("editGroup", editGroup);
-  console.log("::::", groups);
+  // console.log("id", id);
+  // console.log("editGroup", editGroup);
+  // console.log("::::", groups);
 
   const onAddGroupHandler = (e) => {
     e.preventDefault();

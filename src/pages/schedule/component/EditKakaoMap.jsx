@@ -2,13 +2,7 @@ import React, { useEffect, useState } from "react";
 
 const { kakao } = window;
 
-const KakaoMap = ({
-  searchPlace,
-  setSchedule,
-  schedule,
-  setEditSchedule,
-  editSchedule,
-}) => {
+const EditKakaoMap = ({ searchPlace, setEditSchedule, editSchedule }) => {
   // 검색결과 배열에 담아줌
   const [Places, setPlaces] = useState([]);
 
@@ -141,13 +135,6 @@ const KakaoMap = ({
               <span>{item.phone}</span>
               <button
                 onClick={() => {
-                  setSchedule({
-                    ...schedule,
-                    place: {
-                      placeName: item.place_name,
-                      address: item.address_name,
-                    },
-                  });
                   setEditSchedule({
                     ...editSchedule,
                     place: {
@@ -155,7 +142,7 @@ const KakaoMap = ({
                       address: item.address_name,
                     },
                   });
-                  console.log({ schedule, editSchedule });
+                  console.log({ editSchedule });
                 }}
               >
                 선택하기
@@ -170,4 +157,4 @@ const KakaoMap = ({
   );
 };
 
-export default KakaoMap;
+export default EditKakaoMap;
