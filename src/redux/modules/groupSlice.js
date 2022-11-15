@@ -31,7 +31,7 @@ export const __getGroup = createAsyncThunk(
       const res = await getGroupApi();
       return thunkAPI.fulfillWithValue(res);
     } catch (err) {
-      console.log("error");
+      console.log(err);
       return thunkAPI.rejectWithValue(err);
     }
   }

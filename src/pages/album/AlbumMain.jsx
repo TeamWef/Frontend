@@ -11,17 +11,17 @@ const AlbumMain = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const partyId = useParams().partyid;
-
+  // console.log(partyId);
   //모달 컨트롤
   const [createModal, openCreateModal] = useModal();
+  const [Change, setChange] = useState(false);
 
   // 앨범 불러오기
   useEffect(() => {
     dispatch(__getAlbumList(partyId));
-  }, [dispatch, openCreateModal]);
+  }, [dispatch]);
 
   const albumItems = useSelector((state) => state.album?.album);
-  // console.log(albumItems);
 
   return (
     <>
@@ -38,7 +38,12 @@ const AlbumMain = () => {
         ></Stimg>
       ))}
       {createModal && (
-        <AlbumCreate openCreateModal={openCreateModal} partyId={partyId} />
+        <AlbumCreate
+          openCreateModal={openCreateModal}
+          partyId={partyId}
+          Change={Change}
+          setChange={setChange}
+        />
       )}
     </>
   );

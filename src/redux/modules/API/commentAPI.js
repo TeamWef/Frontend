@@ -3,7 +3,6 @@ import { ServerUrl } from "../../../server";
 
 // 코멘트 등록
 export const addCommnetApi = async (payload) => {
-  console.log(payload);
   const data = await axios.post(
     `${ServerUrl}/${payload.id}/comments`,
     { content: payload.comment },
@@ -15,7 +14,7 @@ export const addCommnetApi = async (payload) => {
       },
     }
   );
-  return data.data;
+  return data;
 };
 
 // 코멘트 삭제
@@ -32,10 +31,11 @@ export const delCommentApi = async (payload) => {
 };
 
 // 코멘트 수정
-export const updateCommentApi = async ({ commentId, content }) => {
-  const data = await axios.patch(
-    `${ServerUrl}/comments/${commentId}`,
-    content,
+export const updateCommentApi = async (payload) => {
+  const { id, content } = payload;
+  const data = await axios.put(
+    `${ServerUrl}/comments/${id}`,
+    { content: content },
     {
       headers: {
         Authorization: localStorage.getItem("token"),
@@ -44,5 +44,5 @@ export const updateCommentApi = async ({ commentId, content }) => {
       },
     }
   );
-  return data.data;
+  return data;
 };

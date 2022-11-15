@@ -1,33 +1,87 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { useInput } from "../../../hooks/useInput";
-import { __addComment } from "../../../redux/modules/albumSlice";
+import {
+  __addComment,
+  __delAlbumItem,
+  __delComment,
+  __updateComment,
+} from "../../../redux/modules/albumSlice";
 
-const AlbumComments = ({ id }) => {
+const AlbumComments = ({ id, commentList }) => {
   const dispatch = useDispatch();
+  //등록시 State
   const [comment, onChange, reset] = useInput("");
 
-  const addCommnetHandler = () => {
+  //수정시 State
+  const [updateTarget, setUpdateTarget] = useState("");
+  const [Input, changeInput, inputReset] = useInput("");
+
+  const addCommentHandler = () => {
     dispatch(__addComment({ id, comment }));
     reset();
+  };
+
+  const delCommentHandler = (id) => {
+    if (window.confirm("정말 삭제하시겠습니까?")) {
+      dispatch(__delComment(id));
+      alert("삭제가 완료되었습니다.");
+    }
   };
 
   return (
     <div>
       <h2>AlbumComments영역임</h2>
       <input placeholder="댓글 내용 작성" value={comment} onChange={onChange} />
-      <button onClick={addCommnetHandler}>추가</button>
+      <button onClick={addCommentHandler}>추가</button>
       <br />
       <br />
-      <img src="" alt="profileImg" />
-      <StSpan>이름</StSpan>
-      <StSpan>댓글내용</StSpan>
-      <button>삭제</button>
-      <br />
-      <img src="" alt="profileImg" />
-      <StSpan>이름</StSpan>
-      <StSpan>댓글내용</StSpan>
+      {commentList?.map((comment) => {
+        return (
+          <div key={comment.id}>
+            <img src={comment.profileImageUrl} alt="profileImg" />
+            <StSpan>{comment.writer}</StSpan>
+            {comment.id === updateTarget ? (
+              <>
+                <input value={Input} onChange={changeInput} />
+              </>
+            ) : (
+              <StSpan>{comment.content}</StSpan>
+            )}
+            <StSpan>{comment.beforeTime}</StSpan>
+            {comment.id === updateTarget ? (
+              <>
+                <button
+                  onClick={() => {
+                    dispatch(
+                      __updateComment({ id: comment.id, content: Input })
+                    );
+                    setUpdateTarget("");
+                    inputReset();
+                  }}
+                >
+                  수정 완료
+                </button>
+                <button onClick={() => setUpdateTarget("")}>취소</button>
+              </>
+            ) : (
+              <>
+                <button
+                  onClick={() => {
+                    setUpdateTarget(comment.id);
+                  }}
+                >
+                  수정
+                </button>
+                <button onClick={() => delCommentHandler(comment.id)}>
+                  삭제
+                </button>
+              </>
+            )}
+          </div>
+        );
+      })}
     </div>
   );
 };

@@ -10,6 +10,7 @@ import {
   __updateAlbumItem,
 } from "../../../redux/modules/albumSlice";
 import AlbumComments from "./AlbumComments";
+import jwt_decode from "jwt-decode";
 
 const AlbumDetail = () => {
   const dispatch = useDispatch();
@@ -17,11 +18,23 @@ const AlbumDetail = () => {
   const partyId = useParams().partyid;
   const id = useParams().id;
 
+  //토큰 디코드
+  const token = localStorage.getItem("token").replace("Bearer ", "");
+  const decode = jwt_decode(token);
+  const myname = decode.aud;
+
   // 앨범 정보
   const albumItem = useSelector((state) => state.album.albumItem);
   // console.log(albumItem);
-  const { writer, place, profileImageUrl, imageUrl, beforeTime, content } =
-    albumItem;
+  const {
+    writer,
+    place,
+    profileImageUrl,
+    imageUrl,
+    beforeTime,
+    content,
+    commentList,
+  } = albumItem;
 
   //수정시 state
   const [updateMode, setUpdateMode] = useState(false);
@@ -89,7 +102,7 @@ const AlbumDetail = () => {
           </button>
           <br />
           <br />
-          <AlbumComments id={id} />
+          <AlbumComments id={id} commentList={commentList} />
         </>
       )}
     </div>
