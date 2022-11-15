@@ -40,7 +40,14 @@ const AlbumComments = ({ id, commentList, myname }) => {
       {commentList?.map((comment) => {
         return (
           <div key={comment.id}>
-            <img src={comment.profileImageUrl} alt="profileImg" />
+            <img
+              src={comment.profileImageUrl}
+              alt="profileImg"
+              style={{
+                width: "20px",
+                height: "20px",
+              }}
+            />
             <StSpan>{comment.writer}</StSpan>
             {comment.id === updateTarget ? (
               <>
