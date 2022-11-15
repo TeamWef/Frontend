@@ -1,9 +1,13 @@
 import React, { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useInputs } from "../../../hooks/useInput";
-import { __addAlbumItem } from "../../../redux/modules/albumSlice";
+import {
+  __addAlbumItem,
+  __getAlbumItem,
+  __getAlbumList,
+} from "../../../redux/modules/albumSlice";
 
-const AlbumCreate = ({ openCreateModal, partyId }) => {
+const AlbumCreate = ({ openCreateModal, partyId, Change, setChange }) => {
   const dispatch = useDispatch();
 
   // 내용 State
@@ -47,6 +51,7 @@ const AlbumCreate = ({ openCreateModal, partyId }) => {
     setUploadImg("");
     reset();
     openCreateModal();
+    // setChange(!Change);
   };
 
   return (
