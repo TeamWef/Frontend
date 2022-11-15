@@ -59,7 +59,14 @@ const AlbumDetail = () => {
   return (
     <div>
       <h1>AlbumDetail임</h1>
-      <img src={profileImageUrl} alt="profileImg" />
+      <img
+        src={profileImageUrl}
+        alt="profileImg"
+        style={{
+          width: "20px",
+          height: "20px",
+        }}
+      />
       <span>{writer}</span>
       <br />
       <Stimg src={imageUrl} alt="img" />
