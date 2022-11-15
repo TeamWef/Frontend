@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+
 import { __addSchedule } from "../../../redux/modules/scheduleSlice";
 import LandingPage from "./Landing";
 
@@ -27,6 +28,13 @@ const ScheduleCreate = () => {
     e.preventDefault();
     dispatch(__addSchedule({ schedule, partyId }));
     navigate(`/shedulelist/${partyId}`);
+    setSchedule({
+      title: "",
+      content: "",
+      meetTime: "",
+      date: "",
+      place: { placeName: "", address: "" },
+    });
   };
 
   const onChangeHandler = (e) => {

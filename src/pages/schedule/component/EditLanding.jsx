@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import KakaoMap from "./KakaoMap";
+import EditKakaoMap from "./EditKakaoMap";
 import { useModal } from "../../../hooks/useModal";
 
-function LandingPage({ setSchedule, schedule, editSchedule, setEditSchedule }) {
+function EditLanding({ editSchedule, setEditSchedule }) {
   const [InputText, setInputText] = useState("");
   const [Place, setPlace] = useState("");
   const [modal, openModal] = useModal();
@@ -30,10 +30,8 @@ function LandingPage({ setSchedule, schedule, editSchedule, setEditSchedule }) {
             />
             <button type="submit">검색</button>
           </form>
-          <KakaoMap
+          <EditKakaoMap
             searchPlace={Place}
-            setSchedule={setSchedule}
-            schedule={schedule}
             setEditSchedule={setEditSchedule}
             editSchedule={editSchedule}
           />
@@ -43,4 +41,4 @@ function LandingPage({ setSchedule, schedule, editSchedule, setEditSchedule }) {
   );
 }
 
-export default LandingPage;
+export default EditLanding;

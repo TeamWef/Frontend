@@ -5,7 +5,6 @@ import styled from "styled-components";
 import { useModal } from "../../hooks/useModal";
 import { __getAlbumList } from "../../redux/modules/albumSlice";
 import AlbumCreate from "../album/component/AlbumCreate";
-import AlbumDetail from "./component/AlbumDetail";
 
 const AlbumMain = () => {
   const dispatch = useDispatch();
@@ -18,10 +17,10 @@ const AlbumMain = () => {
   // 앨범 불러오기
   useEffect(() => {
     dispatch(__getAlbumList(partyId));
-  }, [dispatch, openCreateModal]);
+  }, [dispatch]);
 
   const albumItems = useSelector((state) => state.album?.album);
-  // console.log(albumItems);
+  console.log(albumItems);
 
   return (
     <>

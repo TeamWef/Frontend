@@ -46,14 +46,24 @@ export const delScheduleApi = async (scheduleId) => {
   });
 };
 
-// 수정
+// 가입된 전체 그룹의 일정 조회
+export const getGroupScheduleApi = async (payload) => {
+  const res = await axios.get(`${ServerUrl}/schedules`, {
+    headers: {
+      Authorization: localStorage.getItem("token"),
+    },
+  });
+  return res;
+};
 
-// export const putGroupApi = async ({ id, editGroup }) => {
-//   console.log(":::::", id);
-//   console.log(":::::", editGroup);
-//   await axios.put(`${ServerUrl}/party/${id}`, editGroup, {
-//     headers: {
-//       Authorization: localStorage.getItem("token"),
-//     },
-//   });
-// };
+//수정
+
+export const putScheduleEditApi = async ({ detailId, editSchedules }) => {
+  console.log(":::::", detailId);
+  console.log("!!!!", editSchedules);
+  await axios.put(`${ServerUrl}/schedules/${detailId}`, editSchedules, {
+    headers: {
+      Authorization: localStorage.getItem("token"),
+    },
+  });
+};
