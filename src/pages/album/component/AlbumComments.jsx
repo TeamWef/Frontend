@@ -76,7 +76,6 @@ const AlbumComments = ({ id, commentList, myname }) => {
               <>
                 {myname === comment.writer ? (
                   <>
-                    {" "}
                     <button
                       onClick={() => {
                         setUpdateTarget(comment.id);

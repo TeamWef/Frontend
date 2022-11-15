@@ -22,6 +22,13 @@ const ScheduleCard = () => {
 
   return (
     <div>
+      <button
+        onClick={() => {
+          navigate(`/schedule/${partyId}`);
+        }}
+      >
+        💖 일정 등록 🎈
+      </button>
       {seheduleList?.map((data) => {
         return (
           <div scheduleId={data?.scheduleId}>

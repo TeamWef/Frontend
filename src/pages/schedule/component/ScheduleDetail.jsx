@@ -64,7 +64,10 @@ const SchdeleDetail = ({ scheduleId }) => {
       <button onClick={openModal}>수정하기</button>
       <button
         onClick={() => {
-          dispatch(__delSchedule(detailId));
+          if (window.confirm("정말 삭제하시겠습니까?")) {
+            dispatch(__delSchedule(detailId));
+            alert("삭제가 완료되었습니다.");
+          }
           navigate("/main");
         }}
       >
