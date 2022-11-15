@@ -58,12 +58,16 @@ export const getGroupScheduleApi = async (payload) => {
 
 //수정
 
-export const putScheduleEditApi = async ({ detailId, editSchedules }) => {
-  console.log(":::::", detailId);
-  console.log("!!!!", editSchedules);
-  await axios.put(`${ServerUrl}/schedules/${detailId}`, editSchedules, {
-    headers: {
-      Authorization: localStorage.getItem("token"),
-    },
-  });
+export const putScheduleEditApi = async (payload) => {
+  // console.log("API====>", payload);
+  // console.log("API edit====>", payload.editSchedule);
+  await axios.put(
+    `${ServerUrl}/schedules/${payload.detailId}`,
+    payload.editSchedule,
+    {
+      headers: {
+        Authorization: localStorage.getItem("token"),
+      },
+    }
+  );
 };

@@ -10,7 +10,7 @@ import {
 
 const initialState = {
   schedule: [],
-  scheduleDetail: [],
+  scheduleDetail: {},
   groupSchedule: [],
   isLoading: false,
   error: null,
@@ -22,7 +22,6 @@ export const __addSchedule = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const response = await addScheduleApi(payload);
-      // console.log(response);
       return thunkAPI.fulfillWithValue(response.data);
     } catch (err) {
       console.log("error");
@@ -37,7 +36,6 @@ export const __getSchedule = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const res = await getScheduleApi(payload);
-      console.log(res);
       return thunkAPI.fulfillWithValue(res.data);
     } catch (err) {
       console.log("error", err);
@@ -93,11 +91,9 @@ export const __delSchedule = createAsyncThunk(
 export const __editSchedules = createAsyncThunk(
   "put/editSchedules",
   async (payload, thunkAPI) => {
-    console.log("put payload=>", payload);
     try {
-      const res = await putScheduleEditApi(payload);
-      console.log("put payload2222=>", res);
-      return thunkAPI.fulfillWithValue(res);
+      await putScheduleEditApi(payload);
+      return thunkAPI.fulfillWithValue(payload);
     } catch (err) {
       console.log("error ::::::", err.response);
       return thunkAPI.rejectWithValue("<<", err);
@@ -116,8 +112,6 @@ export const scheduleSlice = createSlice({
     },
     [__addSchedule.fulfilled]: (state, action) => {
       state.isLoading = false;
-      // console.log("하면된다===>", action);
-      // console.log("되면한다???", state);
       state.schedule?.push(action.payload);
     },
     [__addSchedule.rejected]: (state, action) => {
@@ -146,7 +140,7 @@ export const scheduleSlice = createSlice({
     },
     [__getGroupSchedule.fulfilled]: (state, action) => {
       state.isLoading = false;
-      console.log("그룹 일정 전체조회===>", action);
+      // console.log("그룹 일정 전체조회===>", action);
       state.groupSchedule = action.payload;
     },
     [__getGroupSchedule.rejected]: (state, action) => {
@@ -189,7 +183,8 @@ export const scheduleSlice = createSlice({
     },
     [__editSchedules.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.schedule?.data.push(action.payload?.editSchedules);
+      console.log("슬라이스 액션=>", action);
+      state.scheduleDetail = action.payload.editSchedule;
     },
     [__editSchedules.rejected]: (state, action) => {
       state.isLoading = false;
@@ -197,6 +192,6 @@ export const scheduleSlice = createSlice({
     },
   },
 });
-//
+
 export const { schedule } = scheduleSlice.actions;
 export default scheduleSlice.reducer;
