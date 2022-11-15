@@ -9,7 +9,7 @@ import {
   __updateComment,
 } from "../../../redux/modules/albumSlice";
 
-const AlbumComments = ({ id, commentList }) => {
+const AlbumComments = ({ id, commentList, myname }) => {
   const dispatch = useDispatch();
   //등록시 State
   const [comment, onChange, reset] = useInput("");
@@ -67,16 +67,21 @@ const AlbumComments = ({ id, commentList }) => {
               </>
             ) : (
               <>
-                <button
-                  onClick={() => {
-                    setUpdateTarget(comment.id);
-                  }}
-                >
-                  수정
-                </button>
-                <button onClick={() => delCommentHandler(comment.id)}>
-                  삭제
-                </button>
+                {myname === comment.writer ? (
+                  <>
+                    {" "}
+                    <button
+                      onClick={() => {
+                        setUpdateTarget(comment.id);
+                      }}
+                    >
+                      수정
+                    </button>
+                    <button onClick={() => delCommentHandler(comment.id)}>
+                      삭제
+                    </button>
+                  </>
+                ) : null}
               </>
             )}
           </div>
