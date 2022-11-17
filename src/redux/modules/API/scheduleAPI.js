@@ -74,10 +74,11 @@ export const putScheduleEditApi = async (payload) => {
 
 // 일정 참여 api
 export const postSchedulejoinApi = async (payload) => {
-  console.log("id 줘..", payload);
-  await axios.post(`${ServerUrl}/${payload}/participate`, {
+  const res = await axios.post(`${ServerUrl}/${payload}/participate`, payload, {
     headers: {
       Authorization: localStorage.getItem("token"),
     },
   });
+  console.log("??", res);
+  return res;
 };
