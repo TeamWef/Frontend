@@ -78,7 +78,6 @@ export const __getGroupSchedule = createAsyncThunk(
 export const __delSchedule = createAsyncThunk(
   "delete/delSchedule",
   async (payload, thunkAPI) => {
-    console.log("async=>", payload);
     try {
       await delScheduleApi(payload);
       console.log("???????=>", payload);
@@ -105,9 +104,8 @@ export const __editSchedules = createAsyncThunk(
 
 //일정 참여
 export const __joinSchedules = createAsyncThunk(
-  "put/joinSchedules",
+  "post/joinSchedules",
   async (payload, thunkAPI) => {
-    console.log("id????", payload);
     try {
       await postSchedulejoinApi(payload);
       return thunkAPI.fulfillWithValue(payload);
