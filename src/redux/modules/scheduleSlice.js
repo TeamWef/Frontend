@@ -6,7 +6,9 @@ import {
   delScheduleApi,
   getGroupScheduleApi,
   putScheduleEditApi,
+
   postSchedulejoinApi,
+
 } from "./API/scheduleAPI";
 
 const initialState = {
@@ -102,6 +104,7 @@ export const __editSchedules = createAsyncThunk(
   }
 );
 
+
 //일정 참여
 export const __joinSchedules = createAsyncThunk(
   "post/joinSchedules",
@@ -115,6 +118,7 @@ export const __joinSchedules = createAsyncThunk(
     }
   }
 );
+
 
 export const scheduleSlice = createSlice({
   name: "schedule",
@@ -206,6 +210,7 @@ export const scheduleSlice = createSlice({
       state.error = action.payload;
     },
 
+
     //일정 참여
     [__editSchedules.pending]: (state) => {
       state.isLoading = true;
@@ -219,6 +224,7 @@ export const scheduleSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
+
   },
 });
 
