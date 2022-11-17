@@ -71,3 +71,13 @@ export const putScheduleEditApi = async (payload) => {
     }
   );
 };
+
+// 일정 참여 api
+export const postSchedulejoinApi = async (payload) => {
+  console.log("id 줘..", payload);
+  await axios.post(`${ServerUrl}/${payload}/participate`, {
+    headers: {
+      Authorization: localStorage.getItem("token"),
+    },
+  });
+};

@@ -6,12 +6,14 @@ import {
   delScheduleApi,
   getGroupScheduleApi,
   putScheduleEditApi,
+  postSchedulejoinApi,
 } from "./API/scheduleAPI";
 
 const initialState = {
   schedule: [],
   scheduleDetail: {},
   groupSchedule: [],
+  join: [],
   isLoading: false,
   error: null,
 };
@@ -93,6 +95,21 @@ export const __editSchedules = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       await putScheduleEditApi(payload);
+      return thunkAPI.fulfillWithValue(payload);
+    } catch (err) {
+      console.log("error ::::::", err.response);
+      return thunkAPI.rejectWithValue("<<", err);
+    }
+  }
+);
+
+//일정 참여
+export const __joinSchedules = createAsyncThunk(
+  "put/joinSchedules",
+  async (payload, thunkAPI) => {
+    console.log("id????", payload);
+    try {
+      await postSchedulejoinApi(payload);
       return thunkAPI.fulfillWithValue(payload);
     } catch (err) {
       console.log("error ::::::", err.response);
@@ -185,6 +202,20 @@ export const scheduleSlice = createSlice({
       state.isLoading = false;
       console.log("슬라이스 액션=>", action);
       state.scheduleDetail = action.payload.editSchedule;
+    },
+    [__editSchedules.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+
+    //일정 참여
+    [__editSchedules.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [__editSchedules.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      console.log("슬라이스 액션=>", action);
+      state.join = action.payload;
     },
     [__editSchedules.rejected]: (state, action) => {
       state.isLoading = false;

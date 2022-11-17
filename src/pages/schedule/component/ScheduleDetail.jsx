@@ -6,6 +6,7 @@ import {
   __getScheduleDetail,
   __delSchedule,
   __editSchedules,
+  __joinSchedules,
 } from "../../../redux/modules/scheduleSlice";
 import { useModal } from "../../../hooks/useModal";
 import EditLanding from "./EditLanding";
@@ -59,7 +60,14 @@ const SchdeleDetail = ({ scheduleId }) => {
         만나는 장소의 주소 :
         {scheduleDetail?.address || scheduleDetail.place?.address}
       </p>
-      <button>참여하기</button>
+      <button
+        onClick={(e) => {
+          e.preventDefault();
+          dispatch(__joinSchedules(scheduleDetail?.scheduleId));
+        }}
+      >
+        참여하기
+      </button>
       {/* 참여자 목록 보내주실 때 byme 카테고리에 참여 true, 미참여 false값 받기 */}
       <button onClick={openModal}>수정하기</button>
       <button
@@ -90,7 +98,14 @@ const SchdeleDetail = ({ scheduleId }) => {
             />
             <input type="time" name="meetTime" onChange={onChangeHandler} />
             <input type="date" name="date" onChange={onChangeHandler} />
-            <button type="submit">작성</button>
+            <button
+              type="submit"
+              onClick={() => {
+                navigate(`/sheduledetail/${scheduleDetail?.scheduleId}`);
+              }}
+            >
+              작성
+            </button>
           </form>
           <EditLanding
             setEditSchedule={setEditSchedule}
