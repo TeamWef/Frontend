@@ -1,5 +1,6 @@
 import axios from "axios";
 import { ServerUrl } from "../../../server";
+import { getCookie } from "../customCookies";
 
 // 코멘트 등록
 export const addCommnetApi = async (payload) => {
@@ -8,8 +9,8 @@ export const addCommnetApi = async (payload) => {
     { content: payload.comment },
     {
       headers: {
-        Authorization: localStorage.getItem("token"),
-        "Refresh-Token": localStorage.getItem("refreshToken"),
+        Authorization: getCookie("token"),
+        "Refresh-Token": getCookie("refreshToken"),
         "Content-Type": "application/json",
       },
     }
@@ -22,8 +23,8 @@ export const delCommentApi = async (payload) => {
   // payload : 코멘트 아이디!
   await axios.delete(`${ServerUrl}/comments/${payload}`, {
     headers: {
-      Authorization: localStorage.getItem("token"),
-      "Refresh-Token": localStorage.getItem("refreshToken"),
+      Authorization: getCookie("token"),
+      "Refresh-Token": getCookie("refreshToken"),
       "Content-Type": "application/json",
     },
   });
@@ -38,8 +39,8 @@ export const updateCommentApi = async (payload) => {
     { content: content },
     {
       headers: {
-        Authorization: localStorage.getItem("token"),
-        "Refresh-Token": localStorage.getItem("refreshToken"),
+        Authorization: getCookie("token"),
+        "Refresh-Token": getCookie("refreshToken"),
         "Content-Type": "application/json",
       },
     }

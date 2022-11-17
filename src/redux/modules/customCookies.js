@@ -26,6 +26,10 @@ export const deleteCookie = (name) => {
 
 // 쿠키 설정
 export const setCookie = (name, value) => {
+  return cookie.set(name, value, { path: "/" });
+};
+
+export const setRFCookie = (name, value) => {
   const date = new Date();
   date.setTime(date.getTime() + 7 * 24 * 60 * 60 * 1000);
   document.cookie = `${name}=${value};expires=${date.toGMTString()};path=/`;

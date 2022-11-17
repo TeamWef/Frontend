@@ -1,12 +1,13 @@
 import axios from "axios";
 import { ServerUrl } from "../../../server/index";
+import { getCookie } from "../customCookies";
 
 //일정 만들기
 export const addScheduleApi = async ({ schedule, partyId }) => {
   console.log("API===>", { schedule });
   const res = await axios.post(`${ServerUrl}/${partyId}/schedules`, schedule, {
     headers: {
-      Authorization: localStorage.getItem("token"),
+      Authorization: getCookie("token"),
     },
   });
   return res;
@@ -17,7 +18,7 @@ export const getScheduleApi = async ({ partyId }) => {
   // console.log("API===>", { partyId });
   const response = await axios.get(`${ServerUrl}/${partyId}/schedules`, {
     headers: {
-      Authorization: localStorage.getItem("token"),
+      Authorization: getCookie("token"),
       "Content-Type": "application/json",
     },
   });
@@ -28,7 +29,7 @@ export const getScheduleApi = async ({ partyId }) => {
 export const getScheduleDetailApi = async (scheduleId) => {
   const response = await axios.get(`${ServerUrl}/schedules/${scheduleId}`, {
     headers: {
-      Authorization: localStorage.getItem("token"),
+      Authorization: getCookie("token"),
       "Content-Type": "application/json",
     },
   });
@@ -41,7 +42,7 @@ export const delScheduleApi = async (scheduleId) => {
   // console.log("API", scheduleId);
   await axios.delete(`${ServerUrl}/schedules/${scheduleId}`, {
     headers: {
-      Authorization: localStorage.getItem("token"),
+      Authorization: getCookie("token"),
     },
   });
 };
@@ -50,7 +51,7 @@ export const delScheduleApi = async (scheduleId) => {
 export const getGroupScheduleApi = async (payload) => {
   const res = await axios.get(`${ServerUrl}/schedules`, {
     headers: {
-      Authorization: localStorage.getItem("token"),
+      Authorization: getCookie("token"),
     },
   });
   return res;
@@ -66,7 +67,7 @@ export const putScheduleEditApi = async (payload) => {
     payload.editSchedule,
     {
       headers: {
-        Authorization: localStorage.getItem("token"),
+        Authorization: getCookie("token"),
       },
     }
   );

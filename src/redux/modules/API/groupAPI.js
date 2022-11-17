@@ -1,10 +1,11 @@
 import axios from "axios";
 import { ServerUrl } from "../../../server";
+import { getCookie } from "../customCookies";
 
 export const addGroupApi = async (payload) => {
   const response = await axios.post(`${ServerUrl}/party`, payload, {
     headers: {
-      Authorization: localStorage.getItem("token"),
+      Authorization: getCookie("token"),
     },
   });
   return response;
@@ -14,7 +15,7 @@ export const addGroupApi = async (payload) => {
 export const getGroupApi = async () => {
   const res = await axios.get(`${ServerUrl}/party`, {
     headers: {
-      Authorization: localStorage.getItem("token"),
+      Authorization: getCookie("token"),
       "Content-Type": "application/json",
     },
   });
@@ -26,7 +27,7 @@ export const delGroupApi = async (id) => {
   console.log("API", id);
   await axios.delete(`${ServerUrl}/party/${id}`, {
     headers: {
-      Authorization: localStorage.getItem("token"),
+      Authorization: getCookie("token"),
     },
   });
 };
@@ -36,7 +37,7 @@ export const putGroupApi = async ({ id, editGroup }) => {
   console.log(":::::", { id, editGroup });
   await axios.put(`${ServerUrl}/party/${id}`, editGroup, {
     headers: {
-      Authorization: localStorage.getItem("token"),
+      Authorization: getCookie("token"),
     },
   });
 };
