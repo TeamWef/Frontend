@@ -1,7 +1,7 @@
 import axios from "axios";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { ServerUrl } from "../../server";
-import { setCookie } from "./customCookies";
+import { setCookie, setRFCookie } from "./customCookies";
 
 // InitialState
 const initialState = {
@@ -54,10 +54,8 @@ export const __login = createAsyncThunk(
   async (userInfo, thunkAPI) => {
     try {
       const data = await axios.post(`${ServerUrl}/members/login`, userInfo);
-      localStorage.setItem("token", data.headers.authorization);
-      localStorage.setItem("refresh-token", data.headers[`refresh-token`]);
-      // axios.defaults.headers.common["Authorization"] = data.data.data.accessToken;
-      setCookie("refreshToken", data.headers[`refresh-token`]);
+      setCookie("token", data.headers.authorization);
+      setRFCookie("refresh-token", data.headers[`refresh-token`]);
       if (data.status === 200) {
         alert(`${data.data}`);
         window.location.reload();

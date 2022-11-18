@@ -1,13 +1,14 @@
 import axios from "axios";
 import { ServerUrl } from "../../../server";
+import { getCookie } from "../customCookies";
 
 // 앨범 목록 불러오기
 export const getAlbumListApi = async (payload) => {
   //payload : 그룹 아이디
   const data = await axios.get(`${ServerUrl}/${payload}/album`, {
     headers: {
-      Authorization: localStorage.getItem("token"),
-      "Refresh-Token": localStorage.getItem("refreshToken"),
+      Authorization: getCookie("token"),
+      "Refresh-Token": getCookie("refreshToken"),
       "Content-Type": "application/json",
     },
   });
@@ -19,8 +20,8 @@ export const getAlbumDetailApi = async (payload) => {
   //payload : 앨범 아이디
   const data = await axios.get(`${ServerUrl}/album/${payload}`, {
     headers: {
-      Authorization: localStorage.getItem("token"),
-      "Refresh-Token": localStorage.getItem("refreshToken"),
+      Authorization: getCookie("token"),
+      "Refresh-Token": getCookie("refreshToken"),
       "Content-Type": "application/json",
     },
   });
@@ -38,8 +39,8 @@ export const addAlbumApi = async ({ newAlbum, partyId }) => {
 
   const data = await axios.post(`${ServerUrl}/${partyId}/album`, form, {
     headers: {
-      Authorization: localStorage.getItem("token"),
-      "Refresh-Token": localStorage.getItem("refreshToken"),
+      Authorization: getCookie("token"),
+      "Refresh-Token": getCookie("refreshToken"),
       "Content-Type": "multipart/form-data",
     },
   });
@@ -50,8 +51,8 @@ export const addAlbumApi = async ({ newAlbum, partyId }) => {
 export const delAlbumApi = async (payload) => {
   await axios.delete(`${ServerUrl}/album/${payload}`, {
     headers: {
-      Authorization: localStorage.getItem("token"),
-      "Refresh-Token": localStorage.getItem("refreshToken"),
+      Authorization: getCookie("token"),
+      "Refresh-Token": getCookie("refreshToken"),
       "Content-Type": "application/json",
     },
   });
@@ -65,8 +66,8 @@ export const updateAlbumApi = async (payload) => {
     { content: payload.contentInput },
     {
       headers: {
-        Authorization: localStorage.getItem("token"),
-        "Refresh-Token": localStorage.getItem("refreshToken"),
+        Authorization: getCookie("token"),
+        "Refresh-Token": getCookie("refreshToken"),
         "Content-Type": "application/json",
       },
     }

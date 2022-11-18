@@ -1,12 +1,13 @@
 import axios from "axios";
 import { ServerUrl } from "../../../server";
+import { getCookie } from "../customCookies";
 
 // 마이페이지 불러오기
 export const getMypageApi = async () => {
   const data = await axios.get(`${ServerUrl}/members/mypage`, {
     headers: {
-      Authorization: localStorage.getItem("token"),
-      "Refresh-Token": localStorage.getItem("refreshToken"),
+      Authorization: getCookie("token"),
+      "Refresh-Token": getCookie("refreshToken"),
       "Content-Type": "application/json",
     },
   });
@@ -22,8 +23,8 @@ export const updateMypageApi = async (payload) => {
   console.log(payload);
   const data = await axios.patch(`${ServerUrl}/members/mypage`, form, {
     headers: {
-      Authorization: localStorage.getItem("token"),
-      "Refresh-Token": localStorage.getItem("refreshToken"),
+      Authorization: getCookie("token"),
+      "Refresh-Token": getCookie("refreshToken"),
       "Content-Type": "multipart/form-data",
     },
   });
