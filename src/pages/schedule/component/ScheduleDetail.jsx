@@ -6,9 +6,11 @@ import {
   __getScheduleDetail,
   __delSchedule,
   __editSchedules,
+  __joinSchedules,
 } from "../../../redux/modules/scheduleSlice";
 import { useModal } from "../../../hooks/useModal";
 import EditLanding from "./EditLanding";
+import styled from "styled-components";
 
 const SchdeleDetail = ({ scheduleId }) => {
   const scheduleDetail = useSelector((state) => state.schedule.scheduleDetail);
@@ -26,8 +28,9 @@ const SchdeleDetail = ({ scheduleId }) => {
     date: "",
     place: { placeName: "", address: "" },
   });
-  const schedule = useSelector((state) => state.schedule.schedule);
-  console.log("selector==>", schedule);
+  const join = useSelector((state) => state.schedule.join);
+  const joiner = scheduleDetail?.participantResponseDtoList;
+  console.log("selector==>", join);
 
   const onChangeHandler = (e) => {
     const { name, value } = e.target;
@@ -59,7 +62,24 @@ const SchdeleDetail = ({ scheduleId }) => {
         만나는 장소의 주소 :
         {scheduleDetail?.address || scheduleDetail.place?.address}
       </p>
-      <button>참여하기</button>
+
+      {joiner?.map((item, i) => {
+        return (
+          <div key={i}>
+            <Profile alt="맹짱구" src={item.profileImageUrl} />
+            <p>참여자 : {item.memberName}</p>
+          </div>
+        );
+      })}
+
+      <button
+        onClick={(e) => {
+          e.preventDefault();
+          dispatch(__joinSchedules(scheduleDetail?.scheduleId));
+        }}
+      >
+        {join ? "취소하기" : "참여하기"}
+      </button>
       {/* 참여자 목록 보내주실 때 byme 카테고리에 참여 true, 미참여 false값 받기 */}
       <button onClick={openModal}>수정하기</button>
       <button
@@ -90,7 +110,14 @@ const SchdeleDetail = ({ scheduleId }) => {
             />
             <input type="time" name="meetTime" onChange={onChangeHandler} />
             <input type="date" name="date" onChange={onChangeHandler} />
-            <button type="submit">작성</button>
+            <button
+              type="submit"
+              onClick={() => {
+                navigate(`/sheduledetail/${scheduleDetail?.scheduleId}`);
+              }}
+            >
+              작성
+            </button>
           </form>
           <EditLanding
             setEditSchedule={setEditSchedule}
@@ -103,3 +130,8 @@ const SchdeleDetail = ({ scheduleId }) => {
 };
 
 export default SchdeleDetail;
+
+const Profile = styled.img`
+  width: 50px;
+  border-radius: 50%;
+`;
