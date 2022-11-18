@@ -1,20 +1,21 @@
 import axios from "axios";
 import { ServerUrl } from "../../../server";
+import { getCookie } from "../customCookies";
 
 export const addGroupApi = async (payload) => {
   const response = await axios.post(`${ServerUrl}/party`, payload, {
     headers: {
-      Authorization: localStorage.getItem("token"),
+      Authorization: getCookie("token"),
     },
   });
-  return response;
+  return response.data;
 };
 
 //그룹 불러오기
 export const getGroupApi = async () => {
   const res = await axios.get(`${ServerUrl}/party`, {
     headers: {
-      Authorization: localStorage.getItem("token"),
+      Authorization: getCookie("token"),
       "Content-Type": "application/json",
     },
   });
@@ -26,17 +27,18 @@ export const delGroupApi = async (id) => {
   console.log("API", id);
   await axios.delete(`${ServerUrl}/party/${id}`, {
     headers: {
-      Authorization: localStorage.getItem("token"),
+      Authorization: getCookie("token"),
     },
   });
 };
 
 //그룹 수정하기
-export const putGroupApi = async ({ id, editGroup }) => {
-  console.log(":::::", { id, editGroup });
-  await axios.put(`${ServerUrl}/party/${id}`, editGroup, {
+export const putGroupApi = async ({ id, partyName, partyIntroduction }) => {
+  const group = { partyIntroduction, partyName };
+  console.log("dd", group);
+  await axios.put(`${ServerUrl}/party/${id}`, group, {
     headers: {
-      Authorization: localStorage.getItem("token"),
+      Authorization: getCookie("token"),
     },
   });
 };

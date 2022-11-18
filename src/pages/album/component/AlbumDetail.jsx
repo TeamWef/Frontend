@@ -11,6 +11,7 @@ import {
 } from "../../../redux/modules/albumSlice";
 import AlbumComments from "./AlbumComments";
 import jwt_decode from "jwt-decode";
+import { getCookie } from "../../../redux/modules/customCookies";
 
 const AlbumDetail = () => {
   const dispatch = useDispatch();
@@ -19,7 +20,7 @@ const AlbumDetail = () => {
   const id = useParams().id;
 
   //토큰 디코드
-  const token = localStorage.getItem("token").replace("Bearer ", "");
+  const token = getCookie("token").replace("Bearer ", "");
   const decode = jwt_decode(token);
   const myname = decode.aud;
 
