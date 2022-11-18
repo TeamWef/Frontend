@@ -6,9 +6,7 @@ import {
   delScheduleApi,
   getGroupScheduleApi,
   putScheduleEditApi,
-
   postSchedulejoinApi,
-
 } from "./API/scheduleAPI";
 
 const initialState = {
@@ -91,9 +89,11 @@ export const __delSchedule = createAsyncThunk(
   }
 );
 
+//수정
 export const __editSchedules = createAsyncThunk(
   "put/editSchedules",
   async (payload, thunkAPI) => {
+    console.log("=====>", payload);
     try {
       await putScheduleEditApi(payload);
       return thunkAPI.fulfillWithValue(payload);
@@ -104,21 +104,19 @@ export const __editSchedules = createAsyncThunk(
   }
 );
 
-
 //일정 참여
 export const __joinSchedules = createAsyncThunk(
   "post/joinSchedules",
   async (payload, thunkAPI) => {
     try {
-      await postSchedulejoinApi(payload);
-      return thunkAPI.fulfillWithValue(payload);
+      const res = await postSchedulejoinApi(payload);
+      return thunkAPI.fulfillWithValue(res.data);
     } catch (err) {
       console.log("error ::::::", err.response);
       return thunkAPI.rejectWithValue("<<", err);
     }
   }
 );
-
 
 export const scheduleSlice = createSlice({
   name: "schedule",
@@ -202,29 +200,35 @@ export const scheduleSlice = createSlice({
     },
     [__editSchedules.fulfilled]: (state, action) => {
       state.isLoading = false;
-      console.log("슬라이스 액션=>", action);
-      state.scheduleDetail = action.payload.editSchedule;
+      console.log(action.payload);
+      state.scheduleDetail = {
+        ...state.scheduleDetail,
+        content: action.payload.editSchedule.content,
+        date: action.payload.editSchedule.date,
+        meetTime: action.payload.editSchedule.meetTime,
+        placeName: action.payload.editSchedule.place.placeName,
+        address: action.payload.editSchedule.place.address,
+        title: action.payload.editSchedule.title,
+      };
     },
     [__editSchedules.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
     },
-
 
     //일정 참여
-    [__editSchedules.pending]: (state) => {
+    [__joinSchedules.pending]: (state) => {
       state.isLoading = true;
     },
-    [__editSchedules.fulfilled]: (state, action) => {
+    [__joinSchedules.fulfilled]: (state, action) => {
       state.isLoading = false;
-      console.log("슬라이스 액션=>", action);
+      console.log("슬라이스 액션=>", action.payload);
       state.join = action.payload;
     },
-    [__editSchedules.rejected]: (state, action) => {
+    [__joinSchedules.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
     },
-
   },
 });
 

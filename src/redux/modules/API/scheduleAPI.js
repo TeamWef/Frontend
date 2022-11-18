@@ -79,6 +79,5 @@ export const postSchedulejoinApi = async (payload) => {
       Authorization: localStorage.getItem("token"),
     },
   });
-  console.log("??", res);
   return res;
 };

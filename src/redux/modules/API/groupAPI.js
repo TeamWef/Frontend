@@ -7,7 +7,7 @@ export const addGroupApi = async (payload) => {
       Authorization: localStorage.getItem("token"),
     },
   });
-  return response;
+  return response.data;
 };
 
 //그룹 불러오기
@@ -32,9 +32,10 @@ export const delGroupApi = async (id) => {
 };
 
 //그룹 수정하기
-export const putGroupApi = async ({ id, editGroup }) => {
-  console.log(":::::", { id, editGroup });
-  await axios.put(`${ServerUrl}/party/${id}`, editGroup, {
+export const putGroupApi = async ({ id, partyName, partyIntroduction }) => {
+  const group = { partyIntroduction, partyName };
+  console.log("dd", group);
+  await axios.put(`${ServerUrl}/party/${id}`, group, {
     headers: {
       Authorization: localStorage.getItem("token"),
     },
