@@ -29,7 +29,7 @@ export const __getGroup = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const res = await getGroupApi();
-      return thunkAPI.fulfillWithValue(res);
+      return thunkAPI.fulfillWithValue(res.data);
     } catch (err) {
       console.log(err);
       return thunkAPI.rejectWithValue(err);
@@ -118,15 +118,16 @@ export const groupSlice = createSlice({
     },
     [__updateGroup.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.group?.data.map((item) => {
-        if (group?.data.partyId === action.payload.id) {
+      console.log(action.payload);
+      state.group = state.group.map((item) => {
+        if (item.partyId === action.payload.id) {
           return {
-            ...group.data,
+            ...item,
             partyName: action.payload.partyName,
             partyIntroduction: action.payload.partyIntroduction,
           };
         }
-        return group?.data;
+        return item;
       });
     },
     [__updateGroup.rejected]: (state, action) => {

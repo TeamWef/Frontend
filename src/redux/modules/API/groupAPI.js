@@ -33,13 +33,17 @@ export const delGroupApi = async (id) => {
 };
 
 //그룹 수정하기
-export const putGroupApi = async ({ id, editGroup }) => {
-  console.log(":::::", { id, editGroup });
-  await axios.put(`${ServerUrl}/party/${id}`, editGroup, {
-    headers: {
-      Authorization: getCookie("token"),
-    },
-  });
+export const putGroupApi = async ({ id, partyName, partyIntroduction }) => {
+  console.log(":::::", { id, partyName, partyIntroduction });
+  await axios.put(
+    `${ServerUrl}/party/${id}`,
+    { partyName, partyIntroduction },
+    {
+      headers: {
+        Authorization: getCookie("token"),
+      },
+    }
+  );
 };
 
 // { id, editGroup }

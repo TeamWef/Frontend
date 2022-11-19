@@ -8,6 +8,7 @@ import AlbumDetail from "../pages/album/component/AlbumDetail";
 import { Home } from "../pages/home/Home";
 import ScheduleCard from "../pages/schedule/component/ScheduleCard";
 import ScheduleDetail from "../pages/schedule/component/ScheduleDetail";
+import Kakao from "../pages/home/component/Kakao";
 
 const Page = () => {
   return (
@@ -15,6 +16,7 @@ const Page = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/members/kakao/callback" element={<Kakao />} />
         <Route path="/schedule/:partyId" element={<ScheduleMain />} />
         <Route path="/main" element={<Main />} />
         <Route path="/:partyid/album" element={<AlbumMain />} />

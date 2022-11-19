@@ -2,6 +2,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useInput } from "../../../hooks/useInput";
 import { __login } from "../../../redux/modules/membersSlice";
+import { KAKAO_AUTH_URL } from "../../../server";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -16,20 +17,31 @@ const Login = () => {
     resetPW();
   };
 
+  const onKakaoLogin = () => {
+    window.location.href = KAKAO_AUTH_URL;
+  };
+
   return (
-    <form onSubmit={onLogin}>
-      <p>
-        Email : <input type="email" value={email} onChange={onChangeEmail} />
-      </p>
-      <p>
-        PW : <input type="password" value={password} onChange={onChangePW} />
-      </p>
-      <button type="submit" onClick={onLogin}>
-        로그인
-      </button>
+    <>
+      <form onSubmit={onLogin}>
+        <p>
+          Email : <input type="email" value={email} onChange={onChangeEmail} />
+        </p>
+        <p>
+          PW : <input type="password" value={password} onChange={onChangePW} />
+        </p>
+        <button type="submit" onClick={onLogin}>
+          로그인
+        </button>
+      </form>
       <p>또는</p>
-      <button onClick={() => navigate("/signup")}>회원가입</button>
-    </form>
+      <button type="button" onClick={onKakaoLogin}>
+        카카오로그인
+      </button>
+      <button type="button" onClick={() => navigate("/signup")}>
+        회원가입
+      </button>
+    </>
   );
 };
 
