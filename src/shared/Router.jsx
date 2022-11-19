@@ -9,6 +9,7 @@ import { Home } from "../pages/home/Home";
 import ScheduleCard from "../pages/schedule/component/ScheduleCard";
 import ScheduleDetail from "../pages/schedule/component/ScheduleDetail";
 import Kakao from "../pages/home/component/Kakao";
+import ChatMain from "../pages/chat/ChatMain";
 
 const Page = () => {
   return (
@@ -25,6 +26,7 @@ const Page = () => {
         <Route path="/album/:id" element={<AlbumDetail />} />
         <Route path="/schedulelist/:partyId" element={<ScheduleCard />} />
         <Route path="/sheduledetail/:scheduleId" element={<ScheduleDetail />} />
+        <Route path="/chat" element={<ChatMain />} />
       </Routes>
     </BrowserRouter>
   );

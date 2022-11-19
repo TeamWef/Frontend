@@ -12,7 +12,8 @@ import { useInput } from "../../../hooks/useInput";
 const GroupCard = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const groups = useSelector((state) => state.group.group);
+
+  const groups = useSelector((state) => state?.group.group);
 
   const [modal, openModal] = useModal();
   const [updateId, setUpdateId] = useState("");
@@ -111,7 +112,6 @@ const GroupCard = () => {
                       onClick={(e) => {
                         e.preventDefault();
                         const id = data.partyId;
-                        console.log("add 안에", id);
                         dispatch(
                           __updateGroup({
                             id,
@@ -120,6 +120,7 @@ const GroupCard = () => {
                           })
                         );
                         setEditGroup({ partyName: "", partyIntroduction: "" });
+                        setUpdateId("");
                       }}
                     >
                       수정하기

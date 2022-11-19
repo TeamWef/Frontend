@@ -77,7 +77,7 @@ export const groupSlice = createSlice({
     },
     [__addGroup.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.group.data?.push(action.payload);
+      state.group.push(action.payload);
     },
     [__addGroup.rejected]: (state, action) => {
       state.isLoading = false;
@@ -103,7 +103,7 @@ export const groupSlice = createSlice({
     },
     [__delGroup.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.group.data = state.group.data.filter(
+      state.group = state.group.filter(
         (item) => item.partyId !== action.payload
       );
     },
@@ -118,7 +118,6 @@ export const groupSlice = createSlice({
     },
     [__updateGroup.fulfilled]: (state, action) => {
       state.isLoading = false;
-      console.log(action.payload);
       state.group = state.group.map((item) => {
         if (item.partyId === action.payload.id) {
           return {
