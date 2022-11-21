@@ -23,7 +23,6 @@ const AlbumDetail = () => {
   const token = getCookie("token").replace("Bearer ", "");
   const decode = jwt_decode(token);
   const myname = decode.aud;
-
   // 앨범 정보
   const albumItem = useSelector((state) => state.album.albumItem);
   // console.log(albumItem);
