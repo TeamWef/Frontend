@@ -5,7 +5,7 @@ import { __getGroupSchedule } from "../../../redux/modules/scheduleSlice";
 
 const ScheduleCard = () => {
   const data = useSelector((state) => state.schedule.groupSchedule.data);
-  console.log("메인 스케쥴 카드=>", data);
+  // console.log("메인 스케쥴 카드=>", data);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -15,13 +15,10 @@ const ScheduleCard = () => {
 
   return (
     <div>
-      <br />
-      <hr />
-      <br />
       {data?.map((item) => {
         return (
           <div key={item.scheduleId}>
-            <h2>💖{item?.partyName}🥳</h2>
+            <h2>💖 {item?.partyName} 🥳</h2>
             <p>{item?.title}</p>
             <p>{item?.writer}</p>
             <button
