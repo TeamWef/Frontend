@@ -12,6 +12,7 @@ const GlobalStyle = createGlobalStyle`
   body {
     display: flex;
     max-width: 1200px;
+    /* overflow:hidden; */
     background-color: #F8F5F0;
   }
   html {

@@ -14,6 +14,7 @@ import styled from "styled-components";
 const GroupCard = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const groups = useSelector((state) => state?.group.group);
 
   const [modal, openModal] = useModal();
