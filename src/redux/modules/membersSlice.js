@@ -76,6 +76,7 @@ export const kakaoLogin = createAsyncThunk(
       `${ServerUrl}/members/kakao/callback?code=${code}`
     );
     setCookie("token", data.headers.authorization);
+    setRFCookie("refresh-token", data.headers[`refresh-token`]);
     navigate("/");
     return thunkAPI.fulfillWithValue(data);
   }

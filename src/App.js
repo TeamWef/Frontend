@@ -1,14 +1,21 @@
 import GlobalStyle from "./shared/GlobalStyle";
 import Page from "../src/shared/Router";
+import styled from "styled-components";
 //
 
 function App() {
   return (
-    <div>
+    <View>
       <GlobalStyle />
       <Page />
-    </div>
+    </View>
   );
 }
 
 export default App;
+
+const View = styled.div`
+  position: relative;
+  width: 1980px;
+  height: 1080px;
+`;
