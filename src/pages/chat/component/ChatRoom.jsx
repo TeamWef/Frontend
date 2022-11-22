@@ -21,7 +21,7 @@ export const ChatRoom = () => {
 
   const onEnter = (e) => {
     if (e.keyCode === 13) {
-      console.log("----- 메시지 전송 성공! -----");
+      console.log("메시지 전송 성공!");
     }
   };
 
@@ -56,9 +56,9 @@ export const ChatRoom = () => {
             return <h4 key={index}>{val}</h4>;
           })}
         {message.length > 0 ? (
-          <p>메시지 발신 중...</p>
+          <p>메시지 보내는 중</p>
         ) : (
-          <p>메시지 수신 중...</p>
+          <p>메시지 받는 중...</p>
         )}
       </div>
       <form onSubmit={submitHandler}>

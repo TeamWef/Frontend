@@ -20,8 +20,8 @@ const ScheduleCard = () => {
 
       {data?.map((item) => {
         return (
-          <ScheduleContainer>
-            <TextContainer key={item.scheduleId}>
+          <ScheduleContainer key={item.scheduleId}>
+            <TextContainer>
               <GroupTitle>
                 <h2>💖 {item?.partyName} 🥳</h2>
                 <p>{item?.title}</p>

@@ -34,7 +34,6 @@ const GroupCard = () => {
   const onAddGroupHandler = (e) => {
     // e.preventDefault();
     // const id = data.partyId;
-    // console.log("add 안에", id);
     // dispatch(__updateGroup({ id, editGroup }));
     // dispatch(__getGroup());
     // setEditGroup({ partyName: "", partyIntroduction: "" });
@@ -49,111 +48,108 @@ const GroupCard = () => {
     <>
       <MainTitleContainer>
         <h2>Group.</h2>
-        <button>추가하기</button>
+        <CreateBtn
+          onClick={() => {
+            openModal();
+          }}
+        >
+          추가하기
+        </CreateBtn>
+        {modal ? <CreateGroupCard openModal={openModal} modal={modal} /> : null}
       </MainTitleContainer>
       <GroupMaincontainer>
-        {/* <CreateGroupCard /> */}
-
         {groups?.map((data) => {
           return (
-            <GroupCardContainer>
-              <div key={data?.partyId}>
-                <TitleContainer>
-                  <h2>{data?.partyName}</h2>
-                  <button>・・・</button>
-                </TitleContainer>
-                <p>{data?.partyIntroduction}</p>
-
-                <Btn
-                  onClick={() => {
-                    openModal();
-                    setUpdateId(data.partyId);
-                  }}
-                >
-                  수정하기
-                </Btn>
-
-                <Btn
-                  onClick={() => {
-                    if (window.confirm("정말 삭제하시겠습니까?")) {
-                      dispatch(__delGroup(data?.partyId));
-                      alert("삭제가 완료되었습니다.");
-                    }
-                  }}
-                >
-                  삭제하기
-                </Btn>
-
-                <Btn
-                  onClick={() => {
-                    navigate(`/schedule/${data.partyId}`);
-                  }}
-                >
-                  일정 등록
-                </Btn>
-
-                <GroupMoreButton
-                  onClick={() => {
-                    navigate(`/schedulelist/${data.partyId}`);
-                  }}
-                >
-                  Join
-                </GroupMoreButton>
-
-                <Btn
-                  onClick={() => {
-                    navigate(`/${data.partyId}/album`);
-                  }}
-                >
-                  앨범보기
-                </Btn>
-
-                {data.partyId === updateId && (
-                  <>
-                    <form onSubmit={onAddGroupHandler}>
-                      <input
-                        name="partyName"
-                        type="text"
-                        placeholder="그룹명을 수정하세요"
-                        onChange={onChangeHandler}
-                      />
-                      <input
-                        name="partyIntroduction"
-                        type="text"
-                        placeholder="그룹을 소개해 주세요!"
-                        onChange={onChangeHandler}
-                      />
-                      <button
-                        onClick={(e) => {
-                          e.preventDefault();
-                          const id = data.partyId;
-                          dispatch(
-                            __updateGroup({
-                              id,
-                              partyName: editGroup.partyName,
-                              partyIntroduction: editGroup.partyIntroduction,
-                            })
-                          );
-                          setEditGroup({
-                            partyName: "",
-                            partyIntroduction: "",
-                          });
-                          setUpdateId("");
-                        }}
-                      >
-                        수정하기
-                      </button>
-                      <button
-                        onClick={() => {
-                          setUpdateId("");
-                        }}
-                      >
-                        닫기
-                      </button>
-                    </form>
-                  </>
-                )}
-              </div>
+            <GroupCardContainer key={data?.partyId}>
+              <TitleContainer>
+                <h2>{data?.partyName}</h2>
+                <button>・・・</button>
+              </TitleContainer>
+              <p>{data?.partyIntroduction}</p>
+              {/* <Btn
+                onClick={() => {
+                  openModal();
+                  setUpdateId(data.partyId);
+                }}
+              >
+                수정하기
+              </Btn> */}
+              <Btn
+                onClick={() => {
+                  if (window.confirm("정말 삭제하시겠습니까?")) {
+                    dispatch(__delGroup(data?.partyId));
+                    alert("삭제가 완료되었습니다.");
+                  }
+                }}
+              >
+                삭제하기
+              </Btn>
+              {/* <Btn
+                onClick={() => {
+                  navigate(`/schedule/${data.partyId}`);
+                }}
+              >
+                일정 등록
+              </Btn> */}
+              <GroupMoreButton
+                onClick={() => {
+                  navigate(`/schedulelist/${data.partyId}`);
+                }}
+              >
+                Join
+              </GroupMoreButton>
+              {/* <Btn
+                onClick={() => {
+                  navigate(`/${data.partyId}/album`);
+                }}
+              >
+                앨범보기
+              </Btn> */}
+              {data.partyId === updateId && (
+                <>
+                  <form onSubmit={onAddGroupHandler}>
+                    <input
+                      name="partyName"
+                      type="text"
+                      placeholder="그룹명을 수정하세요"
+                      onChange={onChangeHandler}
+                    />
+                    <input
+                      name="partyIntroduction"
+                      type="text"
+                      placeholder="그룹을 소개해 주세요!"
+                      onChange={onChangeHandler}
+                    />
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        const id = data.partyId;
+                        dispatch(
+                          __updateGroup({
+                            id,
+                            partyName: editGroup.partyName,
+                            partyIntroduction: editGroup.partyIntroduction,
+                          })
+                        );
+                        setEditGroup({
+                          partyName: "",
+                          partyIntroduction: "",
+                        });
+                        setUpdateId("");
+                      }}
+                    >
+                      수정하기
+                    </button>
+                    <button
+                      onClick={() => {
+                        setUpdateId("");
+                      }}
+                    >
+                      닫기
+                    </button>
+                  </form>
+                </>
+              )}
             </GroupCardContainer>
           );
         })}
@@ -174,13 +170,16 @@ const MainTitleContainer = styled.div`
     margin-top: 40px;
   }
   & button {
-    border: none;
-    width: 100px;
-    height: 20px;
-    margin-top: 40px;
-    background-color: transparent;
-    cursor: pointer;
   }
+`;
+
+const CreateBtn = styled.div`
+  border: none;
+  width: 100px;
+  height: 20px;
+  margin-top: 40px;
+  background-color: transparent;
+  cursor: pointer;
 `;
 
 const GroupMaincontainer = styled.div`
