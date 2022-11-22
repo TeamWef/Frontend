@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { __addGroup, __getGroup } from "../../../redux/modules/groupSlice";
+import Svg from "../../../elem/Svg";
 
 const CreateGroupCard = ({ openModal, modal }) => {
   const navigate = useNavigate();
@@ -34,10 +35,10 @@ const CreateGroupCard = ({ openModal, modal }) => {
           <h2>Group Add</h2>
           <CloseBtn
             onClick={() => {
-              navigate("/");
+              openModal();
             }}
           >
-            X
+            <Svg variant={"close"} />
           </CloseBtn>
         </TitleBox>
         <FormBox>
@@ -140,13 +141,8 @@ const GroupCreateButton = styled.button`
   font-size: 18px;
 `;
 
-const CloseBtn = styled.button`
-  background-color: transparent;
-  border: none;
-  width: 60px;
+const CloseBtn = styled.div`
+  width: 20px;
   height: 54px;
-  border-radius: 5px;
-  font-size: 24px;
-  margin-top: 20px;
-  cursor: pointer;
+  margin-top: 34px;
 `;

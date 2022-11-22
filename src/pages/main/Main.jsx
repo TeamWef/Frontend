@@ -8,7 +8,6 @@ const Main = () => {
   return (
     <>
       <Header />
-
       <GroupCard />
       <MainScheduleCard />
     </>

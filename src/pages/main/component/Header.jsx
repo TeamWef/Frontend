@@ -16,7 +16,12 @@ export const Header = () => {
           <Svg variant={"mainIcon"} />
         </Logo>
         <UserBox>
-          <Alert></Alert>
+          <Invite>
+            <Svg variant={"invite"} />
+          </Invite>
+          <Alert>
+            <Svg variant={"notification"} />
+          </Alert>
           <Logout>logout</Logout>
           <UserInfo>
             <Mypage />
@@ -53,7 +58,7 @@ const Logo = styled.button`
 
 const UserBox = styled.div`
   background-color: #ede8e1;
-  width: 300px;
+  width: 230px;
   height: 38px;
   margin-top: 16px;
   display: flex;
@@ -75,18 +80,23 @@ const UserBox = styled.div`
 `;
 
 const Alert = styled.div`
-  background-color: lightgray;
-  width: 19px;
-  height: 19px;
-  border-radius: 50%;
-  margin-top: 9px;
+  width: 30px;
+  height: 20px;
+  margin-left: 5px;
+`;
+
+const Invite = styled.div`
+  width: 30px;
+  height: 20px;
+  margin-top: 4px;
 `;
 
 const Logout = styled.button`
   background-color: transparent;
   margin-top: 10px;
+  margin-right: 10px;
   border: none;
-  width: 37px;
+  width: 30px;
   height: 18px;
 `;
 
