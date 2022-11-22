@@ -1,5 +1,4 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Login from "../pages/home/component/Login";
 import SignUp from "../pages/home/component/SignUp";
 import ScheduleMain from "../pages/schedule/ScheduleMain";
 import Main from "../pages/main/Main";
@@ -8,6 +7,7 @@ import AlbumDetail from "../pages/album/component/AlbumDetail";
 import { Home } from "../pages/home/Home";
 import ScheduleCard from "../pages/schedule/component/ScheduleCard";
 import ScheduleDetail from "../pages/schedule/component/ScheduleDetail";
+import Kakao from "../pages/home/component/Kakao";
 import ChatMain from "../pages/chat/ChatMain";
 
 const Page = () => {
@@ -16,6 +16,7 @@ const Page = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/members/kakao/callback" element={<Kakao />} />
         <Route path="/schedule/:partyId" element={<ScheduleMain />} />
         <Route path="/main" element={<Main />} />
         <Route path="/:partyid/album" element={<AlbumMain />} />
