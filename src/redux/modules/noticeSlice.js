@@ -5,7 +5,7 @@ import { noticeApis } from "./API/noticeAPI";
 const initialState = {
   noticeList: [],
 };
-
+//
 // export const __getNoticeList = createAsyncThunk(
 //   "get/noticeList",
 //   async (payload, thunkAPI) => {
