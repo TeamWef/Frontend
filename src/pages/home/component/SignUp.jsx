@@ -105,7 +105,7 @@ const SignUp = () => {
           <Flex ai="center">
             <UnderLine onClick={() => navigate("/")}>
               <Span variant="small">
-                이미
+                이미 회원이에요!
                 <Margin mg="2px" />
                 <Span variant="smallBold">로그인 하러가기🖐</Span>
               </Span>
