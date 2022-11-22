@@ -5,7 +5,7 @@ import { Stomp } from "@stomp/stompjs";
 // 가져다 쓰기 쉽게 사용하기 위해 파일을 분리함!
 
 class ChattingService {
-  socket = new sockJS(`${process.env.REACT_APP_BASE_URL}/gs-guide-websocket`);
+  socket = new sockJS(`${process.env.REACT_APP_BASE_URL}/`);
   stompClient = Stomp.over(this.socket);
   roomId = "";
 

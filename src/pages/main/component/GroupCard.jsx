@@ -47,6 +47,10 @@ const GroupCard = () => {
 
   return (
     <>
+      <MainTitleContainer>
+        <h2>Group.</h2>
+        <button>추가하기</button>
+      </MainTitleContainer>
       <GroupMaincontainer>
         {/* <CreateGroupCard /> */}
 
@@ -93,7 +97,7 @@ const GroupCard = () => {
                     navigate(`/schedulelist/${data.partyId}`);
                   }}
                 >
-                  More
+                  Join
                 </GroupMoreButton>
 
                 <Btn
@@ -160,23 +164,65 @@ const GroupCard = () => {
 
 export default GroupCard;
 
+const MainTitleContainer = styled.div`
+  width: 1078px;
+  height: 50px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  & h2 {
+    margin-top: 40px;
+  }
+  & button {
+    border: none;
+    width: 100px;
+    height: 20px;
+    margin-top: 40px;
+    background-color: transparent;
+    cursor: pointer;
+  }
+`;
+
 const GroupMaincontainer = styled.div`
   width: 1078px;
-  height: 220px;
-  display: flex;
-  /* float: left; */
+  height: 255px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(100, 1fr);
+  white-space: nowrap;
+  overflow-x: auto;
+  margin-top: 40px;
+  &::-webkit-scrollbar {
+    background: #d9d9d9;
+    width: 100%;
+    height: 6px;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    width: 200px;
+    height: 5px;
+    background: #a4a19d;
+  }
+  &::-webkit-scrollbar-track {
+    width: 1078px;
+  }
+  /* overflow: hidden; */
 `;
 
 const GroupCardContainer = styled.div`
   width: 250px;
   height: 220px;
+  margin: 0 auto;
+  border-radius: 5px;
   background-color: white;
-  margin-left: 10px;
-  & div {
-    background-color: white;
+  margin-left: 15px;
+  box-shadow: 1px 1px 1px 1px #dadada52;
+  &div {
+    white-space: nowrap;
+    overflow-x: auto;
+    overflow: hidden;
   }
   & p {
-    background-color: white;
     color: #949494;
     margin-left: 20px;
     margin-top: 10px;
@@ -185,7 +231,6 @@ const GroupCardContainer = styled.div`
 
 const TitleContainer = styled.div`
   width: 223px;
-  background-color: gray;
   margin: 0 auto;
   display: flex;
   justify-content: space-between;

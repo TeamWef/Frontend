@@ -20,8 +20,8 @@ const Mypage = () => {
   return (
     <>
       <StDiv onClick={openModal}>
+        <StP>{memberName}</StP>
         <Stimg src={profileImageUrl} alt="profileImg" />
-        <span>{memberName}</span>
       </StDiv>
       {modal && <EditMypage myProfile={myProfile} openModal={openModal} />}
     </>
@@ -31,10 +31,21 @@ const Mypage = () => {
 export default Mypage;
 
 const StDiv = styled.div`
-  margin: 10px;
+  display: flex;
+  justify-content: space-between;
 `;
 
 const Stimg = styled.img`
-  width: 100px;
-  height: 100px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-top: 3px;
+  margin-right: 5px;
+`;
+
+const StP = styled.p`
+  margin-left: 30px;
+  vertical-align: middle;
+  margin-top: 10px;
+  font-weight: 600;
 `;

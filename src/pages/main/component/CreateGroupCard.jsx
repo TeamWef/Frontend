@@ -20,7 +20,7 @@ const CreateGroupCard = () => {
   const onAddGroupHandler = (e) => {
     e.preventDefault();
     dispatch(__addGroup(group));
-    dispatch(__getGroup());
+    // dispatch(__getGroup());
     setGroup({ partyName: "", partyIntroduction: "" });
   };
 
