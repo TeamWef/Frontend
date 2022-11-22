@@ -7,7 +7,8 @@ export default Span;
 
 const StSpan = styled.span`
   display: flex;
-  font-size: 21px;
+  font-size: 20px;
+  margin: ${({ mg }) => (mg ? mg : "")};
 
   ${({ variant }) => {
     switch (variant) {

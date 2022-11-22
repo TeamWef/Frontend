@@ -9,6 +9,7 @@ import ScheduleCard from "../pages/schedule/component/ScheduleCard";
 import ScheduleDetail from "../pages/schedule/component/ScheduleDetail";
 import Kakao from "../pages/home/component/Kakao";
 import ChatMain from "../pages/chat/ChatMain";
+import Notice from "../pages/notice/Notice";
 
 const Page = () => {
   return (
@@ -26,6 +27,7 @@ const Page = () => {
         <Route path="/schedulelist/:partyId" element={<ScheduleCard />} />
         <Route path="/sheduledetail/:scheduleId" element={<ScheduleDetail />} />
         <Route path="/chat" element={<ChatMain />} />
+        <Route path="/notice" element={<Notice />} />
       </Routes>
     </BrowserRouter>
   );

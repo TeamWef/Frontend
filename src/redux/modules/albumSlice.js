@@ -50,7 +50,8 @@ export const __addAlbumItem = createAsyncThunk(
     try {
       const data = await addAlbumApi(payload);
       // console.log(data);
-      return thunkAPI.fulfillWithValue(data);
+      const albumInfo = { id: data.albumId, imageUrl: data.imageUrl };
+      return thunkAPI.fulfillWithValue(albumInfo);
     } catch (err) {
       return console.log(err);
     }
