@@ -71,8 +71,9 @@ const IconSvg = ({ variant, onClick }) => {
 };
 
 const IconWrap = styled.div`
-  height: 24px;
-  width: 24px;
+  width: 163px;
+  height: 61px;
+
   overflow: hidden;
   position: relative;
   margin-right: 15px;
