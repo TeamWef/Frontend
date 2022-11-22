@@ -1,16 +1,7 @@
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import {
-  Button,
-  Div,
-  Flex,
-  Input,
-  Logo,
-  Margin,
-  Span,
-  Svg,
-} from "../../../elem";
+import { Button, Div, Flex, Input, Margin, Span, Svg } from "../../../elem";
 import { useInputs } from "../../../hooks/useInput";
 import { __emailCheck, __signup } from "../../../redux/modules/membersSlice";
 
