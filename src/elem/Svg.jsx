@@ -1,11 +1,7 @@
 import styled, { css } from "styled-components";
 
 const Svg = ({ variant, onClick }) => {
-  return (
-    <IconWrap>
-      <IconSvg variant={variant} onClick={onClick}></IconSvg>
-    </IconWrap>
-  );
+  return <IconSvg variant={variant} onClick={onClick}></IconSvg>;
 };
 
 const IconSvg = ({ variant, onClick }) => {
@@ -203,16 +199,5 @@ const IconSvg = ({ variant, onClick }) => {
       break;
   }
 };
-
-const IconWrap = styled.div`
-  width: 163px;
-  height: 61px;
-  overflow: hidden;
-  position: relative;
-  cursor: pointer;
-  :hover {
-    opacity: 0.7;
-  }
-`;
 
 export default Svg;
