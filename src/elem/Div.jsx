@@ -17,7 +17,7 @@ const StDiv = styled.div`
           width: 370px;
           height: 730px;
           position: absolute;
-          top: 50vh;
+          top: 50%;
           left: 50vw;
           transform: translate(-50%, -50%);
         `;

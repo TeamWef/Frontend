@@ -1,30 +1,19 @@
-import axios from "axios";
-import { ServerUrl } from "../../../server";
-import { getCookie } from "../customCookies";
+import instance from "../../../shared/axios";
+
+// 추후 정리
+// export const albumApis = {
+
+// }
 
 // 앨범 목록 불러오기
 export const getAlbumListApi = async (payload) => {
-  //payload : 그룹 아이디
-  const data = await axios.get(`${ServerUrl}/${payload}/album`, {
-    headers: {
-      Authorization: getCookie("token"),
-      "Refresh-Token": getCookie("refreshToken"),
-      "Content-Type": "application/json",
-    },
-  });
+  const data = await instance.get(`/${payload}/album`);
   return data.data;
 };
 
 // 앨범 상세보기
 export const getAlbumDetailApi = async (payload) => {
-  //payload : 앨범 아이디
-  const data = await axios.get(`${ServerUrl}/album/${payload}`, {
-    headers: {
-      Authorization: getCookie("token"),
-      "Refresh-Token": getCookie("refreshToken"),
-      "Content-Type": "application/json",
-    },
-  });
+  const data = await instance.get(`/album/${payload}`);
   return data.data;
 };
 
@@ -37,10 +26,8 @@ export const addAlbumApi = async ({ newAlbum, partyId }) => {
   form.append("place", newAlbum.place);
   form.append("imageUrl", newAlbum.imageUrl);
 
-  const data = await axios.post(`${ServerUrl}/${partyId}/album`, form, {
+  const data = await instance.post(`/${partyId}/album`, form, {
     headers: {
-      Authorization: getCookie("token"),
-      "Refresh-Token": getCookie("refreshToken"),
       "Content-Type": "multipart/form-data",
     },
   });
@@ -49,28 +36,13 @@ export const addAlbumApi = async ({ newAlbum, partyId }) => {
 
 // 앨범 삭제
 export const delAlbumApi = async (payload) => {
-  await axios.delete(`${ServerUrl}/album/${payload}`, {
-    headers: {
-      Authorization: getCookie("token"),
-      "Refresh-Token": getCookie("refreshToken"),
-      "Content-Type": "application/json",
-    },
-  });
-  return payload;
+  await instance.delete(`/album/${payload}`);
 };
 
 // 앨범 수정
 export const updateAlbumApi = async (payload) => {
-  const data = await axios.patch(
-    `${ServerUrl}/album/${payload.id}`,
-    { content: payload.contentInput },
-    {
-      headers: {
-        Authorization: getCookie("token"),
-        "Refresh-Token": getCookie("refreshToken"),
-        "Content-Type": "application/json",
-      },
-    }
-  );
+  const data = await instance.patch(`/album/${payload.id}`, {
+    content: payload.contentInput,
+  });
   return data;
 };
