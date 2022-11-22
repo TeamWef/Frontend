@@ -3,11 +3,13 @@ import { ServerUrl } from "../../../server";
 import { getCookie } from "../customCookies";
 
 export const addGroupApi = async (payload) => {
+  console.log("api payload!!!", payload);
   const response = await axios.post(`${ServerUrl}/party`, payload, {
     headers: {
       Authorization: getCookie("token"),
     },
   });
+  console.log("res==>", response);
   return response.data;
 };
 

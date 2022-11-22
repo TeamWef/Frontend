@@ -1,17 +1,16 @@
 import React from "react";
 import GroupCard from "./component/GroupCard";
 import MainScheduleCard from "./component/MainScheduleCard";
-import CreateGroupCard from "./component/CreateGroupCard";
-import Mypage from "../mypage/Mypage";
+import styled from "styled-components";
+import { Header } from "./component/Header";
 
 const Main = () => {
   return (
-    <div>
-      <Mypage />
-      <CreateGroupCard />
+    <>
+      <Header />
       <GroupCard />
       <MainScheduleCard />
-    </div>
+    </>
   );
 };
 
