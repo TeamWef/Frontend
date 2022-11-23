@@ -11,6 +11,7 @@ import { useModal } from "../../../hooks/useModal";
 import { useEditModal } from "../../../hooks/useEditModal";
 import styled from "styled-components";
 import Svg from "../../../elem/Svg";
+import { Button } from "../../../elem";
 
 const GroupCard = () => {
   const dispatch = useDispatch();
@@ -87,13 +88,16 @@ const GroupCard = () => {
                 >
                   삭제하기
                 </Btn>
-                <GroupMoreButton
-                  onClick={() => {
-                    navigate(`/${data.partyId}/schedulelist`);
-                  }}
-                >
-                  Join
-                </GroupMoreButton>
+                <ButtonWrap>
+                  <Button
+                    variant="small"
+                    onClick={() => {
+                      navigate(`/${data.partyId}`);
+                    }}
+                  >
+                    Join
+                  </Button>
+                </ButtonWrap>
                 {data.partyId === updateId && (
                   <BackGround>
                     <EditModalContainer>
@@ -258,6 +262,10 @@ const GroupMoreButton = styled.button`
   border-radius: 10px;
   color: white;
   font-size: 13px;
+  margin-left: 27%;
+  margin-top: 50px;
+`;
+const ButtonWrap = styled.div`
   margin-left: 27%;
   margin-top: 50px;
 `;
