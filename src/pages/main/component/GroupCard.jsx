@@ -98,14 +98,16 @@ const GroupCard = () => {
                     </DropBox>
                   ) : null}
                   <p>{data?.partyIntroduction}</p>
-                  <Button
-                    variant="small"
-                    onClick={() => {
-                      navigate(`/${data.partyId}`);
-                    }}
-                  >
-                    Join
-                  </Button>
+                  <ButtonWrap>
+                    <Button
+                      variant="small"
+                      onClick={() => {
+                        navigate(`/${data.partyId}`);
+                      }}
+                    >
+                      Join
+                    </Button>
+                  </ButtonWrap>
                   {data.partyId === updateId && (
                     <BackGround>
                       <EditModalContainer>
@@ -388,4 +390,9 @@ const DropBoxButtonBorderLineNone = styled.button`
   background-color: transparent;
   color: #a4a19d;
   cursor: pointer;
+`;
+
+const ButtonWrap = styled.div`
+  margin-left: 27%;
+  margin-top: 50px;
 `;
