@@ -18,31 +18,40 @@ const ScheduleCard = () => {
   return (
     <MainContainer>
       <h2>Schedule.</h2>
-
-      {data?.map((item) => {
-        return (
-          <ScheduleContainer key={item.scheduleId}>
-            <TextContainer>
-              <GroupTitle>
-                <TitleBox>
-                  <h3>{item?.partyName}</h3>
-                </TitleBox>
-                <p>{item?.title}</p>
-                <p>{item?.writer}</p>
-              </GroupTitle>
-              <UserBox>
-                <More
-                  onClick={() => {
-                    navigate(`/sheduledetail/${item.scheduleId}`);
-                  }}
-                >
-                  <Svg variant={"more"} />
-                </More>
-              </UserBox>
-            </TextContainer>
-          </ScheduleContainer>
-        );
-      })}
+      {data?.length !== 0 ? (
+        <>
+          {data?.map((item) => {
+            return (
+              <ScheduleContainer key={item.scheduleId}>
+                <TextContainer>
+                  <GroupTitle>
+                    <TitleBox>
+                      <h3>{item?.partyName}</h3>
+                    </TitleBox>
+                    <p>{item?.title}</p>
+                    <p>{item?.writer}</p>
+                  </GroupTitle>
+                  <UserBox>
+                    <More
+                      onClick={() => {
+                        navigate(`/sheduledetail/${item.scheduleId}`);
+                      }}
+                    >
+                      <Svg variant={"more"} />
+                    </More>
+                  </UserBox>
+                </TextContainer>
+              </ScheduleContainer>
+            );
+          })}
+        </>
+      ) : (
+        <NullBox>
+          <NullBoxTextBox>
+            <NullBoxH3>현재 일정이 없습니다.</NullBoxH3>
+          </NullBoxTextBox>
+        </NullBox>
+      )}
     </MainContainer>
   );
 };
@@ -105,4 +114,25 @@ const More = styled.div`
   margin-left: 26px;
   border-radius: 5px;
   border: none;
+`;
+
+const NullBox = styled.div`
+  width: 999px;
+  height: 230px;
+  border: 2px dashed #d9d3c7;
+  border-radius: 10px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+`;
+
+const NullBoxTextBox = styled.div`
+  margin-top: 90px;
+`;
+
+const NullBoxH3 = styled.h3`
+  font-size: 18px;
+  font-weight: 500;
+  color: #a4a19d;
+  text-align: center;
+  padding: 15px;
 `;
