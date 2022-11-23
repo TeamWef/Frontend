@@ -11,25 +11,20 @@ import { useModal } from "../../../hooks/useModal";
 import { useEditModal } from "../../../hooks/useEditModal";
 import styled from "styled-components";
 import Svg from "../../../elem/Svg";
+import MainScheduleCard from "../component/MainScheduleCard";
 import { Button } from "../../../elem";
 
 const GroupCard = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
   const groups = useSelector((state) => state.group?.group);
-  console.log(groups);
-
   const [modal, openModal] = useModal();
   const [EditModal, openEditModal] = useEditModal();
   const [updateId, setUpdateId] = useState("");
-
   const [editGroup, setEditGroup] = useState({
     partyName: "",
     partyIntroduction: "",
   });
-
-  // console.log("groups ==>", groups);
 
   useEffect(() => {
     dispatch(__getGroup());
@@ -48,6 +43,8 @@ const GroupCard = () => {
     setEditGroup({ ...editGroup, [name]: value });
   };
 
+  const [dropdown, setDropdown] = useState(false);
+
   return (
     <>
       <MainTitleContainer>
@@ -62,96 +59,109 @@ const GroupCard = () => {
         {modal ? <CreateGroupCard openModal={openModal} modal={modal} /> : null}
       </MainTitleContainer>
       {groups?.length !== 0 ? (
-        <GroupMaincontainer>
-          {groups?.map((data) => {
-            return (
-              <GroupCardContainer key={data?.partyId}>
-                <TitleContainer>
-                  <h2>{data?.partyName}</h2>
-                  <button
-                    onClick={() => {
-                      openEditModal();
-                      setUpdateId(data.partyId);
-                    }}
-                  >
-                    <Svg variant={"editDelete"} />
-                  </button>
-                </TitleContainer>
-                <p>{data?.partyIntroduction}</p>
-                <Btn
-                  onClick={() => {
-                    if (window.confirm("정말 삭제하시겠습니까?")) {
-                      dispatch(__delGroup(data?.partyId));
-                      alert("삭제가 완료되었습니다.");
-                    }
-                  }}
-                >
-                  삭제하기
-                </Btn>
-                <ButtonWrap>
-                  <Button
-                    variant="small"
-                    onClick={() => {
-                      navigate(`/${data.partyId}`);
-                    }}
-                  >
-                    Join
-                  </Button>
-                </ButtonWrap>
-                {data.partyId === updateId && (
-                  <BackGround>
-                    <EditModalContainer>
-                      <ModalTitleBox>
-                        <h2>Group Edit.</h2>
-                        <CloseButton
-                          onClick={() => {
-                            setUpdateId("");
-                          }}
-                        >
-                          <Svg variant={"close"} />
-                        </CloseButton>
-                      </ModalTitleBox>
-                      <form onSubmit={onAddGroupHandler}>
-                        <EditModalInput
-                          name="partyName"
-                          type="text"
-                          placeholder="Title"
-                          onChange={onChangeHandler}
-                        />
-                        <EditModalInput
-                          name="partyIntroduction"
-                          type="text"
-                          placeholder="Introduction"
-                          onChange={onChangeHandler}
-                        />
-                        <EditModalEditButton
-                          onClick={(e) => {
-                            e.preventDefault();
-                            const id = data.partyId;
-                            dispatch(
-                              __updateGroup({
-                                id,
-                                partyName: editGroup.partyName,
-                                partyIntroduction: editGroup.partyIntroduction,
-                              })
-                            );
-                            setEditGroup({
-                              partyName: "",
-                              partyIntroduction: "",
-                            });
-                            setUpdateId("");
-                          }}
-                        >
-                          Apply
-                        </EditModalEditButton>
-                      </form>
-                    </EditModalContainer>
-                  </BackGround>
-                )}
-              </GroupCardContainer>
-            );
-          })}
-        </GroupMaincontainer>
+        <>
+          <GroupMaincontainer>
+            {groups?.map((data) => {
+              return (
+                <GroupCardContainer key={data?.partyId}>
+                  <TitleContainer>
+                    <h2>{data?.partyName}</h2>
+                    <button
+                      onClick={() => {
+                        setDropdown(!dropdown);
+                      }}
+                    >
+                      <Svg variant={"editDelete"} />
+                    </button>
+                  </TitleContainer>
+                  {dropdown ? (
+                    <DropBox>
+                      <DropBoxButtonBorderLineNone
+                        onClick={() => {
+                          openEditModal();
+                        }}
+                      >
+                        수정
+                      </DropBoxButtonBorderLineNone>
+                      <DropBoxButton
+                        onClick={() => {
+                          if (window.confirm("정말 삭제하시겠습니까?")) {
+                            dispatch(__delGroup(data?.partyId));
+                            alert("삭제가 완료되었습니다.");
+                          }
+                        }}
+                      >
+                        삭제
+                      </DropBoxButton>
+                    </DropBox>
+                  ) : null}
+                  <p>{data?.partyIntroduction}</p>
+                  <ButtonWrap>
+                    <Button
+                      variant="small"
+                      onClick={() => {
+                        navigate(`/${data.partyId}`);
+                      }}
+                    >
+                      Join
+                    </Button>
+                  </ButtonWrap>
+                  {EditModal && data.partyId === updateId ? (
+                    <BackGround>
+                      <EditModalContainer>
+                        <ModalTitleBox>
+                          <h2>Group Edit.</h2>
+                          <CloseButton
+                            onClick={() => {
+                              setUpdateId("");
+                            }}
+                          >
+                            <Svg variant={"close"} />
+                          </CloseButton>
+                        </ModalTitleBox>
+                        <form onSubmit={onAddGroupHandler}>
+                          <EditModalInput
+                            name="partyName"
+                            type="text"
+                            placeholder="Title"
+                            onChange={onChangeHandler}
+                          />
+                          <EditModalInput
+                            name="partyIntroduction"
+                            type="text"
+                            placeholder="Introduction"
+                            onChange={onChangeHandler}
+                          />
+                          <EditModalEditButton
+                            onClick={(e) => {
+                              e.preventDefault();
+                              const id = data.partyId;
+                              dispatch(
+                                __updateGroup({
+                                  id,
+                                  partyName: editGroup.partyName,
+                                  partyIntroduction:
+                                    editGroup.partyIntroduction,
+                                })
+                              );
+                              setEditGroup({
+                                partyName: "",
+                                partyIntroduction: "",
+                              });
+                              setUpdateId("");
+                            }}
+                          >
+                            Apply
+                          </EditModalEditButton>
+                        </form>
+                      </EditModalContainer>
+                    </BackGround>
+                  ) : null}
+                </GroupCardContainer>
+              );
+            })}
+          </GroupMaincontainer>
+        </>
       ) : (
         <NullBox>
           <NullBoxTextBox>
@@ -254,34 +264,6 @@ const TitleContainer = styled.div`
   }
 `;
 
-const GroupMoreButton = styled.button`
-  width: 115px;
-  height: 34px;
-  background-color: #a4a19d;
-  border: none;
-  border-radius: 10px;
-  color: white;
-  font-size: 13px;
-  margin-left: 27%;
-  margin-top: 50px;
-`;
-const ButtonWrap = styled.div`
-  margin-left: 27%;
-  margin-top: 50px;
-`;
-
-const Btn = styled.button`
-  background-color: white;
-  border: none;
-  margin-left: 10px;
-  margin-top: 20px;
-  width: 60px;
-  height: 2rem;
-  border: 1px solid gray;
-  border-radius: 15px;
-  display: none;
-`;
-
 const BackGround = styled.div`
   position: fixed;
   top: 0;
@@ -360,4 +342,43 @@ const NullBoxH3 = styled.h3`
   font-weight: 500;
   color: #a4a19d;
   text-align: center;
+`;
+
+const DropBox = styled.div`
+  position: absolute;
+  width: 80px;
+  height: 60px;
+  margin-left: 215px;
+  margin-top: 5px;
+  background-color: white;
+  border: 1px solid #d9d3c7;
+  border-radius: 5px;
+  z-index: 999;
+  box-shadow: 5px 5px 15px rgba(164, 161, 157, 0.15);
+  display: flex;
+  flex-direction: column;
+`;
+
+const DropBoxButton = styled.button`
+  width: 80px;
+  height: 30px;
+  border: none;
+  border-top: 1px solid #ede8e1;
+  background-color: transparent;
+  color: #a4a19d;
+  cursor: pointer;
+`;
+
+const DropBoxButtonBorderLineNone = styled.button`
+  width: 80px;
+  height: 30px;
+  border: none;
+  background-color: transparent;
+  color: #a4a19d;
+  cursor: pointer;
+`;
+
+const ButtonWrap = styled.div`
+  margin-left: 27%;
+  margin-top: 50px;
 `;

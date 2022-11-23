@@ -7,7 +7,7 @@ import Svg from "../../../elem/Svg";
 
 const ScheduleCard = () => {
   const data = useSelector((state) => state.schedule.groupSchedule.data);
-  // console.log("메인 스케쥴 카드=>", data);
+  console.log("메인 스케쥴 카드=>", data);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
