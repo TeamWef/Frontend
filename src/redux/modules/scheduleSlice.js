@@ -13,9 +13,7 @@ const initialState = {
   schedule: [],
   scheduleDetail: {},
   groupSchedule: [],
-
   join: [],
-
   isLoading: false,
   error: null,
 };
@@ -200,7 +198,6 @@ export const scheduleSlice = createSlice({
     },
     [__editSchedules.fulfilled]: (state, action) => {
       state.isLoading = false;
-
       console.log(action.payload);
       state.scheduleDetail = {
         ...state.scheduleDetail,

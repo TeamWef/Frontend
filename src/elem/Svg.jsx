@@ -1,5 +1,3 @@
-import styled, { css } from "styled-components";
-
 const Svg = ({ variant, onClick }) => {
   return <IconSvg variant={variant} onClick={onClick}></IconSvg>;
 };
@@ -193,6 +191,77 @@ const IconSvg = ({ variant, onClick }) => {
               />
             </clipPath>
           </defs>
+        </svg>
+      );
+    case "more":
+      return (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="21"
+          viewBox="0 0 20 21"
+          fill="none"
+        >
+          <path
+            d="M-4.37114e-07 10.5C-1.96264e-07 16.01 4.49 20.5 10 20.5C15.51 20.5 20 16.01 20 10.5C20 4.99 15.51 0.499999 10 0.5C4.49 0.5 -6.77964e-07 4.99 -4.37114e-07 10.5ZM9.25999 6.14999L12.35 10.26C12.36 10.28 12.37 10.31 12.39 10.33C12.4 10.36 12.41 10.38 12.42 10.41C12.47 10.5 12.5 10.61 12.5 10.71C12.5 10.81 12.47 10.91 12.43 11C12.42 11.02 12.41 11.04 12.4 11.07C12.39 11.09 12.38 11.11 12.37 11.13L9.45 15.06C9.22 15.4 8.74999 15.49 8.40999 15.25C8.06999 15.02 7.97999 14.55 8.20999 14.21C8.43999 13.87 10.82 10.73 10.82 10.73L8.06 7.04999C7.81 6.71999 7.87999 6.25 8.20999 6C8.53999 5.75 9.00999 5.81999 9.25999 6.14999Z"
+            fill="#EDE8E1"
+          />
+        </svg>
+      );
+    case "add":
+      return (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          viewBox="0 0 20 20"
+          fill="none"
+        >
+          <circle cx="10" cy="10" r="10" fill="#B5B3AF" />
+          <g clip-path="url(#clip0_37_100)">
+            <rect x="9.375" y="5" width="1.25" height="10" fill="white" />
+            <rect
+              x="5"
+              y="10.625"
+              width="1.25"
+              height="10"
+              transform="rotate(-90 5 10.625)"
+              fill="white"
+            />
+          </g>
+          <defs>
+            <clipPath id="clip0_37_100">
+              <rect
+                width="10"
+                height="10"
+                fill="white"
+                transform="translate(5 5)"
+              />
+            </clipPath>
+          </defs>
+        </svg>
+      );
+    case "editDelete":
+      return (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="26"
+          viewBox="0 0 24 26"
+          fill="none"
+        >
+          <path
+            d="M4.81 10.19C3.26 10.19 2 11.45 2 13C2 14.55 3.26 15.81 4.81 15.81C6.35 15.81 7.60999 14.55 7.60999 13C7.60999 11.45 6.35 10.19 4.81 10.19Z"
+            fill="#A4A19D"
+          />
+          <path
+            d="M11.9999 15.81C13.5519 15.81 14.8099 14.5519 14.8099 13C14.8099 11.4481 13.5519 10.19 11.9999 10.19C10.448 10.19 9.18994 11.4481 9.18994 13C9.18994 14.5519 10.448 15.81 11.9999 15.81Z"
+            fill="#A4A19D"
+          />
+          <path
+            d="M19.19 10.19C17.65 10.19 16.39 11.45 16.39 13C16.39 14.55 17.65 15.81 19.19 15.81C20.74 15.81 22 14.55 22 13C22 11.45 20.74 10.19 19.19 10.19Z"
+            fill="#A4A19D"
+          />
         </svg>
       );
     default:
