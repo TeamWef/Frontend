@@ -7,13 +7,8 @@ import {
 } from "../../../redux/modules/scheduleSlice";
 
 const ScheduleCard = () => {
-<<<<<<< HEAD
-  const seheduleList = useSelector((state) => state.schedule?.schedule);
-  console.log("!!!", seheduleList);
-=======
   const scheduleList = useSelector((state) => state.schedule?.schedule);
   console.log("!!!", scheduleList);
->>>>>>> 64e6d7073554cf6180f9812441d62a5323744abd
   const dispatch = useDispatch();
   const { partyId } = useParams();
   // console.log({ partyId });
