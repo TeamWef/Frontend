@@ -1,8 +1,9 @@
-import { createAsyncThunk, createSlice, current } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import {
   addGroupApi,
   delGroupApi,
   getGroupApi,
+  groupApis,
   putGroupApi,
 } from "./API/groupAPI";
 

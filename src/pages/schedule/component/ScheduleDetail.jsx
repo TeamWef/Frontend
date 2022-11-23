@@ -11,6 +11,7 @@ import {
 import { useModal } from "../../../hooks/useModal";
 import EditLanding from "./EditLanding";
 import styled from "styled-components";
+import Notice from "../../notice/Notice";
 
 const SchdeleDetail = ({ scheduleId, partyId }) => {
   const scheduleDetail = useSelector((state) => state.schedule.scheduleDetail);

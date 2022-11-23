@@ -21,7 +21,7 @@ const AlbumMain = () => {
   }, [dispatch]);
 
   const albumItems = useSelector((state) => state.album?.album);
-
+  console.log(albumItems);
   return (
     <>
       <button onClick={openCreateModal}>사진 올리기</button>

@@ -1,16 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import {
-  addAlbumApi,
-  delAlbumApi,
-  getAlbumDetailApi,
-  getAlbumListApi,
-  updateAlbumApi,
-} from "./API/albumAPI";
-import {
-  addCommnetApi,
-  delCommentApi,
-  updateCommentApi,
-} from "./API/commentAPI";
+import { albumApis, addAlbumApi } from "./API/albumAPI";
+import { commentApis } from "./API/commentAPI";
 
 const initialState = {
   album: [],
@@ -23,8 +13,8 @@ export const __getAlbumList = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       // console.log(payload);
-      const data = await getAlbumListApi(payload);
-      return thunkAPI.fulfillWithValue(data);
+      const data = await albumApis.getAlbumList(payload);
+      return thunkAPI.fulfillWithValue(data.data);
     } catch (err) {
       return console.log(err);
     }
@@ -35,9 +25,9 @@ export const __getAlbumItem = createAsyncThunk(
   "get/getAlbumItem",
   async (payload, thunkAPI) => {
     try {
-      const data = await getAlbumDetailApi(payload);
+      const data = await albumApis.getAlbumDetail(payload);
       // console.log(data);
-      return thunkAPI.fulfillWithValue(data);
+      return thunkAPI.fulfillWithValue(data.data);
     } catch (err) {
       return console.log(err);
     }
@@ -61,9 +51,8 @@ export const __addAlbumItem = createAsyncThunk(
 export const __delAlbumItem = createAsyncThunk(
   "delete/delAlbumItem",
   async (payload, thunkAPI) => {
-    // console.log(payload);
     try {
-      await delAlbumApi(payload);
+      await albumApis.delAlbum(payload);
       return thunkAPI.fulfillWithValue(payload);
     } catch (err) {
       return console.log(err);
@@ -75,7 +64,7 @@ export const __updateAlbumItem = createAsyncThunk(
   "patch/updateAlbumItem",
   async (payload, thunkAPI) => {
     try {
-      const data = await updateAlbumApi(payload);
+      const data = await albumApis.updateAlbum(payload);
       if (data.status === 200) {
         alert(`${data.data}`);
       }
@@ -92,8 +81,7 @@ export const __addComment = createAsyncThunk(
   "post/addCommnet",
   async ({ id, comment }, thunkAPI) => {
     try {
-      const data = await addCommnetApi({ id, comment });
-      // console.log(data);
+      const data = await commentApis.addComment({ id, comment });
       if (data.status === 200) {
         alert("댓글이 등록되었습니다.");
       }
@@ -107,9 +95,8 @@ export const __addComment = createAsyncThunk(
 export const __delComment = createAsyncThunk(
   "delete/delComment",
   async (payload, thunkAPI) => {
-    // console.log(payload);
     try {
-      await delCommentApi(payload);
+      await commentApis.delComment(payload);
       return thunkAPI.fulfillWithValue(payload);
     } catch (err) {
       return console.log(err);
@@ -121,11 +108,12 @@ export const __updateComment = createAsyncThunk(
   "patch/updateComment",
   async (payload, thunkAPI) => {
     try {
-      const data = await updateCommentApi(payload);
+      const data = await commentApis.updateComment(payload);
+      console.log(data);
       if (data.status === 200) {
         alert(`${data.data}`);
       }
-      // console.log(data);
+      console.log(data);
       return thunkAPI.fulfillWithValue(payload);
     } catch (err) {
       return console.log(err);
@@ -153,7 +141,7 @@ export const albumSlice = createSlice({
     // Delete
     [__delAlbumItem.fulfilled]: (state, action) => {
       state.album = state.album.filter(
-        (albumItem) => albumItem.id !== action.payload
+        (item) => item.id !== Number(action.payload)
       );
     },
     // Update
