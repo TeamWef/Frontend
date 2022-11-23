@@ -8,7 +8,6 @@ import {
   __updateGroup,
 } from "../../../redux/modules/groupSlice";
 import { useModal } from "../../../hooks/useModal";
-import { useEditModal } from "../../../hooks/useEditModal";
 import styled from "styled-components";
 import Svg from "../../../elem/Svg";
 import { Button, Div, Flex, Margin, Span } from "../../../elem";
@@ -16,22 +15,16 @@ import { Button, Div, Flex, Margin, Span } from "../../../elem";
 const GroupCard = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
   const groups = useSelector((state) => state.group?.group);
-  console.log(groups);
-
   const [createModal, openCreateModal] = useModal();
   const [editModal, openEditModal] = useModal();
   const [dropBox, openDropBox] = useModal();
   const [updateId, setUpdateId] = useState("");
-  const [updateTarget, setUpdateTarget] = useState("");
 
   const [editGroup, setEditGroup] = useState({
     partyName: "",
     partyIntroduction: "",
   });
-
-  // console.log("groups ==>", groups);
 
   useEffect(() => {
     dispatch(__getGroup());
@@ -268,18 +261,6 @@ const TitleContainer = styled.div`
     margin-top: 23px;
     font-size: 18px;
   }
-`;
-
-const Btn = styled.button`
-  background-color: white;
-  border: none;
-  margin-left: 10px;
-  margin-top: 20px;
-  width: 60px;
-  height: 2rem;
-  border: 1px solid gray;
-  border-radius: 15px;
-  display: none;
 `;
 
 const EditModalInput = styled.input`
