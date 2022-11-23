@@ -11,7 +11,7 @@ const ScheduleCard = () => {
   console.log("!!!", scheduleList);
   const dispatch = useDispatch();
   const { partyId } = useParams();
-  // console.log({ partyId });
+  console.log({ partyId });
   const navigate = useNavigate();
   // const scheduleId = seheduleList?.scheduleId;
 
@@ -24,7 +24,7 @@ const ScheduleCard = () => {
     <div>
       <button
         onClick={() => {
-          navigate(`/schedule/${partyId}`);
+          navigate(`/${partyId}/schedule`);
         }}
       >
         💖 일정 등록 🎈
@@ -37,7 +37,7 @@ const ScheduleCard = () => {
             <p>{data?.writer}</p>
             <button
               onClick={() => {
-                navigate(`/sheduledetail/${data?.scheduleId}`);
+                navigate(`/${partyId}/scheduledetail/${data?.scheduleId}`);
               }}
             >
               상세보기

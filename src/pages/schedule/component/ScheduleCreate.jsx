@@ -27,7 +27,7 @@ const ScheduleCreate = () => {
   const onAddScheduleHandler = (e) => {
     e.preventDefault();
     dispatch(__addSchedule({ schedule, partyId }));
-    navigate(`/schedulelist/${partyId}`);
+    navigate(`/${partyId}/schedulelist`);
     setSchedule({
       title: "",
       content: "",

@@ -13,15 +13,18 @@ import EditLanding from "./EditLanding";
 import styled from "styled-components";
 import Notice from "../../notice/Notice";
 
-const SchdeleDetail = ({ scheduleId, partyId }) => {
+const SchdeleDetail = ({ scheduleId }) => {
   const scheduleDetail = useSelector((state) => state.schedule?.scheduleDetail);
   console.log("디테일 selector==>", scheduleDetail);
   const detailId = useParams().scheduleId;
+  const partyId = useParams().partyId;
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(__getScheduleDetail(detailId));
   }, [dispatch, detailId]);
   const navigate = useNavigate();
+
+  console.log(useParams());
 
   const [editSchedule, setEditSchedule] = useState({
     title: "",
@@ -31,9 +34,9 @@ const SchdeleDetail = ({ scheduleId, partyId }) => {
     place: { placeName: "", address: "" },
   });
 
-  const join = useSelector((state) => state.schedule.join);
+  const [scheduleJoin, setScheduleJoin] = useState(false);
+  // const join = useSelector((state) => state.schedule.join);
   const joiner = scheduleDetail?.participantResponseDtoList;
-  console.log("selector==>", join);
 
   const onChangeHandler = (e) => {
     const { name, value } = e.target;
@@ -46,8 +49,6 @@ const SchdeleDetail = ({ scheduleId, partyId }) => {
     e.preventDefault();
     dispatch(__editSchedules({ detailId, editSchedule }));
   };
-
-  // console.log("디테일 파람스 !!! schdeleId===>", detailId);
 
   return (
     <div>
@@ -78,10 +79,11 @@ const SchdeleDetail = ({ scheduleId, partyId }) => {
       <button
         onClick={(e) => {
           e.preventDefault();
+          setScheduleJoin();
           dispatch(__joinSchedules(scheduleDetail?.scheduleId));
         }}
       >
-        {join ? "취소하기" : "참여하기"}
+        {scheduleJoin ? "취소하기" : "참여하기"}
       </button>
       {/* 참여자 목록 보내주실 때 byme 카테고리에 참여 true, 미참여 false값 받기 */}
       <button onClick={openModal}>수정하기</button>
@@ -91,7 +93,7 @@ const SchdeleDetail = ({ scheduleId, partyId }) => {
             dispatch(__delSchedule(detailId));
             alert("삭제가 완료되었습니다.");
           }
-          navigate(`/schedulelist/${partyId}`);
+          navigate(`/${partyId}/schedulelist`);
         }}
       >
         삭제하기
@@ -116,7 +118,7 @@ const SchdeleDetail = ({ scheduleId, partyId }) => {
             <button
               type="submit"
               onClick={() => {
-                navigate(`/sheduledetail/${scheduleDetail?.scheduleId}`);
+                navigate(`/scheduledetail/${scheduleDetail?.scheduleId}`);
               }}
             >
               작성

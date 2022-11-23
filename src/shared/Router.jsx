@@ -18,13 +18,16 @@ const Page = () => {
         <Route path="/" element={<Home />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/members/kakao/callback" element={<Kakao />} />
-        <Route path="/schedule/:partyId" element={<ScheduleMain />} />
+        <Route path="/:partyId/schedule" element={<ScheduleMain />} />
         <Route path="/:partyid/album" element={<AlbumMain />} />
         <Route path="/:partyid/album/:id" element={<AlbumDetail />} />
         <Route path="/album" element={<AlbumMain />} />
         <Route path="/album/:id" element={<AlbumDetail />} />
-        <Route path="/schedulelist/:partyId" element={<ScheduleCard />} />
-        <Route path="/sheduledetail/:scheduleId" element={<ScheduleDetail />} />
+        <Route path="/:partyId/schedulelist" element={<ScheduleCard />} />
+        <Route
+          path="/:partyId/scheduledetail/:scheduleId"
+          element={<ScheduleDetail />}
+        />
         {/* <Route path="/chat" element={<ChatMain />} /> */}
         <Route path="/notice" element={<Notice />} />
       </Routes>

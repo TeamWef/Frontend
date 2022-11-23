@@ -52,6 +52,7 @@ export const __getScheduleDetail = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const res = await getScheduleDetailApi(payload);
+      console.log("상세조회", res);
       return thunkAPI.fulfillWithValue(res.data);
     } catch (err) {
       console.log("error", err);
@@ -60,13 +61,12 @@ export const __getScheduleDetail = createAsyncThunk(
   }
 );
 
-//가입된 그룹의 일정 전체 조회(메인)
+//가입된 그룹의 일정 전체 조회(메인) 건들지마!!!
 export const __getGroupSchedule = createAsyncThunk(
   "get/getGroupSchedule",
   async (payload, thunkAPI) => {
     try {
       const res = await getGroupScheduleApi();
-      // console.log("axios??", res);
       return thunkAPI.fulfillWithValue(res);
     } catch (err) {
       console.log("error", err);
@@ -183,7 +183,8 @@ export const scheduleSlice = createSlice({
     },
     [__delSchedule.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.scheduieDetail = state.scheduieDetail.filter(
+      console.log("스케쥴 액션", state.scheduleDetail);
+      state.schedule = state.schedule.filter(
         (item) => item.scheduleId !== action.payload
       );
     },
@@ -220,7 +221,6 @@ export const scheduleSlice = createSlice({
     },
     [__joinSchedules.fulfilled]: (state, action) => {
       state.isLoading = false;
-      console.log("슬라이스 액션=>", action.payload);
       state.join = action.payload;
     },
     [__joinSchedules.rejected]: (state, action) => {

@@ -89,7 +89,7 @@ const GroupCard = () => {
                 </Btn>
                 <GroupMoreButton
                   onClick={() => {
-                    navigate(`/schedulelist/${data.partyId}`);
+                    navigate(`/${data.partyId}/schedulelist`);
                   }}
                 >
                   Join
