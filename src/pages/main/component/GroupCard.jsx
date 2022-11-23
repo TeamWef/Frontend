@@ -93,6 +93,7 @@ const GroupCard = () => {
                           dispatch(__delGroup(data?.partyId));
                           alert("삭제가 완료되었습니다.");
                         }
+                        openDropBox();
                       }}
                     >
                       그룹 삭제

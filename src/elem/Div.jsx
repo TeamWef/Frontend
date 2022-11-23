@@ -39,6 +39,7 @@ const StDiv = styled.div`
           width: 100%;
           height: 100%;
           background-color: rgba(153, 153, 153, 0.4);
+          z-index: 8;
         `;
       case "groupEdit":
         return css`
