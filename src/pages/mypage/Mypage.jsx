@@ -21,7 +21,11 @@ const Mypage = () => {
     <>
       <StDiv onClick={openModal}>
         <StP>{memberName}</StP>
-        <Stimg src={profileImageUrl} alt="profileImg" />
+        {profileImageUrl === null ? (
+          <Stimg src="/images/userProfile.jpg" />
+        ) : (
+          <Stimg src={profileImageUrl} alt="profileImg" />
+        )}
       </StDiv>
       {modal && <EditMypage myProfile={myProfile} openModal={openModal} />}
     </>

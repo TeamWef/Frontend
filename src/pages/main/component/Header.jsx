@@ -2,9 +2,17 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Mypage from "../../mypage/Mypage";
 import Svg from "../../../elem/Svg";
+import { deleteCookie } from "../../../redux/modules/customCookies";
 
 export const Header = () => {
   const navigate = useNavigate();
+  const logoutHandler = () => {
+    deleteCookie("token");
+    deleteCookie("refresh-token");
+    alert("로그아웃 되었습니다.");
+    window.location.reload();
+  };
+
   return (
     <BaseContainer>
       <CenterBox>
@@ -22,7 +30,7 @@ export const Header = () => {
           <Alert>
             <Svg variant={"notification"} />
           </Alert>
-          <Logout>logout</Logout>
+          <Logout onClick={logoutHandler}>logout</Logout>
           <UserInfo>
             <Mypage />
           </UserInfo>
@@ -98,6 +106,7 @@ const Logout = styled.button`
   border: none;
   width: 30px;
   height: 18px;
+  cursor: pointer;
 `;
 
 const UserInfo = styled.div`

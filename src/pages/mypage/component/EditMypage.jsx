@@ -69,7 +69,7 @@ const EditMypage = ({ myProfile, openModal }) => {
             {uploadImg ? (
               <StImg src={previewImage} alt="preview" />
             ) : (
-              <StImg src={profileImageUrl} alt="profileImg" />
+              <StImg src={profileImageUrl} alt="p" />
             )}
           </StDiv>
         )}
