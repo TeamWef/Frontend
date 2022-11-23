@@ -26,7 +26,7 @@ const Page = () => {
         <Route path="/album/:id" element={<AlbumDetail />} />
         <Route path="/schedulelist/:partyId" element={<ScheduleCard />} />
         <Route path="/sheduledetail/:scheduleId" element={<ScheduleDetail />} />
-        <Route path="/chat" element={<ChatMain />} />
+        {/* <Route path="/chat" element={<ChatMain />} /> */}
         <Route path="/notice" element={<Notice />} />
       </Routes>
     </BrowserRouter>
