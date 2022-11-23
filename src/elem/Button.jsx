@@ -10,17 +10,17 @@ const StBtn = styled.button`
   cursor: pointer;
   border: 0px;
   border-radius: 5px;
+  width: ${({ width }) => (width ? width : "370px")};
+  height: ${({ height }) => (height ? height : "65px")};
+  font-size: ${({ fs }) => (fs ? fs : "20px")};
+  font-weight: ${({ fw }) => (fw ? fw : "400")};
 
   ${({ variant }) => {
     switch (variant) {
-      case "sign":
+      case "bronzeBtn":
         return css`
           color: #fff;
-          font-weight: 700;
-          font-size: 24px;
           background-color: #a4a19d;
-          width: 370px;
-          height: 65px;
           :hover {
             opacity: 0.6;
             transition: 0.3s;

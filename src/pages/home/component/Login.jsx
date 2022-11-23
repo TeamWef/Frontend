@@ -61,7 +61,7 @@ const Login = () => {
             onChange={onChangePW}
             placeholder="Password"
           />
-          <Button variant="sign" type="submit" onClick={onLogin}>
+          <Button variant="bronzeBtn" type="submit" onClick={onLogin} fw="700">
             Sign in
           </Button>
         </form>

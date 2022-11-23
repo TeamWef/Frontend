@@ -117,9 +117,11 @@ const IconSvg = ({ variant, onClick }) => {
           height="20"
           viewBox="0 0 20 20"
           fill="none"
+          onClick={onClick}
+          cursor="pointer"
         >
-          <path d="M18 2L2 18" stroke="#B5B3AF" stroke-width="3" />
-          <path d="M2 2L18 18" stroke="#B5B3AF" stroke-width="3" />
+          <path d="M18 2L2 18" stroke="#B5B3AF" strokeWidth="3" />
+          <path d="M2 2L18 18" stroke="#B5B3AF" strokeWidth="3" />
         </svg>
       );
     case "logo":

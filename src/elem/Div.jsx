@@ -21,9 +21,16 @@ const StDiv = styled.div`
           left: 50vw;
           transform: translate(-50%, -50%);
         `;
-
-      case "kakao":
-        return css``;
+      case "profileEdit":
+        return css`
+          background-color: #f8f5f0;
+          width: 290px;
+          height: 320px;
+          position: absolute;
+          top: 40px;
+          left: -3vw;
+          box-shadow: 2px 1px 5px 1px #bebebe;
+        `;
       default:
         break;
     }

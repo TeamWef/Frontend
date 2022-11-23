@@ -4,9 +4,8 @@ import Flex from "./Flex";
 import Icon from "./Icon";
 import Img from "./Img";
 import Input from "./Input";
-import Logo from "./Logo";
 import Margin from "./Margin";
 import Span from "./Span";
 import Svg from "./Svg";
 
-export { Button, Div, Flex, Input, Margin, Svg, Img, Span, Icon, Logo };
+export { Button, Div, Flex, Input, Margin, Svg, Img, Span, Icon };

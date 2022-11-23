@@ -12,7 +12,7 @@ export const updateMypageApi = async (payload) => {
   const form = new FormData();
   form.append("profileImageUrl", payload);
 
-  console.log(payload);
+  // console.log(payload);
   const data = await instance.patch(`/members/mypage`, form, {
     headers: {
       "Content-Type": "multipart/form-data",

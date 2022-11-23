@@ -27,7 +27,7 @@ export const __updateMypage = createAsyncThunk(
       if (data.status === 200) {
         alert("수정이 완료되었습니다");
       }
-      console.log(data);
+      // console.log(data);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (err) {
       return console.log(err);
