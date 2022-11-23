@@ -31,6 +31,24 @@ const StDiv = styled.div`
           right: 0px;
           box-shadow: 2px 1px 5px 1px #bebebe;
         `;
+      case "background":
+        return css`
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-color: rgba(153, 153, 153, 0.4);
+        `;
+      case "groupEdit":
+        return css`
+          position: relative;
+          width: 440px;
+          height: 390px;
+          background-color: #f8f5f0;
+          border-radius: 5px;
+          padding: 20px;
+        `;
       default:
         break;
     }

@@ -11,7 +11,7 @@ import { useModal } from "../../../hooks/useModal";
 import { useEditModal } from "../../../hooks/useEditModal";
 import styled from "styled-components";
 import Svg from "../../../elem/Svg";
-import { Button } from "../../../elem";
+import { Button, Div, Flex, Margin, Span } from "../../../elem";
 
 const GroupCard = () => {
   const dispatch = useDispatch();
@@ -20,9 +20,11 @@ const GroupCard = () => {
   const groups = useSelector((state) => state.group?.group);
   console.log(groups);
 
-  const [modal, openModal] = useModal();
-  const [EditModal, openEditModal] = useEditModal();
+  const [createModal, openCreateModal] = useModal();
+  const [editModal, openEditModal] = useModal();
+  const [dropBox, openDropBox] = useModal();
   const [updateId, setUpdateId] = useState("");
+  const [updateTarget, setUpdateTarget] = useState("");
 
   const [editGroup, setEditGroup] = useState({
     partyName: "",
@@ -35,14 +37,6 @@ const GroupCard = () => {
     dispatch(__getGroup());
   }, [dispatch]);
 
-  const onAddGroupHandler = (e) => {
-    // e.preventDefault();
-    // const id = data.partyId;
-    // dispatch(__updateGroup({ id, editGroup }));
-    // dispatch(__getGroup());
-    // setEditGroup({ partyName: "", partyIntroduction: "" });
-  };
-
   const onChangeHandler = (e) => {
     const { name, value } = e.target;
     setEditGroup({ ...editGroup, [name]: value });
@@ -54,12 +48,14 @@ const GroupCard = () => {
         <h2>Group.</h2>
         <CreateBtn
           onClick={() => {
-            openModal();
+            openCreateModal();
           }}
         >
           <Svg variant={"add"} />
         </CreateBtn>
-        {modal ? <CreateGroupCard openModal={openModal} modal={modal} /> : null}
+        {createModal ? (
+          <CreateGroupCard openModal={openCreateModal} modal={createModal} />
+        ) : null}
       </MainTitleContainer>
       {groups?.length !== 0 ? (
         <GroupMaincontainer>
@@ -70,24 +66,14 @@ const GroupCard = () => {
                   <h2>{data?.partyName}</h2>
                   <button
                     onClick={() => {
-                      openEditModal();
+                      openDropBox();
                       setUpdateId(data.partyId);
                     }}
                   >
-                    <Svg variant={"editDelete"} />
+                    <Svg variant="editDelete" />
                   </button>
                 </TitleContainer>
                 <p>{data?.partyIntroduction}</p>
-                <Btn
-                  onClick={() => {
-                    if (window.confirm("정말 삭제하시겠습니까?")) {
-                      dispatch(__delGroup(data?.partyId));
-                      alert("삭제가 완료되었습니다.");
-                    }
-                  }}
-                >
-                  삭제하기
-                </Btn>
                 <ButtonWrap>
                   <Button
                     variant="small"
@@ -98,55 +84,84 @@ const GroupCard = () => {
                     Join
                   </Button>
                 </ButtonWrap>
-                {data.partyId === updateId && (
-                  <BackGround>
-                    <EditModalContainer>
-                      <ModalTitleBox>
-                        <h2>Group Edit.</h2>
-                        <CloseButton
-                          onClick={() => {
-                            setUpdateId("");
-                          }}
-                        >
-                          <Svg variant={"close"} />
-                        </CloseButton>
-                      </ModalTitleBox>
-                      <form onSubmit={onAddGroupHandler}>
-                        <EditModalInput
-                          name="partyName"
-                          type="text"
-                          placeholder="Title"
-                          onChange={onChangeHandler}
-                        />
-                        <EditModalInput
-                          name="partyIntroduction"
-                          type="text"
-                          placeholder="Introduction"
-                          onChange={onChangeHandler}
-                        />
-                        <EditModalEditButton
-                          onClick={(e) => {
-                            e.preventDefault();
-                            const id = data.partyId;
-                            dispatch(
-                              __updateGroup({
-                                id,
-                                partyName: editGroup.partyName,
-                                partyIntroduction: editGroup.partyIntroduction,
-                              })
-                            );
-                            setEditGroup({
-                              partyName: "",
-                              partyIntroduction: "",
-                            });
-                            setUpdateId("");
-                          }}
-                        >
-                          Apply
-                        </EditModalEditButton>
-                      </form>
-                    </EditModalContainer>
-                  </BackGround>
+                {dropBox && data.partyId === updateId && (
+                  <DropBox>
+                    <DropBoxButton
+                      onClick={() => {
+                        openEditModal();
+                        openDropBox();
+                      }}
+                    >
+                      그룹 수정
+                    </DropBoxButton>
+                    <DropBoxButton
+                      onClick={() => {
+                        if (window.confirm("정말 삭제하시겠습니까?")) {
+                          dispatch(__delGroup(data?.partyId));
+                          alert("삭제가 완료되었습니다.");
+                        }
+                      }}
+                    >
+                      그룹 삭제
+                    </DropBoxButton>
+                  </DropBox>
+                )}
+                {editModal && (
+                  <Div variant="background">
+                    <Div variant="groupEdit">
+                      <Flex>
+                        <Flex fd="row" jc="space-between">
+                          <Span variant="bold">Group Edit.</Span>
+                          <Svg
+                            variant="close"
+                            onClick={() => {
+                              openEditModal();
+                              setUpdateId("");
+                            }}
+                          />
+                        </Flex>
+                        <Margin />
+                        <div>
+                          <EditModalInput
+                            name="partyName"
+                            type="text"
+                            placeholder="Title"
+                            onChange={onChangeHandler}
+                          />
+                          <EditModalInput
+                            name="partyIntroduction"
+                            type="text"
+                            placeholder="Introduction"
+                            onChange={onChangeHandler}
+                          />
+                          <Margin mg="50px" />
+                          <Button
+                            variant="large"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              const id = data.partyId;
+                              dispatch(
+                                __updateGroup({
+                                  id,
+                                  partyName: editGroup.partyName,
+                                  partyIntroduction:
+                                    editGroup.partyIntroduction,
+                                })
+                              );
+                              setEditGroup({
+                                partyName: "",
+                                partyIntroduction: "",
+                              });
+                              setUpdateId("");
+                              openEditModal();
+                            }}
+                          >
+                            Apply
+                          </Button>
+                        </div>
+                      </Flex>
+                    </Div>
+                  </Div>
                 )}
               </GroupCardContainer>
             );
@@ -191,6 +206,7 @@ const CreateBtn = styled.div`
 `;
 
 const GroupMaincontainer = styled.div`
+  position: relative;
   width: 1078px;
   height: 255px;
   margin: 0 auto;
@@ -254,22 +270,6 @@ const TitleContainer = styled.div`
   }
 `;
 
-const GroupMoreButton = styled.button`
-  width: 115px;
-  height: 34px;
-  background-color: #a4a19d;
-  border: none;
-  border-radius: 10px;
-  color: white;
-  font-size: 13px;
-  margin-left: 27%;
-  margin-top: 50px;
-`;
-const ButtonWrap = styled.div`
-  margin-left: 27%;
-  margin-top: 50px;
-`;
-
 const Btn = styled.button`
   background-color: white;
   border: none;
@@ -280,38 +280,6 @@ const Btn = styled.button`
   border: 1px solid gray;
   border-radius: 15px;
   display: none;
-`;
-
-const BackGround = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(153, 153, 153, 0.4);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const EditModalContainer = styled.div`
-  position: relative;
-  width: 440px;
-  height: 370px;
-  background-color: #f8f5f0;
-  border-radius: 5px;
-  padding: 20px;
-`;
-
-const CloseButton = styled.button`
-  border: none;
-  background-color: transparent;
-  cursor: pointer;
-`;
-
-const ModalTitleBox = styled.div`
-  display: flex;
-  justify-content: space-between;
 `;
 
 const EditModalInput = styled.input`
@@ -328,17 +296,6 @@ const EditModalInput = styled.input`
     font-weight: 500;
     background-image: url("");
   }
-`;
-
-const EditModalEditButton = styled.button`
-  width: 375px;
-  height: 55px;
-  margin-top: 20px;
-  background-color: #a4a19d;
-  border: none;
-  border-radius: 5px;
-  color: white;
-  font-size: 20px;
 `;
 
 const NullBox = styled.div`
@@ -360,4 +317,43 @@ const NullBoxH3 = styled.h3`
   font-weight: 500;
   color: #a4a19d;
   text-align: center;
+`;
+
+const ButtonWrap = styled.div`
+  margin-left: 27%;
+  margin-top: 50px;
+`;
+
+const DropBox = styled.div`
+  position: absolute;
+  width: 80px;
+  height: 60px;
+  margin-left: 215px;
+  top: 50px;
+  background-color: white;
+  border: 1px solid #d9d3c7;
+  border-radius: 5px;
+  z-index: 999;
+  box-shadow: 5px 5px 15px rgba(164, 161, 157, 0.15);
+  display: flex;
+  flex-direction: column;
+`;
+
+const DropBoxButton = styled.button`
+  width: 80px;
+  height: 30px;
+  border: none;
+  border-top: 1px solid #ede8e1;
+  background-color: transparent;
+  color: #a4a19d;
+  cursor: pointer;
+`;
+
+const DropBoxButtonBorderLineNone = styled.button`
+  width: 80px;
+  height: 30px;
+  border: none;
+  background-color: transparent;
+  color: #a4a19d;
+  cursor: pointer;
 `;

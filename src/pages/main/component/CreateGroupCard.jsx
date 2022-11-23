@@ -4,9 +4,9 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { __addGroup, __getGroup } from "../../../redux/modules/groupSlice";
 import Svg from "../../../elem/Svg";
+import { Button, Div, Flex, Input, Margin, Span } from "../../../elem";
 
 const CreateGroupCard = ({ openModal, modal }) => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [group, setGroup] = useState({
     partyName: "",
@@ -29,120 +29,47 @@ const CreateGroupCard = ({ openModal, modal }) => {
   };
 
   return (
-    <MainContainer>
-      <CreateCardContainer>
-        <TitleBox>
-          <h2>Group Add</h2>
-          <CloseBtn
-            onClick={() => {
-              openModal();
-            }}
-          >
-            <Svg variant={"close"} />
-          </CloseBtn>
-        </TitleBox>
-        <FormBox>
+    <Div variant="background">
+      <Div variant="groupEdit">
+        <Flex>
+          <Flex fd="row" jc="space-between">
+            <Span variant="bold">Group Add</Span>
+            <Svg
+              variant="close"
+              onClick={() => {
+                openModal();
+              }}
+            />
+          </Flex>
+          <Margin />
           <form onSubmit={onAddGroupHandler}>
-            <InputContainer>
-              <GroupCreateInput
-                name="partyName"
-                type="text"
-                placeholder="그룹명"
-                onChange={onChangeHandler}
-              />
-              <GroupCreateInput
-                name="partyIntroduction"
-                type="text"
-                placeholder="그룹을 소개해 주세요!"
-                onChange={onChangeHandler}
-              />
-            </InputContainer>
-            <ButtonContainer>
-              <GroupCreateButton onClick={onAddGroupHandler}>
-                Add
-              </GroupCreateButton>
-            </ButtonContainer>
+            <Span variant="mediumBronze">Group title</Span>
+            <Margin mg="12px" />
+            <Input
+              variant="big"
+              name="partyName"
+              type="text"
+              placeholder="그룹이름을 설정해주세요!"
+              onChange={onChangeHandler}
+            />
+            <Span variant="mediumBronze">Group contents</Span>
+            <Margin mg="12px" />
+            <Input
+              variant="big"
+              name="partyIntroduction"
+              type="text"
+              placeholder="그룹을 소개해 주세요!"
+              onChange={onChangeHandler}
+            />
+            <Margin mg="20px" />
+            <Button variant="large" onClick={onAddGroupHandler}>
+              Apply
+            </Button>
           </form>
-        </FormBox>
-      </CreateCardContainer>
-    </MainContainer>
+        </Flex>
+      </Div>
+    </Div>
   );
 };
 
 export default CreateGroupCard;
-
-const MainContainer = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(153, 153, 153, 0.4);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const CreateCardContainer = styled.div`
-  background-color: #f8f5f0;
-  width: 440px;
-  height: 411px;
-  margin: 0 auto;
-  margin-top: 100px;
-  border-radius: 15px;
-  z-index: 999;
-`;
-
-const TitleBox = styled.div`
-  width: 378px;
-  margin-top: 32px;
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  & h2 {
-    font-size: 24px;
-    margin-top: 30px;
-  }
-`;
-
-const FormBox = styled.div`
-  margin-top: 30px;
-`;
-
-const InputContainer = styled.div``;
-
-const GroupCreateInput = styled.input`
-  width: 375px;
-  height: 60px;
-  border: none;
-  background-color: white;
-  border-radius: 10px;
-  margin-top: 10px;
-  margin-left: 31px;
-  ::placeholder {
-    padding-left: 15px;
-    font-size: 13px;
-  }
-`;
-
-const ButtonContainer = styled.div`
-  margin-top: 20px;
-  display: flex;
-  justify-content: space-evenly;
-`;
-
-const GroupCreateButton = styled.button`
-  background-color: #a4a19d;
-  color: white;
-  border: none;
-  width: 375px;
-  height: 54px;
-  border-radius: 5px;
-  font-size: 18px;
-`;
-
-const CloseBtn = styled.div`
-  width: 20px;
-  height: 54px;
-  margin-top: 34px;
-`;

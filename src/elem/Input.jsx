@@ -11,7 +11,7 @@ const StInput = styled.input`
   border-radius: 5px;
   ${({ variant }) => {
     switch (variant) {
-      case "sign":
+      case "big":
         return css`
           padding-left: 16px;
           display: flex;
@@ -20,7 +20,7 @@ const StInput = styled.input`
           margin-bottom: 12px;
           font-size: 20px;
           ::placeholder {
-            font-size: 20px;
+            font-size: 16px;
             opacity: 0.5;
           }
         `;

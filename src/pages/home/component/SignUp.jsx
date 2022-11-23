@@ -74,7 +74,7 @@ const SignUp = () => {
             </StBtn>
           </StDiv>
           <Input
-            variant="sign"
+            variant="big"
             type="password"
             name="password"
             value={password}
@@ -82,7 +82,7 @@ const SignUp = () => {
             placeholder="Password"
           />
           <Input
-            variant="sign"
+            variant="big"
             type="password"
             name="passwordCheck"
             value={passwordCheck}
