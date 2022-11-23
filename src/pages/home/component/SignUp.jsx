@@ -89,7 +89,7 @@ const SignUp = () => {
             onChange={onChange}
             placeholder="Confirm Password"
           />
-          <Button variant="bronzeBtn" type="submit" fw="700">
+          <Button variant="large" type="submit">
             Sign up
           </Button>
           <Margin mg="30px" />

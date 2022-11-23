@@ -12,6 +12,7 @@ import { useEditModal } from "../../../hooks/useEditModal";
 import styled from "styled-components";
 import Svg from "../../../elem/Svg";
 import MainScheduleCard from "../component/MainScheduleCard";
+import { Button } from "../../../elem";
 
 const GroupCard = () => {
   const dispatch = useDispatch();
@@ -97,13 +98,14 @@ const GroupCard = () => {
                     </DropBox>
                   ) : null}
                   <p>{data?.partyIntroduction}</p>
-                  <GroupMoreButton
+                  <Button
+                    variant="small"
                     onClick={() => {
-                      navigate(`/${data.partyId}/schedulelist`);
+                      navigate(`/${data.partyId}`);
                     }}
                   >
                     Join
-                  </GroupMoreButton>
+                  </Button>
                   {data.partyId === updateId && (
                     <BackGround>
                       <EditModalContainer>
