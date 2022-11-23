@@ -102,7 +102,7 @@ const Invite = styled.div`
 const Logout = styled.button`
   background-color: transparent;
   margin-top: 10px;
-  margin-right: 10px;
+  margin-right: 20px;
   border: none;
   width: 30px;
   height: 18px;

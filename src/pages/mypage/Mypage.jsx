@@ -36,6 +36,8 @@ export default Mypage;
 
 const StDiv = styled.div`
   display: flex;
+  min-width: 110px;
+  width: auto;
   justify-content: space-between;
 `;
 
@@ -51,7 +53,7 @@ const Stimg = styled.img`
 const StP = styled.p`
   display: flex;
   justify-content: center;
-  width: 100%;
+  width: auto;
   margin-left: 30px;
   vertical-align: middle;
   margin-top: 10px;

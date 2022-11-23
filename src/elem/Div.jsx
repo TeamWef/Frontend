@@ -28,7 +28,7 @@ const StDiv = styled.div`
           height: 320px;
           position: absolute;
           top: 40px;
-          left: -3vw;
+          right: 0px;
           box-shadow: 2px 1px 5px 1px #bebebe;
         `;
       default:
