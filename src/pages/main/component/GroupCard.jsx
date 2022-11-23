@@ -16,7 +16,8 @@ const GroupCard = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const groups = useSelector((state) => state?.group.group);
+  const groups = useSelector((state) => state.group?.group);
+  console.log(groups);
 
   const [modal, openModal] = useModal();
   const [EditModal, openEditModal] = useEditModal();
@@ -59,115 +60,104 @@ const GroupCard = () => {
         </CreateBtn>
         {modal ? <CreateGroupCard openModal={openModal} modal={modal} /> : null}
       </MainTitleContainer>
-      <GroupMaincontainer>
-        {groups?.map((data) => {
-          return (
-            <GroupCardContainer key={data?.partyId}>
-              <TitleContainer>
-                <h2>{data?.partyName}</h2>
-                <button
+      {groups.length !== 0 ? (
+        <GroupMaincontainer>
+          {groups?.map((data) => {
+            return (
+              <GroupCardContainer key={data?.partyId}>
+                <TitleContainer>
+                  <h2>{data?.partyName}</h2>
+                  <button
+                    onClick={() => {
+                      openEditModal();
+                      setUpdateId(data.partyId);
+                    }}
+                  >
+                    <Svg variant={"editDelete"} />
+                  </button>
+                </TitleContainer>
+                <p>{data?.partyIntroduction}</p>
+                <Btn
                   onClick={() => {
-                    openEditModal();
-                    setUpdateId(data.partyId);
+                    if (window.confirm("정말 삭제하시겠습니까?")) {
+                      dispatch(__delGroup(data?.partyId));
+                      alert("삭제가 완료되었습니다.");
+                    }
                   }}
                 >
-                  <Svg variant={"editDelete"} />
-                </button>
-              </TitleContainer>
-              <p>{data?.partyIntroduction}</p>
-              {/* <Btn
-                onClick={() => {
-                  openModal();
-                  setUpdateId(data.partyId);
-                }}
-              >
-                수정하기
-              </Btn> */}
-              <Btn
-                onClick={() => {
-                  if (window.confirm("정말 삭제하시겠습니까?")) {
-                    dispatch(__delGroup(data?.partyId));
-                    alert("삭제가 완료되었습니다.");
-                  }
-                }}
-              >
-                삭제하기
-              </Btn>
-              {/* <Btn
-                onClick={() => {
-                  navigate(`/schedule/${data.partyId}`);
-                }}
-              >
-                일정 등록
-              </Btn> */}
-              <GroupMoreButton
-                onClick={() => {
-                  navigate(`/schedulelist/${data.partyId}`);
-                }}
-              >
-                Join
-              </GroupMoreButton>
-              {/* <Btn
-                onClick={() => {
-                  navigate(`/${data.partyId}/album`);
-                }}
-              >
-                앨범보기
-              </Btn> */}
-              {data.partyId === updateId && (
-                <BackGround>
-                  <EditModalContainer>
-                    <ModalTitleBox>
-                      <h2>Group Edit.</h2>
-                      <CloseButton
-                        onClick={() => {
-                          setUpdateId("");
-                        }}
-                      >
-                        <Svg variant={"close"} />
-                      </CloseButton>
-                    </ModalTitleBox>
-                    <form onSubmit={onAddGroupHandler}>
-                      <EditModalInput
-                        name="partyName"
-                        type="text"
-                        placeholder="Title"
-                        onChange={onChangeHandler}
-                      />
-                      <EditModalInput
-                        name="partyIntroduction"
-                        type="text"
-                        placeholder="Introduction"
-                        onChange={onChangeHandler}
-                      />
-                      <EditModalEditButton
-                        onClick={(e) => {
-                          e.preventDefault();
-                          const id = data.partyId;
-                          dispatch(
-                            __updateGroup({
-                              id,
-                              partyName: editGroup.partyName,
-                              partyIntroduction: editGroup.partyIntroduction,
-                            })
-                          );
-                          setEditGroup({
-                            partyName: "",
-                            partyIntroduction: "",
-                          });
-                          setUpdateId("");
-                        }}
-                      >
-                        Apply
-                      </EditModalEditButton>
-                    </form>
-                  </EditModalContainer>
-                </BackGround>
-              )}
-            </GroupCardContainer>
-          );
-        })}
-      </GroupMaincontainer>
+                  삭제하기
+                </Btn>
+                <GroupMoreButton
+                  onClick={() => {
+                    navigate(`/schedulelist/${data.partyId}`);
+                  }}
+                >
+                  Join
+                </GroupMoreButton>
+                {data.partyId === updateId && (
+                  <BackGround>
+                    <EditModalContainer>
+                      <ModalTitleBox>
+                        <h2>Group Edit.</h2>
+                        <CloseButton
+                          onClick={() => {
+                            setUpdateId("");
+                          }}
+                        >
+                          <Svg variant={"close"} />
+                        </CloseButton>
+                      </ModalTitleBox>
+                      <form onSubmit={onAddGroupHandler}>
+                        <EditModalInput
+                          name="partyName"
+                          type="text"
+                          placeholder="Title"
+                          onChange={onChangeHandler}
+                        />
+                        <EditModalInput
+                          name="partyIntroduction"
+                          type="text"
+                          placeholder="Introduction"
+                          onChange={onChangeHandler}
+                        />
+                        <EditModalEditButton
+                          onClick={(e) => {
+                            e.preventDefault();
+                            const id = data.partyId;
+                            dispatch(
+                              __updateGroup({
+                                id,
+                                partyName: editGroup.partyName,
+                                partyIntroduction: editGroup.partyIntroduction,
+                              })
+                            );
+                            setEditGroup({
+                              partyName: "",
+                              partyIntroduction: "",
+                            });
+                            setUpdateId("");
+                          }}
+                        >
+                          Apply
+                        </EditModalEditButton>
+                      </form>
+                    </EditModalContainer>
+                  </BackGround>
+                )}
+              </GroupCardContainer>
+            );
+          })}
+        </GroupMaincontainer>
+      ) : (
+        <NullBox>
+          <NullBoxTextBox>
+            <NullBoxH3>현재 그룹이 없습니다.</NullBoxH3>
+            <NullBoxH3>
+              새로운 그룹을 만들어 친구들을 초대해보세요! 🍀
+            </NullBoxH3>
+          </NullBoxTextBox>
+        </NullBox>
+      )}
     </>
   );
 };
@@ -341,4 +331,25 @@ const EditModalEditButton = styled.button`
   border-radius: 5px;
   color: white;
   font-size: 20px;
+`;
+
+const NullBox = styled.div`
+  width: 999px;
+  height: 227px;
+  border: 2px dashed #d9d3c7;
+  border-radius: 10px;
+  margin-left: 450px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+`;
+
+const NullBoxTextBox = styled.div`
+  margin-top: 90px;
+`;
+
+const NullBoxH3 = styled.h3`
+  font-size: 18px;
+  font-weight: 500;
+  color: #a4a19d;
+  text-align: center;
 `;

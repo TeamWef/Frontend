@@ -101,7 +101,9 @@ const Logout = styled.button`
 `;
 
 const UserInfo = styled.div`
-  width: 100px;
+  position: relative;
+  width: 120px;
+  max-width: 120px;
   height: 36px;
   border-radius: 25px;
   margin-top: 1px;
