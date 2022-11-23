@@ -183,7 +183,7 @@ export const scheduleSlice = createSlice({
     },
     [__delSchedule.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.scheduieDetail.data = state.scheduieDetail.data.filter(
+      state.scheduieDetail = state.scheduieDetail.filter(
         (item) => item.scheduleId !== action.payload
       );
     },
