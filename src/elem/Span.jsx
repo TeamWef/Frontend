@@ -32,7 +32,7 @@ const StSpan = styled.span`
         `;
       case "bigBronze":
         return css`
-          font-size: 21px;
+          font-size: 20px;
           color: #a4a19d;
         `;
       default:

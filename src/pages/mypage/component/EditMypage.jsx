@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { __updateMypage } from "../../../redux/modules/mypageSlice";
 import { useModal } from "../../../hooks/useModal";
+import { Div, Span, Flex, Button, Margin, Svg } from "../../../elem";
 
 const EditMypage = ({ myProfile, openModal }) => {
   const dispatch = useDispatch();
@@ -38,69 +39,94 @@ const EditMypage = ({ myProfile, openModal }) => {
   };
 
   return (
-    <StDiv>
-      {uploadImg ? (
-        <div
-          style={{
-            width: "100px",
-            height: "100px",
-            backgroundImage: `url(${previewImage})`,
-            backgroundSize: "contain",
-            backgroundRepeat: "no-repeat",
-          }}
-        >
-          이미지 미리보기
-        </div>
-      ) : (
-        <img
-          src={profileImageUrl}
-          alt="profileImg"
-          style={{
-            width: "100px",
-            height: "100px",
-          }}
-        />
-      )}
-      {edit ? (
-        <>
-          <input
-            name="ImageUrl"
-            style={{ display: "none" }}
-            ref={imgInput}
-            type="file"
-            onChange={onChangeImg}
+    <Div variant="profileEdit">
+      <Flex>
+        <Flex fd="row" jc="space-between">
+          <Span variant="bigBronze">Profile</Span>
+          <Svg
+            variant="close"
+            onClick={() => {
+              openModal();
+              setUploadImg("");
+            }}
           />
-          <button
+        </Flex>
+        <Margin mg="15px" />
+        {profileImageUrl === null && uploadImg === null ? (
+          <UploadForm
             onClick={() => {
               imgInput.current.click();
             }}
           >
-            사진 등록
-          </button>
-          <button onClick={uploadHandler}>수정 완료</button>
-          <button
+            <ErrorImg src="/images/imgError.jpg" />
+          </UploadForm>
+        ) : (
+          <StDiv
             onClick={() => {
-              openEdit();
-              setUploadImg("");
+              imgInput.current.click();
             }}
           >
-            취소
-          </button>
-        </>
-      ) : (
-        <>
-          <button onClick={openEdit}>수정하기</button>
-          <button onClick={openModal}>닫기</button>
-        </>
-      )}
-      <p>{memberName}</p>
-    </StDiv>
+            {uploadImg ? (
+              <StImg src={previewImage} alt="preview" />
+            ) : (
+              <StImg src={profileImageUrl} alt="profileImg" />
+            )}
+          </StDiv>
+        )}
+        <Margin mg="15px" />
+        <input
+          name="ImageUrl"
+          style={{ display: "none" }}
+          ref={imgInput}
+          type="file"
+          onChange={onChangeImg}
+        />
+        <Button
+          variant="bronzeBtn"
+          width="224px"
+          height="38px"
+          onClick={uploadHandler}
+        >
+          Apply
+        </Button>
+      </Flex>
+    </Div>
   );
 };
 
 export default EditMypage;
 
 const StDiv = styled.div`
-  margin: 10px;
-  border: solid 1px;
+  display: flex;
+  margin: 0 auto;
+  width: 144px;
+  height: 144px;
+  border-radius: 50%;
+  overflow: hidden;
+`;
+
+const StImg = styled.img`
+  width: 144px;
+  height: 144px;
+  overflow: hidden;
+  object-fit: cover;
+`;
+
+const UploadForm = styled.div`
+  display: flex;
+  width: 224px;
+  height: 144px;
+  margin: 0 auto;
+  border: 2px dashed #d9d3c7;
+  border-radius: 5px;
+  position: relative;
+`;
+
+const ErrorImg = styled.img`
+  width: 38px;
+  height: 38px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 `;
