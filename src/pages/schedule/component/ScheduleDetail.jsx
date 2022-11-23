@@ -12,7 +12,7 @@ import { useModal } from "../../../hooks/useModal";
 import EditLanding from "./EditLanding";
 import styled from "styled-components";
 
-const SchdeleDetail = ({ scheduleId }) => {
+const SchdeleDetail = ({ scheduleId, partyId }) => {
   const scheduleDetail = useSelector((state) => state.schedule.scheduleDetail);
   console.log("디테일 selector==>", scheduleDetail);
   const detailId = useParams().scheduleId;
@@ -21,6 +21,7 @@ const SchdeleDetail = ({ scheduleId }) => {
     dispatch(__getScheduleDetail(detailId));
   }, [dispatch, detailId]);
   const navigate = useNavigate();
+
   const [editSchedule, setEditSchedule] = useState({
     title: "",
     content: "",
@@ -28,6 +29,7 @@ const SchdeleDetail = ({ scheduleId }) => {
     date: "",
     place: { placeName: "", address: "" },
   });
+
   const join = useSelector((state) => state.schedule.join);
   const joiner = scheduleDetail?.participantResponseDtoList;
   console.log("selector==>", join);
@@ -88,7 +90,7 @@ const SchdeleDetail = ({ scheduleId }) => {
             dispatch(__delSchedule(detailId));
             alert("삭제가 완료되었습니다.");
           }
-          navigate("/main");
+          navigate(`/schedulelist/${partyId}`);
         }}
       >
         삭제하기

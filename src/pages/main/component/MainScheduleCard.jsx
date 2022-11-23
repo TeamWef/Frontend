@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { __getGroupSchedule } from "../../../redux/modules/scheduleSlice";
+import Svg from "../../../elem/Svg";
 
 const ScheduleCard = () => {
   const data = useSelector((state) => state.schedule.groupSchedule.data);
@@ -23,18 +24,20 @@ const ScheduleCard = () => {
           <ScheduleContainer key={item.scheduleId}>
             <TextContainer>
               <GroupTitle>
-                <h2>💖 {item?.partyName} 🥳</h2>
+                <TitleBox>
+                  <h3>{item?.partyName}</h3>
+                </TitleBox>
                 <p>{item?.title}</p>
+                <p>{item?.writer}</p>
               </GroupTitle>
               <UserBox>
-                <p>{item?.writer}</p>
-                <button
+                <More
                   onClick={() => {
                     navigate(`/sheduledetail/${item.scheduleId}`);
                   }}
                 >
-                  바로가기
-                </button>
+                  <Svg variant={"more"} />
+                </More>
               </UserBox>
             </TextContainer>
           </ScheduleContainer>
@@ -50,8 +53,20 @@ const MainContainer = styled.div`
   width: 1078px;
   height: 40px;
   margin: 0 auto;
-  & h2 {
-    margin-top: 20px;
+`;
+
+const TitleBox = styled.div`
+  background-color: #ede8e1;
+  color: #a4a19d;
+  width: 160px;
+  height: 30px;
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  & h3 {
+    font-weight: 400;
   }
 `;
 
@@ -62,14 +77,15 @@ const ScheduleContainer = styled.div`
 
 const TextContainer = styled.div`
   display: flex;
-  justify-content: space-between;
 `;
 
 const GroupTitle = styled.div`
+  width: 1078px;
   display: flex;
+  justify-content: space-between;
   & p {
     margin-top: 28px;
-    margin-left: 25px;
+    margin-left: 30px;
     color: #b5b3af;
   }
 `;
@@ -80,14 +96,13 @@ const UserBox = styled.div`
     margin-top: 30px;
     font-weight: 600;
   }
-  & button {
-    margin-top: 22px;
-    margin-left: 20px;
-    width: 95px;
-    height: 28px;
-    border-radius: 5px;
-    border: none;
-    background-color: #a4a19d;
-    color: #f0eade;
-  }
+`;
+
+const More = styled.div`
+  width: 50px;
+  height: 30px;
+  margin-top: 26px;
+  margin-left: 26px;
+  border-radius: 5px;
+  border: none;
 `;

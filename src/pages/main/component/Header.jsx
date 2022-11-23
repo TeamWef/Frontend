@@ -105,5 +105,5 @@ const UserInfo = styled.div`
   height: 36px;
   border-radius: 25px;
   margin-top: 1px;
-  background-color: white;
+  background-color: #f8f5f0;
 `;

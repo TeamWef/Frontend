@@ -8,8 +8,9 @@ import {
   __updateGroup,
 } from "../../../redux/modules/groupSlice";
 import { useModal } from "../../../hooks/useModal";
-import { useInput } from "../../../hooks/useInput";
+import { useEditModal } from "../../../hooks/useEditModal";
 import styled from "styled-components";
+import Svg from "../../../elem/Svg";
 
 const GroupCard = () => {
   const dispatch = useDispatch();
@@ -18,6 +19,7 @@ const GroupCard = () => {
   const groups = useSelector((state) => state?.group.group);
 
   const [modal, openModal] = useModal();
+  const [EditModal, openEditModal] = useEditModal();
   const [updateId, setUpdateId] = useState("");
 
   const [editGroup, setEditGroup] = useState({
@@ -53,7 +55,7 @@ const GroupCard = () => {
             openModal();
           }}
         >
-          추가하기
+          <Svg variant={"add"} />
         </CreateBtn>
         {modal ? <CreateGroupCard openModal={openModal} modal={modal} /> : null}
       </MainTitleContainer>
@@ -63,7 +65,14 @@ const GroupCard = () => {
             <GroupCardContainer key={data?.partyId}>
               <TitleContainer>
                 <h2>{data?.partyName}</h2>
-                <button>・・・</button>
+                <button
+                  onClick={() => {
+                    openEditModal();
+                    setUpdateId(data.partyId);
+                  }}
+                >
+                  <Svg variant={"editDelete"} />
+                </button>
               </TitleContainer>
               <p>{data?.partyIntroduction}</p>
               {/* <Btn
@@ -106,49 +115,54 @@ const GroupCard = () => {
                 앨범보기
               </Btn> */}
               {data.partyId === updateId && (
-                <>
-                  <form onSubmit={onAddGroupHandler}>
-                    <input
-                      name="partyName"
-                      type="text"
-                      placeholder="그룹명을 수정하세요"
-                      onChange={onChangeHandler}
-                    />
-                    <input
-                      name="partyIntroduction"
-                      type="text"
-                      placeholder="그룹을 소개해 주세요!"
-                      onChange={onChangeHandler}
-                    />
-                    <button
-                      onClick={(e) => {
-                        e.preventDefault();
-                        const id = data.partyId;
-                        dispatch(
-                          __updateGroup({
-                            id,
-                            partyName: editGroup.partyName,
-                            partyIntroduction: editGroup.partyIntroduction,
-                          })
-                        );
-                        setEditGroup({
-                          partyName: "",
-                          partyIntroduction: "",
-                        });
-                        setUpdateId("");
-                      }}
-                    >
-                      수정하기
-                    </button>
-                    <button
-                      onClick={() => {
-                        setUpdateId("");
-                      }}
-                    >
-                      닫기
-                    </button>
-                  </form>
-                </>
+                <BackGround>
+                  <EditModalContainer>
+                    <ModalTitleBox>
+                      <h2>Group Edit.</h2>
+                      <CloseButton
+                        onClick={() => {
+                          setUpdateId("");
+                        }}
+                      >
+                        <Svg variant={"close"} />
+                      </CloseButton>
+                    </ModalTitleBox>
+                    <form onSubmit={onAddGroupHandler}>
+                      <EditModalInput
+                        name="partyName"
+                        type="text"
+                        placeholder="Title"
+                        onChange={onChangeHandler}
+                      />
+                      <EditModalInput
+                        name="partyIntroduction"
+                        type="text"
+                        placeholder="Introduction"
+                        onChange={onChangeHandler}
+                      />
+                      <EditModalEditButton
+                        onClick={(e) => {
+                          e.preventDefault();
+                          const id = data.partyId;
+                          dispatch(
+                            __updateGroup({
+                              id,
+                              partyName: editGroup.partyName,
+                              partyIntroduction: editGroup.partyIntroduction,
+                            })
+                          );
+                          setEditGroup({
+                            partyName: "",
+                            partyIntroduction: "",
+                          });
+                          setUpdateId("");
+                        }}
+                      >
+                        Apply
+                      </EditModalEditButton>
+                    </form>
+                  </EditModalContainer>
+                </BackGround>
               )}
             </GroupCardContainer>
           );
@@ -254,7 +268,7 @@ const GroupMoreButton = styled.button`
   border-radius: 10px;
   color: white;
   font-size: 13px;
-  margin-left: 23%;
+  margin-left: 27%;
   margin-top: 50px;
 `;
 
@@ -268,4 +282,63 @@ const Btn = styled.button`
   border: 1px solid gray;
   border-radius: 15px;
   display: none;
+`;
+
+const BackGround = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(153, 153, 153, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const EditModalContainer = styled.div`
+  position: relative;
+  width: 440px;
+  height: 370px;
+  background-color: #f8f5f0;
+  border-radius: 5px;
+  padding: 20px;
+`;
+
+const CloseButton = styled.button`
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+`;
+
+const ModalTitleBox = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const EditModalInput = styled.input`
+  display: flex;
+  flex-direction: row;
+  margin-top: 20px;
+  width: 375px;
+  height: 55px;
+  border: none;
+  border-bottom: 1px solid #a4a19d;
+  background-color: transparent;
+  &::placeholder {
+    font-size: 16px;
+    font-weight: 500;
+    background-image: url("");
+  }
+`;
+
+const EditModalEditButton = styled.button`
+  width: 375px;
+  height: 55px;
+  margin-top: 20px;
+  background-color: #a4a19d;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-size: 20px;
 `;
