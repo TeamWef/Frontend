@@ -30,6 +30,7 @@ const StDiv = styled.div`
           top: 40px;
           right: 0px;
           box-shadow: 2px 1px 5px 1px #bebebe;
+          z-index: 8;
         `;
       case "background":
         return css`
