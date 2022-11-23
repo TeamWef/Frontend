@@ -1,23 +1,16 @@
 import instance from "../../../shared/axios";
 
-// 추후 정리
-// export const albumApis = {
-
-// }
-
-// 앨범 목록 불러오기
-export const getAlbumListApi = async (payload) => {
-  const data = await instance.get(`/${payload}/album`);
-  return data.data;
+export const albumApis = {
+  getAlbumList: async (payload) => await instance.get(`/${payload}/album`),
+  getAlbumDetail: async (payload) => await instance.get(`/album/${payload}`),
+  delAlbum: async (payload) => await instance.delete(`/album/${payload}`),
+  updateAlbum: async (payload) =>
+    await instance.patch(`/album/${payload.id}`, {
+      content: payload.contentInput,
+    }),
 };
 
-// 앨범 상세보기
-export const getAlbumDetailApi = async (payload) => {
-  const data = await instance.get(`/album/${payload}`);
-  return data.data;
-};
-
-// 앨범 등록
+// 앨범 등록 (Apis에 넣으면 imgUrl이 파일로 잡히는 현상있음)
 export const addAlbumApi = async ({ newAlbum, partyId }) => {
   // console.log(newAlbum, partyId);
   // 폼데이터
@@ -32,17 +25,4 @@ export const addAlbumApi = async ({ newAlbum, partyId }) => {
     },
   });
   return data.data;
-};
-
-// 앨범 삭제
-export const delAlbumApi = async (payload) => {
-  await instance.delete(`/album/${payload}`);
-};
-
-// 앨범 수정
-export const updateAlbumApi = async (payload) => {
-  const data = await instance.patch(`/album/${payload.id}`, {
-    content: payload.contentInput,
-  });
-  return data;
 };

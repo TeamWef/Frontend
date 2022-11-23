@@ -5,12 +5,13 @@ import { noticeApis } from "./API/noticeAPI";
 const initialState = {
   noticeList: [],
 };
-//
+
 // export const __getNoticeList = createAsyncThunk(
 //   "get/noticeList",
 //   async (payload, thunkAPI) => {
 //     try {
 //       const data = await noticeApis.noticeList();
+//       console.log(data);
 //       return thunkAPI.fulfillWithValue(data);
 //     } catch (err) {
 //       return console.log(err);
