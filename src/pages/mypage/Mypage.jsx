@@ -21,7 +21,11 @@ const Mypage = () => {
     <>
       <StDiv onClick={openModal}>
         <StP>{memberName}</StP>
-        <Stimg src={profileImageUrl} alt="profileImg" />
+        {profileImageUrl === null ? (
+          <Stimg src="/images/userProfile.jpg" />
+        ) : (
+          <Stimg src={profileImageUrl} alt="profileImg" />
+        )}
       </StDiv>
       {modal && <EditMypage myProfile={myProfile} openModal={openModal} />}
     </>
@@ -41,9 +45,13 @@ const Stimg = styled.img`
   border-radius: 50%;
   margin-top: 3px;
   margin-right: 5px;
+  object-fit: cover;
 `;
 
 const StP = styled.p`
+  display: flex;
+  justify-content: center;
+  width: 100%;
   margin-left: 30px;
   vertical-align: middle;
   margin-top: 10px;

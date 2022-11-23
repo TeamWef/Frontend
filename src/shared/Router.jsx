@@ -19,7 +19,6 @@ const Page = () => {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/members/kakao/callback" element={<Kakao />} />
         <Route path="/schedule/:partyId" element={<ScheduleMain />} />
-        <Route path="/main" element={<Main />} />
         <Route path="/:partyid/album" element={<AlbumMain />} />
         <Route path="/:partyid/album/:id" element={<AlbumDetail />} />
         <Route path="/album" element={<AlbumMain />} />

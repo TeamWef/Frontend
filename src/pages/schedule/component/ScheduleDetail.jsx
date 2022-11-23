@@ -14,7 +14,7 @@ import styled from "styled-components";
 import Notice from "../../notice/Notice";
 
 const SchdeleDetail = ({ scheduleId, partyId }) => {
-  const scheduleDetail = useSelector((state) => state.schedule.scheduleDetail);
+  const scheduleDetail = useSelector((state) => state.schedule?.scheduleDetail);
   console.log("디테일 selector==>", scheduleDetail);
   const detailId = useParams().scheduleId;
   const dispatch = useDispatch();

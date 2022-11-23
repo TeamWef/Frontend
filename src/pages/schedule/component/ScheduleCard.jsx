@@ -7,7 +7,7 @@ import {
 } from "../../../redux/modules/scheduleSlice";
 
 const ScheduleCard = () => {
-  const seheduleList = useSelector((state) => state.schedule.schedule);
+  const seheduleList = useSelector((state) => state.schedule?.schedule);
   console.log("!!!", seheduleList);
   const dispatch = useDispatch();
   const { partyId } = useParams();
@@ -31,7 +31,7 @@ const ScheduleCard = () => {
       </button>
       {seheduleList?.map((data) => {
         return (
-          <div scheduleId={data?.scheduleId}>
+          <div key={data?.scheduleId}>
             <h4>{data?.scheduleId}</h4>
             <h2>{data?.title}</h2>
             <p>{data?.writer}</p>
