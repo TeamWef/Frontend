@@ -21,7 +21,6 @@ const GroupCard = () => {
   const [modal, openModal] = useModal();
   const [EditModal, openEditModal] = useEditModal();
   const [updateId, setUpdateId] = useState("");
-  const [updatepartyId, setUpdatepartyId] = useState("");
   const [editGroup, setEditGroup] = useState({
     partyName: "",
     partyIntroduction: "",
@@ -70,7 +69,6 @@ const GroupCard = () => {
                     <button
                       onClick={() => {
                         setDropdown(!dropdown);
-                        updatepartyId();
                       }}
                     >
                       <Svg variant={"editDelete"} />
@@ -108,7 +106,7 @@ const GroupCard = () => {
                       Join
                     </Button>
                   </ButtonWrap>
-                  {data.partyId === updateId && (
+                  {EditModal && data.partyId === updateId ? (
                     <BackGround>
                       <EditModalContainer>
                         <ModalTitleBox>
@@ -158,7 +156,7 @@ const GroupCard = () => {
                         </form>
                       </EditModalContainer>
                     </BackGround>
-                  )}
+                  ) : null}
                 </GroupCardContainer>
               );
             })}
@@ -264,18 +262,6 @@ const TitleContainer = styled.div`
     margin-top: 23px;
     font-size: 18px;
   }
-`;
-
-const GroupMoreButton = styled.button`
-  width: 115px;
-  height: 34px;
-  background-color: #a4a19d;
-  border: none;
-  border-radius: 10px;
-  color: white;
-  font-size: 13px;
-  margin-left: 27%;
-  margin-top: 80px;
 `;
 
 const BackGround = styled.div`
