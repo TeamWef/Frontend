@@ -60,7 +60,7 @@ const GroupCard = () => {
         </CreateBtn>
         {modal ? <CreateGroupCard openModal={openModal} modal={modal} /> : null}
       </MainTitleContainer>
-      {groups.length !== 0 ? (
+      {groups?.length !== 0 ? (
         <GroupMaincontainer>
           {groups?.map((data) => {
             return (
