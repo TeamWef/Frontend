@@ -47,7 +47,7 @@ const SignUp = () => {
         <Margin />
         <form onSubmit={onSignup}>
           <Input
-            variant="sign"
+            variant="large"
             name="name"
             value={name}
             onChange={onChange}
@@ -55,14 +55,14 @@ const SignUp = () => {
           />
           <StDiv>
             <Input
-              variant="sign"
+              variant="large"
               name="email"
               value={email}
               onChange={onChange}
               placeholder="Email"
             />
             <StBtn
-              variant="sign"
+              variant="large"
               type="button"
               onClick={() =>
                 email
@@ -74,7 +74,7 @@ const SignUp = () => {
             </StBtn>
           </StDiv>
           <Input
-            variant="big"
+            variant="large"
             type="password"
             name="password"
             value={password}
@@ -82,7 +82,7 @@ const SignUp = () => {
             placeholder="Password"
           />
           <Input
-            variant="big"
+            variant="large"
             type="password"
             name="passwordCheck"
             value={passwordCheck}

@@ -11,7 +11,7 @@ const StInput = styled.input`
   border-radius: 5px;
   ${({ variant }) => {
     switch (variant) {
-      case "big":
+      case "large":
         return css`
           padding-left: 16px;
           display: flex;

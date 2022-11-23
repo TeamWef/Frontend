@@ -46,7 +46,7 @@ const CreateGroupCard = ({ openModal, modal }) => {
             <Span variant="mediumBronze">Group title</Span>
             <Margin mg="12px" />
             <Input
-              variant="big"
+              variant="large"
               name="partyName"
               type="text"
               placeholder="그룹이름을 설정해주세요!"
@@ -55,7 +55,7 @@ const CreateGroupCard = ({ openModal, modal }) => {
             <Span variant="mediumBronze">Group contents</Span>
             <Margin mg="12px" />
             <Input
-              variant="big"
+              variant="large"
               name="partyIntroduction"
               type="text"
               placeholder="그룹을 소개해 주세요!"

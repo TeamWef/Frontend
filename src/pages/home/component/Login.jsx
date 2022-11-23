@@ -48,14 +48,14 @@ const Login = () => {
         <Margin />
         <form onSubmit={onLogin}>
           <Input
-            variant="sign"
+            variant="large"
             type="email"
             value={email}
             onChange={onChangeEmail}
             placeholder="Email"
           />
           <Input
-            variant="sign"
+            variant="large"
             type="password"
             value={password}
             onChange={onChangePW}
