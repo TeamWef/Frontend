@@ -1,18 +1,12 @@
-import { useEffect, useRef } from "react";
-import SockJS from "sockjs-client";
-import { Stomp } from "@stomp/stompjs";
+import React from "react";
+import { ChatRoom } from "../chat/component/ChatRoom";
 
-const chatMain = () => {
+const ChatMain = () => {
   return (
     <div>
-      <ul>
-        <li>다른 사용자: message</li>
-        <li>또 다른 사용자 : message</li>
-      </ul>
-      <input />
-      <button>send</button>
+      <ChatRoom />
     </div>
   );
 };
 
-export default chatMain;
+export default ChatMain;

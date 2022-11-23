@@ -1,5 +1,4 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Login from "../pages/home/component/Login";
 import SignUp from "../pages/home/component/SignUp";
 import ScheduleMain from "../pages/schedule/ScheduleMain";
 import Main from "../pages/main/Main";

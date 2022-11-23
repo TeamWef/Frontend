@@ -16,9 +16,10 @@ const initialState = {
 export const __addGroup = createAsyncThunk(
   "post/addGroup",
   async (payload, thunkAPI) => {
+    console.log("payload==>", payload);
     try {
       const res = await addGroupApi(payload);
-      return thunkAPI.fulfillWithValue(res.data);
+      return thunkAPI.fulfillWithValue(res);
     } catch (err) {
       return thunkAPI.rejectWithValue(err);
     }
@@ -78,6 +79,7 @@ export const groupSlice = createSlice({
     },
     [__addGroup.fulfilled]: (state, action) => {
       state.isLoading = false;
+      console.log("action??", action);
       state.group.push(action.payload);
     },
     [__addGroup.rejected]: (state, action) => {

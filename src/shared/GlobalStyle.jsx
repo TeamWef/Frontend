@@ -11,7 +11,6 @@ const GlobalStyle = createGlobalStyle`
   }
   body {
     display: flex;
-    /* justify-content: center; */
     max-width: 1200px;
     /* overflow:hidden; */
     background-color: #F8F5F0;
