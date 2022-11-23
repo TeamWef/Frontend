@@ -7,7 +7,6 @@ import { Header } from "./component/Header";
 const Main = () => {
   return (
     <>
-      <Header />
       <GroupCard />
       <MainScheduleCard />
     </>

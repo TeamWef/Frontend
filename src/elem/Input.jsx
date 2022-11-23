@@ -15,8 +15,8 @@ const StInput = styled.input`
         return css`
           padding-left: 16px;
           display: flex;
-          width: 370px;
-          height: 65px;
+          width: 375px;
+          height: 55px;
           margin-bottom: 12px;
           font-size: 20px;
           ::placeholder {

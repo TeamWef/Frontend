@@ -41,8 +41,10 @@ export const __addAlbumItem = createAsyncThunk(
       const data = await addAlbumApi(payload);
       // console.log(data);
       const albumInfo = { id: data.albumId, imageUrl: data.imageUrl };
+      alert("앨범이 등록되었습니다");
       return thunkAPI.fulfillWithValue(albumInfo);
     } catch (err) {
+      alert("앨범 등록 실패");
       return console.log(err);
     }
   }

@@ -1,10 +1,21 @@
-import { useNavigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { getCookie } from "../../redux/modules/customCookies";
-import Main from "../main/Main";
+import { Header } from "../main/component/Header";
 import Login from "./component/Login";
 
 export const Home = () => {
   const token = getCookie("token");
 
-  return <>{token ? <Main /> : <Login />}</>;
+  return (
+    <>
+      {token ? (
+        <>
+          <Header />
+          <Outlet></Outlet>
+        </>
+      ) : (
+        <Login />
+      )}
+    </>
+  );
 };

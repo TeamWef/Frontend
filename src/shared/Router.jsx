@@ -10,25 +10,27 @@ import ScheduleDetail from "../pages/schedule/component/ScheduleDetail";
 import Kakao from "../pages/home/component/Kakao";
 import ChatMain from "../pages/chat/ChatMain";
 import Notice from "../pages/notice/Notice";
+import GroupMain from "../pages/groupmain/GroupMain";
 
 const Page = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Home />}>
+          <Route path="" element={<Main />} />
+          <Route path=":partyId" element={<GroupMain />} />
+          <Route path=":partyid/album" element={<AlbumMain />} />
+          <Route path=":partyid/album/:id" element={<AlbumDetail />} />
+          <Route path=":partyId/schedule" element={<ScheduleMain />} />
+          <Route path=":partyId/schedulelist" element={<ScheduleCard />} />
+          <Route
+            path="/:partyId/scheduledetail/:scheduleId"
+            element={<ScheduleDetail />}
+          />
+          {/* <Route path="/chat" element={<ChatMain />} /> */}
+        </Route>
         <Route path="/signup" element={<SignUp />} />
         <Route path="/members/kakao/callback" element={<Kakao />} />
-        <Route path="/:partyId/schedule" element={<ScheduleMain />} />
-        <Route path="/:partyid/album" element={<AlbumMain />} />
-        <Route path="/:partyid/album/:id" element={<AlbumDetail />} />
-        <Route path="/album" element={<AlbumMain />} />
-        <Route path="/album/:id" element={<AlbumDetail />} />
-        <Route path="/:partyId/schedulelist" element={<ScheduleCard />} />
-        <Route
-          path="/:partyId/scheduledetail/:scheduleId"
-          element={<ScheduleDetail />}
-        />
-        {/* <Route path="/chat" element={<ChatMain />} /> */}
         <Route path="/notice" element={<Notice />} />
       </Routes>
     </BrowserRouter>

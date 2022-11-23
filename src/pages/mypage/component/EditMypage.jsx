@@ -7,7 +7,6 @@ import { Div, Span, Flex, Button, Margin, Svg } from "../../../elem";
 
 const EditMypage = ({ myProfile, openModal }) => {
   const dispatch = useDispatch();
-
   const { memberName, profileImageUrl } = myProfile;
 
   const [edit, openEdit] = useModal();
@@ -81,12 +80,7 @@ const EditMypage = ({ myProfile, openModal }) => {
           type="file"
           onChange={onChangeImg}
         />
-        <Button
-          variant="bronzeBtn"
-          width="224px"
-          height="38px"
-          onClick={uploadHandler}
-        >
+        <Button variant="mideum" onClick={uploadHandler}>
           Apply
         </Button>
       </Flex>
