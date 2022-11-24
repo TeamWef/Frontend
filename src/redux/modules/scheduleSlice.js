@@ -38,6 +38,7 @@ export const __getSchedule = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const res = await getScheduleApi(payload);
+      console.log(res);
       return thunkAPI.fulfillWithValue(res.data);
     } catch (err) {
       console.log("error", err);

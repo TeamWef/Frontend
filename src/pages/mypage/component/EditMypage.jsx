@@ -80,7 +80,7 @@ const EditMypage = ({ myProfile, openModal }) => {
           type="file"
           onChange={onChangeImg}
         />
-        <Button variant="mideum" onClick={uploadHandler}>
+        <Button variant="medium" onClick={uploadHandler}>
           Apply
         </Button>
       </Flex>

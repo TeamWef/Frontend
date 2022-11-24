@@ -31,6 +31,7 @@ export const __getGroup = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const res = await getGroupApi();
+      // console.log(res);
       return thunkAPI.fulfillWithValue(res.data);
     } catch (err) {
       console.log(err);
@@ -45,7 +46,7 @@ export const __delGroup = createAsyncThunk(
     console.log("async=>", payload);
     try {
       await delGroupApi(payload);
-      console.log("???????=>", payload);
+      // console.log("???????=>", payload);
       return thunkAPI.fulfillWithValue(payload);
     } catch (err) {
       console.log("error ::::::", err.response);

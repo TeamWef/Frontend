@@ -25,7 +25,7 @@ const StBtn = styled.button`
           height: 55px;
           font-size: 18px;
         `;
-      case "mideum":
+      case "medium":
         return css`
           width: 225px;
           height: 38px;

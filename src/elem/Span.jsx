@@ -30,9 +30,14 @@ const StSpan = styled.span`
           font-size: 14px;
           color: #a4a19d;
         `;
+      case "mediumBronze":
+        return css`
+          font-size: 16px;
+          color: #a4a19d;
+        `;
       case "bigBronze":
         return css`
-          font-size: 20px;
+          font-size: 18px;
           color: #a4a19d;
         `;
       default:

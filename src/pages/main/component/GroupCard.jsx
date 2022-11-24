@@ -8,19 +8,19 @@ import {
   __updateGroup,
 } from "../../../redux/modules/groupSlice";
 import { useModal } from "../../../hooks/useModal";
-import { useEditModal } from "../../../hooks/useEditModal";
 import styled from "styled-components";
 import Svg from "../../../elem/Svg";
-import MainScheduleCard from "../component/MainScheduleCard";
-import { Button } from "../../../elem";
+import { Button, Div, Flex, Margin, Span } from "../../../elem";
 
 const GroupCard = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const groups = useSelector((state) => state.group?.group);
-  const [modal, openModal] = useModal();
-  const [EditModal, openEditModal] = useEditModal();
+  const [createModal, openCreateModal] = useModal();
+  const [editModal, openEditModal] = useModal();
+  const [dropBox, openDropBox] = useModal();
   const [updateId, setUpdateId] = useState("");
+
   const [editGroup, setEditGroup] = useState({
     partyName: "",
     partyIntroduction: "",
@@ -30,20 +30,10 @@ const GroupCard = () => {
     dispatch(__getGroup());
   }, [dispatch]);
 
-  const onAddGroupHandler = (e) => {
-    // e.preventDefault();
-    // const id = data.partyId;
-    // dispatch(__updateGroup({ id, editGroup }));
-    // dispatch(__getGroup());
-    // setEditGroup({ partyName: "", partyIntroduction: "" });
-  };
-
   const onChangeHandler = (e) => {
     const { name, value } = e.target;
     setEditGroup({ ...editGroup, [name]: value });
   };
-
-  const [dropdown, setDropdown] = useState(false);
 
   return (
     <>
@@ -51,75 +41,81 @@ const GroupCard = () => {
         <h2>Group.</h2>
         <CreateBtn
           onClick={() => {
-            openModal();
+            openCreateModal();
           }}
         >
           <Svg variant={"add"} />
         </CreateBtn>
-        {modal ? <CreateGroupCard openModal={openModal} modal={modal} /> : null}
+        {createModal ? (
+          <CreateGroupCard openModal={openCreateModal} modal={createModal} />
+        ) : null}
       </MainTitleContainer>
       {groups?.length !== 0 ? (
-        <>
-          <GroupMaincontainer>
-            {groups?.map((data) => {
-              return (
-                <GroupCardContainer key={data?.partyId}>
-                  <TitleContainer>
-                    <h2>{data?.partyName}</h2>
-                    <button
+        <GroupMaincontainer>
+          {groups?.map((data) => {
+            return (
+              <GroupCardContainer key={data?.partyId}>
+                <TitleContainer>
+                  <h2>{data?.partyName}</h2>
+                  <button
+                    onClick={() => {
+                      openDropBox();
+                      setUpdateId(data.partyId);
+                    }}
+                  >
+                    <Svg variant="editDelete" />
+                  </button>
+                </TitleContainer>
+                <p>{data?.partyIntroduction}</p>
+                <ButtonWrap>
+                  <Button
+                    variant="small"
+                    onClick={() => {
+                      navigate(`/${data.partyId}`);
+                    }}
+                  >
+                    Join
+                  </Button>
+                </ButtonWrap>
+                {dropBox && data.partyId === updateId && (
+                  <DropBox>
+                    <DropBoxButton
                       onClick={() => {
-                        setDropdown(!dropdown);
+                        openEditModal();
+                        openDropBox();
                       }}
                     >
-                      <Svg variant={"editDelete"} />
-                    </button>
-                  </TitleContainer>
-                  {dropdown ? (
-                    <DropBox>
-                      <DropBoxButtonBorderLineNone
-                        onClick={() => {
-                          openEditModal();
-                        }}
-                      >
-                        수정
-                      </DropBoxButtonBorderLineNone>
-                      <DropBoxButton
-                        onClick={() => {
-                          if (window.confirm("정말 삭제하시겠습니까?")) {
-                            dispatch(__delGroup(data?.partyId));
-                            alert("삭제가 완료되었습니다.");
-                          }
-                        }}
-                      >
-                        삭제
-                      </DropBoxButton>
-                    </DropBox>
-                  ) : null}
-                  <p>{data?.partyIntroduction}</p>
-                  <ButtonWrap>
-                    <Button
-                      variant="small"
+                      그룹 수정
+                    </DropBoxButton>
+                    <DropBoxButton
                       onClick={() => {
-                        navigate(`/${data.partyId}`);
+                        if (window.confirm("정말 삭제하시겠습니까?")) {
+                          dispatch(__delGroup(data?.partyId));
+                          alert("삭제가 완료되었습니다.");
+                        }
+                        openDropBox();
                       }}
                     >
-                      Join
-                    </Button>
-                  </ButtonWrap>
-                  {EditModal && data.partyId === updateId ? (
-                    <BackGround>
-                      <EditModalContainer>
-                        <ModalTitleBox>
-                          <h2>Group Edit.</h2>
-                          <CloseButton
+                      그룹 삭제
+                    </DropBoxButton>
+                  </DropBox>
+                )}
+                {editModal && (
+                  <Div variant="background">
+                    <Div variant="groupEdit">
+                      <Flex>
+                        <Flex fd="row" jc="space-between">
+                          <Span variant="bold">Group Edit.</Span>
+                          <Svg
+                            variant="close"
                             onClick={() => {
+                              openEditModal();
                               setUpdateId("");
                             }}
-                          >
-                            <Svg variant={"close"} />
-                          </CloseButton>
-                        </ModalTitleBox>
-                        <form onSubmit={onAddGroupHandler}>
+                          />
+                        </Flex>
+                        <Margin />
+                        <div>
                           <EditModalInput
                             name="partyName"
                             type="text"
@@ -132,7 +128,9 @@ const GroupCard = () => {
                             placeholder="Introduction"
                             onChange={onChangeHandler}
                           />
-                          <EditModalEditButton
+                          <Margin mg="50px" />
+                          <Button
+                            variant="large"
                             onClick={(e) => {
                               e.preventDefault();
                               const id = data.partyId;
@@ -149,19 +147,20 @@ const GroupCard = () => {
                                 partyIntroduction: "",
                               });
                               setUpdateId("");
+                              openEditModal();
                             }}
                           >
                             Apply
-                          </EditModalEditButton>
-                        </form>
-                      </EditModalContainer>
-                    </BackGround>
-                  ) : null}
-                </GroupCardContainer>
-              );
-            })}
-          </GroupMaincontainer>
-        </>
+                          </Button>
+                        </div>
+                      </Flex>
+                    </Div>
+                  </Div>
+                )}
+              </GroupCardContainer>
+            );
+          })}
+        </GroupMaincontainer>
       ) : (
         <NullBox>
           <NullBoxTextBox>
@@ -201,6 +200,7 @@ const CreateBtn = styled.div`
 `;
 
 const GroupMaincontainer = styled.div`
+  position: relative;
   width: 1078px;
   height: 255px;
   margin: 0 auto;
@@ -264,38 +264,6 @@ const TitleContainer = styled.div`
   }
 `;
 
-const BackGround = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(153, 153, 153, 0.4);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const EditModalContainer = styled.div`
-  position: relative;
-  width: 440px;
-  height: 370px;
-  background-color: #f8f5f0;
-  border-radius: 5px;
-  padding: 20px;
-`;
-
-const CloseButton = styled.button`
-  border: none;
-  background-color: transparent;
-  cursor: pointer;
-`;
-
-const ModalTitleBox = styled.div`
-  display: flex;
-  justify-content: space-between;
-`;
-
 const EditModalInput = styled.input`
   display: flex;
   flex-direction: row;
@@ -310,17 +278,6 @@ const EditModalInput = styled.input`
     font-weight: 500;
     background-image: url("");
   }
-`;
-
-const EditModalEditButton = styled.button`
-  width: 375px;
-  height: 55px;
-  margin-top: 20px;
-  background-color: #a4a19d;
-  border: none;
-  border-radius: 5px;
-  color: white;
-  font-size: 20px;
 `;
 
 const NullBox = styled.div`
@@ -344,12 +301,17 @@ const NullBoxH3 = styled.h3`
   text-align: center;
 `;
 
+const ButtonWrap = styled.div`
+  margin-left: 27%;
+  margin-top: 50px;
+`;
+
 const DropBox = styled.div`
   position: absolute;
   width: 80px;
   height: 60px;
   margin-left: 215px;
-  margin-top: 5px;
+  top: 50px;
   background-color: white;
   border: 1px solid #d9d3c7;
   border-radius: 5px;
@@ -376,9 +338,4 @@ const DropBoxButtonBorderLineNone = styled.button`
   background-color: transparent;
   color: #a4a19d;
   cursor: pointer;
-`;
-
-const ButtonWrap = styled.div`
-  margin-left: 27%;
-  margin-top: 50px;
 `;

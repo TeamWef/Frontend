@@ -251,6 +251,7 @@ const IconSvg = ({ variant, onClick }) => {
           height="26"
           viewBox="0 0 24 26"
           fill="none"
+          cursor="pointer"
         >
           <path
             d="M4.81 10.19C3.26 10.19 2 11.45 2 13C2 14.55 3.26 15.81 4.81 15.81C6.35 15.81 7.60999 14.55 7.60999 13C7.60999 11.45 6.35 10.19 4.81 10.19Z"

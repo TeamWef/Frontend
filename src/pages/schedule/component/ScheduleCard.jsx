@@ -14,6 +14,7 @@ const ScheduleCard = () => {
   console.log({ partyId });
   const navigate = useNavigate();
   // const scheduleId = seheduleList?.scheduleId;
+  console.log(scheduleList);
 
   useEffect(() => {
     dispatch(__getSchedule({ partyId }));
