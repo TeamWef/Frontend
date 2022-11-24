@@ -1,11 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import {
-  addGroupApi,
-  delGroupApi,
-  getGroupApi,
-  groupApis,
-  putGroupApi,
-} from "./API/groupAPI";
+import { groupApis } from "./API/groupAPI";
 
 const initialState = {
   group: [],
@@ -18,8 +12,8 @@ export const __addGroup = createAsyncThunk(
   async (payload, thunkAPI) => {
     console.log("payload==>", payload);
     try {
-      const res = await addGroupApi(payload);
-      return thunkAPI.fulfillWithValue(res);
+      const res = await groupApis.addGroup(payload);
+      return thunkAPI.fulfillWithValue(res.data);
     } catch (err) {
       return thunkAPI.rejectWithValue(err);
     }
@@ -30,7 +24,7 @@ export const __getGroup = createAsyncThunk(
   "get/getGroup",
   async (payload, thunkAPI) => {
     try {
-      const res = await getGroupApi();
+      const res = await groupApis.getGroup();
       // console.log(res);
       return thunkAPI.fulfillWithValue(res.data);
     } catch (err) {
@@ -45,8 +39,7 @@ export const __delGroup = createAsyncThunk(
   async (payload, thunkAPI) => {
     console.log("async=>", payload);
     try {
-      await delGroupApi(payload);
-      // console.log("???????=>", payload);
+      await groupApis.delGroup(payload);
       return thunkAPI.fulfillWithValue(payload);
     } catch (err) {
       console.log("error ::::::", err.response);
@@ -60,7 +53,7 @@ export const __updateGroup = createAsyncThunk(
   async (payload, thunkAPI) => {
     console.log("put payload=>", payload);
     try {
-      await putGroupApi(payload);
+      await groupApis.putGroup(payload);
       return thunkAPI.fulfillWithValue(payload);
     } catch (err) {
       console.log("error ::::::", err.response);

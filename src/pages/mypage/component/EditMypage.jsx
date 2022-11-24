@@ -9,7 +9,6 @@ const EditMypage = ({ myProfile, openModal }) => {
   const dispatch = useDispatch();
   const { memberName, profileImageUrl } = myProfile;
 
-  const [edit, openEdit] = useModal();
   // 이미지 State
   const [uploadImg, setUploadImg] = useState(null);
   const [previewImage, setPreviewImage] = useState(null);
@@ -34,7 +33,6 @@ const EditMypage = ({ myProfile, openModal }) => {
     }
     dispatch(__updateMypage(uploadImg));
     setUploadImg("");
-    openEdit();
   };
 
   return (
@@ -104,6 +102,7 @@ const StImg = styled.img`
   height: 144px;
   overflow: hidden;
   object-fit: cover;
+  cursor: pointer;
 `;
 
 const UploadForm = styled.div`

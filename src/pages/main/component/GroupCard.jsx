@@ -11,6 +11,8 @@ import { useModal } from "../../../hooks/useModal";
 import styled from "styled-components";
 import Svg from "../../../elem/Svg";
 import { Button, Div, Flex, Margin, Span } from "../../../elem";
+import { getCookie } from "../../../redux/modules/customCookies";
+import jwt_decode from "jwt-decode";
 
 const GroupCard = () => {
   const dispatch = useDispatch();
@@ -26,6 +28,11 @@ const GroupCard = () => {
     partyName: "",
     partyIntroduction: "",
   });
+
+  //토큰 디코드
+  const token = getCookie("token").replace("Bearer ", "");
+  const decode = jwt_decode(token);
+  const myId = decode.sub;
 
   useEffect(() => {
     dispatch(__getGroup());
@@ -78,29 +85,37 @@ const GroupCard = () => {
                     Join
                   </Button>
                 </ButtonWrap>
-                {dropBox && data.partyId === updateId && (
-                  <DropBox>
-                    <DropBoxButton
-                      onClick={() => {
-                        openEditModal();
-                        openDropBox();
-                      }}
-                    >
-                      그룹 수정
-                    </DropBoxButton>
-                    <DropBoxButton
-                      onClick={() => {
-                        if (window.confirm("정말 삭제하시겠습니까?")) {
-                          dispatch(__delGroup(data?.partyId));
-                          alert("삭제가 완료되었습니다.");
-                        }
-                        openDropBox();
-                      }}
-                    >
-                      그룹 삭제
-                    </DropBoxButton>
-                  </DropBox>
-                )}
+                {dropBox &&
+                  data.partyId === updateId &&
+                  (data.memberEmail === myId ? (
+                    <DropBox>
+                      <DropBoxButton
+                        onClick={() => {
+                          openEditModal();
+                          openDropBox();
+                        }}
+                      >
+                        그룹 수정
+                      </DropBoxButton>
+                      <DropBoxButton
+                        onClick={() => {
+                          if (window.confirm("정말 삭제하시겠습니까?")) {
+                            dispatch(__delGroup(data?.partyId));
+                            alert("삭제가 완료되었습니다.");
+                          }
+                          openDropBox();
+                        }}
+                      >
+                        그룹 삭제
+                      </DropBoxButton>
+                    </DropBox>
+                  ) : (
+                    <DropBox>
+                      <DropBoxButtonBorderLineNone>
+                        그룹 나가기
+                      </DropBoxButtonBorderLineNone>
+                    </DropBox>
+                  ))}
                 {editModal && (
                   <Div variant="background">
                     <Div variant="groupEdit">
@@ -134,10 +149,9 @@ const GroupCard = () => {
                             variant="large"
                             onClick={(e) => {
                               e.preventDefault();
-                              const id = data.partyId;
                               dispatch(
                                 __updateGroup({
-                                  id,
+                                  id: updateId,
                                   partyName: editGroup.partyName,
                                   partyIntroduction:
                                     editGroup.partyIntroduction,
@@ -310,13 +324,13 @@ const ButtonWrap = styled.div`
 const DropBox = styled.div`
   position: absolute;
   width: 80px;
-  height: 60px;
+  height: auto;
   margin-left: 215px;
   top: 50px;
   background-color: white;
   border: 1px solid #d9d3c7;
   border-radius: 5px;
-  z-index: 999;
+  z-index: 10;
   box-shadow: 5px 5px 15px rgba(164, 161, 157, 0.15);
   display: flex;
   flex-direction: column;
@@ -333,6 +347,7 @@ const DropBoxButton = styled.button`
 `;
 
 const DropBoxButtonBorderLineNone = styled.button`
+  font-size: 13px;
   width: 80px;
   height: 30px;
   border: none;
