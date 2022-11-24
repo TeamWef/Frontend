@@ -5,6 +5,10 @@ export const groupApis = {
     const res = await instance.get(`/party`);
     return res;
   },
+  getMainGroupinfo: async () => {
+    const res = await instance.get(`/`);
+    return res;
+  },
   addGroup: async (payload) => {
     const response = await instance.post(`/party`, payload);
     return response.data;
