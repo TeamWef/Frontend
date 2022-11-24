@@ -3,7 +3,7 @@
 # 🥳 위프, we are friend! 🎈 <br>
 
 
-( https://main.daegm2i4mn3we.amplifyapp.com )
+바로가기 ⏩️ https://main.daegm2i4mn3we.amplifyapp.com 
 
 ----
 # 📍 목차
@@ -21,7 +21,7 @@
 - trouble shooting
 ----
 
-# team
+# ⚽️team
 
 ## taem member introduction
 
@@ -68,7 +68,8 @@ FrontEnd <br>
 <img src="https://img.shields.io/badge/redux-%23593d88.svg?style=flat-square&logo=redux&logoColor=white"> 
 <img src="https://img.shields.io/badge/Axios-5A29E4.svg?style=flat-square&logo=Axios&logoColor=white"/>
 <img src="https://img.shields.io/badge/github-181717.svg?style=flat-square&logo=github&logoColor=white"> 
-<img src="https://img.shields.io/badge/Visual%20Studio%20Code-0078d7.svg?style=flat-square&logo=visual-studio-code&logoColor=white">
+<img src="https://img.shields.io/badge/kakao login-FFCD00?style=flat-square&logo=kakao&logoColor=black">
+ <img src="https://img.shields.io/badge/kakao map-FFCD00?style=flat-square&logo=kakao&logoColor=black">
 </div>
 ------
 
