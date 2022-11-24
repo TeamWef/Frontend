@@ -13,8 +13,6 @@ const CreateGroupCard = ({ openModal, modal }) => {
     partyIntroduction: "",
   });
 
-  console.log("===>", group);
-
   const onChangeHandler = (e) => {
     const { name, value } = e.target;
     setGroup({ ...group, [name]: value });
