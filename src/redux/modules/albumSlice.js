@@ -111,11 +111,10 @@ export const __updateComment = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const data = await commentApis.updateComment(payload);
-      console.log(data);
       if (data.status === 200) {
         alert(`${data.data}`);
       }
-      console.log(data);
+      // console.log(data);
       return thunkAPI.fulfillWithValue(payload);
     } catch (err) {
       return console.log(err);
