@@ -6,7 +6,7 @@
 바로가기 ⏩️ https://main.daegm2i4mn3we.amplifyapp.com 
 
 ----
-# 📍 목차
+# 📍 table of contents
 
 1. team
 - taem member introduction
