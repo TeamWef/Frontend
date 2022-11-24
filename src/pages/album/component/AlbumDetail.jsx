@@ -22,10 +22,11 @@ const AlbumDetail = () => {
   //토큰 디코드
   const token = getCookie("token").replace("Bearer ", "");
   const decode = jwt_decode(token);
-  const myname = decode.aud;
+  const myId = decode.sub;
+
   // 앨범 정보
   const albumItem = useSelector((state) => state.album.albumItem);
-  // console.log(albumItem);
+  // console.log(myId)
   const {
     writer,
     place,
@@ -34,6 +35,7 @@ const AlbumDetail = () => {
     beforeTime,
     content,
     commentList,
+    memberEmail,
   } = albumItem;
 
   //수정시 state
@@ -81,7 +83,7 @@ const AlbumDetail = () => {
         <button onClick={updateClick}>수정완료</button>
       ) : (
         <>
-          {myname === writer ? (
+          {myId === memberEmail && (
             <>
               <button
                 onClick={() => {
@@ -103,7 +105,7 @@ const AlbumDetail = () => {
                 삭제
               </button>
             </>
-          ) : null}
+          )}
           <button
             onClick={() => {
               navigate(`/${partyId}/album`);
@@ -113,7 +115,7 @@ const AlbumDetail = () => {
           </button>
           <br />
           <br />
-          <AlbumComments id={id} commentList={commentList} myname={myname} />
+          <AlbumComments id={id} commentList={commentList} myId={myId} />
         </>
       )}
     </div>
