@@ -7,13 +7,14 @@ import {
 } from "../../../redux/modules/scheduleSlice";
 
 const ScheduleCard = () => {
-  const seheduleList = useSelector((state) => state.schedule.schedule);
-  console.log("!!!", seheduleList);
+  const scheduleList = useSelector((state) => state.schedule?.schedule);
+  console.log("!!!", scheduleList);
   const dispatch = useDispatch();
   const { partyId } = useParams();
-  // console.log({ partyId });
+  console.log({ partyId });
   const navigate = useNavigate();
   // const scheduleId = seheduleList?.scheduleId;
+  console.log(scheduleList);
 
   useEffect(() => {
     dispatch(__getSchedule({ partyId }));
@@ -24,20 +25,20 @@ const ScheduleCard = () => {
     <div>
       <button
         onClick={() => {
-          navigate(`/schedule/${partyId}`);
+          navigate(`/${partyId}/schedule`);
         }}
       >
         💖 일정 등록 🎈
       </button>
-      {seheduleList?.map((data) => {
+      {scheduleList?.map((data) => {
         return (
-          <div scheduleId={data?.scheduleId}>
+          <div key={data?.scheduleId}>
             <h4>{data?.scheduleId}</h4>
             <h2>{data?.title}</h2>
             <p>{data?.writer}</p>
             <button
               onClick={() => {
-                navigate(`/sheduledetail/${data?.scheduleId}`);
+                navigate(`/${partyId}/scheduledetail/${data?.scheduleId}`);
               }}
             >
               상세보기

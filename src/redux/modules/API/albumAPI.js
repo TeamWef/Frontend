@@ -1,34 +1,16 @@
-import axios from "axios";
-import { ServerUrl } from "../../../server";
-import { getCookie } from "../customCookies";
+import instance from "../../../shared/axios";
 
-// 앨범 목록 불러오기
-export const getAlbumListApi = async (payload) => {
-  //payload : 그룹 아이디
-  const data = await axios.get(`${ServerUrl}/${payload}/album`, {
-    headers: {
-      Authorization: getCookie("token"),
-      "Refresh-Token": getCookie("refreshToken"),
-      "Content-Type": "application/json",
-    },
-  });
-  return data.data;
+export const albumApis = {
+  getAlbumList: async (payload) => await instance.get(`/${payload}/album`),
+  getAlbumDetail: async (payload) => await instance.get(`/album/${payload}`),
+  delAlbum: async (payload) => await instance.delete(`/album/${payload}`),
+  updateAlbum: async (payload) =>
+    await instance.patch(`/album/${payload.id}`, {
+      content: payload.contentInput,
+    }),
 };
 
-// 앨범 상세보기
-export const getAlbumDetailApi = async (payload) => {
-  //payload : 앨범 아이디
-  const data = await axios.get(`${ServerUrl}/album/${payload}`, {
-    headers: {
-      Authorization: getCookie("token"),
-      "Refresh-Token": getCookie("refreshToken"),
-      "Content-Type": "application/json",
-    },
-  });
-  return data.data;
-};
-
-// 앨범 등록
+// 앨범 등록 (Apis에 넣으면 imgUrl이 파일로 잡히는 현상있음)
 export const addAlbumApi = async ({ newAlbum, partyId }) => {
   // console.log(newAlbum, partyId);
   // 폼데이터
@@ -37,40 +19,10 @@ export const addAlbumApi = async ({ newAlbum, partyId }) => {
   form.append("place", newAlbum.place);
   form.append("imageUrl", newAlbum.imageUrl);
 
-  const data = await axios.post(`${ServerUrl}/${partyId}/album`, form, {
+  const data = await instance.post(`/${partyId}/album`, form, {
     headers: {
-      Authorization: getCookie("token"),
-      "Refresh-Token": getCookie("refreshToken"),
       "Content-Type": "multipart/form-data",
     },
   });
   return data.data;
-};
-
-// 앨범 삭제
-export const delAlbumApi = async (payload) => {
-  await axios.delete(`${ServerUrl}/album/${payload}`, {
-    headers: {
-      Authorization: getCookie("token"),
-      "Refresh-Token": getCookie("refreshToken"),
-      "Content-Type": "application/json",
-    },
-  });
-  return payload;
-};
-
-// 앨범 수정
-export const updateAlbumApi = async (payload) => {
-  const data = await axios.patch(
-    `${ServerUrl}/album/${payload.id}`,
-    { content: payload.contentInput },
-    {
-      headers: {
-        Authorization: getCookie("token"),
-        "Refresh-Token": getCookie("refreshToken"),
-        "Content-Type": "application/json",
-      },
-    }
-  );
-  return data;
 };

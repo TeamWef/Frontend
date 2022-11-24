@@ -77,7 +77,7 @@ export const putScheduleEditApi = async (payload) => {
 export const postSchedulejoinApi = async (payload) => {
   const res = await axios.post(`${ServerUrl}/${payload}/participate`, payload, {
     headers: {
-      Authorization: localStorage.getItem("token"),
+      Authorization: getCookie("token"),
     },
   });
   return res;

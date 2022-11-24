@@ -6,18 +6,14 @@ import {
   delScheduleApi,
   getGroupScheduleApi,
   putScheduleEditApi,
-
   postSchedulejoinApi,
-
 } from "./API/scheduleAPI";
 
 const initialState = {
   schedule: [],
   scheduleDetail: {},
   groupSchedule: [],
-
   join: [],
-
   isLoading: false,
   error: null,
 };
@@ -42,6 +38,7 @@ export const __getSchedule = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const res = await getScheduleApi(payload);
+      console.log(res);
       return thunkAPI.fulfillWithValue(res.data);
     } catch (err) {
       console.log("error", err);
@@ -56,6 +53,7 @@ export const __getScheduleDetail = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const res = await getScheduleDetailApi(payload);
+      console.log("상세조회", res);
       return thunkAPI.fulfillWithValue(res.data);
     } catch (err) {
       console.log("error", err);
@@ -64,13 +62,12 @@ export const __getScheduleDetail = createAsyncThunk(
   }
 );
 
-//가입된 그룹의 일정 전체 조회(메인)
+//가입된 그룹의 일정 전체 조회(메인) 건들지마!!!
 export const __getGroupSchedule = createAsyncThunk(
   "get/getGroupSchedule",
   async (payload, thunkAPI) => {
     try {
       const res = await getGroupScheduleApi();
-      // console.log("axios??", res);
       return thunkAPI.fulfillWithValue(res);
     } catch (err) {
       console.log("error", err);
@@ -119,7 +116,6 @@ export const __joinSchedules = createAsyncThunk(
     }
   }
 );
-
 
 export const scheduleSlice = createSlice({
   name: "schedule",
@@ -188,7 +184,8 @@ export const scheduleSlice = createSlice({
     },
     [__delSchedule.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.scheduieDetail.data = state.scheduieDetail.data.filter(
+      console.log("스케쥴 액션", state.scheduleDetail);
+      state.schedule = state.schedule.filter(
         (item) => item.scheduleId !== action.payload
       );
     },
@@ -203,7 +200,6 @@ export const scheduleSlice = createSlice({
     },
     [__editSchedules.fulfilled]: (state, action) => {
       state.isLoading = false;
-
       console.log(action.payload);
       state.scheduleDetail = {
         ...state.scheduleDetail,
@@ -214,13 +210,11 @@ export const scheduleSlice = createSlice({
         address: action.payload.editSchedule.place.address,
         title: action.payload.editSchedule.title,
       };
-
     },
     [__editSchedules.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
     },
-
 
     //일정 참여
     [__joinSchedules.pending]: (state) => {
@@ -228,7 +222,6 @@ export const scheduleSlice = createSlice({
     },
     [__joinSchedules.fulfilled]: (state, action) => {
       state.isLoading = false;
-      console.log("슬라이스 액션=>", action.payload);
       state.join = action.payload;
     },
     [__joinSchedules.rejected]: (state, action) => {

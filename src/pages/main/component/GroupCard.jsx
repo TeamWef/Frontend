@@ -8,16 +8,20 @@ import {
   __updateGroup,
 } from "../../../redux/modules/groupSlice";
 import { useModal } from "../../../hooks/useModal";
-import { useInput } from "../../../hooks/useInput";
 import styled from "styled-components";
+import Svg from "../../../elem/Svg";
+import { Button, Div, Flex, Margin, Span } from "../../../elem";
+import { getCookie } from "../../../redux/modules/customCookies";
+import jwt_decode from "jwt-decode";
 
 const GroupCard = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const groups = useSelector((state) => state?.group.group);
-
-  const [modal, openModal] = useModal();
+  const groups = useSelector((state) => state.group?.group);
+  console.log("이메일 낸나...", groups);
+  const [createModal, openCreateModal] = useModal();
+  const [editModal, openEditModal] = useModal();
+  const [dropBox, openDropBox] = useModal();
   const [updateId, setUpdateId] = useState("");
 
   const [editGroup, setEditGroup] = useState({
@@ -25,20 +29,14 @@ const GroupCard = () => {
     partyIntroduction: "",
   });
 
-  // console.log("groups ==>", groups);
+  //토큰 디코드
+  const token = getCookie("token").replace("Bearer ", "");
+  const decode = jwt_decode(token);
+  const myId = decode.sub;
 
   useEffect(() => {
     dispatch(__getGroup());
   }, [dispatch]);
-
-  const onAddGroupHandler = (e) => {
-    // e.preventDefault();
-    // const id = data.partyId;
-    // console.log("add 안에", id);
-    // dispatch(__updateGroup({ id, editGroup }));
-    // dispatch(__getGroup());
-    // setEditGroup({ partyName: "", partyIntroduction: "" });
-  };
 
   const onChangeHandler = (e) => {
     const { name, value } = e.target;
@@ -49,115 +47,145 @@ const GroupCard = () => {
     <>
       <MainTitleContainer>
         <h2>Group.</h2>
-        <button>추가하기</button>
+        <CreateBtn
+          onClick={() => {
+            openCreateModal();
+          }}
+        >
+          <Svg variant={"add"} />
+        </CreateBtn>
+        {createModal ? (
+          <CreateGroupCard openModal={openCreateModal} modal={createModal} />
+        ) : null}
       </MainTitleContainer>
-      <GroupMaincontainer>
-        {/* <CreateGroupCard /> */}
-
-        {groups?.map((data) => {
-          return (
-            <GroupCardContainer>
-              <div key={data?.partyId}>
+      {groups?.length !== 0 ? (
+        <GroupMaincontainer>
+          {groups?.map((data) => {
+            return (
+              <GroupCardContainer key={data?.partyId}>
                 <TitleContainer>
                   <h2>{data?.partyName}</h2>
-                  <button>・・・</button>
+                  <button
+                    onClick={() => {
+                      openDropBox();
+                      setUpdateId(data.partyId);
+                    }}
+                  >
+                    <Svg variant="editDelete" />
+                  </button>
                 </TitleContainer>
                 <p>{data?.partyIntroduction}</p>
-
-                <Btn
-                  onClick={() => {
-                    openModal();
-                    setUpdateId(data.partyId);
-                  }}
-                >
-                  수정하기
-                </Btn>
-
-                <Btn
-                  onClick={() => {
-                    if (window.confirm("정말 삭제하시겠습니까?")) {
-                      dispatch(__delGroup(data?.partyId));
-                      alert("삭제가 완료되었습니다.");
-                    }
-                  }}
-                >
-                  삭제하기
-                </Btn>
-
-                <Btn
-                  onClick={() => {
-                    navigate(`/schedule/${data.partyId}`);
-                  }}
-                >
-                  일정 등록
-                </Btn>
-
-                <GroupMoreButton
-                  onClick={() => {
-                    navigate(`/schedulelist/${data.partyId}`);
-                  }}
-                >
-                  Join
-                </GroupMoreButton>
-
-                <Btn
-                  onClick={() => {
-                    navigate(`/${data.partyId}/album`);
-                  }}
-                >
-                  앨범보기
-                </Btn>
-
-                {data.partyId === updateId && (
-                  <>
-                    <form onSubmit={onAddGroupHandler}>
-                      <input
-                        name="partyName"
-                        type="text"
-                        placeholder="그룹명을 수정하세요"
-                        onChange={onChangeHandler}
-                      />
-                      <input
-                        name="partyIntroduction"
-                        type="text"
-                        placeholder="그룹을 소개해 주세요!"
-                        onChange={onChangeHandler}
-                      />
-                      <button
-                        onClick={(e) => {
-                          e.preventDefault();
-                          const id = data.partyId;
-                          dispatch(
-                            __updateGroup({
-                              id,
-                              partyName: editGroup.partyName,
-                              partyIntroduction: editGroup.partyIntroduction,
-                            })
-                          );
-                          setEditGroup({
-                            partyName: "",
-                            partyIntroduction: "",
-                          });
-                          setUpdateId("");
-                        }}
-                      >
-                        수정하기
-                      </button>
-                      <button
+                <ButtonWrap>
+                  <Button
+                    variant="small"
+                    onClick={() => {
+                      navigate(`/${data.partyId}`);
+                    }}
+                  >
+                    Join
+                  </Button>
+                </ButtonWrap>
+                {dropBox &&
+                  data.partyId === updateId &&
+                  (data.memberEmail === myId ? (
+                    <DropBox>
+                      <DropBoxButton
                         onClick={() => {
-                          setUpdateId("");
+                          openEditModal();
+                          openDropBox();
                         }}
                       >
-                        닫기
-                      </button>
-                    </form>
-                  </>
+                        그룹 수정
+                      </DropBoxButton>
+                      <DropBoxButton
+                        onClick={() => {
+                          if (window.confirm("정말 삭제하시겠습니까?")) {
+                            dispatch(__delGroup(data?.partyId));
+                            alert("삭제가 완료되었습니다.");
+                          }
+                          openDropBox();
+                        }}
+                      >
+                        그룹 삭제
+                      </DropBoxButton>
+                    </DropBox>
+                  ) : (
+                    <DropBox>
+                      <DropBoxButtonBorderLineNone>
+                        그룹 나가기
+                      </DropBoxButtonBorderLineNone>
+                    </DropBox>
+                  ))}
+                {editModal && (
+                  <Div variant="background">
+                    <Div variant="groupEdit">
+                      <Flex>
+                        <Flex fd="row" jc="space-between">
+                          <Span variant="bold">Group Edit.</Span>
+                          <Svg
+                            variant="close"
+                            onClick={() => {
+                              openEditModal();
+                              setUpdateId("");
+                            }}
+                          />
+                        </Flex>
+                        <Margin />
+                        <div>
+                          <EditModalInput
+                            name="partyName"
+                            type="text"
+                            placeholder="Title"
+                            onChange={onChangeHandler}
+                          />
+                          <EditModalInput
+                            name="partyIntroduction"
+                            type="text"
+                            placeholder="Introduction"
+                            onChange={onChangeHandler}
+                          />
+                          <Margin mg="50px" />
+                          <Button
+                            variant="large"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              dispatch(
+                                __updateGroup({
+                                  id: updateId,
+                                  partyName: editGroup.partyName,
+                                  partyIntroduction:
+                                    editGroup.partyIntroduction,
+                                })
+                              );
+                              setEditGroup({
+                                partyName: "",
+                                partyIntroduction: "",
+                              });
+                              setUpdateId("");
+                              openEditModal();
+                            }}
+                          >
+                            Apply
+                          </Button>
+                        </div>
+                      </Flex>
+                    </Div>
+                  </Div>
                 )}
-              </div>
-            </GroupCardContainer>
-          );
-        })}
-      </GroupMaincontainer>
+              </GroupCardContainer>
+            );
+          })}
+        </GroupMaincontainer>
+      ) : (
+        <NullBox>
+          <NullBoxTextBox>
+            <NullBoxH3>현재 그룹이 없습니다.</NullBoxH3>
+            <NullBoxH3>
+              새로운 그룹을 만들어 친구들을 초대해보세요! 🍀
+            </NullBoxH3>
+          </NullBoxTextBox>
+        </NullBox>
+      )}
     </>
   );
 };
@@ -174,16 +202,20 @@ const MainTitleContainer = styled.div`
     margin-top: 40px;
   }
   & button {
-    border: none;
-    width: 100px;
-    height: 20px;
-    margin-top: 40px;
-    background-color: transparent;
-    cursor: pointer;
   }
 `;
 
+const CreateBtn = styled.div`
+  border: none;
+  width: 100px;
+  height: 20px;
+  margin-top: 40px;
+  background-color: transparent;
+  cursor: pointer;
+`;
+
 const GroupMaincontainer = styled.div`
+  position: relative;
   width: 1078px;
   height: 255px;
   margin: 0 auto;
@@ -247,26 +279,79 @@ const TitleContainer = styled.div`
   }
 `;
 
-const GroupMoreButton = styled.button`
-  width: 115px;
-  height: 34px;
-  background-color: #a4a19d;
+const EditModalInput = styled.input`
+  display: flex;
+  flex-direction: row;
+  margin-top: 20px;
+  width: 375px;
+  height: 55px;
   border: none;
+  border-bottom: 1px solid #a4a19d;
+  background-color: transparent;
+  &::placeholder {
+    font-size: 16px;
+    font-weight: 500;
+    background-image: url("");
+  }
+`;
+
+const NullBox = styled.div`
+  width: 999px;
+  height: 227px;
+  border: 2px dashed #d9d3c7;
   border-radius: 10px;
-  color: white;
-  font-size: 13px;
-  margin-left: 23%;
+  margin-left: 450px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+`;
+
+const NullBoxTextBox = styled.div`
+  margin-top: 90px;
+`;
+
+const NullBoxH3 = styled.h3`
+  font-size: 18px;
+  font-weight: 500;
+  color: #a4a19d;
+  text-align: center;
+`;
+
+const ButtonWrap = styled.div`
+  margin-left: 27%;
   margin-top: 50px;
 `;
 
-const Btn = styled.button`
+const DropBox = styled.div`
+  position: absolute;
+  width: 80px;
+  height: auto;
+  margin-left: 215px;
+  top: 50px;
   background-color: white;
+  border: 1px solid #d9d3c7;
+  border-radius: 5px;
+  z-index: 10;
+  box-shadow: 5px 5px 15px rgba(164, 161, 157, 0.15);
+  display: flex;
+  flex-direction: column;
+`;
+
+const DropBoxButton = styled.button`
+  width: 80px;
+  height: 30px;
   border: none;
-  margin-left: 10px;
-  margin-top: 20px;
-  width: 60px;
-  height: 2rem;
-  border: 1px solid gray;
-  border-radius: 15px;
-  display: none;
+  border-top: 1px solid #ede8e1;
+  background-color: transparent;
+  color: #a4a19d;
+  cursor: pointer;
+`;
+
+const DropBoxButtonBorderLineNone = styled.button`
+  font-size: 13px;
+  width: 80px;
+  height: 30px;
+  border: none;
+  background-color: transparent;
+  color: #a4a19d;
+  cursor: pointer;
 `;

@@ -148,13 +148,6 @@ const KakaoMap = ({
                       address: item.address_name,
                     },
                   });
-                  setEditSchedule({
-                    ...editSchedule,
-                    place: {
-                      placeName: item.place_name,
-                      address: item.address_name,
-                    },
-                  });
                   console.log({ schedule, editSchedule });
                 }}
               >

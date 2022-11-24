@@ -11,16 +11,16 @@ const StInput = styled.input`
   border-radius: 5px;
   ${({ variant }) => {
     switch (variant) {
-      case "sign":
+      case "large":
         return css`
           padding-left: 16px;
           display: flex;
-          width: 370px;
-          height: 65px;
+          width: 375px;
+          height: 55px;
           margin-bottom: 12px;
           font-size: 20px;
           ::placeholder {
-            font-size: 20px;
+            font-size: 16px;
             opacity: 0.5;
           }
         `;

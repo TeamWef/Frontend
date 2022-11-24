@@ -4,19 +4,18 @@ import styled from "styled-components";
 import { useInput } from "../../../hooks/useInput";
 import {
   __addComment,
-  __delAlbumItem,
   __delComment,
   __updateComment,
 } from "../../../redux/modules/albumSlice";
 
-const AlbumComments = ({ id, commentList, myname }) => {
+const AlbumComments = ({ id, commentList, myId }) => {
   const dispatch = useDispatch();
   //등록시 State
   const [comment, onChange, reset] = useInput("");
 
   //수정시 State
   const [updateTarget, setUpdateTarget] = useState("");
-  const [Input, changeInput, inputReset] = useInput("");
+  const [Input, changeInput, inputReset, setInput] = useInput("");
 
   const addCommentHandler = () => {
     dispatch(__addComment({ id, comment }));
@@ -29,7 +28,6 @@ const AlbumComments = ({ id, commentList, myname }) => {
       alert("삭제가 완료되었습니다.");
     }
   };
-
   return (
     <div>
       <h2>AlbumComments영역임</h2>
@@ -74,11 +72,12 @@ const AlbumComments = ({ id, commentList, myname }) => {
               </>
             ) : (
               <>
-                {myname === comment.writer ? (
+                {myId === comment.memberEmail ? (
                   <>
                     <button
                       onClick={() => {
                         setUpdateTarget(comment.id);
+                        setInput(comment.content);
                       }}
                     >
                       수정

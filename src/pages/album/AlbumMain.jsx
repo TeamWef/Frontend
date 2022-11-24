@@ -21,11 +21,13 @@ const AlbumMain = () => {
   }, [dispatch]);
 
   const albumItems = useSelector((state) => state.album?.album);
-
+  // console.log(albumItems);
   return (
     <>
       <button onClick={openCreateModal}>사진 올리기</button>
-      <button onClick={() => navigate(`/`)}>메인 페이지로 돌아가기</button>
+      <button onClick={() => navigate(`/${partyId}`)}>
+        메인 페이지로 돌아가기
+      </button>
       <br />
       {albumItems.map((albumItem) => (
         <Stimg
