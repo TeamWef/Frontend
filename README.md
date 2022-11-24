@@ -54,6 +54,12 @@
 
 ## major skill
 
+✨ 그룹 생성 <br>
+✨ 일정 생성 <br>
+✨ 앨범 생성 <br>
+✨ 일정 참여 <br>
+✨ 댓글 달기 <br>
+
 ## project architecture
 
 ## skill stack
