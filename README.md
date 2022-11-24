@@ -16,6 +16,7 @@
 - project introduction
 - major skill
 - project architecture
+- ERD
 - skill stack
 - skill stack & library cause of utilization
 - trouble shooting
@@ -63,6 +64,9 @@
 ## project architecture
 <img src="https://velog.velcdn.com/images/resyve/post/df4a13ab-b696-4f2a-89a1-99a602487895/image.png">
 
+## ERD
+<img src="https://velog.velcdn.com/images/resyve/post/f636d45f-f7f2-4098-af99-9a830e73f107/image.png">
+
 ## skill stack
 
 🧶 FrontEnd <br>
@@ -93,11 +97,7 @@
 <img src="https://img.shields.io/badge/codedeploy-6DB33F?style=flat-square&logo=codedeploy&logoColor=white">
 <img src="https://img.shields.io/badge/kakao login-FFCD00?style=flat-square&logo=kakao&logoColor=black">
 <img src="https://img.shields.io/badge/Swagger-85EA2D?style=flat-square&logo=Swagger&logoColor=white">
-
-
-
 </div>
-
 [사용 예정]<br>
 <img src="https://img.shields.io/badge/SockJS-010101?style=flat-square&logoColor=white"/>
 <img src="https://img.shields.io/badge/Stromp-353535?style=flat-square&logoColor=white">
