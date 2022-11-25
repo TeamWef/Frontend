@@ -118,6 +118,7 @@ const SchdeleDetail = ({ scheduleId }) => {
             <button
               type="submit"
               onClick={() => {
+
                 navigate(
                   `/${partyId}/scheduledetail/${scheduleDetail?.scheduleId}`
                 );
