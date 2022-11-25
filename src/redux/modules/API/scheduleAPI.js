@@ -89,7 +89,7 @@ export const getGroupScheduleApi = async (payload) => {
 
 export const putScheduleEditApi = async (payload) => {
   // console.log("API====>", payload);
-  // console.log("API edit====>", payload.editSchedule);
+  console.log("API edit====>", payload.editSchedule);
   await axios.put(
     `${ServerUrl}/schedules/${payload.detailId}`,
     payload.editSchedule,

@@ -25,43 +25,41 @@ export const Header = () => {
     <BaseContainer>
       <CenterBox>
         <Svg variant="mainIcon" onClick={goHome} />
-        <UserBox>
-          <Flex fd="row">
-            {param.partyId !== undefined && (
-              <>
-                <MenuBtn
-                  onClick={() => {
-                    navigate(`/${param.partyId}`);
-                  }}
-                >
-                  Home
-                </MenuBtn>
-                <MenuBtn
-                  onClick={() => {
-                    navigate(`/${param.partyId}/schedule`);
-                  }}
-                >
-                  Schedule
-                </MenuBtn>
-                <MenuBtn
-                  onClick={() => {
-                    navigate(`/${param.partyId}/album`);
-                  }}
-                >
-                  Album
-                </MenuBtn>
-              </>
-            )}
-            <Margin mg="5px" />
-            <Svg variant="invite" />
-            <Svg variant="notification" />
-            <MenuBtn onClick={logoutHandler}>Logout</MenuBtn>
-            <Margin mg="5px" />
-            <UserInfo>
-              <Mypage />
-            </UserInfo>
-          </Flex>
-        </UserBox>
+        <Flex fd="row">
+          {param.partyId !== undefined && (
+            <>
+              <MenuBtn
+                onClick={() => {
+                  navigate(`/${param.partyId}`);
+                }}
+              >
+                Home
+              </MenuBtn>
+              <MenuBtn
+                onClick={() => {
+                  navigate(`/${param.partyId}/schedule`);
+                }}
+              >
+                Schedule
+              </MenuBtn>
+              <MenuBtn
+                onClick={() => {
+                  navigate(`/${param.partyId}/album`);
+                }}
+              >
+                Album
+              </MenuBtn>
+            </>
+          )}
+          <Margin mg="5px" />
+          <Svg variant="invite" />
+          <Svg variant="notification" />
+          <MenuBtn onClick={logoutHandler}>Logout</MenuBtn>
+          <Margin mg="5px" />
+          <UserInfo>
+            <Mypage />
+          </UserInfo>
+        </Flex>
       </CenterBox>
     </BaseContainer>
   );
@@ -85,8 +83,6 @@ const CenterBox = styled.div`
   justify-content: space-between;
   margin-top: 16.5px;
 `;
-
-const UserBox = styled.div``;
 
 const UserInfo = styled.div`
   position: relative;
