@@ -1,4 +1,5 @@
 import { Outlet } from "react-router-dom";
+import { Div } from "../../elem";
 import { getCookie } from "../../redux/modules/customCookies";
 import { Header } from "../main/component/Header";
 import Login from "./component/Login";
@@ -11,7 +12,9 @@ export const Home = () => {
       {token ? (
         <>
           <Header />
-          <Outlet></Outlet>
+          <Div variant="bodyContainer">
+            <Outlet></Outlet>
+          </Div>
         </>
       ) : (
         <Login />
