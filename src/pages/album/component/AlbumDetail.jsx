@@ -57,7 +57,7 @@ const AlbumDetail = () => {
     setContentInput(content);
     setUpdateMode(false);
   };
-
+  // console.log(albumItem);
   return (
     <div>
       <h1>AlbumDetail임</h1>
