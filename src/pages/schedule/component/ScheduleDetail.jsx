@@ -16,6 +16,10 @@ import { Div } from "../../../elem";
 const SchdeleDetail = ({ scheduleId }) => {
   const scheduleDetail = useSelector((state) => state.schedule?.scheduleDetail);
   console.log("디테일 selector==>", scheduleDetail);
+  const participant = useSelector((state) => state.mypage?.myProfile);
+  const participanter = useSelector((state) => state.schedule?.join);
+  console.log("참여자 찾기=>", participanter);
+  console.log("참여자 찾기=>", participant);
   const detailId = useParams().scheduleId;
   const partyId = useParams().partyId;
   const dispatch = useDispatch();
@@ -67,15 +71,23 @@ const SchdeleDetail = ({ scheduleId }) => {
         만나는 장소의 주소 :
         {scheduleDetail?.address || scheduleDetail.place?.address}
       </p>
-
-      {joiner?.map((item, i) => {
-        return (
-          <div key={i}>
-            <Profile alt="맹짱구" src={item.profileImageUrl} />
-            <p>참여자 : {item.memberName}</p>
-          </div>
-        );
-      })}
+      {participanter ? (
+        scheduleDetail.isParticipant ? (
+          <>
+            <div>{participant.memberName}</div>
+            <Profile alt="맹짱구" src={participant.profileImageUrl} />
+          </>
+        ) : (
+          joiner?.map((item, i) => {
+            return (
+              <div key={i}>
+                <Profile alt="맹짱구" src={item.profileImageUrl} />
+                <p>참여자 : {item.memberName}</p>
+              </div>
+            );
+          })
+        )
+      ) : null}
 
       <button
         onClick={(e) => {
@@ -84,7 +96,7 @@ const SchdeleDetail = ({ scheduleId }) => {
           dispatch(__joinSchedules(scheduleDetail?.scheduleId));
         }}
       >
-        {scheduleJoin ? "취소하기" : "참여하기"}
+        {participanter ? "참여" : "취소"}
       </button>
       {/* 참여자 목록 보내주실 때 byme 카테고리에 참여 true, 미참여 false값 받기 */}
       <button onClick={openModal}>수정하기</button>
@@ -94,7 +106,7 @@ const SchdeleDetail = ({ scheduleId }) => {
             dispatch(__delSchedule(detailId));
             alert("삭제가 완료되었습니다.");
           }
-          navigate(`/${partyId}/schedulelist`);
+          navigate(`/${partyId}/schedule`);
         }}
       >
         삭제하기
