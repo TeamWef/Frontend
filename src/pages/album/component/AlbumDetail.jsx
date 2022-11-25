@@ -12,6 +12,7 @@ import {
 import AlbumComments from "./AlbumComments";
 import jwt_decode from "jwt-decode";
 import { getCookie } from "../../../redux/modules/customCookies";
+import { Div, Flex, Img } from "../../../elem";
 
 const AlbumDetail = () => {
   const dispatch = useDispatch();
@@ -59,19 +60,18 @@ const AlbumDetail = () => {
   };
   // console.log(albumItem);
   return (
-    <div>
+    <Div variant="bodyContainer">
       <h1>AlbumDetail임</h1>
-      <img
-        src={profileImageUrl}
-        alt="profileImg"
-        style={{
-          width: "20px",
-          height: "20px",
-        }}
-      />
-      <span>{writer}</span>
+      <Flex fd="row">
+        {profileImageUrl ? (
+          <Profile src={profileImageUrl} alt="img" />
+        ) : (
+          <Profile src="/images/userProfile.jpg" alt="img" />
+        )}
+        <span>{writer}</span>
+      </Flex>
       <br />
-      <Stimg src={imageUrl} alt="img" />
+      <StImg src={imageUrl} alt="img" />
       <p>{place}</p>
       {updateMode ? (
         <input value={contentInput} onChange={onChange} />
@@ -82,7 +82,7 @@ const AlbumDetail = () => {
       {updateMode ? (
         <button onClick={updateClick}>수정완료</button>
       ) : (
-        <>
+        <div>
           {myId === memberEmail && (
             <>
               <button
@@ -116,17 +116,22 @@ const AlbumDetail = () => {
           <br />
           <br />
           <AlbumComments id={id} commentList={commentList} myId={myId} />
-        </>
+        </div>
       )}
-    </div>
+    </Div>
   );
 };
 
 export default AlbumDetail;
 
-const Stimg = styled.img`
-  width: 200px;
-  height: 200px;
+const StImg = styled.img`
+  width: 300px;
+  height: auto;
   margin: 5px;
-  background-color: silver;
+`;
+
+const Profile = styled.img`
+  position: relative;
+  width: 20px;
+  height: 20px;
 `;

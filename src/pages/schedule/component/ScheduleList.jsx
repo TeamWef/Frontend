@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 export const ScheduleList = () => {
-  const schedule = useSelector((state) => state.schedule?.schedule);
+  const schedule = useSelector((state) => state.schedule.schedule);
   console.log(schedule);
   const navigate = useNavigate();
   return (

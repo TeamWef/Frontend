@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { __getGroupSchedule } from "../../../redux/modules/scheduleSlice";
 import Svg from "../../../elem/Svg";
-import { Flex, Margin, Span } from "../../../elem";
+import { Div, Flex, Margin, Span } from "../../../elem";
 
 const ScheduleCard = () => {
   const data = useSelector((state) => state.schedule.groupSchedule.data);
@@ -17,49 +17,51 @@ const ScheduleCard = () => {
   }, [dispatch]);
 
   return (
-    <Flex>
-      <Span variant="bold">Schedule.</Span>
-      <ScheduleMaincontainer>
-        {data?.length !== 0 ? (
-          <>
-            {data?.map((item) => {
-              return (
-                <ScheduleDiv key={item.scheduleId}>
-                  <TextContainer>
-                    <GroupTitle>
-                      <TitleBox>
-                        <Span variant="smallBronze">{item?.partyName}</Span>
-                      </TitleBox>
-                      <p>{item?.title}</p>
-                      <p>{item?.writer}</p>
-                    </GroupTitle>
-                    <UserBox>
-                      <More
-                        onClick={() => {
-                          navigate(
-                            `/${item.partyId}/scheduledetail/${item.scheduleId}`
-                          );
-                        }}
-                      >
-                        <Svg variant={"more"} />
-                      </More>
-                    </UserBox>
-                  </TextContainer>
-                </ScheduleDiv>
-              );
-            })}
-          </>
-        ) : (
-          <NullBox>
-            <Flex>
-              <Span variant="bigBronze" asf="center">
-                현재 일정이 없습니다.
-              </Span>
-            </Flex>
-          </NullBox>
-        )}
-      </ScheduleMaincontainer>
-    </Flex>
+    <Div variant="bodyContainer">
+      <Flex>
+        <Span variant="bold">Schedule.</Span>
+        <ScheduleMaincontainer>
+          {data?.length !== 0 ? (
+            <>
+              {data?.map((item) => {
+                return (
+                  <ScheduleDiv key={item.scheduleId}>
+                    <TextContainer>
+                      <GroupTitle>
+                        <TitleBox>
+                          <Span variant="smallBronze">{item?.partyName}</Span>
+                        </TitleBox>
+                        <p>{item?.title}</p>
+                        <p>{item?.writer}</p>
+                      </GroupTitle>
+                      <UserBox>
+                        <More
+                          onClick={() => {
+                            navigate(
+                              `/${item.partyId}/scheduledetail/${item.scheduleId}`
+                            );
+                          }}
+                        >
+                          <Svg variant={"more"} />
+                        </More>
+                      </UserBox>
+                    </TextContainer>
+                  </ScheduleDiv>
+                );
+              })}
+            </>
+          ) : (
+            <NullBox>
+              <Flex>
+                <Span variant="bigBronze" asf="center">
+                  현재 일정이 없습니다.
+                </Span>
+              </Flex>
+            </NullBox>
+          )}
+        </ScheduleMaincontainer>
+      </Flex>
+    </Div>
   );
 };
 

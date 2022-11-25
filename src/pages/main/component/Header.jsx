@@ -69,11 +69,11 @@ export const Header = () => {
 
 const BaseContainer = styled.div`
   position: fixed;
+  top: 0;
   background-color: #ede8e1;
-  display: flex;
   width: 1980px;
   height: 74px;
-  z-index: 99;
+  z-index: 9;
 `;
 
 const CenterBox = styled.div`

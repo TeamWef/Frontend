@@ -12,9 +12,7 @@ export const Home = () => {
       {token ? (
         <>
           <Header />
-          <Div variant="bodyContainer">
-            <Outlet></Outlet>
-          </Div>
+          <Outlet></Outlet>
         </>
       ) : (
         <Login />

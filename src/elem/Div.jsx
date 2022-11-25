@@ -38,11 +38,10 @@ const StDiv = styled.div`
         return css`
           position: fixed;
           top: 0;
-          left: 0;
           width: 100%;
           height: 100%;
           background-color: rgba(153, 153, 153, 0.4);
-          z-index: 8;
+          z-index: 10;
         `;
       case "groupEdit":
         return css`
@@ -57,14 +56,12 @@ const StDiv = styled.div`
         return css`
           display: flex;
           flex-direction: column;
-          position: absolute;
+          position: relative;
           top: 74px;
           left: 50%;
           transform: translate(-50%, 0);
           width: 1100px;
           height: auto;
-          border-radius: 5px;
-          padding: 20px;
         `;
       default:
         break;
