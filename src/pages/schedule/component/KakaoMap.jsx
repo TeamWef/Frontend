@@ -2,37 +2,12 @@ import React, { useEffect, useState } from "react";
 
 const { kakao } = window;
 
-const KakaoMap = ({
-  searchPlace,
-  setSchedule,
-  schedule,
-  setEditSchedule,
-  editSchedule,
-}) => {
+const KakaoMap = ({ searchPlace, setSchedule, schedule, openModal }) => {
   // 검색결과 배열에 담아줌
   const [Places, setPlaces] = useState([]);
 
-  // {
-  //   Array(pageNum)
-  //     .fill()
-  //     .map((_, i) => (
-  //       <PageBtn
-  //         key={i + 1}
-  //         onClick={() => setPage(i + 1)}
-  //         aria-current={page === i + 1 ? "page" : null}
-  //       >
-  //         {i + 1}
-  //       </PageBtn>
-  //     ));
-  // }
-
-  // const { partyId } = useParams();
-
-  // console.log("카카오맵 스케쥴", schedule);
-
   useEffect(() => {
     var infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
-    // var markers = [];
 
     const container = document.getElementById("myMap");
     const options = {
@@ -108,19 +83,6 @@ const KakaoMap = ({
     }
   }, [searchPlace]);
 
-  // const [InputText, setInputText] = useState("");
-  // const [Place, setPlace] = useState("");
-
-  // const onChange = (e) => {
-  //   setInputText(e.target.value);
-  // };
-
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   setPlace(InputText);
-  //   setInputText("");
-  // };
-
   return (
     <div>
       <div id="myMap" style={{ display: "none" }}></div>
@@ -148,12 +110,11 @@ const KakaoMap = ({
                       address: item.address_name,
                     },
                   });
-                  console.log({ schedule, editSchedule });
+                  openModal();
                 }}
               >
                 선택하기
               </button>
-              {/* 온클릭이벤트로 setSchedule 요놈한테 바로 넣어버린다 */}
             </div>
           </div>
         ))}

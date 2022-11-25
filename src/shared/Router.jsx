@@ -5,12 +5,13 @@ import Main from "../pages/main/Main";
 import AlbumMain from "../pages/album/AlbumMain";
 import AlbumDetail from "../pages/album/component/AlbumDetail";
 import { Home } from "../pages/home/Home";
-import ScheduleCard from "../pages/schedule/component/ScheduleCard";
 import ScheduleDetail from "../pages/schedule/component/ScheduleDetail";
 import Kakao from "../pages/home/component/Kakao";
 import ChatMain from "../pages/chat/ChatMain";
 import Notice from "../pages/notice/Notice";
 import GroupMain from "../pages/groupmain/GroupMain";
+import scheduleMain from "../pages/schedule/ScheduleMain";
+import ScheduleCreate from "../pages/schedule/component/ScheduleCreate";
 
 const Page = () => {
   return (
@@ -22,7 +23,7 @@ const Page = () => {
           <Route path=":partyId/album" element={<AlbumMain />} />
           <Route path=":partyId/album/:id" element={<AlbumDetail />} />
           <Route path=":partyId/schedule" element={<ScheduleMain />} />
-          <Route path=":partyId/schedulelist" element={<ScheduleCard />} />
+          <Route path=":partyId/schedule/create" element={<ScheduleCreate />} />
           <Route
             path="/:partyId/scheduledetail/:scheduleId"
             element={<ScheduleDetail />}

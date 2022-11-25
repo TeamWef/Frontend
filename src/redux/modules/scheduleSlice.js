@@ -22,11 +22,11 @@ const initialState = {
 export const __addSchedule = createAsyncThunk(
   "post/addSchedule",
   async (payload, thunkAPI) => {
-    console.log("??? 작성자 내놔..", payload);
+    console.log("payload", payload);
     try {
       const response = await addScheduleApi(payload);
-      console.log("리스폰스값????", response);
-      return thunkAPI.fulfillWithValue(response.data);
+      console.log("res===>", response);
+      return thunkAPI.fulfillWithValue(response);
     } catch (err) {
       console.log("error");
       return thunkAPI.rejectWithValue(err);
@@ -40,7 +40,6 @@ export const __getSchedule = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const res = await getScheduleApi(payload);
-      console.log(res);
       return thunkAPI.fulfillWithValue(res.data);
     } catch (err) {
       console.log("error", err);
@@ -55,7 +54,6 @@ export const __getScheduleDetail = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const res = await getScheduleDetailApi(payload);
-      console.log("상세조회", res);
       return thunkAPI.fulfillWithValue(res.data);
     } catch (err) {
       console.log("error", err);
@@ -130,6 +128,7 @@ export const scheduleSlice = createSlice({
     },
     [__addSchedule.fulfilled]: (state, action) => {
       state.isLoading = false;
+      console.log(action.payload);
       state.schedule?.push(action.payload);
     },
     [__addSchedule.rejected]: (state, action) => {
