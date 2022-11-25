@@ -9,6 +9,8 @@ const StDiv = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  width: ${({ width }) => (width ? width : "column")};
+  height: ${({ height }) => (height ? height : "column")};
 
   ${({ variant }) => {
     switch (variant) {
@@ -48,6 +50,19 @@ const StDiv = styled.div`
           width: 440px;
           height: 390px;
           background-color: #f8f5f0;
+          border-radius: 5px;
+          padding: 20px;
+        `;
+      case "bodyContainer":
+        return css`
+          display: flex;
+          flex-direction: column;
+          position: absolute;
+          top: 74px;
+          left: 50%;
+          transform: translate(-50%, 0);
+          width: 1100px;
+          height: auto;
           border-radius: 5px;
           padding: 20px;
         `;
