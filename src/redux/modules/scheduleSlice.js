@@ -109,8 +109,12 @@ export const __joinSchedules = createAsyncThunk(
   "post/joinSchedules",
   async (payload, thunkAPI) => {
     try {
-      const res = await postSchedulejoinApi(payload);
-      return thunkAPI.fulfillWithValue(res.data);
+      console.log(payload);
+      const { detailId, participant } = payload;
+      const res = await postSchedulejoinApi({ detailId, participant });
+      const isJoin = res.data;
+      const myProfile = payload.participant;
+      return thunkAPI.fulfillWithValue({ isJoin, myProfile });
     } catch (err) {
       console.log("error ::::::", err.response);
       return thunkAPI.rejectWithValue("<<", err);
@@ -224,7 +228,19 @@ export const scheduleSlice = createSlice({
     },
     [__joinSchedules.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.join = action.payload;
+      state.join = action.payload.isJoin;
+      if (action.payload.isJoin) {
+        state.scheduleDetail.participantResponseDtoList.push(
+          action.payload.myProfile
+        );
+      } else {
+        state.scheduleDetail.participantResponseDtoList =
+          state.scheduleDetail.participantResponseDtoList.filter((item) => {
+            return (
+              item.profileImageUrl !== action.payload.myProfile.profileImageUrl
+            );
+          });
+      }
     },
     [__joinSchedules.rejected]: (state, action) => {
       state.isLoading = false;

@@ -102,12 +102,16 @@ export const putScheduleEditApi = async (payload) => {
 };
 
 // 일정 참여 api
-export const postSchedulejoinApi = async (payload) => {
-  const res = await axios.post(`${ServerUrl}/${payload}/participate`, payload, {
-    headers: {
-      Authorization: getCookie("token"),
-    },
-  });
+export const postSchedulejoinApi = async ({ detailId, participant }) => {
+  const res = await axios.post(
+    `${ServerUrl}/${detailId}/participate`,
+    detailId,
+    {
+      headers: {
+        Authorization: getCookie("token"),
+      },
+    }
+  );
   return res;
 };
 

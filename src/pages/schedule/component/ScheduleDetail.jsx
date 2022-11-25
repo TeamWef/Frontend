@@ -71,29 +71,21 @@ const SchdeleDetail = ({ scheduleId }) => {
         만나는 장소의 주소 :
         {scheduleDetail?.address || scheduleDetail.place?.address}
       </p>
-      {participanter ? (
-        scheduleDetail.isParticipant ? (
-          <>
-            <div>{participant.memberName}</div>
-            <Profile alt="맹짱구" src={participant.profileImageUrl} />
-          </>
-        ) : (
-          joiner?.map((item, i) => {
-            return (
-              <div key={i}>
-                <Profile alt="맹짱구" src={item.profileImageUrl} />
-                <p>참여자 : {item.memberName}</p>
-              </div>
-            );
-          })
-        )
-      ) : null}
+
+      {joiner?.map((item, i) => {
+        return (
+          <div key={i}>
+            <Profile alt="맹짱구" src={item.profileImageUrl} />
+            <p>참여자 : {item.memberName}</p>
+          </div>
+        );
+      })}
 
       <button
         onClick={(e) => {
           e.preventDefault();
           setScheduleJoin();
-          dispatch(__joinSchedules(scheduleDetail?.scheduleId));
+          dispatch(__joinSchedules({ detailId, participant }));
         }}
       >
         {participanter ? "참여" : "취소"}
