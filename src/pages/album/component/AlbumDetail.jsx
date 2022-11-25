@@ -16,7 +16,7 @@ import { getCookie } from "../../../redux/modules/customCookies";
 const AlbumDetail = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const partyId = useParams().partyid;
+  const partyId = useParams().partyId;
   const id = useParams().id;
 
   //토큰 디코드
