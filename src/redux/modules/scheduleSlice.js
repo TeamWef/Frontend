@@ -13,7 +13,7 @@ const initialState = {
   schedule: [],
   scheduleDetail: {},
   groupSchedule: [],
-  join: [],
+  join: false,
   isLoading: false,
   error: null,
 };
