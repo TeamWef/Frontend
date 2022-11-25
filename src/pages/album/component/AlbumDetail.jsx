@@ -12,7 +12,7 @@ import {
 import AlbumComments from "./AlbumComments";
 import jwt_decode from "jwt-decode";
 import { getCookie } from "../../../redux/modules/customCookies";
-import { Div, Img } from "../../../elem";
+import { Div, Flex, Img } from "../../../elem";
 
 const AlbumDetail = () => {
   const dispatch = useDispatch();
@@ -62,14 +62,14 @@ const AlbumDetail = () => {
   return (
     <Div variant="bodyContainer">
       <h1>AlbumDetail임</h1>
-      <div>
+      <Flex fd="row">
         {profileImageUrl ? (
           <Profile src={profileImageUrl} alt="img" />
         ) : (
           <Profile src="/images/userProfile.jpg" alt="img" />
         )}
         <span>{writer}</span>
-      </div>
+      </Flex>
       <br />
       <StImg src={imageUrl} alt="img" />
       <p>{place}</p>
@@ -131,6 +131,7 @@ const StImg = styled.img`
 `;
 
 const Profile = styled.img`
+  position: relative;
   width: 20px;
   height: 20px;
 `;
