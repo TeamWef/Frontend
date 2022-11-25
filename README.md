@@ -3,7 +3,8 @@
 # 🥳 위프, we are friend! 🎈 <br>
 
 
-바로가기 ⏩️ https://main.daegm2i4mn3we.amplifyapp.com 
+WeF 바록가 ⏩️ https://main.daegm2i4mn3we.amplifyapp.com 
+team Notion ⏩️ https://sumptuous-devourer-e77.notion.site/2-we-are-friends-bf4c7ed5ce7f4da88186c275c221bb2c
 
 ----
 # 📍 table of contents
