@@ -54,7 +54,14 @@
 
 ## major skill
 
+✨ 그룹 생성 <br>
+✨ 일정 생성 <br>
+✨ 앨범 생성 <br>
+✨ 일정 참여 <br>
+✨ 댓글 달기 <br>
+
 ## project architecture
+<img src="https://velog.velcdn.com/images/resyve/post/df4a13ab-b696-4f2a-89a1-99a602487895/image.png">
 
 ## skill stack
 

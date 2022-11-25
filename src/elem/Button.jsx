@@ -36,6 +36,7 @@ const StBtn = styled.button`
           width: 115px;
           height: 34px;
           font-size: 13px;
+
         `;
       default:
         break;
