@@ -137,60 +137,61 @@ const GroupCard = () => {
         <CreateGroupCard openModal={openCreateModal} modal={createModal} />
       )}
       {editModal && (
-        <Div variant="background">
-          <Div variant="groupEdit">
-            <Flex>
-              <Flex fd="row" jc="space-between">
-                <Span variant="bold">Group Edit.</Span>
-                <Svg
-                  variant="close"
-                  onClick={() => {
-                    openEditModal();
-                    setUpdateId("");
-                  }}
-                />
-              </Flex>
-              <Margin />
-              <div>
-                <EditModalInput
-                  name="partyName"
-                  type="text"
-                  placeholder="Title"
-                  onChange={onChangeHandler}
-                />
-                <EditModalInput
-                  name="partyIntroduction"
-                  type="text"
-                  placeholder="Introduction"
-                  onChange={onChangeHandler}
-                />
-                <Margin mg="50px" />
-                <Button
-                  variant="large"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    dispatch(
-                      __updateGroup({
-                        id: updateId,
-                        partyName: editGroup.partyName,
-                        partyIntroduction: editGroup.partyIntroduction,
-                      })
-                    );
-                    setEditGroup({
-                      partyName: "",
-                      partyIntroduction: "",
-                    });
-                    setUpdateId("");
-                    openEditModal();
-                  }}
-                >
-                  Apply
-                </Button>
-              </div>
-            </Flex>
-          </Div>
-        </Div>
-      )}
+                      <Div variant="background">
+                        <Div variant="groupEdit">
+                          <Flex>
+                            <Flex fd="row" jc="space-between">
+                              <Span variant="bold">Group Edit.</Span>
+                              <Svg
+                                variant="close"
+                                onClick={() => {
+                                  openEditModal();
+                                  setUpdateId("");
+                                }}
+                              />
+                            </Flex>
+                            <Margin />
+                            <div>
+                              <EditModalInput
+                                name="partyName"
+                                type="text"
+                                placeholder="Title"
+                                onChange={onChangeHandler}
+                              />
+                              <EditModalInput
+                                name="partyIntroduction"
+                                type="text"
+                                placeholder="Introduction"
+                                onChange={onChangeHandler}
+                              />
+                              <Margin mg="50px" />
+                              <Button
+                                variant="large"
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  dispatch(
+                                    __updateGroup({
+                                      id: updateId,
+                                      partyName: editGroup.partyName,
+                                      partyIntroduction:
+                                        editGroup.partyIntroduction,
+                                    })
+                                  );
+                                  setEditGroup({
+                                    partyName: "",
+                                    partyIntroduction: "",
+                                  });
+                                  setUpdateId("");
+                                  openEditModal();
+                                }}
+                              >
+                                Apply
+                              </Button>
+                            </div>
+                          </Flex>
+                        </Div>
+                      </Div>
+                    )}
     </>
   );
 };
