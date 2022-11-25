@@ -19,7 +19,7 @@ export const Header = () => {
     alert("로그아웃 되었습니다.");
     window.location.reload();
   };
-  console.log(param.partyId);
+  console.log(param);
 
   return (
     <BaseContainer>
@@ -27,7 +27,7 @@ export const Header = () => {
         <Svg variant="mainIcon" onClick={goHome} />
         <UserBox>
           <Flex fd="row">
-            {param && (
+            {param.partyId !== undefined && (
               <>
                 <MenuBtn
                   onClick={() => {

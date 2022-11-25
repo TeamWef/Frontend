@@ -19,8 +19,8 @@ const Page = () => {
         <Route path="/" element={<Home />}>
           <Route path="" element={<Main />} />
           <Route path=":partyId" element={<GroupMain />} />
-          <Route path=":partyid/album" element={<AlbumMain />} />
-          <Route path=":partyid/album/:id" element={<AlbumDetail />} />
+          <Route path=":partyId/album" element={<AlbumMain />} />
+          <Route path=":partyId/album/:id" element={<AlbumDetail />} />
           <Route path=":partyId/schedule" element={<ScheduleMain />} />
           <Route path=":partyId/schedulelist" element={<ScheduleCard />} />
           <Route
