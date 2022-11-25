@@ -13,7 +13,7 @@ const GroupMain = () => {
         <Flex fd="row">
           <button
             onClick={() => {
-              navigate(`/${partyId}/schedulelist`);
+              navigate(`/${partyId}/schedule`);
             }}
           >
             schedule
