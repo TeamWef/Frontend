@@ -11,7 +11,7 @@ import {
 import { useModal } from "../../../hooks/useModal";
 import EditLanding from "./EditLanding";
 import styled from "styled-components";
-import Notice from "../../notice/Notice";
+import { Div } from "../../../elem";
 
 const SchdeleDetail = ({ scheduleId }) => {
   const scheduleDetail = useSelector((state) => state.schedule?.scheduleDetail);
@@ -51,7 +51,7 @@ const SchdeleDetail = ({ scheduleId }) => {
   };
 
   return (
-    <div>
+    <Div variant="bodyContainer">
       <h2>title : {scheduleDetail?.title}</h2>
       <h3>작성자 : {scheduleDetail?.writer}</h3>
       <p>id : {scheduleDetail?.scheduleId}</p>
@@ -118,7 +118,6 @@ const SchdeleDetail = ({ scheduleId }) => {
             <button
               type="submit"
               onClick={() => {
-
                 navigate(
                   `/${partyId}/scheduledetail/${scheduleDetail?.scheduleId}`
                 );
@@ -133,7 +132,7 @@ const SchdeleDetail = ({ scheduleId }) => {
           />
         </div>
       )}
-    </div>
+    </Div>
   );
 };
 

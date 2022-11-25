@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+import { Div } from "../../../elem";
 import {
   __getSchedule,
   __getGroupSchedule,
@@ -22,7 +23,7 @@ const ScheduleCard = () => {
   }, [dispatch, partyId]);
 
   return (
-    <div>
+    <Div variant="bodyContainer">
       <button
         onClick={() => {
           navigate(`/${partyId}/schedule`);
@@ -46,7 +47,7 @@ const ScheduleCard = () => {
           </div>
         );
       })}
-    </div>
+    </Div>
   );
 };
 

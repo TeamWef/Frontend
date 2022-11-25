@@ -44,152 +44,153 @@ const GroupCard = () => {
 
   return (
     <>
-      <Flex>
-        <Margin />
-        <Flex fd="row" jc="space-between">
-          <Span variant="bold">Group.</Span>
-          <Div
-            onClick={() => {
-              openCreateModal();
-            }}
-          >
-            <Svg variant="add" />
-          </Div>
+      <Div variant="bodyContainer">
+        <Flex>
+          <Margin />
+          <Flex fd="row" jc="space-between">
+            <Span variant="bold">Group.</Span>
+            <Div
+              onClick={() => {
+                openCreateModal();
+              }}
+            >
+              <Svg variant="add" />
+            </Div>
+          </Flex>
+          {groups?.length !== 0 ? (
+            <GroupMaincontainer>
+              {groups?.map((data) => {
+                return (
+                  <GroupCardContainer key={data?.partyId}>
+                    <TitleContainer>
+                      <h2>{data?.partyName}</h2>
+                      <button
+                        onClick={() => {
+                          openDropBox();
+                          setUpdateId(data.partyId);
+                        }}
+                      >
+                        <Svg variant="editDelete" />
+                      </button>
+                    </TitleContainer>
+                    <p>{data?.partyIntroduction}</p>
+                    <ButtonWrap>
+                      <Button
+                        variant="small"
+                        onClick={() => {
+                          navigate(`/${data.partyId}`);
+                        }}
+                      >
+                        Join
+                      </Button>
+                    </ButtonWrap>
+                    {dropBox &&
+                      data.partyId === updateId &&
+                      (data.memberEmail === myId ? (
+                        <DropBox>
+                          <DropBoxButton
+                            onClick={() => {
+                              openEditModal();
+                              openDropBox();
+                            }}
+                          >
+                            그룹 수정
+                          </DropBoxButton>
+                          <DropBoxButton
+                            onClick={() => {
+                              if (window.confirm("정말 삭제하시겠습니까?")) {
+                                dispatch(__delGroup(data?.partyId));
+                                alert("삭제가 완료되었습니다.");
+                              }
+                              openDropBox();
+                            }}
+                          >
+                            그룹 삭제
+                          </DropBoxButton>
+                        </DropBox>
+                      ) : (
+                        <DropBox>
+                          <DropBoxButtonBorderLineNone>
+                            그룹 나가기
+                          </DropBoxButtonBorderLineNone>
+                        </DropBox>
+                      ))}
+                  </GroupCardContainer>
+                );
+              })}
+            </GroupMaincontainer>
+          ) : (
+            <NullBox>
+              <Flex>
+                <Span variant="bigBronze" asf="center">
+                  현재 그룹이 없습니다.
+                </Span>
+                <Span variant="bigBronze" asf="center">
+                  새로운 그룹을 만들어 친구들을 초대해보세요! 🍀
+                </Span>
+              </Flex>
+            </NullBox>
+          )}
         </Flex>
-        {createModal ? (
-          <CreateGroupCard openModal={openCreateModal} modal={createModal} />
-        ) : null}
-        {groups?.length !== 0 ? (
-          <GroupMaincontainer>
-            {groups?.map((data) => {
-              return (
-                <GroupCardContainer key={data?.partyId}>
-                  <TitleContainer>
-                    <h2>{data?.partyName}</h2>
-                    <button
-                      onClick={() => {
-                        openDropBox();
-                        setUpdateId(data.partyId);
-                      }}
-                    >
-                      <Svg variant="editDelete" />
-                    </button>
-                  </TitleContainer>
-                  <p>{data?.partyIntroduction}</p>
-                  <ButtonWrap>
-                    <Button
-                      variant="small"
-                      onClick={() => {
-                        navigate(`/${data.partyId}`);
-                      }}
-                    >
-                      Join
-                    </Button>
-                  </ButtonWrap>
-                  {dropBox &&
-                    data.partyId === updateId &&
-                    (data.memberEmail === myId ? (
-                      <DropBox>
-                        <DropBoxButton
-                          onClick={() => {
-                            openEditModal();
-                            openDropBox();
-                          }}
-                        >
-                          그룹 수정
-                        </DropBoxButton>
-                        <DropBoxButton
-                          onClick={() => {
-                            if (window.confirm("정말 삭제하시겠습니까?")) {
-                              dispatch(__delGroup(data?.partyId));
-                              alert("삭제가 완료되었습니다.");
-                            }
-                            openDropBox();
-                          }}
-                        >
-                          그룹 삭제
-                        </DropBoxButton>
-                      </DropBox>
-                    ) : (
-                      <DropBox>
-                        <DropBoxButtonBorderLineNone>
-                          그룹 나가기
-                        </DropBoxButtonBorderLineNone>
-                      </DropBox>
-                    ))}
-                  {editModal && (
-                    <Div variant="background">
-                      <Div variant="groupEdit">
-                        <Flex>
-                          <Flex fd="row" jc="space-between">
-                            <Span variant="bold">Group Edit.</Span>
-                            <Svg
-                              variant="close"
-                              onClick={() => {
-                                openEditModal();
-                                setUpdateId("");
-                              }}
-                            />
-                          </Flex>
-                          <Margin />
-                          <div>
-                            <EditModalInput
-                              name="partyName"
-                              type="text"
-                              placeholder="Title"
-                              onChange={onChangeHandler}
-                            />
-                            <EditModalInput
-                              name="partyIntroduction"
-                              type="text"
-                              placeholder="Introduction"
-                              onChange={onChangeHandler}
-                            />
-                            <Margin mg="50px" />
-                            <Button
-                              variant="large"
-                              onClick={(e) => {
-                                e.preventDefault();
-                                dispatch(
-                                  __updateGroup({
-                                    id: updateId,
-                                    partyName: editGroup.partyName,
-                                    partyIntroduction:
-                                      editGroup.partyIntroduction,
-                                  })
-                                );
-                                setEditGroup({
-                                  partyName: "",
-                                  partyIntroduction: "",
-                                });
-                                setUpdateId("");
-                                openEditModal();
-                              }}
-                            >
-                              Apply
-                            </Button>
-                          </div>
-                        </Flex>
-                      </Div>
-                    </Div>
-                  )}
-                </GroupCardContainer>
-              );
-            })}
-          </GroupMaincontainer>
-        ) : (
-          <NullBox>
+      </Div>
+      {createModal && (
+        <CreateGroupCard openModal={openCreateModal} modal={createModal} />
+      )}
+      {editModal && (
+        <Div variant="background">
+          <Div variant="groupEdit">
             <Flex>
-              <Span variant="bigBronze" asf="center">
-                현재 그룹이 없습니다.
-              </Span>
-              <Span variant="bigBronze" asf="center">
-                새로운 그룹을 만들어 친구들을 초대해보세요! 🍀
-              </Span>
+              <Flex fd="row" jc="space-between">
+                <Span variant="bold">Group Edit.</Span>
+                <Svg
+                  variant="close"
+                  onClick={() => {
+                    openEditModal();
+                    setUpdateId("");
+                  }}
+                />
+              </Flex>
+              <Margin />
+              <div>
+                <EditModalInput
+                  name="partyName"
+                  type="text"
+                  placeholder="Title"
+                  onChange={onChangeHandler}
+                />
+                <EditModalInput
+                  name="partyIntroduction"
+                  type="text"
+                  placeholder="Introduction"
+                  onChange={onChangeHandler}
+                />
+                <Margin mg="50px" />
+                <Button
+                  variant="large"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    dispatch(
+                      __updateGroup({
+                        id: updateId,
+                        partyName: editGroup.partyName,
+                        partyIntroduction: editGroup.partyIntroduction,
+                      })
+                    );
+                    setEditGroup({
+                      partyName: "",
+                      partyIntroduction: "",
+                    });
+                    setUpdateId("");
+                    openEditModal();
+                  }}
+                >
+                  Apply
+                </Button>
+              </div>
             </Flex>
-          </NullBox>
-        )}
-      </Flex>
+          </Div>
+        </Div>
+      )}
     </>
   );
 };

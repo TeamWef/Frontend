@@ -1,5 +1,5 @@
 import { Navigate, useNavigate, useParams } from "react-router-dom";
-import { Flex } from "../../elem";
+import { Div, Flex } from "../../elem";
 
 const GroupMain = () => {
   const navigate = useNavigate();
@@ -8,23 +8,25 @@ const GroupMain = () => {
 
   return (
     <>
-      <div>Group MainPage</div>
-      <Flex fd="row">
-        <button
-          onClick={() => {
-            navigate(`/${partyId}/schedulelist`);
-          }}
-        >
-          schedule
-        </button>
-        <button
-          onClick={() => {
-            navigate(`/${partyId}/album`);
-          }}
-        >
-          album
-        </button>
-      </Flex>
+      <Div variant="bodyContainer">
+        <div>Group MainPage</div>
+        <Flex fd="row">
+          <button
+            onClick={() => {
+              navigate(`/${partyId}/schedulelist`);
+            }}
+          >
+            schedule
+          </button>
+          <button
+            onClick={() => {
+              navigate(`/${partyId}/album`);
+            }}
+          >
+            album
+          </button>
+        </Flex>
+      </Div>
     </>
   );
 };
