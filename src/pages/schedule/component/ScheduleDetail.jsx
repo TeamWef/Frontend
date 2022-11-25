@@ -20,6 +20,9 @@ const SchdeleDetail = ({ scheduleId }) => {
   const participanter = useSelector((state) => state.schedule?.join);
   console.log("참여자 찾기=>", participanter);
   console.log("참여자 찾기=>", participant);
+  const [isParticipant, setIsParticipant] = useState(
+    scheduleDetail.isParticipant
+  );
   const detailId = useParams().scheduleId;
   const partyId = useParams().partyId;
   const dispatch = useDispatch();
@@ -86,9 +89,10 @@ const SchdeleDetail = ({ scheduleId }) => {
           e.preventDefault();
           setScheduleJoin();
           dispatch(__joinSchedules({ detailId, participant }));
+          setIsParticipant(!isParticipant);
         }}
       >
-        {participanter ? "참여" : "취소"}
+        {isParticipant ? "참여" : "취소"}
       </button>
       {/* 참여자 목록 보내주실 때 byme 카테고리에 참여 true, 미참여 false값 받기 */}
       <button onClick={openModal}>수정하기</button>
