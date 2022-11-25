@@ -48,6 +48,7 @@ const SchdeleDetail = ({ scheduleId }) => {
   const onEditScheduleHandler = (e) => {
     e.preventDefault();
     dispatch(__editSchedules({ detailId, editSchedule }));
+    openModal();
   };
 
   return (
@@ -126,6 +127,16 @@ const SchdeleDetail = ({ scheduleId }) => {
               작성
             </button>
           </form>
+          {editSchedule.place ? (
+            <>
+              <p>{editSchedule.place.placeName}</p>
+              <p>{editSchedule.place.address}</p>
+            </>
+          ) : (
+            <>
+              <p>선택한 장소가 없습니다.</p>
+            </>
+          )}
           <EditLanding
             setEditSchedule={setEditSchedule}
             editSchedule={editSchedule}

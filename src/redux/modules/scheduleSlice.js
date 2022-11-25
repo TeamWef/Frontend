@@ -93,6 +93,7 @@ export const __delSchedule = createAsyncThunk(
 export const __editSchedules = createAsyncThunk(
   "put/editSchedules",
   async (payload, thunkAPI) => {
+    console.log("수정 페이로드", payload);
     try {
       await putScheduleEditApi(payload);
       return thunkAPI.fulfillWithValue(payload);
