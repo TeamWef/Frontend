@@ -22,8 +22,10 @@ const initialState = {
 export const __addSchedule = createAsyncThunk(
   "post/addSchedule",
   async (payload, thunkAPI) => {
+    console.log("??? 작성자 내놔..", payload);
     try {
       const response = await addScheduleApi(payload);
+      console.log("리스폰스값????", response);
       return thunkAPI.fulfillWithValue(response.data);
     } catch (err) {
       console.log("error");

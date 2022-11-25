@@ -74,7 +74,9 @@ const GroupCard = () => {
                       <Svg variant="editDelete" />
                     </button>
                   </TitleContainer>
-                  <p>{data?.partyIntroduction}</p>
+                  <TextBox>
+                    <p>{data?.partyIntroduction}</p>
+                  </TextBox>
                   <ButtonWrap>
                     <Button
                       variant="small"
@@ -223,6 +225,7 @@ const GroupMaincontainer = styled.div`
 `;
 
 const GroupCardContainer = styled.div`
+  position: relative;
   width: 250px;
   height: 220px;
   margin: 0 auto;
@@ -230,16 +233,21 @@ const GroupCardContainer = styled.div`
   background-color: white;
   margin-left: 15px;
   box-shadow: 1px 1px 1px 1px #dadada52;
-  &div {
-    white-space: nowrap;
+  /* & div {
     overflow-x: auto;
     overflow: hidden;
-  }
+  } */
   & p {
     color: #949494;
-    margin-left: 20px;
+    white-space: normal;
+    padding: 20px;
     margin-top: 10px;
   }
+`;
+
+const TextBox = styled.div`
+  width: 250px;
+  height: 200px;
 `;
 
 const TitleContainer = styled.div`
@@ -289,8 +297,9 @@ const NullBox = styled.div`
 `;
 
 const ButtonWrap = styled.div`
-  margin-left: 27%;
-  margin-top: 50px;
+  position: absolute;
+  bottom: 20px;
+  left: 70px;
 `;
 
 const DropBox = styled.div`
