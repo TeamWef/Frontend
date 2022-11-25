@@ -39,7 +39,7 @@ const AlbumCreate = ({ openCreateModal, partyId }) => {
     if (!uploadImg) {
       alert("사진을 추가해주세요!");
       return null;
-    } else if (!albumItem.place) {
+    } else if (!albumPlace) {
       alert("장소를 입력해주세요!");
       return null;
     } else if (!albumItem.content) {
@@ -51,7 +51,7 @@ const AlbumCreate = ({ openCreateModal, partyId }) => {
     openCreateModal();
     // setChange(!Change);
   };
-  console.log(albumPlace);
+  // console.log(albumPlace);
   return (
     <div>
       <h1>AlbumCreate</h1>

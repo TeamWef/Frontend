@@ -1,39 +1,66 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import Mypage from "../../mypage/Mypage";
 import Svg from "../../../elem/Svg";
 import { deleteCookie } from "../../../redux/modules/customCookies";
+import { Flex, Margin } from "../../../elem";
 
 export const Header = () => {
   const navigate = useNavigate();
+  const param = useParams();
+
+  const goHome = () => {
+    navigate("/");
+  };
+
   const logoutHandler = () => {
     deleteCookie("token");
     deleteCookie("refresh-token");
     alert("로그아웃 되었습니다.");
     window.location.reload();
   };
+  console.log(param.partyId);
 
   return (
     <BaseContainer>
       <CenterBox>
-        <Logo
-          onClick={() => {
-            navigate("/");
-          }}
-        >
-          <Svg variant={"mainIcon"} />
-        </Logo>
+        <Svg variant="mainIcon" onClick={goHome} />
         <UserBox>
-          <Invite>
-            <Svg variant={"invite"} />
-          </Invite>
-          <Alert>
-            <Svg variant={"notification"} />
-          </Alert>
-          <Logout onClick={logoutHandler}>logout</Logout>
-          <UserInfo>
-            <Mypage />
-          </UserInfo>
+          <Flex fd="row">
+            {param && (
+              <>
+                <MenuBtn
+                  onClick={() => {
+                    navigate(`/${param.partyId}`);
+                  }}
+                >
+                  Home
+                </MenuBtn>
+                <MenuBtn
+                  onClick={() => {
+                    navigate(`/${param.partyId}/schedule`);
+                  }}
+                >
+                  Schedule
+                </MenuBtn>
+                <MenuBtn
+                  onClick={() => {
+                    navigate(`/${param.partyId}/album`);
+                  }}
+                >
+                  Album
+                </MenuBtn>
+              </>
+            )}
+            <Margin mg="5px" />
+            <Svg variant="invite" />
+            <Svg variant="notification" />
+            <MenuBtn onClick={logoutHandler}>Logout</MenuBtn>
+            <Margin mg="5px" />
+            <UserInfo>
+              <Mypage />
+            </UserInfo>
+          </Flex>
         </UserBox>
       </CenterBox>
     </BaseContainer>
@@ -41,38 +68,25 @@ export const Header = () => {
 };
 
 const BaseContainer = styled.div`
+  position: fixed;
   background-color: #ede8e1;
+  display: flex;
   width: 1980px;
   height: 74px;
+  z-index: 99;
 `;
 
 const CenterBox = styled.div`
-  background-color: #ede8e1;
-  width: 1077px;
+  width: 1075px;
   position: absolute;
-  left: 25%;
+  left: 50%;
+  transform: translate(-50%, 0);
   display: flex;
   justify-content: space-between;
-`;
-
-const Logo = styled.button`
-  width: 180px;
-  height: 40px;
-  border: none;
-  margin-top: 12px;
-  background-color: transparent;
-  cursor: pointer;
+  margin-top: 16.5px;
 `;
 
 const UserBox = styled.div`
-  background-color: #ede8e1;
-  width: 230px;
-  height: 38px;
-  margin-top: 16px;
-  display: flex;
-  justify-content: space-between;
-  position: absolute;
-  right: 1%;
   @media screen and (max-width: 1435px) {
     position: absolute;
     right: 20%;
@@ -81,32 +95,6 @@ const UserBox = styled.div`
     position: absolute;
     right: 35%;
   }
-  @media screen and (max-width: 1035px) {
-    position: absolute;
-    right: 55%;
-  }
-`;
-
-const Alert = styled.div`
-  width: 30px;
-  height: 20px;
-  margin-left: 5px;
-`;
-
-const Invite = styled.div`
-  width: 30px;
-  height: 20px;
-  margin-top: 4px;
-`;
-
-const Logout = styled.button`
-  background-color: transparent;
-  margin-top: 10px;
-  margin-right: 20px;
-  border: none;
-  width: 30px;
-  height: 18px;
-  cursor: pointer;
 `;
 
 const UserInfo = styled.div`
@@ -117,4 +105,13 @@ const UserInfo = styled.div`
   border-radius: 25px;
   margin-top: 1px;
   background-color: #f8f5f0;
+`;
+
+const MenuBtn = styled.button`
+  background-color: transparent;
+  border: none;
+  display: flex;
+  padding: 10px;
+  font-size: 13px;
+  cursor: pointer;
 `;

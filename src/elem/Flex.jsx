@@ -11,4 +11,5 @@ const Flexbox = styled.div`
   flex-direction: ${({ fd }) => (fd ? fd : "column")};
   justify-content: ${({ jc }) => (jc ? jc : "center")};
   align-items: ${({ ai }) => (ai ? ai : "")};
+  position: ${({ posi }) => (posi ? posi : "")};
 `;

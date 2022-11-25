@@ -9,6 +9,7 @@ const StSpan = styled.span`
   display: flex;
   font-size: 20px;
   margin: ${({ mg }) => (mg ? mg : "")};
+  align-self: ${({ asf }) => (asf ? asf : "")};
 
   ${({ variant }) => {
     switch (variant) {
