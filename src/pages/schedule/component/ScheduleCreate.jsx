@@ -1,18 +1,18 @@
 // 작성 페이지
 
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-
+import { Div } from "../../../elem";
+import { useModal } from "../../../hooks/useModal";
 import { __addSchedule } from "../../../redux/modules/scheduleSlice";
 import LandingPage from "./Landing";
 
 const ScheduleCreate = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // const groupId = useSelector((state) => state);
-  // console.log("groupId===>", groupId);
   const { partyId } = useParams();
+  const [Modal, openModal] = useModal();
 
   const [schedule, setSchedule] = useState({
     title: "",
@@ -43,26 +43,44 @@ const ScheduleCreate = () => {
   };
 
   return (
-    <div>
+    <Div variant="bodyContainer">
       <form onSubmit={onAddScheduleHandler}>
         <input
           type="text"
           placeholder="제목"
           name="title"
           onChange={onChangeHandler}
+          minLength={1}
+          required
         />
         <input
           type="text"
           placeholder="내용"
           name="content"
           onChange={onChangeHandler}
+          minLength={1}
+          required
         />
         <input type="time" name="meetTime" onChange={onChangeHandler} />
         <input type="date" name="date" onChange={onChangeHandler} />
         <button type="submit">작성</button>
       </form>
-      <LandingPage setSchedule={setSchedule} schedule={schedule} />
-    </div>
+      {schedule.place ? (
+        <>
+          <p>{schedule.place.placeName}</p>
+          <p>{schedule.place.address}</p>
+        </>
+      ) : (
+        <>
+          <p>선택한 장소가 없습니다.</p>
+        </>
+      )}
+      <LandingPage
+        setSchedule={setSchedule}
+        schedule={schedule}
+        openModal={openModal}
+      />
+    </Div>
   );
 };
 

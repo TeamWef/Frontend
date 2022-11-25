@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import KakaoMap from "./KakaoMap";
 import { useModal } from "../../../hooks/useModal";
 
-function LandingPage({ setSchedule, schedule, editSchedule, setEditSchedule }) {
+function LandingPage({ setSchedule, schedule }) {
   const [InputText, setInputText] = useState("");
   const [Place, setPlace] = useState("");
   const [modal, openModal] = useModal();
@@ -34,8 +34,7 @@ function LandingPage({ setSchedule, schedule, editSchedule, setEditSchedule }) {
             searchPlace={Place}
             setSchedule={setSchedule}
             schedule={schedule}
-            setEditSchedule={setEditSchedule}
-            editSchedule={editSchedule}
+            openModal={openModal}
           />
         </div>
       )}
