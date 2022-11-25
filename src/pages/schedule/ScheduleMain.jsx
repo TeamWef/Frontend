@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+import { Div } from "../../elem";
 import {
   __getSchedule,
   __getGroupSchedule,
@@ -11,7 +12,10 @@ const ScheduleMain = () => {
   console.log("!!!", scheduleList);
   const dispatch = useDispatch();
   const { partyId } = useParams();
+  console.log({ partyId });
   const navigate = useNavigate();
+  // const scheduleId = seheduleList?.scheduleId;
+  console.log(scheduleList);
 
   useEffect(() => {
     dispatch(__getSchedule({ partyId }));
@@ -19,7 +23,7 @@ const ScheduleMain = () => {
   }, [dispatch, partyId]);
 
   return (
-    <div>
+    <Div variant="bodyContainer">
       <button
         onClick={() => {
           navigate(`/${partyId}/schedule/create`);
@@ -30,6 +34,7 @@ const ScheduleMain = () => {
       {scheduleList?.map((data) => {
         return (
           <div key={data?.scheduleId}>
+            <h4>{data?.scheduleId}</h4>
             <h2>{data?.title}</h2>
             <p>{data?.writer}</p>
             <button
@@ -42,7 +47,7 @@ const ScheduleMain = () => {
           </div>
         );
       })}
-    </div>
+    </Div>
   );
 };
 

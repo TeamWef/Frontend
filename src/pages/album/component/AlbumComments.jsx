@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
+import { Flex } from "../../../elem";
 import { useInput } from "../../../hooks/useInput";
 import {
   __addComment,
@@ -29,70 +30,76 @@ const AlbumComments = ({ id, commentList, myId }) => {
     }
   };
   return (
-    <div>
+    <Flex>
       <h2>AlbumComments영역임</h2>
-      <input placeholder="댓글 내용 작성" value={comment} onChange={onChange} />
-      <button onClick={addCommentHandler}>추가</button>
+      <Flex fd="row">
+        <input
+          placeholder="댓글 내용 작성"
+          value={comment}
+          onChange={onChange}
+        />
+        <button onClick={addCommentHandler}>추가</button>
+      </Flex>
       <br />
-      <br />
-      {commentList?.map((comment) => {
-        return (
-          <div key={comment.id}>
-            <img
-              src={comment.profileImageUrl}
-              alt="profileImg"
-              style={{
-                width: "20px",
-                height: "20px",
-              }}
-            />
-            <StSpan>{comment.writer}</StSpan>
-            {comment.id === updateTarget ? (
-              <>
-                <input value={Input} onChange={changeInput} />
-              </>
-            ) : (
-              <StSpan>{comment.content}</StSpan>
-            )}
-            <StSpan>{comment.beforeTime}</StSpan>
-            {comment.id === updateTarget ? (
-              <>
-                <button
-                  onClick={() => {
-                    dispatch(
-                      __updateComment({ id: comment.id, content: Input })
-                    );
-                    setUpdateTarget("");
-                    inputReset();
-                  }}
-                >
-                  수정 완료
-                </button>
-                <button onClick={() => setUpdateTarget("")}>취소</button>
-              </>
-            ) : (
-              <>
-                {myId === comment.memberEmail ? (
-                  <>
-                    <button
-                      onClick={() => {
-                        setUpdateTarget(comment.id);
-                        setInput(comment.content);
-                      }}
-                    >
-                      수정
-                    </button>
-                    <button onClick={() => delCommentHandler(comment.id)}>
-                      삭제
-                    </button>
-                  </>
-                ) : null}
-              </>
-            )}
-          </div>
-        );
-      })}
-    </div>
+      <Flex>
+        {commentList?.map((comment) => {
+          return (
+            <Flex fd="row" jc="flex-start" key={comment.id}>
+              <Flex fd="row">
+                {comment.profileImageUrl ? (
+                  <Profile src={comment.profileImageUrl} alt="profileImg" />
+                ) : (
+                  <Profile src="/images/userProfile.jpg" alt="profileImg" />
+                )}
+                <StSpan>{comment.writer}</StSpan>
+              </Flex>
+              {comment.id === updateTarget ? (
+                <>
+                  <input value={Input} onChange={changeInput} />
+                </>
+              ) : (
+                <StSpan>{comment.content}</StSpan>
+              )}
+              <StSpan>{comment.beforeTime}</StSpan>
+              {comment.id === updateTarget ? (
+                <>
+                  <button
+                    onClick={() => {
+                      dispatch(
+                        __updateComment({ id: comment.id, content: Input })
+                      );
+                      setUpdateTarget("");
+                      inputReset();
+                    }}
+                  >
+                    수정 완료
+                  </button>
+                  <button onClick={() => setUpdateTarget("")}>취소</button>
+                </>
+              ) : (
+                <>
+                  {myId === comment.memberEmail ? (
+                    <>
+                      <button
+                        onClick={() => {
+                          setUpdateTarget(comment.id);
+                          setInput(comment.content);
+                        }}
+                      >
+                        수정
+                      </button>
+                      <button onClick={() => delCommentHandler(comment.id)}>
+                        삭제
+                      </button>
+                    </>
+                  ) : null}
+                </>
+              )}
+            </Flex>
+          );
+        })}
+      </Flex>
+    </Flex>
   );
 };
 
@@ -100,4 +107,10 @@ export default AlbumComments;
 
 const StSpan = styled.span`
   margin-left: 5px;
+`;
+
+const Profile = styled.img`
+  position: relative;
+  width: 20px;
+  height: 20px;
 `;

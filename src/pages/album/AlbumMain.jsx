@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
-import { Flex } from "../../elem";
+import { Div, Flex } from "../../elem";
 import { useModal } from "../../hooks/useModal";
 import { __getAlbumList } from "../../redux/modules/albumSlice";
 import AlbumCreate from "../album/component/AlbumCreate";
@@ -24,7 +24,7 @@ const AlbumMain = () => {
   const albumItems = useSelector((state) => state.album?.album);
   // console.log(albumItems);
   return (
-    <>
+    <Div variant="bodyContainer">
       <Flex fd="row">
         <button onClick={openCreateModal}>사진 올리기</button>
         <button onClick={() => navigate(`/${partyId}`)}>
@@ -50,7 +50,7 @@ const AlbumMain = () => {
           setChange={setChange}
         />
       )}
-    </>
+    </Div>
   );
 };
 

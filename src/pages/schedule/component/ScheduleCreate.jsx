@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+import { Div } from "../../../elem";
 import { useModal } from "../../../hooks/useModal";
 import { __addSchedule } from "../../../redux/modules/scheduleSlice";
 import LandingPage from "./Landing";
@@ -42,7 +43,7 @@ const ScheduleCreate = () => {
   };
 
   return (
-    <div>
+    <Div variant="bodyContainer">
       <form onSubmit={onAddScheduleHandler}>
         <input
           type="text"
@@ -79,7 +80,7 @@ const ScheduleCreate = () => {
         schedule={schedule}
         openModal={openModal}
       />
-    </div>
+    </Div>
   );
 };
 

@@ -1,17 +1,15 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import SignUp from "../pages/home/component/SignUp";
-import ScheduleMain from "../pages/schedule/ScheduleMain";
 import Main from "../pages/main/Main";
 import AlbumMain from "../pages/album/AlbumMain";
 import AlbumDetail from "../pages/album/component/AlbumDetail";
 import { Home } from "../pages/home/Home";
 import ScheduleDetail from "../pages/schedule/component/ScheduleDetail";
 import Kakao from "../pages/home/component/Kakao";
-import ChatMain from "../pages/chat/ChatMain";
 import Notice from "../pages/notice/Notice";
 import GroupMain from "../pages/groupmain/GroupMain";
-import scheduleMain from "../pages/schedule/ScheduleMain";
 import ScheduleCreate from "../pages/schedule/component/ScheduleCreate";
+import ScheduleMain from "../pages/schedule/ScheduleMain";
 
 const Page = () => {
   return (
