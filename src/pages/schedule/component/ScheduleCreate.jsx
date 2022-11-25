@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+import { Div } from "../../../elem";
 
 import { __addSchedule } from "../../../redux/modules/scheduleSlice";
 import LandingPage from "./Landing";
@@ -43,7 +44,7 @@ const ScheduleCreate = () => {
   };
 
   return (
-    <div>
+    <Div variant="bodyContainer">
       <form onSubmit={onAddScheduleHandler}>
         <input
           type="text"
@@ -62,7 +63,7 @@ const ScheduleCreate = () => {
         <button type="submit">작성</button>
       </form>
       <LandingPage setSchedule={setSchedule} schedule={schedule} />
-    </div>
+    </Div>
   );
 };
 
