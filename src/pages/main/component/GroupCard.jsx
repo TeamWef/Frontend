@@ -45,6 +45,7 @@ const GroupCard = () => {
   return (
     <>
       <Flex>
+        <Margin />
         <Flex fd="row" jc="space-between">
           <Span variant="bold">Group.</Span>
           <Div
