@@ -10,7 +10,7 @@ import AlbumCreate from "../album/component/AlbumCreate";
 const AlbumMain = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const partyId = useParams().partyid;
+  const partyId = useParams().partyId;
   // console.log(partyId);
   //모달 컨트롤
   const [createModal, openCreateModal] = useModal();

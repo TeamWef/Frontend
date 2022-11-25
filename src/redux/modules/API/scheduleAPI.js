@@ -4,7 +4,7 @@ import { getCookie } from "../customCookies";
 
 //일정 만들기
 export const addScheduleApi = async ({ schedule, partyId }) => {
-  console.log("API===>", { schedule });
+  console.log("API===>", schedule);
   const res = await axios.post(`${ServerUrl}/${partyId}/schedules`, schedule, {
     headers: {
       Authorization: getCookie("token"),
