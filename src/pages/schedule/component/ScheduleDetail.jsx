@@ -92,7 +92,7 @@ const SchdeleDetail = ({ scheduleId }) => {
           setIsParticipant(!isParticipant);
         }}
       >
-        {isParticipant ? "참여" : "취소"}
+        {isParticipant ? "취소" : "참여"}
       </button>
       {/* 참여자 목록 보내주실 때 byme 카테고리에 참여 true, 미참여 false값 받기 */}
       <button onClick={openModal}>수정하기</button>

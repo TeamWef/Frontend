@@ -86,16 +86,7 @@ const CenterBox = styled.div`
   margin-top: 16.5px;
 `;
 
-const UserBox = styled.div`
-  @media screen and (max-width: 1435px) {
-    position: absolute;
-    right: 20%;
-  }
-  @media screen and (max-width: 1235px) {
-    position: absolute;
-    right: 35%;
-  }
-`;
+const UserBox = styled.div``;
 
 const UserInfo = styled.div`
   position: relative;
