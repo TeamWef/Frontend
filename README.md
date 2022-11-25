@@ -3,10 +3,11 @@
 # 🥳 위프, we are friend! 🎈 <br>
 
 
-바로가기 ⏩️ https://main.daegm2i4mn3we.amplifyapp.com 
+WeF 바로가기  ⏩️ https://main.daegm2i4mn3we.amplifyapp.com  <br>
+team Notion ⏩️ https://sumptuous-devourer-e77.notion.site/2-we-are-friends-bf4c7ed5ce7f4da88186c275c221bb2c
 
 ----
-# 📍 목차
+# 📍 table of contents
 
 1. team
 - taem member introduction
@@ -16,6 +17,7 @@
 - project introduction
 - major skill
 - project architecture
+- ERD
 - skill stack
 - skill stack & library cause of utilization
 - trouble shooting
@@ -63,9 +65,12 @@
 ## project architecture
 <img src="https://velog.velcdn.com/images/resyve/post/df4a13ab-b696-4f2a-89a1-99a602487895/image.png">
 
+## ERD
+<img src="https://velog.velcdn.com/images/resyve/post/f636d45f-f7f2-4098-af99-9a830e73f107/image.png">
+
 ## skill stack
 
-FrontEnd <br>
+🧶 FrontEnd <br>
 <div>
 <img src="https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=HTML5&logoColor=white"/> 
 <img src="https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=CSS3&logoColor=white"/> 
@@ -78,9 +83,8 @@ FrontEnd <br>
 <img src="https://img.shields.io/badge/kakao login-FFCD00?style=flat-square&logo=kakao&logoColor=black">
  <img src="https://img.shields.io/badge/kakao map-FFCD00?style=flat-square&logo=kakao&logoColor=black">
 </div>
-------
 
-BackEnd<br>
+🧵 BackEnd <br>
 <div>
 <img src="https://img.shields.io/badge/Spring Boot-6DB33F?style=flat-square&logo=SpringBoot&logoColor=white"/>
 <img src="https://img.shields.io/badge/Gradle-02303A?style=flat-square&logo=Gradle&logoColor=white"/>
@@ -94,14 +98,12 @@ BackEnd<br>
 <img src="https://img.shields.io/badge/codedeploy-6DB33F?style=flat-square&logo=codedeploy&logoColor=white">
 <img src="https://img.shields.io/badge/kakao login-FFCD00?style=flat-square&logo=kakao&logoColor=black">
 <img src="https://img.shields.io/badge/Swagger-85EA2D?style=flat-square&logo=Swagger&logoColor=white">
-
-
-
 </div>
 
-[사용 예정]<br>
-<img src="https://img.shields.io/badge/SockJS-010101?style=flat-square&logoColor=white"/>
-<img src="https://img.shields.io/badge/Stromp-353535?style=flat-square&logoColor=white">
+[사용 예정]<br/>
+
+
+<img src="https://img.shields.io/badge/SockJS-010101?style=flat-square&logoColor=white"/> <img src="https://img.shields.io/badge/Stromp-353535?style=flat-square&logoColor=white">
 <img src="https://img.shields.io/badge/google login-4285F4?style=flat-square&logo=google&logoColor=white">
 <img src="https://img.shields.io/badge/Redis-DC382D?style=flat-square&logo=Redis&logoColor=white">
 <img src="https://img.shields.io/badge/QueryDSL-0769AD?style=flat-square&logo=jQuery&logoColor=white">
@@ -111,12 +113,7 @@ BackEnd<br>
 | :--- | :--- |
 | Redux ToolKit | 리덕스를 사용하다보면, redux devtool, immer, reselect 등 여러가지 라이브러리를 설치하게 되는데 이러한 패키지 의존성을 줄여주고, ducks pattern을 유지할 수 있다는 점이 좋았고, 리덕스의 단점으로 꼽히는 *보일러플레이트 코드가 줄어들기 때문에 선정하게 되었습니다 |
 | aws amplify | 배포 자동화를 어떤 방식으로 하는지 구글링과 이전 기수들의 깃헙을 찾아보았을 때 크게 버셀, aws s3, aws amplify를 많이 사용하고 있었는데 그중 amplify를 사용한 이유는 생성 절차가 무척 간단하고, 연결된 git repository의 브랜치 변경이 발생하면 자동으로 이를 감지해 빌드와 배포를 도와주기 때문에 사용하게 되었습니다 (+ 새로운 빌드가 준비되면 바로 배포되고 적용되서 더 좋았습니다!) |
-| ㅇ  | ㅇ |
-| ㅇ | ㅇ |
-| ㅇ |  ㅇ |
-| 휘인 |  ㅇ |
-| 휘인 | ㅇ |
-|  | ㅇ |
+| AWS EC2 | 이번 프로젝트가 수익성을 목표로 하고 있지 않기에, 초기 투자비용이 적은 AWS의 EC2 프리티어가 존재하며, 여러 다른 AWS 서비스인 RDS, S3 등의 유기적인 연동 및 관리가 쉽게 가능하기에 사용하기로 함 |
 | MySQL | 오픈 소스 라이센스로 유지되고 있으며, 빠른 속도와 높은 보안성이 특징이기에 사용하기로 함 |
 | JWT (JSON Web Token) | 토큰 안에 유저의 정보를 담고 있기 때문에 별도의 데이터 및 저장 공간이 필요하지 않기에 사용하기로 함 |
 | Github Action | 프로젝트를 빌드하여 본 서버에 배포하는 과정에서 반복되는 과정들을 자동화 할 필요성을 느껴 별도의 서버 설치가 필요하지 않고 호환성이 좋은 Github Action을 사용하기로 함 |
