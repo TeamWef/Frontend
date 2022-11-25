@@ -137,61 +137,60 @@ const GroupCard = () => {
         <CreateGroupCard openModal={openCreateModal} modal={createModal} />
       )}
       {editModal && (
-                      <Div variant="background">
-                        <Div variant="groupEdit">
-                          <Flex>
-                            <Flex fd="row" jc="space-between">
-                              <Span variant="bold">Group Edit.</Span>
-                              <Svg
-                                variant="close"
-                                onClick={() => {
-                                  openEditModal();
-                                  setUpdateId("");
-                                }}
-                              />
-                            </Flex>
-                            <Margin />
-                            <div>
-                              <EditModalInput
-                                name="partyName"
-                                type="text"
-                                placeholder="Title"
-                                onChange={onChangeHandler}
-                              />
-                              <EditModalInput
-                                name="partyIntroduction"
-                                type="text"
-                                placeholder="Introduction"
-                                onChange={onChangeHandler}
-                              />
-                              <Margin mg="50px" />
-                              <Button
-                                variant="large"
-                                onClick={(e) => {
-                                  e.preventDefault();
-                                  dispatch(
-                                    __updateGroup({
-                                      id: updateId,
-                                      partyName: editGroup.partyName,
-                                      partyIntroduction:
-                                        editGroup.partyIntroduction,
-                                    })
-                                  );
-                                  setEditGroup({
-                                    partyName: "",
-                                    partyIntroduction: "",
-                                  });
-                                  setUpdateId("");
-                                  openEditModal();
-                                }}
-                              >
-                                Apply
-                              </Button>
-                            </div>
-                          </Flex>
-                        </Div>
-                      </Div>
-                    )}
+        <Div variant="background">
+          <Div variant="groupEdit">
+            <Flex>
+              <Flex fd="row" jc="space-between">
+                <Span variant="bold">Group Edit.</Span>
+                <Svg
+                  variant="close"
+                  onClick={() => {
+                    openEditModal();
+                    setUpdateId("");
+                  }}
+                />
+              </Flex>
+              <Margin />
+              <div>
+                <EditModalInput
+                  name="partyName"
+                  type="text"
+                  placeholder="Title"
+                  onChange={onChangeHandler}
+                />
+                <EditModalInput
+                  name="partyIntroduction"
+                  type="text"
+                  placeholder="Introduction"
+                  onChange={onChangeHandler}
+                />
+                <Margin mg="50px" />
+                <Button
+                  variant="large"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    dispatch(
+                      __updateGroup({
+                        id: updateId,
+                        partyName: editGroup.partyName,
+                        partyIntroduction: editGroup.partyIntroduction,
+                      })
+                    );
+                    setEditGroup({
+                      partyName: "",
+                      partyIntroduction: "",
+                    });
+                    setUpdateId("");
+                    openEditModal();
+                  }}
+                >
+                  Apply
+                </Button>
+              </div>
+            </Flex>
+          </Div>
+        </Div>
+      )}
     </>
   );
 };
@@ -222,10 +221,10 @@ const GroupMaincontainer = styled.div`
   &::-webkit-scrollbar-track {
     width: 1078px;
   }
-  /* overflow: hidden; */
 `;
 
 const GroupCardContainer = styled.div`
+  position: relative;
   width: 250px;
   height: 220px;
   margin: 0 auto;
@@ -233,15 +232,10 @@ const GroupCardContainer = styled.div`
   background-color: white;
   margin-left: 15px;
   box-shadow: 1px 1px 1px 1px #dadada52;
-  &div {
-    white-space: nowrap;
-    overflow-x: auto;
-    overflow: hidden;
-  }
   & p {
+    white-space: normal;
     color: #949494;
-    margin-left: 20px;
-    margin-top: 10px;
+    padding: 20px;
   }
 `;
 
@@ -292,8 +286,9 @@ const NullBox = styled.div`
 `;
 
 const ButtonWrap = styled.div`
-  margin-left: 27%;
-  margin-top: 50px;
+  position: absolute;
+  left: 70px;
+  bottom: 20px;
 `;
 
 const DropBox = styled.div`

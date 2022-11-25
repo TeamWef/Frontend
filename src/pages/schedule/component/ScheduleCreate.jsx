@@ -22,12 +22,10 @@ const ScheduleCreate = () => {
     place: { placeName: "", address: "" },
   });
 
-  // console.log("스케쥴 안에 무엇이 담겨있나요? =>", schedule);
-
   const onAddScheduleHandler = (e) => {
     e.preventDefault();
     dispatch(__addSchedule({ schedule, partyId }));
-    navigate(`/${partyId}/schedulelist`);
+    navigate(`/${partyId}/schedule`);
     setSchedule({
       title: "",
       content: "",
