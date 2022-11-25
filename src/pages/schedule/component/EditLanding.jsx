@@ -34,6 +34,7 @@ function EditLanding({ editSchedule, setEditSchedule }) {
             searchPlace={Place}
             setEditSchedule={setEditSchedule}
             editSchedule={editSchedule}
+            editOpenModal={openModal}
           />
         </div>
       )}
