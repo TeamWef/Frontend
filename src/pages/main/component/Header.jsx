@@ -19,7 +19,7 @@ export const Header = () => {
     alert("로그아웃 되었습니다.");
     window.location.reload();
   };
-  console.log(param);
+  // console.log(param);
 
   return (
     <BaseContainer>

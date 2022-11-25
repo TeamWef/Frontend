@@ -15,11 +15,11 @@ import { Div } from "../../../elem";
 
 const SchdeleDetail = ({ scheduleId }) => {
   const scheduleDetail = useSelector((state) => state.schedule?.scheduleDetail);
-  console.log("디테일 selector==>", scheduleDetail);
+  // console.log("디테일 selector==>", scheduleDetail);
   const participant = useSelector((state) => state.mypage?.myProfile);
   const participanter = useSelector((state) => state.schedule?.join);
-  console.log("참여자 찾기=>", participanter);
-  console.log("참여자 찾기=>", participant);
+  // console.log("참여자 찾기=>", participanter);
+  // console.log("참여자 찾기=>", participant);
   const [isParticipant, setIsParticipant] = useState(
     scheduleDetail.isParticipant
   );
@@ -31,7 +31,7 @@ const SchdeleDetail = ({ scheduleId }) => {
   }, [dispatch, detailId]);
   const navigate = useNavigate();
 
-  console.log(useParams());
+  // console.log(useParams());
 
   const [editSchedule, setEditSchedule] = useState({
     title: "",
