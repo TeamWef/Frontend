@@ -118,7 +118,10 @@ const SchdeleDetail = ({ scheduleId }) => {
             <button
               type="submit"
               onClick={() => {
-                navigate(`/${scheduleDetail?.scheduleId}/scheduledetail`);
+
+                navigate(
+                  `/${partyId}/scheduledetail/${scheduleDetail?.scheduleId}`
+                );
               }}
             >
               작성

@@ -1,21 +1,20 @@
 import React, { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useInputs } from "../../../hooks/useInput";
-import {
-  __addAlbumItem,
-  __getAlbumItem,
-  __getAlbumList,
-} from "../../../redux/modules/albumSlice";
+import { useInput, useInputs } from "../../../hooks/useInput";
+import { __addAlbumItem } from "../../../redux/modules/albumSlice";
+import LandingKakao from "./LandingKakao";
 
-const AlbumCreate = ({ openCreateModal, partyId, Change, setChange }) => {
+const AlbumCreate = ({ openCreateModal, partyId }) => {
   const dispatch = useDispatch();
 
   // 내용 State
-  const [albumItem, onChangeAlbumItem, reset] = useInputs({
-    content: "",
-    place: "",
-  });
-
+  const [content, onChangeContent, contentReset, setContent] = useInput("");
+  const [albumPlace, , placeReset, setAlbumPlace] = useInput("");
+  const albumItem = {
+    content: content,
+    place: `${albumPlace.placeName}:${albumPlace.address}`,
+  };
+  // console.log(albumItem);
   // 이미지 State
   const [uploadImg, setUploadImg] = useState(null);
   const [previewImage, setPreviewImage] = useState(null);
@@ -49,11 +48,10 @@ const AlbumCreate = ({ openCreateModal, partyId, Change, setChange }) => {
     }
     dispatch(__addAlbumItem({ newAlbum, partyId }));
     setUploadImg("");
-    reset();
     openCreateModal();
     // setChange(!Change);
   };
-
+  console.log(albumPlace);
   return (
     <div>
       <h1>AlbumCreate</h1>
@@ -87,8 +85,21 @@ const AlbumCreate = ({ openCreateModal, partyId, Change, setChange }) => {
           </button>
         </>
       )}
-      장소 : <input name="place" onChange={onChangeAlbumItem} />
-      내용 : <input name="content" onChange={onChangeAlbumItem} />
+      <div>
+        장소 :
+        {albumPlace ? (
+          <>
+            <div>{albumPlace.placeName}</div>
+            <div>{albumPlace.address}</div>
+          </>
+        ) : (
+          <span>선택한 장소가 없습니다.</span>
+        )}
+        <LandingKakao albumPlace={albumPlace} setAlbumPlace={setAlbumPlace} />
+      </div>
+      <div>
+        내용 : <input onChange={onChangeContent} />
+      </div>
       <button onClick={uploadHandler}>등록완료</button>
       <button onClick={openCreateModal}>닫기</button>
     </div>
