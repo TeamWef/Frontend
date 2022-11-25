@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { __getGroupSchedule } from "../../../redux/modules/scheduleSlice";
 import Svg from "../../../elem/Svg";
+import { Flex, Margin, Span } from "../../../elem";
 
 const ScheduleCard = () => {
   const data = useSelector((state) => state.schedule.groupSchedule.data);
@@ -16,73 +17,95 @@ const ScheduleCard = () => {
   }, [dispatch]);
 
   return (
-    <MainContainer>
-      <h2>Schedule.</h2>
-      {data?.length !== 0 ? (
-        <>
-          {data?.map((item) => {
-            return (
-              <ScheduleContainer key={item.scheduleId}>
-                <TextContainer>
-                  <GroupTitle>
-                    <TitleBox>
-                      <h3>{item?.partyName}</h3>
-                    </TitleBox>
-                    <p>{item?.title}</p>
-                    <p>{item?.writer}</p>
-                  </GroupTitle>
-                  <UserBox>
-                    <More
-                      onClick={() => {
-                        navigate(
-                          `/${item.partyId}/scheduledetail/${item.scheduleId}`
-                        );
-                      }}
-                    >
-                      <Svg variant={"more"} />
-                    </More>
-                  </UserBox>
-                </TextContainer>
-              </ScheduleContainer>
-            );
-          })}
-        </>
-      ) : (
-        <NullBox>
-          <NullBoxTextBox>
-            <NullBoxH3>현재 일정이 없습니다.</NullBoxH3>
-          </NullBoxTextBox>
-        </NullBox>
-      )}
-    </MainContainer>
+    <Flex>
+      <Margin />
+      <Span variant="bold">Schedule.</Span>
+      <ScheduleMaincontainer>
+        {data?.length !== 0 ? (
+          <>
+            {data?.map((item) => {
+              return (
+                <ScheduleDiv key={item.scheduleId}>
+                  <TextContainer>
+                    <GroupTitle>
+                      <TitleBox>
+                        <Span variant="smallBronze">{item?.partyName}</Span>
+                      </TitleBox>
+                      <p>{item?.title}</p>
+                      <p>{item?.writer}</p>
+                    </GroupTitle>
+                    <UserBox>
+                      <More
+                        onClick={() => {
+                          navigate(
+                            `/${item.partyId}/scheduledetail/${item.scheduleId}`
+                          );
+                        }}
+                      >
+                        <Svg variant={"more"} />
+                      </More>
+                    </UserBox>
+                  </TextContainer>
+                </ScheduleDiv>
+              );
+            })}
+          </>
+        ) : (
+          <NullBox>
+            <Flex>
+              <Span variant="bigBronze" asf="center">
+                현재 일정이 없습니다.
+              </Span>
+            </Flex>
+          </NullBox>
+        )}
+      </ScheduleMaincontainer>
+    </Flex>
   );
 };
 
 export default ScheduleCard;
 
-const MainContainer = styled.div`
-  width: 1078px;
-  height: 40px;
-  margin: 0 auto;
-`;
-
 const TitleBox = styled.div`
   background-color: #ede8e1;
   color: #a4a19d;
   width: 160px;
-  height: 30px;
+  height: 35px;
   margin-top: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 5px;
-  & h3 {
-    font-weight: 400;
-  }
 `;
 
-const ScheduleContainer = styled.div`
-  height: 70px;
+const ScheduleMaincontainer = styled.div`
+  width: 1075px;
+  height: 500px;
+  display: flex;
+  flex-direction: column;
+  white-space: nowrap;
+  overflow-y: auto;
+  overflow-x: hidden;
+  margin-top: 20px;
+  &::-webkit-scrollbar {
+    background: #d9d9d9;
+    width: 6px;
+    height: 100%;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: #a4a19d;
+  }
+  &::-webkit-scrollbar-track {
+    width: 0;
+    height: auto;
+  }
+  /* overflow: hidden; */
+`;
+
+const ScheduleDiv = styled.div`
+  width: 1075px;
+  height: 75px;
   border-bottom: 1px solid #d9d3c7;
 `;
 
@@ -91,7 +114,7 @@ const TextContainer = styled.div`
 `;
 
 const GroupTitle = styled.div`
-  width: 1078px;
+  width: 1075px;
   display: flex;
   justify-content: space-between;
   & p {
@@ -119,22 +142,13 @@ const More = styled.div`
 `;
 
 const NullBox = styled.div`
-  width: 999px;
-  height: 230px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 1070px;
+  height: 227px;
   border: 2px dashed #d9d3c7;
   border-radius: 10px;
-  margin-top: 20px;
-  margin-bottom: 20px;
-`;
-
-const NullBoxTextBox = styled.div`
-  margin-top: 90px;
-`;
-
-const NullBoxH3 = styled.h3`
-  font-size: 18px;
-  font-weight: 500;
-  color: #a4a19d;
-  text-align: center;
-  padding: 15px;
+  margin-top: 40px;
 `;

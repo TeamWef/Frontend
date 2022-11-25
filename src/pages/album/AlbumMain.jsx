@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
+import { Flex } from "../../elem";
 import { useModal } from "../../hooks/useModal";
 import { __getAlbumList } from "../../redux/modules/albumSlice";
 import AlbumCreate from "../album/component/AlbumCreate";
@@ -24,20 +25,23 @@ const AlbumMain = () => {
   // console.log(albumItems);
   return (
     <>
-      <button onClick={openCreateModal}>사진 올리기</button>
-      <button onClick={() => navigate(`/${partyId}`)}>
-        메인 페이지로 돌아가기
-      </button>
-      <br />
-      {albumItems.map((albumItem) => (
-        <Stimg
-          onClick={() => {
-            navigate(`/${partyId}/album/${albumItem.id}`);
-          }}
-          key={albumItem.id}
-          src={albumItem.imageUrl}
-        ></Stimg>
-      ))}
+      <Flex fd="row">
+        <button onClick={openCreateModal}>사진 올리기</button>
+        <button onClick={() => navigate(`/${partyId}`)}>
+          메인 페이지로 돌아가기
+        </button>
+      </Flex>
+      <Flex fd="row">
+        {albumItems.map((albumItem) => (
+          <Stimg
+            onClick={() => {
+              navigate(`/${partyId}/album/${albumItem.id}`);
+            }}
+            key={albumItem.id}
+            src={albumItem.imageUrl}
+          ></Stimg>
+        ))}
+      </Flex>
       {createModal && (
         <AlbumCreate
           openCreateModal={openCreateModal}
