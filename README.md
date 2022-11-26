@@ -129,3 +129,4 @@ team Notion ⏩️ https://sumptuous-devourer-e77.notion.site/2-we-are-friends-b
 | 이벤트 알림 | SSE 통신 |
 | 그룹 내 친구들과의 채팅 | SockJS, Stomp |
 | 초대 코드 | uuid |
+| 구글 로그인 | Google cloud consol |
