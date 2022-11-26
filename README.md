@@ -9,11 +9,11 @@ team Notion ⏩️ https://sumptuous-devourer-e77.notion.site/2-we-are-friends-b
 ----
 # 📍 table of contents
 
-1. team
+1. **team**
 - taem member introduction
 - team Github
 
-2. project
+2. **project**
 - project introduction
 - major skill
 - project architecture
