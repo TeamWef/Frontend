@@ -54,7 +54,7 @@ team Notion ⏩️ https://sumptuous-devourer-e77.notion.site/2-we-are-friends-b
  이런 고민은 이제 그만! ✋🏻 <br>
  위프에서 친구들과 함께 그룹을 생성해, 만날 약속을 잡고, 그날의 사진들을 공유해 보세요! </p>
 
-## major skill
+## major function
 
 ✨ 그룹 생성 <br>
 ✨ 일정 생성 <br>
@@ -121,3 +121,11 @@ team Notion ⏩️ https://sumptuous-devourer-e77.notion.site/2-we-are-friends-b
 
 ## trouble shooting
 
+
+
+## to be continue...
+| **구현 기능** | **사용할 스킬** |
+| :--- | :--- |
+| 이벤트 알림 | SSE 통신 |
+| 그룹 내 친구들과의 채팅 | SockJS, Stomp |
+| 초대 코드 | uuid |
