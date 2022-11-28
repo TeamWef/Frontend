@@ -13,6 +13,8 @@ import Svg from "../../../elem/Svg";
 import { Button, Div, Flex, Margin, Span } from "../../../elem";
 import { getCookie } from "../../../redux/modules/customCookies";
 import jwt_decode from "jwt-decode";
+import DropDown from "../../../elem/DropDown";
+import { useInput, useInputs } from "../../../hooks/useInput";
 
 const GroupCard = () => {
   const dispatch = useDispatch();
@@ -23,11 +25,17 @@ const GroupCard = () => {
   const [editModal, openEditModal] = useModal();
   const [dropBox, openDropBox] = useModal();
   const [updateId, setUpdateId] = useState("");
-
-  const [editGroup, setEditGroup] = useState({
+  const [editGroup, onChange, reset] = useInputs({
     partyName: "",
     partyIntroduction: "",
   });
+  const { partyName, partyIntroduction } = editGroup;
+
+  const groupItem = {
+    id: updateId,
+    partyName: partyName,
+    partyIntroduction: partyIntroduction,
+  };
 
   //토큰 디코드
   const token = getCookie("token").replace("Bearer ", "");
@@ -38,9 +46,14 @@ const GroupCard = () => {
     dispatch(__getGroup());
   }, [dispatch]);
 
-  const onChangeHandler = (e) => {
-    const { name, value } = e.target;
-    setEditGroup({ ...editGroup, [name]: value });
+  const onEdit = (e) => {
+    e.preventDefault();
+    if (!editGroup.partyName || !editGroup.partyIntroduction) {
+      return alert("모든 항목을 입력해주세요.");
+    }
+    dispatch(__updateGroup(groupItem));
+    setUpdateId("");
+    openEditModal();
   };
 
   return (
@@ -75,7 +88,7 @@ const GroupCard = () => {
                       </button>
                     </StTitleDiv>
                     <p>{data?.partyIntroduction}</p>
-                    <ButtonWrap>
+                    <StbuttonDiv>
                       <Button
                         variant="small"
                         onClick={() => {
@@ -84,20 +97,21 @@ const GroupCard = () => {
                       >
                         Join
                       </Button>
-                    </ButtonWrap>
+                    </StbuttonDiv>
                     {dropBox &&
                       data.partyId === updateId &&
                       (data.memberEmail === myId ? (
-                        <DropBox>
-                          <DropBoxButton
+                        <Div variant="dropDown">
+                          <DropDown
                             onClick={() => {
                               openEditModal();
                               openDropBox();
                             }}
                           >
                             그룹 수정
-                          </DropBoxButton>
-                          <DropBoxButton
+                          </DropDown>
+                          <DropDown
+                            variant="bottom"
                             onClick={() => {
                               if (window.confirm("정말 삭제하시겠습니까?")) {
                                 dispatch(__delGroup(data?.partyId));
@@ -107,19 +121,19 @@ const GroupCard = () => {
                             }}
                           >
                             그룹 삭제
-                          </DropBoxButton>
-                        </DropBox>
+                          </DropDown>
+                        </Div>
                       ) : (
-                        <DropBox>
-                          <StButton>그룹 나가기</StButton>
-                        </DropBox>
+                        <Div variant="dropDown">
+                          <DropDown variant="bottom">그룹 나가기</DropDown>
+                        </Div>
                       ))}
                   </StCardDiv>
                 );
               })}
             </StContainerDiv>
           ) : (
-            <NullBox>
+            <Div variant="nullBox">
               <Flex>
                 <Span variant="bigBronze" asf="center">
                   현재 그룹이 없습니다.
@@ -128,7 +142,7 @@ const GroupCard = () => {
                   새로운 그룹을 만들어 친구들을 초대해보세요! 🍀
                 </Span>
               </Flex>
-            </NullBox>
+            </Div>
           )}
         </Flex>
       </Div>
@@ -151,40 +165,24 @@ const GroupCard = () => {
               </Flex>
               <Margin />
               <div>
-                <EditModalInput
-                  name="partyName"
-                  type="text"
-                  placeholder="Title"
-                  onChange={onChangeHandler}
-                />
-                <EditModalInput
-                  name="partyIntroduction"
-                  type="text"
-                  placeholder="Introduction"
-                  onChange={onChangeHandler}
-                />
-                <Margin mg="50px" />
-                <Button
-                  variant="large"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    dispatch(
-                      __updateGroup({
-                        id: updateId,
-                        partyName: editGroup.partyName,
-                        partyIntroduction: editGroup.partyIntroduction,
-                      })
-                    );
-                    setEditGroup({
-                      partyName: "",
-                      partyIntroduction: "",
-                    });
-                    setUpdateId("");
-                    openEditModal();
-                  }}
-                >
-                  Apply
-                </Button>
+                <form onSubmit={onEdit}>
+                  <StInput
+                    name="partyName"
+                    type="text"
+                    placeholder="Title"
+                    onChange={onChange}
+                    value={editGroup.partyName}
+                  />
+                  <StInput
+                    name="partyIntroduction"
+                    type="text"
+                    placeholder="Introduction"
+                    onChange={onChange}
+                    value={editGroup.partyIntroduction}
+                  />
+                  <Margin mg="50px" />
+                  <Button variant="large">Apply</Button>
+                </form>
               </div>
             </Flex>
           </Div>
@@ -200,12 +198,10 @@ const StContainerDiv = styled.div`
   position: relative;
   width: 1075px;
   height: 255px;
-  margin: 0 auto;
+  margin-top: 40px;
   display: grid;
   grid-template-columns: repeat(100, 1fr);
-  white-space: nowrap;
   overflow-x: auto;
-  margin-top: 40px;
   &::-webkit-scrollbar {
     background: #d9d9d9;
     width: 100%;
@@ -246,16 +242,15 @@ const StTitleDiv = styled.div`
     margin-top: 23px;
   }
   & button {
-    border: none;
-    background-color: transparent;
     width: 20px;
     height: 10px;
     margin-top: 23px;
-    font-size: 18px;
+    border: none;
+    background-color: transparent;
   }
 `;
 
-const EditModalInput = styled.input`
+const StInput = styled.input`
   display: flex;
   flex-direction: row;
   margin-top: 20px;
@@ -267,59 +262,11 @@ const EditModalInput = styled.input`
   &::placeholder {
     font-size: 16px;
     font-weight: 500;
-    background-image: url("");
   }
 `;
 
-const NullBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 1070px;
-  height: 227px;
-  border: 2px dashed #d9d3c7;
-  border-radius: 10px;
-  margin-top: 40px;
-`;
-
-const ButtonWrap = styled.div`
+const StbuttonDiv = styled.div`
   position: absolute;
   left: 70px;
   bottom: 20px;
-`;
-
-const DropBox = styled.div`
-  position: absolute;
-  top: 50px;
-  width: 80px;
-  height: auto;
-  margin-left: 215px;
-  background-color: white;
-  border: 1px solid #d9d3c7;
-  border-radius: 5px;
-  z-index: 10;
-  box-shadow: 5px 5px 15px rgba(164, 161, 157, 0.15);
-  display: flex;
-  flex-direction: column;
-`;
-
-const DropBoxButton = styled.button`
-  width: 80px;
-  height: 30px;
-  border: none;
-  border-top: 1px solid #ede8e1;
-  background-color: transparent;
-  color: #a4a19d;
-  cursor: pointer;
-`;
-
-const StButton = styled.button`
-  font-size: 13px;
-  width: 80px;
-  height: 30px;
-  border: none;
-  background-color: transparent;
-  color: #a4a19d;
-  cursor: pointer;
 `;
