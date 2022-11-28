@@ -27,6 +27,7 @@ const GroupCard = () => {
     partyName: "",
     partyIntroduction: "",
   });
+  console.log(groups);
 
   //토큰 디코드
   const token = getCookie("token").replace("Bearer ", "");

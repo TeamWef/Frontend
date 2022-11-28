@@ -9,8 +9,8 @@ const StDiv = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: ${({ width }) => (width ? width : "column")};
-  height: ${({ height }) => (height ? height : "column")};
+  width: ${({ width }) => (width ? width : "")};
+  height: ${({ height }) => (height ? height : "")};
 
   ${({ variant }) => {
     switch (variant) {
