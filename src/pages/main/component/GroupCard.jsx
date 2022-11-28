@@ -18,6 +18,7 @@ const GroupCard = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const groups = useSelector((state) => state.group?.group);
+  console.log(groups);
   const [createModal, openCreateModal] = useModal();
   const [editModal, openEditModal] = useModal();
   const [dropBox, openDropBox] = useModal();
@@ -58,11 +59,11 @@ const GroupCard = () => {
             </Div>
           </Flex>
           {groups?.length !== 0 ? (
-            <GroupMaincontainer>
+            <StContainerDiv>
               {groups?.map((data) => {
                 return (
-                  <GroupCardContainer key={data?.partyId}>
-                    <TitleContainer>
+                  <StCardDiv key={data?.partyId}>
+                    <StTitleDiv>
                       <h2>{data?.partyName}</h2>
                       <button
                         onClick={() => {
@@ -72,7 +73,7 @@ const GroupCard = () => {
                       >
                         <Svg variant="editDelete" />
                       </button>
-                    </TitleContainer>
+                    </StTitleDiv>
                     <p>{data?.partyIntroduction}</p>
                     <ButtonWrap>
                       <Button
@@ -110,15 +111,13 @@ const GroupCard = () => {
                         </DropBox>
                       ) : (
                         <DropBox>
-                          <DropBoxButtonBorderLineNone>
-                            그룹 나가기
-                          </DropBoxButtonBorderLineNone>
+                          <StButton>그룹 나가기</StButton>
                         </DropBox>
                       ))}
-                  </GroupCardContainer>
+                  </StCardDiv>
                 );
               })}
-            </GroupMaincontainer>
+            </StContainerDiv>
           ) : (
             <NullBox>
               <Flex>
@@ -197,7 +196,7 @@ const GroupCard = () => {
 
 export default GroupCard;
 
-const GroupMaincontainer = styled.div`
+const StContainerDiv = styled.div`
   position: relative;
   width: 1075px;
   height: 255px;
@@ -223,11 +222,10 @@ const GroupMaincontainer = styled.div`
   }
 `;
 
-const GroupCardContainer = styled.div`
+const StCardDiv = styled.div`
   position: relative;
   width: 250px;
   height: 220px;
-  margin: 0 auto;
   border-radius: 5px;
   background-color: white;
   margin-left: 15px;
@@ -239,7 +237,7 @@ const GroupCardContainer = styled.div`
   }
 `;
 
-const TitleContainer = styled.div`
+const StTitleDiv = styled.div`
   width: 223px;
   margin: 0 auto;
   display: flex;
@@ -293,10 +291,10 @@ const ButtonWrap = styled.div`
 
 const DropBox = styled.div`
   position: absolute;
+  top: 50px;
   width: 80px;
   height: auto;
   margin-left: 215px;
-  top: 50px;
   background-color: white;
   border: 1px solid #d9d3c7;
   border-radius: 5px;
@@ -316,7 +314,7 @@ const DropBoxButton = styled.button`
   cursor: pointer;
 `;
 
-const DropBoxButtonBorderLineNone = styled.button`
+const StButton = styled.button`
   font-size: 13px;
   width: 80px;
   height: 30px;
