@@ -27,7 +27,7 @@ const GroupMain = () => {
             {member?.map((item, i) => {
               return (
                 <>
-                  <div key={item.i}></div>
+                  <div key={i}></div>
                   <Stimg src={item.profileImageUrl} alt="profileImg" />
                   {item.memberName}
                 </>

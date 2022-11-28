@@ -24,6 +24,16 @@ const ScheduleCreate = () => {
 
   const onAddScheduleHandler = (e) => {
     e.preventDefault();
+    if (
+      !schedule.title ||
+      !schedule.content ||
+      !schedule.date ||
+      !schedule.meetTime ||
+      !schedule.place?.placeName ||
+      !schedule.place?.address
+    ) {
+      return alert("모든 일정을 입력해주세요!");
+    }
     dispatch(__addSchedule({ schedule, partyId }));
     navigate(`/${partyId}/schedule`);
     setSchedule({
@@ -33,6 +43,7 @@ const ScheduleCreate = () => {
       date: "",
       place: { placeName: "", address: "" },
     });
+    alert("일정 등록이 완료되었습니다!");
   };
 
   const onChangeHandler = (e) => {
@@ -49,7 +60,6 @@ const ScheduleCreate = () => {
           name="title"
           onChange={onChangeHandler}
           minLength={1}
-          required
         />
         <input
           type="text"
@@ -57,7 +67,6 @@ const ScheduleCreate = () => {
           name="content"
           onChange={onChangeHandler}
           minLength={1}
-          required
         />
         <input type="time" name="meetTime" onChange={onChangeHandler} />
         <input type="date" name="date" onChange={onChangeHandler} />
