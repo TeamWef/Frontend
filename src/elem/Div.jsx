@@ -64,10 +64,7 @@ const StDiv = styled.div`
         `;
       case "nullBox":
         return css`
-          display: flex;
           flex-direction: column;
-          align-items: center;
-          justify-content: center;
           width: 1070px;
           height: 227px;
           border: 2px dashed #d9d3c7;
@@ -96,9 +93,6 @@ const StDiv = styled.div`
           background-color: #ede8e1;
           color: #a4a19d;
           margin-top: 20px;
-          display: flex;
-          justify-content: center;
-          align-items: center;
           border-radius: 5px;
         `;
       default:

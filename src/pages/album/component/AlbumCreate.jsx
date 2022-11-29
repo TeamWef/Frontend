@@ -1,5 +1,7 @@
 import React, { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
+import styled from "styled-components";
+import { Button, Div, Flex, Span } from "../../../elem";
 import { useInput, useInputs } from "../../../hooks/useInput";
 import { __addAlbumItem } from "../../../redux/modules/albumSlice";
 import LandingKakao from "./LandingKakao";
@@ -53,57 +55,71 @@ const AlbumCreate = ({ openCreateModal, partyId }) => {
   };
   // console.log(albumPlace);
   return (
-    <div>
-      <h1>AlbumCreate</h1>
-      {uploadImg ? (
-        <div
-          style={{
-            width: "100px",
-            height: "100px",
-            backgroundImage: `url(${previewImage})`,
-            backgroundSize: "contain",
-            backgroundRepeat: "no-repeat",
-          }}
-        >
-          이미지 미리보기
-        </div>
-      ) : (
-        <>
-          <input
-            name="ImageUrl"
-            style={{ display: "none" }}
-            ref={imgInput}
-            type="file"
-            onChange={onChangeImg}
-          />
-          <button
-            onClick={() => {
-              imgInput.current.click();
+    <StDiv>
+      <Div variant="bodyContainer">
+        <Flex fd="row" jc="space-between" ai="center">
+          <Span variant="bold">Album</Span>
+          <Button variant="small" onClick={uploadHandler}>
+            Upload
+          </Button>
+        </Flex>
+        {uploadImg ? (
+          <div
+            style={{
+              width: "100px",
+              height: "100px",
+              backgroundImage: `url(${previewImage})`,
+              backgroundSize: "contain",
+              backgroundRepeat: "no-repeat",
             }}
           >
-            사진 추가하기
-          </button>
-        </>
-      )}
-      <div>
-        장소 :
-        {albumPlace ? (
-          <>
-            <div>{albumPlace.placeName}</div>
-            <div>{albumPlace.address}</div>
-          </>
+            이미지 미리보기
+          </div>
         ) : (
-          <span>선택한 장소가 없습니다.</span>
+          <>
+            <input
+              name="ImageUrl"
+              style={{ display: "none" }}
+              ref={imgInput}
+              type="file"
+              onChange={onChangeImg}
+            />
+            <button
+              onClick={() => {
+                imgInput.current.click();
+              }}
+            >
+              사진 추가하기
+            </button>
+          </>
         )}
-        <LandingKakao albumPlace={albumPlace} setAlbumPlace={setAlbumPlace} />
-      </div>
-      <div>
-        내용 : <input onChange={onChangeContent} />
-      </div>
-      <button onClick={uploadHandler}>등록완료</button>
-      <button onClick={openCreateModal}>닫기</button>
-    </div>
+        <div>
+          장소 :
+          {albumPlace ? (
+            <>
+              <div>{albumPlace.placeName}</div>
+              <div>{albumPlace.address}</div>
+            </>
+          ) : (
+            <span>선택한 장소가 없습니다.</span>
+          )}
+          <LandingKakao albumPlace={albumPlace} setAlbumPlace={setAlbumPlace} />
+        </div>
+        <div>
+          내용 : <input onChange={onChangeContent} />
+        </div>
+        <button onClick={uploadHandler}>등록완료</button>
+        <button onClick={openCreateModal}>닫기</button>
+      </Div>
+    </StDiv>
   );
 };
 
 export default AlbumCreate;
+
+const StDiv = styled.div`
+  background-color: #f8f5f0;
+  position: absolute;
+  width: 100%;
+  height: 1000px;
+`;
