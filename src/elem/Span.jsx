@@ -10,12 +10,18 @@ const StSpan = styled.span`
   font-size: 20px;
   margin: ${({ mg }) => (mg ? mg : "")};
   align-self: ${({ asf }) => (asf ? asf : "")};
+  color: ${({ color }) => (color ? color : "")};
+  font-weight: ${({ fw }) => (fw ? fw : "")};
 
   ${({ variant }) => {
     switch (variant) {
       case "small":
         return css`
           font-size: 14px;
+        `;
+      case "medium":
+        return css`
+          font-size: 16px;
         `;
       case "bold":
         return css`
