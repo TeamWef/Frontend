@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
+import GroupTitle from "../../components/GroupTitle";
 import { Div, Svg } from "../../elem";
 import {
   __getSchedule,
@@ -25,9 +26,7 @@ const ScheduleMain = () => {
 
   return (
     <Div variant="bodyContainer">
-      <StTitleDiv>
-        <h2>{scheduleList[0]?.partyName}</h2>
-      </StTitleDiv>
+      <GroupTitle />
       <StItemDiv>
         <h2>Schedule.</h2>
         <button

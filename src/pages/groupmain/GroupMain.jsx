@@ -18,7 +18,7 @@ const GroupMain = () => {
   return (
     <>
       <Div variant="bodyContainer">
-        <Margin mg="50px" />
+        <Margin mg="38px" />
         <Flex>
           <Flex>
             <Flex ai="center">

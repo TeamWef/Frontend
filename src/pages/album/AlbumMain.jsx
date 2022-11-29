@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
+import GroupTitle from "../../components/GroupTitle";
 import { Div, Flex, Margin, Span, Svg } from "../../elem";
 import { useModal } from "../../hooks/useModal";
 import { __getAlbumList } from "../../redux/modules/albumSlice";
@@ -25,7 +26,7 @@ const AlbumMain = () => {
 
   return (
     <Div variant="bodyContainer">
-      <Margin mg="20px 0 0 0" />
+      <GroupTitle />
       <Flex ai="center">
         <Flex fd="row" jc="space-between" ai="center" width="1050px">
           <Span variant="bold">Album</Span>
@@ -82,5 +83,20 @@ const StGreed = styled.div`
   padding-top: 15px;
   display: grid;
   width: 100%;
+  height: 555px;
   grid-template-columns: repeat(4, 1fr);
+  &::-webkit-scrollbar {
+    background: #d9d9d9;
+    width: 6px;
+    height: 100%;
+    border-radius: 10px;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: #a4a19d;
+  }
+  &::-webkit-scrollbar-track {
+    width: 0;
+    height: auto;
+  }
 `;

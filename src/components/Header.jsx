@@ -1,10 +1,10 @@
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
-import Mypage from "../../mypage/Mypage";
-import Svg from "../../../elem/Svg";
-import { deleteCookie } from "../../../redux/modules/customCookies";
-import { Flex, Margin } from "../../../elem";
-import Notice from "../../notice/Notice";
+import Mypage from "../pages/mypage/Mypage";
+import Svg from "../elem/Svg";
+import { deleteCookie } from "../redux/modules/customCookies";
+import { Flex, Margin } from "../elem";
+import Notice from "../pages/notice/Notice";
 
 export const Header = () => {
   const navigate = useNavigate();
@@ -18,6 +18,7 @@ export const Header = () => {
     deleteCookie("token");
     deleteCookie("refresh-token");
     alert("로그아웃 되었습니다.");
+    localStorage.clear();
     window.location.reload();
   };
   // console.log(param);
@@ -88,9 +89,11 @@ const CenterBox = styled.div`
 
 const UserInfo = styled.div`
   position: relative;
-  width: 120px;
-  max-width: 120px;
+  display: flex;
+  align-items: center;
+  width: auto;
   height: 36px;
+  padding: 0 15px;
   border-radius: 25px;
   margin-top: 1px;
   background-color: #f8f5f0;
