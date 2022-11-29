@@ -1,7 +1,8 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { Div } from "../../elem";
+import styled from "styled-components";
+import { Div, Svg } from "../../elem";
 import {
   __getSchedule,
   __getGroupSchedule,
@@ -24,27 +25,39 @@ const ScheduleMain = () => {
 
   return (
     <Div variant="bodyContainer">
-      <button
-        onClick={() => {
-          navigate(`/${partyId}/schedule/create`);
-        }}
-      >
-        💖 일정 등록 🎈
-      </button>
+      <StTitleDiv>
+        <h2>{scheduleList[0]?.partyName}</h2>
+      </StTitleDiv>
+      <StItemDiv>
+        <h2>Schedule.</h2>
+        <button
+          onClick={() => {
+            navigate(`/${partyId}/schedule/create`);
+          }}
+        >
+          <Svg variant="add" />
+        </button>
+      </StItemDiv>
       {scheduleList?.map((data) => {
         return (
-          <div key={data?.scheduleId}>
-            <h4>{data?.scheduleId}</h4>
-            <h2>{data?.title}</h2>
-            <p>{data?.writer}</p>
-            <button
-              onClick={() => {
-                navigate(`/${partyId}/scheduledetail/${data?.scheduleId}`);
-              }}
-            >
-              상세보기
-            </button>
-          </div>
+          <StDiv key={data?.scheduleId}>
+            <StFlexDiv>
+              <StItemDiv>
+                <StTitleDiv>
+                  <h4>{data?.partyName}</h4>
+                </StTitleDiv>
+                <p>{data?.title}</p>
+                <p>{data?.writer}</p>
+              </StItemDiv>
+              <StbtnDiv
+                onClick={() => {
+                  navigate(`/${partyId}/scheduledetail/${data?.scheduleId}`);
+                }}
+              >
+                <Svg variant={"more"} />
+              </StbtnDiv>
+            </StFlexDiv>
+          </StDiv>
         );
       })}
     </Div>
@@ -52,3 +65,49 @@ const ScheduleMain = () => {
 };
 
 export default ScheduleMain;
+
+const StDiv = styled.div`
+  width: 1075px;
+  height: 75px;
+  border-bottom: 1px solid #d9d3c7;
+`;
+
+const StFlexDiv = styled.div`
+  display: flex;
+`;
+
+const StItemDiv = styled.div`
+  width: 1075px;
+  display: flex;
+  justify-content: space-between;
+  & p {
+    margin-top: 28px;
+    margin-left: 30px;
+    color: #b5b3af;
+  }
+  & button {
+    border: none;
+    background-color: transparent;
+  }
+`;
+
+const StTitleDiv = styled.div`
+  width: 160px;
+  height: 35px;
+  background-color: #ede8e1;
+  color: #a4a19d;
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+`;
+
+const StbtnDiv = styled.div`
+  width: 50px;
+  height: 30px;
+  margin-top: 26px;
+  margin-left: 26px;
+  border-radius: 5px;
+  border: none;
+`;

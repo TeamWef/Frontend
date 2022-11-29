@@ -21,8 +21,6 @@ const CreateGroupCard = ({ openModal, modal }) => {
   const onAddGroupHandler = (e) => {
     e.preventDefault();
     dispatch(__addGroup(group));
-    // dispatch(__getGroup());
-    // setGroup({ partyName: "", partyIntroduction: "" });
     openModal();
   };
 

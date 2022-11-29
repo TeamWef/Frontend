@@ -7,12 +7,14 @@ import {
   getGroupScheduleApi,
   putScheduleEditApi,
   postSchedulejoinApi,
+  getSchedulePopularApi,
 } from "./API/scheduleAPI";
 
 const initialState = {
   schedule: [],
   scheduleDetail: {},
   groupSchedule: [],
+  popularSchedule: {},
   join: false,
   isLoading: false,
   error: null,
@@ -104,6 +106,20 @@ export const __editSchedules = createAsyncThunk(
   }
 );
 
+//그룹 메인 페이지 인기 일정 조회
+export const __popularSchedule = createAsyncThunk(
+  "get/popularSchedule",
+  async (payload, thunkAPI) => {
+    try {
+      const res = await getSchedulePopularApi(payload);
+      return thunkAPI.fulfillWithValue(res.data);
+    } catch (err) {
+      console.log("error ::::::", err.response);
+      return thunkAPI.rejectWithValue("<<", err);
+    }
+  }
+);
+
 //일정 참여
 export const __joinSchedules = createAsyncThunk(
   "post/joinSchedules",
@@ -180,6 +196,20 @@ export const scheduleSlice = createSlice({
       state.scheduleDetail = action.payload;
     },
     [__getScheduleDetail.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+
+    //그룹 메인 페이지 get
+
+    [__popularSchedule.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [__popularSchedule.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.popularSchedule = action.payload;
+    },
+    [__popularSchedule.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
     },

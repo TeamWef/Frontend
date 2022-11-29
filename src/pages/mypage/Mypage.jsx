@@ -20,7 +20,7 @@ const Mypage = () => {
   return (
     <>
       <StDiv onClick={openModal}>
-        <StP>{memberName}</StP>
+        <StP>{myProfile?.memberName}</StP>
         {profileImageUrl === null ? (
           <Stimg src="/images/userProfile.jpg" />
         ) : (

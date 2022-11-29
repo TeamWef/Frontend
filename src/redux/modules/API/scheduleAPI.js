@@ -4,30 +4,20 @@ import { ServerUrl } from "../../../server/index";
 import { getCookie } from "../customCookies";
 
 // export const ScheduleApis = {
-//   getSchedule: async ({ partyId }) => {
-//     const response = await instance.get(`/${partyId}/schedules`);
-//     return response;
-//   },
-//   getScheduleDetail: async (scheduleId) => {
-//     const response = await instance.get(`/schedules/${scheduleId}`);
-//     return response;
-//   },
-//   postSchedulejoin: async (payload) => {
-//     const res = await instance.post(`/${payload}/participate`, payload);
-//     return res;
-//   },
-//   addSchedule: async ({ schedule, partyId }) => {
-//     const res = await instance.post(`/${partyId}/schedules`, schedule);
-//     return res.data;
-//   },
+//   getSchedule: async ({ partyId }) =>
+//     await instance.get(`/${partyId}/schedules`),
+//   getScheduleDetail: async (scheduleId) =>
+//     await instance.get(`/schedules/${scheduleId}`),
+//   postSchedulejoin: async (payload) =>
+//     await instance.post(`/${payload}/participations`, payload),
+//   addSchedule: async ({ schedule, partyId }) =>
+//     await instance.post(`/${partyId}/schedules`, schedule),
 //   delSchedule: async (scheduleId) =>
 //     await instance.delete(`/schedules/${scheduleId}`),
 //   putSchedule: async (payload) =>
 //     await instance.put(`/schedules/${payload.detailId}`, payload.editSchedule),
-//   getSchedulePopular: async (payload) => {
-//     const res = await instance.get(`/${payload}/schedules/popular`);
-//     return res;
-//   },
+//   getSchedulePopular: async (payload) =>
+//     await instance.get(`/${payload}/schedules/popular`),
 // };
 
 //일정 만들기
@@ -104,7 +94,7 @@ export const putScheduleEditApi = async (payload) => {
 // 일정 참여 api
 export const postSchedulejoinApi = async ({ detailId, participant }) => {
   const res = await axios.post(
-    `${ServerUrl}/${detailId}/participate`,
+    `${ServerUrl}/${detailId}/participations`,
     detailId,
     {
       headers: {
@@ -115,7 +105,7 @@ export const postSchedulejoinApi = async ({ detailId, participant }) => {
   return res;
 };
 
-export const getSchedulePopular = async (payload) => {
+export const getSchedulePopularApi = async (payload) => {
   const res = await axios.get(`${ServerUrl}/${payload}/schedules/popular`, {
     headers: { Authorization: getCookie("token") },
   });
