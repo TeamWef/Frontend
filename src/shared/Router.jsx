@@ -27,7 +27,7 @@ const Page = () => {
             path="/:partyId/scheduledetail/:scheduleId"
             element={<ScheduleDetail />}
           />
-          <Route path="/chat" element={<Chat />} />
+          <Route path=":partyId/chat" element={<Chat />} />
         </Route>
         <Route path="/signup" element={<SignUp />} />
         <Route path="/members/kakao/callback" element={<Kakao />} />

@@ -14,4 +14,5 @@ const Flexbox = styled.div`
   position: ${({ posi }) => (posi ? posi : "")};
   width: ${({ width }) => (width ? width : "")};
   height: ${({ height }) => (height ? height : "")};
+  margin: ${({ margin }) => (margin ? margin : "")};
 `;

@@ -47,6 +47,11 @@ const StSpan = styled.span`
           font-size: 18px;
           color: #a4a19d;
         `;
+      case "other":
+        return css`
+          font-size: 12px;
+          color: #a4a19d;
+        `;
       default:
         break;
     }

@@ -83,7 +83,6 @@ const StDiv = styled.div`
           border-radius: 5px;
           z-index: 10;
           box-shadow: 5px 5px 15px rgba(164, 161, 157, 0.15);
-          display: flex;
           flex-direction: column;
         `;
       case "title":

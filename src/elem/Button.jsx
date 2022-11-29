@@ -11,6 +11,7 @@ const StBtn = styled.button`
   border: 0px;
   border-radius: 5px;
   font-weight: ${({ fw }) => (fw ? fw : "")};
+  margin: ${({ margin }) => (margin ? margin : "")};
   transition: 0.3s;
   :hover {
     opacity: 0.6;
@@ -36,6 +37,17 @@ const StBtn = styled.button`
           width: 115px;
           height: 34px;
           font-size: 13px;
+          margin-left: 10px;
+        `;
+      case "border-small":
+        return css`
+          border: 1px solid #a4a19d;
+          background-color: transparent;
+          width: 115px;
+          height: 34px;
+          font-size: 13px;
+          margin-left: 10px;
+          color: #a4a19d;
         `;
       default:
         break;

@@ -16,12 +16,11 @@ class ChattingService {
   };
   // 웹소켓 연결 요청 & 구독 요청
 
-  onConnect = (
-    roomAddress = "/sub/chatrooms/1",
-    headers = { Authorization: getCookie("token") },
-    callback = () => {}
-  ) => {
+
+  onConnect = (roomAddress = "/sub/chatrooms/1", callback = () => {}) => {
+
     let newMessage = "";
+    let headers = { Authorization: getCookie("token") };
     // headers에 {} 인증요청 집어 넣기
     this.stompClient.connect(headers, () => {
       console.log("연결 성공");

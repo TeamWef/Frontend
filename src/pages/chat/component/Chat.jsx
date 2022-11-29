@@ -5,14 +5,22 @@ import { useModal } from "../../../hooks/useModal";
 import ChattingService from "../../../ChattingService/ChattingService";
 import { getCookie } from "../../../redux/modules/customCookies";
 
+import { useParams } from "react-router-dom";
+
+
 const ChattingServiceKit = new ChattingService();
 
 export const Chat = () => {
   const [Chat, openChat] = useModal();
   const token = getCookie("token").replace("Bearer", "");
+
+
   const [chatLog, setChatLog] = useState([]);
   const [receiveMsg, setReceiveMsg] = useState();
-  //   const textRef = useRef < HTMLInputElement > null;
+
+  console.log("chatLog==>", chatLog);
+  console.log("receiveMsg===>", receiveMsg);
+
 
   // message를 키:벨류 형태로 저장해서 key 왼쪽 value 오른쪽 (노랭이)
   // class name=key, value
@@ -35,15 +43,19 @@ export const Chat = () => {
     setReceiveMsg(newMessage.content);
   });
 
-  //   useEffect(() => {
-  //     setChatLog([...chatLog, receiveMsg]);
-  //   }, [chatLog, receiveMsg]);
+
+  useEffect(() => {
+    setChatLog([...chatLog, receiveMsg]);
+  }, [setChatLog, receiveMsg]);
+
 
   const submitHandler = (e) => {
     e.preventDefault();
     ChattingServiceKit.sendMessage({
       content: message,
-      //   accesstoken: token,
+
+      accesstoken: token,
+
     });
     setMessage("");
   };
@@ -60,27 +72,51 @@ export const Chat = () => {
       <StModalDiv onClick={openChat}> 💬 </StModalDiv>
 
       {Chat ? (
-        <StContainerDiv>
-          <StBoxDiv>
-            <p>채팅이 없습니다 🥺</p>
-            <p>첫 메시지를 친구들에게 남겨보세요!</p>
-          </StBoxDiv>
-          <span>메시지를 주고 받으세요!</span>
-          <StBottomDiv>
-            <form onSubmit={submitHandler}>
-              <StInput
-                name="chat"
-                autoComplete="off"
-                placeholder="메시지를 입력해주세요!"
-                type="text"
-                onKeyDown={onEnter}
-                value={message}
-                onChange={inputMessage}
-              />
-              <StBtn type="submit"> 💌 </StBtn>
-            </form>
-          </StBottomDiv>
-        </StContainerDiv>
+        chatLog.length > 0 ? (
+          <StContainerDiv>
+            <span>
+              {chatLog.map((item) => {
+                return <StBox>{item}</StBox>;
+              })}
+            </span>
+            <StBottomDiv>
+              <form onSubmit={submitHandler}>
+                <StInput
+                  name="chat"
+                  autoComplete="off"
+                  placeholder="메시지를 입력해주세요!"
+                  type="text"
+                  onKeyDown={onEnter}
+                  value={message}
+                  onChange={inputMessage}
+                />
+                <StBtn type="submit"> 💌 </StBtn>
+              </form>
+            </StBottomDiv>
+          </StContainerDiv>
+        ) : (
+          <StContainerDiv>
+            <StBoxDiv>
+              <p>채팅이 없습니다 🥺</p>
+              <p>첫 메시지를 친구들에게 남겨보세요!</p>
+            </StBoxDiv>
+            <span>메시지를 주고 받으세요!</span>
+            <StBottomDiv>
+              <form onSubmit={submitHandler}>
+                <StInput
+                  name="chat"
+                  autoComplete="off"
+                  placeholder="메시지를 입력해주세요!"
+                  type="text"
+                  onKeyDown={onEnter}
+                  value={message}
+                  onChange={inputMessage}
+                />
+                <StBtn type="submit"> 💌 </StBtn>
+              </form>
+            </StBottomDiv>
+          </StContainerDiv>
+        )
       ) : null}
     </Div>
   );
@@ -157,4 +193,11 @@ const StBtn = styled.button`
   background-color: transparent;
   border: none;
   font-size: 20px;
+`;
+
+const StBox = styled.div`
+  width: 100px;
+  height: 20px;
+  background-color: #acacac;
+  color: #e8e8e8;
 `;
