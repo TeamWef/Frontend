@@ -4,6 +4,7 @@ import Mypage from "../../mypage/Mypage";
 import Svg from "../../../elem/Svg";
 import { deleteCookie } from "../../../redux/modules/customCookies";
 import { Flex, Margin } from "../../../elem";
+import Notice from "../../notice/Notice";
 
 export const Header = () => {
   const navigate = useNavigate();
@@ -61,6 +62,7 @@ export const Header = () => {
           </UserInfo>
         </Flex>
       </CenterBox>
+      {/* <Notice></Notice> */}
     </BaseContainer>
   );
 };

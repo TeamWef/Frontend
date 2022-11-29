@@ -13,7 +13,7 @@ const Notice = () => {
   useEffect(() => {
     console.log("첫번째 useEffect실행됐음");
     if (token) {
-      const sse = new EventSource("http://13.209.42.213:8080/subscribe", {
+      const sse = new EventSource("http://43.201.55.218:8080/subscribe", {
         headers: {
           Authorization: `${token}`,
         },
@@ -30,14 +30,14 @@ const Notice = () => {
         // console.log(response);
       };
 
-      // source.addEventListener("sse", (e) => {
-      //   // const response = JSON.parse(e.data);
-      //   // console.log(response);
+      // sse.addEventListener("sse", (e) => {
+      // const response = JSON.parse(e.data);
+      // console.log(response);
       //     if(e.data.startsWith('{')) {
       // setRealtimeAlam((prev) => [JSON.parse(e.data)])
       // });
       sse.addEventListener("sse", (e) => {
-        console.log(e.data);
+        console.log(e);
       });
 
       sse.addEventListener("error", (e) => {
