@@ -21,15 +21,16 @@ class ChattingService {
     let headers = { Authorization: getCookie("token") };
     // headers에 {} 인증요청 집어 넣기
     this.stompClient.connect(headers, () => {
-      console.log("연결 성공");
-      this.stompClient.subscribe(roomAddress, headers, (data) => {
+      this.stompClient.subscribe(roomAddress, (data) => {
         newMessage = JSON.parse(data.body);
+        console.log("!!!", newMessage);
         // 연결 성공시 발동시킬 콜백 넣기
         // 주로 메세지를 받는 로직을 여기에 넣는다
         // 리렌더링
-        callback(newMessage);
+        // callback(newMessage);
       });
     });
+    console.log("???", newMessage);
     return newMessage;
   };
 
