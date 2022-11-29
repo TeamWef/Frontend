@@ -54,7 +54,6 @@ const StDiv = styled.div`
         `;
       case "bodyContainer":
         return css`
-          display: flex;
           flex-direction: column;
           position: relative;
           top: 74px;

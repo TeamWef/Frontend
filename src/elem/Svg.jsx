@@ -226,6 +226,7 @@ const IconSvg = ({ variant, onClick }) => {
           height="20"
           viewBox="0 0 20 20"
           fill="none"
+          onClick={onClick}
         >
           <circle cx="10" cy="10" r="10" fill="#B5B3AF" />
           <g clipPath="url(#clip0_37_100)">

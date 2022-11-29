@@ -11,9 +11,9 @@ const StBtn = styled.button`
   border: 0px;
   border-radius: 5px;
   font-weight: ${({ fw }) => (fw ? fw : "")};
+  transition: 0.3s;
   :hover {
     opacity: 0.6;
-    transition: 0.3s;
   }
   color: #fff;
   background-color: #a4a19d;
@@ -36,7 +36,6 @@ const StBtn = styled.button`
           width: 115px;
           height: 34px;
           font-size: 13px;
-
         `;
       default:
         break;
