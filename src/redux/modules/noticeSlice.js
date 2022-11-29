@@ -3,7 +3,8 @@ import instance from "../../shared/axios";
 import { noticeApis } from "./API/noticeAPI";
 
 const initialState = {
-  noticeList: [],
+  newList: [],
+  readList: [],
 };
 
 // export const __getNoticeList = createAsyncThunk(
@@ -39,7 +40,7 @@ export const noticeSlice = createSlice({
   extraReducers: {
     // Get
     [__getNoticeList.fulfilled]: (state, action) => {
-      state.notice = action.payload;
+      state.newList = action.payload;
     },
   },
 });

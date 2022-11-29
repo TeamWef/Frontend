@@ -27,7 +27,7 @@ const AlbumDetail = () => {
 
   // 앨범 정보
   const albumItem = useSelector((state) => state.album.albumItem);
-  // console.log(myId)
+  console.log(albumItem);
   const {
     writer,
     place,

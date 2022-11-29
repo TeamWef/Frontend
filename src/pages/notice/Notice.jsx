@@ -8,8 +8,6 @@ const Notice = () => {
   const EventSource = EventSourcePolyfill || NativeEventSource;
   const token = getCookie("token");
 
-  let sse = undefined;
-
   useEffect(() => {
     console.log("첫번째 useEffect실행됐음");
     if (token) {
@@ -38,6 +36,8 @@ const Notice = () => {
       // });
       sse.addEventListener("sse", (e) => {
         console.log(e);
+        const data = JSON.parse(e.data);
+        console.log(data);
       });
 
       sse.addEventListener("error", (e) => {

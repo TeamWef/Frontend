@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
-import { Div, Flex } from "../../elem";
+import { Div, Flex, Margin, Span, Svg } from "../../elem";
 import { useModal } from "../../hooks/useModal";
 import { __getAlbumList } from "../../redux/modules/albumSlice";
 import AlbumCreate from "../album/component/AlbumCreate";
@@ -22,25 +22,26 @@ const AlbumMain = () => {
   }, [dispatch]);
 
   const albumItems = useSelector((state) => state.album?.album);
-  // console.log(albumItems);
+  console.log(albumItems);
   return (
     <Div variant="bodyContainer">
-      <Flex fd="row">
-        <button onClick={openCreateModal}>사진 올리기</button>
-        <button onClick={() => navigate(`/${partyId}`)}>
-          메인 페이지로 돌아가기
-        </button>
-      </Flex>
-      <Flex fd="row">
-        {albumItems.map((albumItem) => (
-          <Stimg
-            onClick={() => {
-              navigate(`/${partyId}/album/${albumItem.id}`);
-            }}
-            key={albumItem.id}
-            src={albumItem.imageUrl}
-          ></Stimg>
-        ))}
+      <Margin />
+      <Flex ai="center">
+        <Flex fd="row" jc="space-between" ai="center" width="1140px">
+          <Span variant="bold">Album</Span>
+          <Svg variant="add" onClick={openCreateModal} />
+        </Flex>
+        <StGreed>
+          {albumItems.map((albumItem) => (
+            <StImg
+              onClick={() => {
+                navigate(`/${partyId}/album/${albumItem.id}`);
+              }}
+              key={albumItem.id}
+              src={albumItem.imageUrl}
+            />
+          ))}
+        </StGreed>
       </Flex>
       {createModal && (
         <AlbumCreate
@@ -56,10 +57,25 @@ const AlbumMain = () => {
 
 export default AlbumMain;
 
-const Stimg = styled.img`
-  src: ${(props) => props.src};
-  width: 100px;
-  height: 100px;
-  margin: 5px;
+const StImg = styled.img`
+  background-color: aliceblue;
+  width: 260px;
+  height: 260px;
+  object-fit: cover;
   background-color: silver;
+  margin: 10px;
+  transition: 0.3s;
+  :hover {
+    width: 270px;
+    height: 270px;
+    margin: 5px;
+  }
+`;
+
+const StGreed = styled.div`
+  padding: 15px;
+  display: grid;
+  gap: 5px;
+  width: 1200px;
+  grid-template-columns: repeat(4, 1fr);
 `;

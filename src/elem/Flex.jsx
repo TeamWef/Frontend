@@ -12,4 +12,6 @@ const Flexbox = styled.div`
   justify-content: ${({ jc }) => (jc ? jc : "center")};
   align-items: ${({ ai }) => (ai ? ai : "")};
   position: ${({ posi }) => (posi ? posi : "")};
+  width: ${({ width }) => (width ? width : "")};
+  height: ${({ height }) => (height ? height : "")};
 `;
