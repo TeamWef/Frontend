@@ -29,6 +29,7 @@ const GroupCard = () => {
     partyName: "",
     partyIntroduction: "",
   });
+
   const { partyName, partyIntroduction } = editGroup;
 
   const groupItem = {
@@ -36,6 +37,7 @@ const GroupCard = () => {
     partyName: partyName,
     partyIntroduction: partyIntroduction,
   };
+
 
   //토큰 디코드
   const token = getCookie("token").replace("Bearer ", "");
