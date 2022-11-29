@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { Div } from "../../../elem";
 import { useModal } from "../../../hooks/useModal";
@@ -6,17 +6,26 @@ import ChattingService from "../../../ChattingService/ChattingService";
 import { getCookie } from "../../../redux/modules/customCookies";
 import { useParams } from "react-router-dom";
 
+import { Stomp } from "@stomp/stompjs";
+import sockJS from "sockjs-client";
+
+
 const ChattingServiceKit = new ChattingService();
 
 export const Chat = () => {
   const [Chat, openChat] = useModal();
-  const token = getCookie("token").replace("Bearer", "");
+
+  const token = getCookie("token");
+  const partyId = useParams().partyId;
 
   const [chatLog, setChatLog] = useState([]);
   const [receiveMsg, setReceiveMsg] = useState();
 
   console.log("chatLog==>", chatLog);
   console.log("receiveMsg===>", receiveMsg);
+
+  // console.log(partyId.partyId);
+
 
   // message를 키:벨류 형태로 저장해서 key 왼쪽 value 오른쪽 (노랭이)
   // class name=key, value
@@ -35,9 +44,13 @@ export const Chat = () => {
     }
   };
 
-  ChattingServiceKit.onConnect("/sub/chatrooms/1", {}, (newMessage) => {
-    setReceiveMsg(newMessage.content);
-  });
+  ChattingServiceKit.onConnect(
+    `/sub/chatrooms/${partyId}`,
+    { Authorization: token },
+    (newMessage) => {
+      setReceiveMsg(newMessage);
+    }
+  );
 
   useEffect(() => {
     setChatLog([...chatLog, receiveMsg]);
@@ -64,11 +77,13 @@ export const Chat = () => {
       <StModalDiv onClick={openChat}> 💬 </StModalDiv>
 
       {Chat ? (
-        chatLog.length > 0 ? (
+
+        chatLog.length > 1 ? (
           <StContainerDiv>
             <span>
-              {chatLog.map((item) => {
-                return <StBox>{item}</StBox>;
+              {chatLog.map((item, i) => {
+                return <StBox key={i}>{item?.content}</StBox>;
+
               })}
             </span>
             <StBottomDiv>
@@ -193,3 +208,7 @@ const StBox = styled.div`
   background-color: #acacac;
   color: #e8e8e8;
 `;
+
+
+const StDiv = styled.div``;
+

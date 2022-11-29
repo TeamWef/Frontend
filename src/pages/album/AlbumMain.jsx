@@ -22,12 +22,14 @@ const AlbumMain = () => {
   }, [dispatch]);
 
   const albumItems = useSelector((state) => state.album?.album);
-  console.log(albumItems);
+
+
   return (
     <Div variant="bodyContainer">
-      <Margin />
+      <Margin mg="20px 0 0 0" />
       <Flex ai="center">
-        <Flex fd="row" jc="space-between" ai="center" width="1140px">
+        <Flex fd="row" jc="space-between" ai="center" width="1050px">
+
           <Span variant="bold">Album</Span>
           <Svg variant="add" onClick={openCreateModal} />
         </Flex>
@@ -58,24 +60,35 @@ const AlbumMain = () => {
 export default AlbumMain;
 
 const StImg = styled.img`
-  background-color: aliceblue;
-  width: 260px;
-  height: 260px;
+
+  position: relative;
+  width: 250px;
+  height: 250px;
+
   object-fit: cover;
   background-color: silver;
   margin: 10px;
   transition: 0.3s;
+
+  border-radius: 5px;
+  border: 0px solid white;
   :hover {
     width: 270px;
     height: 270px;
-    margin: 5px;
+    margin: 0;
+    z-index: 10;
+    border: 5px solid white;
+    transform: translate(2%, 2%);
+
   }
 `;
 
 const StGreed = styled.div`
-  padding: 15px;
+
+  position: relative;
+  padding-top: 15px;
   display: grid;
-  gap: 5px;
-  width: 1200px;
+  width: 100%;
+
   grid-template-columns: repeat(4, 1fr);
 `;

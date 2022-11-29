@@ -18,6 +18,7 @@ const ScheduleCard = () => {
 
   return (
     <Div variant="bodyContainer">
+      <Margin />
       <Flex>
         <Span variant="bold">Schedule.</Span>
         <StContainerDiv>
@@ -67,7 +68,7 @@ export default ScheduleCard;
 
 const StContainerDiv = styled.div`
   width: 1075px;
-  height: 500px;
+  height: 400px;
   display: flex;
   flex-direction: column;
   overflow-y: auto;
