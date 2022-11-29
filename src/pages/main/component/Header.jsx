@@ -71,7 +71,7 @@ const BaseContainer = styled.div`
   position: fixed;
   top: 0;
   background-color: #ede8e1;
-  width: 1980px;
+  width: 100%;
   height: 74px;
   z-index: 9;
 `;

@@ -4,6 +4,7 @@ import { Div } from "../../../elem";
 import { useModal } from "../../../hooks/useModal";
 import ChattingService from "../../../ChattingService/ChattingService";
 import { getCookie } from "../../../redux/modules/customCookies";
+
 import { useParams } from "react-router-dom";
 import { Stomp } from "@stomp/stompjs";
 import sockJS from "sockjs-client";
@@ -55,6 +56,7 @@ export const Chat = () => {
     e.preventDefault();
     ChattingServiceKit.sendMessage({
       content: message,
+
       accesstoken: token,
     });
     setMessage("");
