@@ -38,7 +38,6 @@ const GroupCard = () => {
     partyIntroduction: partyIntroduction,
   };
 
-
   //토큰 디코드
   const token = getCookie("token").replace("Bearer ", "");
   const decode = jwt_decode(token);
@@ -95,6 +94,7 @@ const GroupCard = () => {
                         variant="small"
                         onClick={() => {
                           navigate(`/${data.partyId}`);
+                          localStorage.setItem("Group", data.partyName);
                         }}
                       >
                         Join

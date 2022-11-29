@@ -35,9 +35,11 @@ const Notice = () => {
       // setRealtimeAlam((prev) => [JSON.parse(e.data)])
       // });
       sse.addEventListener("sse", (e) => {
-        console.log(e);
-        const data = JSON.parse(e.data);
-        console.log(data);
+        console.log(e.data);
+        if (e.data.startsWith("{")) {
+          const msg = JSON.parse(e.data);
+          console.log(msg);
+        }
       });
 
       sse.addEventListener("error", (e) => {

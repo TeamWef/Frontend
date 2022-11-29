@@ -19,9 +19,9 @@ const StDiv = styled.div`
           width: 370px;
           height: 730px;
           position: absolute;
-          top: 50%;
+          top: 120px;
           left: 50vw;
-          transform: translate(-50%, -50%);
+          transform: translate(-50%, 0);
         `;
       case "profileEdit":
         return css`

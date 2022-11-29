@@ -14,7 +14,7 @@ import styled from "styled-components";
 
 
 import { Button, Div, Flex, Margin, Span, Svg } from "../../../elem";
-
+import GroupTitle from "../../../components/GroupTitle";
 
 
 const SchdeleDetail = ({ scheduleId }) => {
@@ -75,9 +75,7 @@ const SchdeleDetail = ({ scheduleId }) => {
 
   return (
     <Div variant="bodyContainer">
-      <Div variant="title">
-        <h2>Group title.</h2>
-      </Div>
+      <GroupTitle />
       <StDiv>Schedule.</StDiv>
       <Flex jc="space-between" fd="row" width="1000px">
         <Flex fd="row" ai="center">
@@ -282,5 +280,4 @@ const StJoinDiv = styled.div`
   background-color: #ede8e1;
   border-radius: 5px;
   margin: 50px 0px 0px 10px;
-
 `;
