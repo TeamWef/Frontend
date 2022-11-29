@@ -11,7 +11,7 @@ import {
 import { useModal } from "../../../hooks/useModal";
 import EditLanding from "./EditLanding";
 import styled from "styled-components";
-import { Div } from "../../../elem";
+import { Div, Svg } from "../../../elem";
 
 const SchdeleDetail = ({ scheduleId }) => {
   const scheduleDetail = useSelector((state) => state.schedule?.scheduleDetail);
@@ -71,20 +71,37 @@ const SchdeleDetail = ({ scheduleId }) => {
 
   return (
     <Div variant="bodyContainer">
-      <h2>title : {scheduleDetail?.title}</h2>
-      <h3>작성자 : {scheduleDetail?.writer}</h3>
-      <p>id : {scheduleDetail?.scheduleId}</p>
-      <p>내용 : {scheduleDetail?.content}</p>
-      <p>만나는 날짜 : {scheduleDetail?.date}</p>
-      <p>만나는 시간 : {scheduleDetail?.meetTime}</p>
-      <p>
-        만나는 장소 :
-        {scheduleDetail?.placeName || scheduleDetail.place?.placeName}
-      </p>
-      <p>
-        만나는 장소의 주소 :
-        {scheduleDetail?.address || scheduleDetail.place?.address}
-      </p>
+      <Div variant="title">
+        <h2>Group title.</h2>
+      </Div>
+      <p>Schedule.</p>
+      <StTitleDiv>
+        <h2>{scheduleDetail?.title}</h2>
+        <img src={scheduleDetail?.profileImageUrl} alt="프로필" />
+        <p>{scheduleDetail?.writer}</p>
+      </StTitleDiv>
+      <StTitleDiv>
+        <button onClick={openModal}>수정</button>
+        <button
+          onClick={() => {
+            if (window.confirm("정말 삭제하시겠습니까?")) {
+              dispatch(__delSchedule(detailId));
+              alert("삭제가 완료되었습니다.");
+            }
+            navigate(`/${partyId}/schedule`);
+          }}
+        >
+          삭제
+        </button>
+      </StTitleDiv>
+      <p> {scheduleDetail?.content}</p>
+      <Svg variant="date" />
+      <p> {scheduleDetail?.date}</p>
+      <Svg variant="clock" />
+      <p> {scheduleDetail?.meetTime}</p>
+      <Svg variant="location" />
+      <p>{scheduleDetail?.placeName || scheduleDetail.place?.placeName}</p>
+      <p>{scheduleDetail?.address || scheduleDetail.place?.address}</p>
 
       {joiner?.map((item, i) => {
         return (
@@ -106,18 +123,7 @@ const SchdeleDetail = ({ scheduleId }) => {
         {isParticipant ? "취소" : "참여"}
       </button>
       {/* 참여자 목록 보내주실 때 byme 카테고리에 참여 true, 미참여 false값 받기 */}
-      <button onClick={openModal}>수정하기</button>
-      <button
-        onClick={() => {
-          if (window.confirm("정말 삭제하시겠습니까?")) {
-            dispatch(__delSchedule(detailId));
-            alert("삭제가 완료되었습니다.");
-          }
-          navigate(`/${partyId}/schedule`);
-        }}
-      >
-        삭제하기
-      </button>
+
       {modal && (
         <div>
           <form onSubmit={onEditScheduleHandler}>
@@ -183,4 +189,13 @@ export default SchdeleDetail;
 const Profile = styled.img`
   width: 50px;
   border-radius: 50%;
+`;
+
+const StTitleDiv = styled.div`
+  display: flex;
+  & img {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+  }
 `;

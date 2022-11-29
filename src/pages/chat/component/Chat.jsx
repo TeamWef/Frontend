@@ -1,10 +1,58 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { Div } from "../../../elem";
 import { useModal } from "../../../hooks/useModal";
+import ChattingService from "../../../ChattingService/ChattingService";
+import { getCookie } from "../../../redux/modules/customCookies";
+
+const ChattingServiceKit = new ChattingService();
 
 export const Chat = () => {
   const [Chat, openChat] = useModal();
+  const token = getCookie("token").replace("Bearer", "");
+  const [chatLog, setChatLog] = useState([]);
+  const [receiveMsg, setReceiveMsg] = useState();
+  //   const textRef = useRef < HTMLInputElement > null;
+
+  // message를 키:벨류 형태로 저장해서 key 왼쪽 value 오른쪽 (노랭이)
+  // class name=key, value
+
+  // Message User & Content
+  const [message, setMessage] = useState("");
+
+  const inputMessage = (e) => {
+    setMessage(e.target.value);
+  };
+
+  const onEnter = (e) => {
+    // 만약 엔터를 해서 텍스트를 보냈을 때, 실행할 콘솔
+    if (e.keyCode === 13) {
+      console.log("메시지 전송 성공!");
+    }
+  };
+
+  ChattingServiceKit.onConnect("/sub/chatrooms/1", {}, (newMessage) => {
+    setReceiveMsg(newMessage.content);
+  });
+
+  //   useEffect(() => {
+  //     setChatLog([...chatLog, receiveMsg]);
+  //   }, [chatLog, receiveMsg]);
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    ChattingServiceKit.sendMessage({
+      content: message,
+      //   accesstoken: token,
+    });
+    setMessage("");
+  };
+
+  useEffect(() => {
+    return () => {
+      ChattingServiceKit.onDisconnect();
+    };
+  }, []);
 
   return (
     <Div variant="bodyContainer">
@@ -19,7 +67,18 @@ export const Chat = () => {
           </StBoxDiv>
           <span>메시지를 주고 받으세요!</span>
           <StBottomDiv>
-            <StInput /> <StBtn> 💌 </StBtn>
+            <form onSubmit={submitHandler}>
+              <StInput
+                name="chat"
+                autoComplete="off"
+                placeholder="메시지를 입력해주세요!"
+                type="text"
+                onKeyDown={onEnter}
+                value={message}
+                onChange={inputMessage}
+              />
+              <StBtn type="submit"> 💌 </StBtn>
+            </form>
           </StBottomDiv>
         </StContainerDiv>
       ) : null}

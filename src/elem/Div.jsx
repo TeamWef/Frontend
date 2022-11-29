@@ -89,6 +89,18 @@ const StDiv = styled.div`
           display: flex;
           flex-direction: column;
         `;
+      case "title":
+        return css`
+          width: 160px;
+          height: 35px;
+          background-color: #ede8e1;
+          color: #a4a19d;
+          margin-top: 20px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border-radius: 5px;
+        `;
       default:
         break;
     }
