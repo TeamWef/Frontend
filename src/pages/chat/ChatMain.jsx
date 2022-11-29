@@ -4,7 +4,6 @@ const ChatMain = () => {
   return (
     <div>
       <Chat />
-      <ChatMain />
     </div>
   );
 };
