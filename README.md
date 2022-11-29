@@ -9,11 +9,11 @@ team Notion ⏩️ https://sumptuous-devourer-e77.notion.site/2-we-are-friends-b
 ----
 # 📍 table of contents
 
-1. team
+1. **team**
 - taem member introduction
 - team Github
 
-2. project
+2. **project**
 - project introduction
 - major skill
 - project architecture
@@ -54,7 +54,7 @@ team Notion ⏩️ https://sumptuous-devourer-e77.notion.site/2-we-are-friends-b
  이런 고민은 이제 그만! ✋🏻 <br>
  위프에서 친구들과 함께 그룹을 생성해, 만날 약속을 잡고, 그날의 사진들을 공유해 보세요! </p>
 
-## major skill
+## major function
 
 ✨ 그룹 생성 <br>
 ✨ 일정 생성 <br>
@@ -121,3 +121,12 @@ team Notion ⏩️ https://sumptuous-devourer-e77.notion.site/2-we-are-friends-b
 
 ## trouble shooting
 
+
+
+## to be continue...
+| **구현 기능** | **사용할 스킬** | **사용 이유** |
+| :--- | :--- | :--- |
+| 이벤트 알림 | SSE 통신 | 프론트에서 이벤트를 감지해 서버에서 단방향으로 알림 메시지를 전달해주어야 하기 때문에 SSE 통신을 도입할 예정입니다 |
+| 그룹 내 친구들과의 채팅 | SockJS, Stomp | 그룹 내 친구들끼리 메시지를 주고 받는 형식으로 채팅방을 만들 예정이기 때문에 양방향 통신이 필요하다 생각되어 도입할 예정입니다 |
+| 초대 코드 | uuid | 초대 코드를 임의의 숫자, 문자 조합 6자리를 사용하기 위해 랜덤으로 id값을 받아올 예정입니다 |
+| 구글 로그인 | Google cloud consol | 구글 api를 이용해 구글 소셜 로그인 방식을 도입할 예정입니다 |

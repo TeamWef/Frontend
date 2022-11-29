@@ -16,6 +16,6 @@ export default App;
 
 const View = styled.div`
   position: relative;
-  width: 1980px;
-  height: 1080px;
+  width: 100vw;
+  height: 100%;
 `;

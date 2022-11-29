@@ -4,7 +4,9 @@ import { Div } from "../../../elem";
 import { useModal } from "../../../hooks/useModal";
 import ChattingService from "../../../ChattingService/ChattingService";
 import { getCookie } from "../../../redux/modules/customCookies";
+
 import { useParams } from "react-router-dom";
+
 
 const ChattingServiceKit = new ChattingService();
 
@@ -12,11 +14,13 @@ export const Chat = () => {
   const [Chat, openChat] = useModal();
   const token = getCookie("token").replace("Bearer", "");
 
+
   const [chatLog, setChatLog] = useState([]);
   const [receiveMsg, setReceiveMsg] = useState();
 
   console.log("chatLog==>", chatLog);
   console.log("receiveMsg===>", receiveMsg);
+
 
   // message를 키:벨류 형태로 저장해서 key 왼쪽 value 오른쪽 (노랭이)
   // class name=key, value
@@ -39,15 +43,19 @@ export const Chat = () => {
     setReceiveMsg(newMessage.content);
   });
 
+
   useEffect(() => {
     setChatLog([...chatLog, receiveMsg]);
   }, [setChatLog, receiveMsg]);
+
 
   const submitHandler = (e) => {
     e.preventDefault();
     ChattingServiceKit.sendMessage({
       content: message,
+
       accesstoken: token,
+
     });
     setMessage("");
   };

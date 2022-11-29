@@ -11,7 +11,9 @@ import {
 import { useModal } from "../../../hooks/useModal";
 import EditLanding from "./EditLanding";
 import styled from "styled-components";
+
 import { Button, Div, Flex, Margin, Span, Svg } from "../../../elem";
+
 
 const SchdeleDetail = ({ scheduleId }) => {
   const scheduleDetail = useSelector((state) => state.schedule?.scheduleDetail);
@@ -278,4 +280,5 @@ const StJoinDiv = styled.div`
   background-color: #ede8e1;
   border-radius: 5px;
   margin: 50px 0px 0px 10px;
+
 `;
