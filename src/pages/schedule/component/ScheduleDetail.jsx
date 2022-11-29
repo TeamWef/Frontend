@@ -12,7 +12,9 @@ import { useModal } from "../../../hooks/useModal";
 import EditLanding from "./EditLanding";
 import styled from "styled-components";
 
+
 import { Button, Div, Flex, Margin, Span, Svg } from "../../../elem";
+
 
 
 const SchdeleDetail = ({ scheduleId }) => {
