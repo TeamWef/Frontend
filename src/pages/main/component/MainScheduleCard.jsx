@@ -8,7 +8,7 @@ import { Div, Flex, Margin, Span } from "../../../elem";
 
 const ScheduleCard = () => {
   const data = useSelector((state) => state.schedule.groupSchedule.data);
-  // console.log("메인 스케쥴 카드=>", data);
+  console.log("메인 스케쥴 카드=>", data);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -20,46 +20,44 @@ const ScheduleCard = () => {
     <Div variant="bodyContainer">
       <Flex>
         <Span variant="bold">Schedule.</Span>
-        <ScheduleMaincontainer>
+        <StContainerDiv>
           {data?.length !== 0 ? (
             <>
               {data?.map((item) => {
                 return (
-                  <ScheduleDiv key={item.scheduleId}>
-                    <TextContainer>
-                      <GroupTitle>
-                        <TitleBox>
+                  <StDiv key={item.scheduleId}>
+                    <StFlexDiv>
+                      <StItemDiv>
+                        <StTitleDiv>
                           <Span variant="smallBronze">{item?.partyName}</Span>
-                        </TitleBox>
+                        </StTitleDiv>
                         <p>{item?.title}</p>
                         <p>{item?.writer}</p>
-                      </GroupTitle>
-                      <UserBox>
-                        <More
-                          onClick={() => {
-                            navigate(
-                              `/${item.partyId}/scheduledetail/${item.scheduleId}`
-                            );
-                          }}
-                        >
-                          <Svg variant={"more"} />
-                        </More>
-                      </UserBox>
-                    </TextContainer>
-                  </ScheduleDiv>
+                      </StItemDiv>
+                      <StbtnDiv
+                        onClick={() => {
+                          navigate(
+                            `/${item.partyId}/scheduledetail/${item.scheduleId}`
+                          );
+                        }}
+                      >
+                        <Svg variant={"more"} />
+                      </StbtnDiv>
+                    </StFlexDiv>
+                  </StDiv>
                 );
               })}
             </>
           ) : (
-            <NullBox>
+            <Div variant="nullBox">
               <Flex>
                 <Span variant="bigBronze" asf="center">
                   현재 일정이 없습니다.
                 </Span>
               </Flex>
-            </NullBox>
+            </Div>
           )}
-        </ScheduleMaincontainer>
+        </StContainerDiv>
       </Flex>
     </Div>
   );
@@ -67,24 +65,11 @@ const ScheduleCard = () => {
 
 export default ScheduleCard;
 
-const TitleBox = styled.div`
-  background-color: #ede8e1;
-  color: #a4a19d;
-  width: 160px;
-  height: 35px;
-  margin-top: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 5px;
-`;
-
-const ScheduleMaincontainer = styled.div`
+const StContainerDiv = styled.div`
   width: 1075px;
   height: 500px;
   display: flex;
   flex-direction: column;
-  white-space: nowrap;
   overflow-y: auto;
   overflow-x: hidden;
   margin-top: 20px;
@@ -101,20 +86,31 @@ const ScheduleMaincontainer = styled.div`
     width: 0;
     height: auto;
   }
-  /* overflow: hidden; */
 `;
 
-const ScheduleDiv = styled.div`
+const StTitleDiv = styled.div`
+  width: 160px;
+  height: 35px;
+  background-color: #ede8e1;
+  color: #a4a19d;
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+`;
+
+const StDiv = styled.div`
   width: 1075px;
   height: 75px;
   border-bottom: 1px solid #d9d3c7;
 `;
 
-const TextContainer = styled.div`
+const StFlexDiv = styled.div`
   display: flex;
 `;
 
-const GroupTitle = styled.div`
+const StItemDiv = styled.div`
   width: 1075px;
   display: flex;
   justify-content: space-between;
@@ -125,31 +121,11 @@ const GroupTitle = styled.div`
   }
 `;
 
-const UserBox = styled.div`
-  display: flex;
-  & p {
-    margin-top: 30px;
-    font-weight: 600;
-  }
-`;
-
-const More = styled.div`
+const StbtnDiv = styled.div`
   width: 50px;
   height: 30px;
   margin-top: 26px;
   margin-left: 26px;
   border-radius: 5px;
   border: none;
-`;
-
-const NullBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 1070px;
-  height: 227px;
-  border: 2px dashed #d9d3c7;
-  border-radius: 10px;
-  margin-top: 40px;
 `;

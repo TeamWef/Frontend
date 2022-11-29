@@ -63,6 +63,33 @@ const StDiv = styled.div`
           width: 1100px;
           height: auto;
         `;
+      case "nullBox":
+        return css`
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          width: 1070px;
+          height: 227px;
+          border: 2px dashed #d9d3c7;
+          border-radius: 10px;
+          margin-top: 40px;
+        `;
+      case "dropDown":
+        return css`
+          position: absolute;
+          top: 50px;
+          width: 80px;
+          height: auto;
+          margin-left: 215px;
+          background-color: white;
+          border: 1px solid #d9d3c7;
+          border-radius: 5px;
+          z-index: 10;
+          box-shadow: 5px 5px 15px rgba(164, 161, 157, 0.15);
+          display: flex;
+          flex-direction: column;
+        `;
       default:
         break;
     }

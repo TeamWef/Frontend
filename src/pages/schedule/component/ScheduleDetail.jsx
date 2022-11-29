@@ -18,8 +18,7 @@ const SchdeleDetail = ({ scheduleId }) => {
   // console.log("디테일 selector==>", scheduleDetail);
   const participant = useSelector((state) => state.mypage?.myProfile);
   const participanter = useSelector((state) => state.schedule?.join);
-  // console.log("참여자 찾기=>", participanter);
-  // console.log("참여자 찾기=>", participant);
+
   const [isParticipant, setIsParticipant] = useState(
     scheduleDetail.isParticipant
   );
@@ -42,7 +41,6 @@ const SchdeleDetail = ({ scheduleId }) => {
   });
 
   const [scheduleJoin, setScheduleJoin] = useState(false);
-  // const join = useSelector((state) => state.schedule.join);
   const joiner = scheduleDetail?.participantResponseDtoList;
 
   const onChangeHandler = (e) => {
@@ -50,12 +48,25 @@ const SchdeleDetail = ({ scheduleId }) => {
     setEditSchedule({ ...editSchedule, [name]: value });
   };
 
+  console.log(editSchedule);
+
   const [modal, openModal] = useModal();
 
   const onEditScheduleHandler = (e) => {
     e.preventDefault();
+    if (
+      !editSchedule.title ||
+      !editSchedule.content ||
+      !editSchedule.date ||
+      !editSchedule.meetTime ||
+      !editSchedule.place?.placeName ||
+      !editSchedule.place?.address
+    ) {
+      return alert("모든 일정을 입력해주세요!");
+    }
     dispatch(__editSchedules({ detailId, editSchedule }));
     openModal();
+    alert("수정이 완료되었습니다!");
   };
 
   return (
@@ -115,15 +126,27 @@ const SchdeleDetail = ({ scheduleId }) => {
               placeholder="제목"
               name="title"
               onChange={onChangeHandler}
+              value={editSchedule.title}
             />
             <input
               type="text"
               placeholder="내용"
               name="content"
               onChange={onChangeHandler}
+              value={editSchedule.content}
             />
-            <input type="time" name="meetTime" onChange={onChangeHandler} />
-            <input type="date" name="date" onChange={onChangeHandler} />
+            <input
+              type="time"
+              name="meetTime"
+              value={editSchedule.meetTime}
+              onChange={onChangeHandler}
+            />
+            <input
+              type="date"
+              name="date"
+              value={editSchedule.date}
+              onChange={onChangeHandler}
+            />
             <button
               type="submit"
               onClick={() => {
