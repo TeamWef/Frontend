@@ -85,6 +85,7 @@ const StGreed = styled.div`
   width: 100%;
   height: 555px;
   grid-template-columns: repeat(4, 1fr);
+  overflow-y: auto;
   &::-webkit-scrollbar {
     background: #d9d9d9;
     width: 6px;

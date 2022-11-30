@@ -9,18 +9,29 @@ const StInput = styled.input`
   background-color: #fff;
   border: 0px;
   border-radius: 5px;
+  display: flex;
+  padding-left: 16px;
+  width: ${({ width }) => (width ? width : "")};
+
   ${({ variant }) => {
     switch (variant) {
       case "large":
         return css`
-          padding-left: 16px;
-          display: flex;
           width: 375px;
           height: 55px;
-          margin-bottom: 12px;
           font-size: 20px;
+          margin-bottom: 12px;
           ::placeholder {
             font-size: 16px;
+            opacity: 0.5;
+          }
+        `;
+      case "medium":
+        return css`
+          height: 40px;
+          font-size: 14px;
+          ::placeholder {
+            font-size: 14px;
             opacity: 0.5;
           }
         `;

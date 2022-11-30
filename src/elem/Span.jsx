@@ -37,6 +37,12 @@ const StSpan = styled.span`
           font-size: 14px;
           color: #a4a19d;
         `;
+      case "mediumBronzeBold":
+        return css`
+          font-size: 16px;
+          color: #a4a19d;
+          font-weight: 700;
+        `;
       case "mediumBronze":
         return css`
           font-size: 16px;

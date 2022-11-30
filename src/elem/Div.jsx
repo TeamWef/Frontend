@@ -7,10 +7,15 @@ export default Div;
 
 const StDiv = styled.div`
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: ${({ jc }) => (jc ? jc : "center")};
   width: ${({ width }) => (width ? width : "")};
   height: ${({ height }) => (height ? height : "")};
+  flex-direction: ${({ fd }) => (fd ? fd : "")};
+  background-color: ${({ bc }) => (bc ? bc : "")};
+  border-radius: ${({ br }) => (br ? br : "5px")};
+  margin: ${({ mg }) => (mg ? mg : "")};
+  padding: ${({ pd }) => (pd ? pd : "")};
 
   ${({ variant }) => {
     switch (variant) {
@@ -85,14 +90,33 @@ const StDiv = styled.div`
           box-shadow: 5px 5px 15px rgba(164, 161, 157, 0.15);
           flex-direction: column;
         `;
-      case "title":
+      case "albumBox":
         return css`
-          width: 160px;
-          height: 35px;
-          background-color: #ede8e1;
-          color: #a4a19d;
-          margin-top: 20px;
-          border-radius: 5px;
+          width: 525px;
+          height: 525px;
+          overflow: hidden;
+        `;
+      case "scroll-y":
+        return css`
+          margin: 10px 0;
+          flex-direction: column;
+          justify-content: flex-start;
+          align-items: flex-start;
+          overflow-y: auto;
+          &::-webkit-scrollbar {
+            background: #d9d9d9;
+            width: 6px;
+            height: 100%;
+            border-radius: 10px;
+          }
+          &::-webkit-scrollbar-thumb {
+            border-radius: 10px;
+            background: #a4a19d;
+          }
+          &::-webkit-scrollbar-track {
+            width: 0;
+            height: auto;
+          }
         `;
       default:
         break;

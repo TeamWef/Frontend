@@ -12,7 +12,8 @@ import {
 import AlbumComments from "./AlbumComments";
 import jwt_decode from "jwt-decode";
 import { getCookie } from "../../../redux/modules/customCookies";
-import { Div, Flex, Img } from "../../../elem";
+import { Button, Div, Flex, Img, Margin, Span, Svg } from "../../../elem";
+import GroupTitle from "../../../components/GroupTitle";
 
 const AlbumDetail = () => {
   const dispatch = useDispatch();
@@ -27,7 +28,7 @@ const AlbumDetail = () => {
 
   // 앨범 정보
   const albumItem = useSelector((state) => state.album.albumItem);
-  console.log(albumItem);
+  // console.log(albumItem);
   const {
     writer,
     place,
@@ -58,42 +59,26 @@ const AlbumDetail = () => {
     setContentInput(content);
     setUpdateMode(false);
   };
-  // console.log(albumItem);
+  console.log(albumItem);
   return (
     <Div variant="bodyContainer">
-      <h1>AlbumDetail임</h1>
-      <Flex fd="row">
-        {profileImageUrl ? (
-          <Profile src={profileImageUrl} alt="img" />
-        ) : (
-          <Profile src="/images/userProfile.jpg" alt="img" />
-        )}
-        <span>{writer}</span>
-      </Flex>
-      <br />
-      <StImg src={imageUrl} alt="img" />
-      <p>{place}</p>
-      {updateMode ? (
-        <input value={contentInput} onChange={onChange} />
-      ) : (
-        <p>{content}</p>
-      )}
-      <p>{beforeTime}</p>
-      {updateMode ? (
-        <button onClick={updateClick}>수정완료</button>
-      ) : (
-        <div>
+      <GroupTitle />
+      <Flex fd="row" jc="space-between" width="1050px">
+        <Span variant="bold">Album</Span>
+        <Flex fd="row">
           {myId === memberEmail && (
             <>
-              <button
+              <Button
+                variant="small"
                 onClick={() => {
                   setUpdateMode(true);
                   setContentInput(content);
                 }}
               >
                 수정
-              </button>
-              <button
+              </Button>
+              <Button
+                variant="small"
                 onClick={() => {
                   if (window.confirm("정말 삭제하시겠습니까?")) {
                     dispatch(__delAlbumItem(id));
@@ -103,21 +88,66 @@ const AlbumDetail = () => {
                 }}
               >
                 삭제
-              </button>
+              </Button>
             </>
           )}
-          <button
+          <Margin mg="10px" />
+          <Svg
+            variant="close"
             onClick={() => {
               navigate(`/${partyId}/album`);
             }}
-          >
-            닫기
-          </button>
-          <br />
-          <br />
-          <AlbumComments id={id} commentList={commentList} myId={myId} />
-        </div>
-      )}
+          />
+        </Flex>
+      </Flex>
+      <Margin />
+      <Flex fd="row">
+        <Div variant="albumBox">
+          <StImg src={imageUrl} alt="img" />
+        </Div>
+        <Div variant="albumBox" fd="column">
+          <Flex jc="space-between">
+            <Flex ai="center">
+              <Flex fd="row" jc="space-between" width="470px">
+                <Flex fd="row" ai="center">
+                  {profileImageUrl ? (
+                    <Img src={profileImageUrl} alt="img" />
+                  ) : (
+                    <Img src="/images/userProfile.jpg" alt="img" />
+                  )}
+                  <Span variant="mediumBronze" mg="0 0 0 5px">
+                    {writer}
+                  </Span>
+                </Flex>
+                <Flex fd="row" ai="center">
+                  <Span variant="other">
+                    <Span variant="other" fw="700" mg="0 5px 0 0">
+                      {place?.split(":")[0]}
+                    </Span>
+                    {place?.split(":")[1]}
+                  </Span>
+                  <Svg variant="location" />
+                </Flex>
+              </Flex>
+              <Div variant="scroll-y" width="470px" height="162px" mg="0">
+                {updateMode ? (
+                  <input value={contentInput} onChange={onChange} />
+                ) : (
+                  <Span variant="smallBronze">{content}</Span>
+                )}
+              </Div>
+              <Span variant="smallBronze" asf="flex-start" mg="0 0 0 15px">
+                {beforeTime}
+              </Span>
+            </Flex>
+          </Flex>
+          {updateMode ? (
+            <button onClick={updateClick}>수정완료</button>
+          ) : (
+            <AlbumComments id={id} commentList={commentList} myId={myId} />
+          )}
+        </Div>
+      </Flex>
     </Div>
   );
 };
@@ -125,13 +155,13 @@ const AlbumDetail = () => {
 export default AlbumDetail;
 
 const StImg = styled.img`
-  width: 300px;
-  height: auto;
-  margin: 5px;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 5px;
 `;
 
-const Profile = styled.img`
-  position: relative;
-  width: 20px;
-  height: 20px;
+const StContent = styled.div`
+  width: 400px;
+  height: 200px;
+  display: flex;
 `;
