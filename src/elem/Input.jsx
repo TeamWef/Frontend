@@ -9,6 +9,7 @@ const StInput = styled.input`
   background-color: #fff;
   border: 0px;
   border-radius: 5px;
+
   ${({ variant }) => {
     switch (variant) {
       case "large":

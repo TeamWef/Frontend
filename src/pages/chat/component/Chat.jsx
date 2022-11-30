@@ -9,7 +9,6 @@ import { useParams } from "react-router-dom";
 import { Stomp } from "@stomp/stompjs";
 import sockJS from "sockjs-client";
 
-
 const ChattingServiceKit = new ChattingService();
 
 export const Chat = () => {
@@ -25,7 +24,6 @@ export const Chat = () => {
   console.log("receiveMsg===>", receiveMsg);
 
   // console.log(partyId.partyId);
-
 
   // message를 키:벨류 형태로 저장해서 key 왼쪽 value 오른쪽 (노랭이)
   // class name=key, value
@@ -73,19 +71,18 @@ export const Chat = () => {
 
   return (
     <Div variant="bodyContainer">
-      <h2>Chat</h2>
       <StModalDiv onClick={openChat}> 💬 </StModalDiv>
-
       {Chat ? (
-
         chatLog.length > 1 ? (
           <StContainerDiv>
-            <span>
-              {chatLog.map((item, i) => {
-                return <StBox key={i}>{item?.content}</StBox>;
+            {chatLog.map((item, i) => {
+              return (
+                <StChatBoxDiv>
+                  <StChatDiv key={i}>{item?.content}</StChatDiv>
+                </StChatBoxDiv>
+              );
+            })}
 
-              })}
-            </span>
             <StBottomDiv>
               <form onSubmit={submitHandler}>
                 <StInput
@@ -130,6 +127,9 @@ export const Chat = () => {
 };
 
 const StModalDiv = styled.div`
+  position: fixed;
+  top: 700px;
+  right: 50px;
   display: flex;
   align-items: center;
   text-align: center;
@@ -143,9 +143,12 @@ const StModalDiv = styled.div`
 `;
 
 const StContainerDiv = styled.div`
+  position: fixed;
+  top: 50px;
+  right: 120px;
   display: flex;
-  align-items: center;
   flex-direction: column;
+  justify-content: right;
   width: 440px;
   height: 700px;
   background-color: #f8f5f0;
@@ -189,6 +192,9 @@ const StInput = styled.input`
   background-color: transparent;
   border-radius: 55px;
   border: 2px solid #d9d3c7;
+  &::placeholder {
+    padding: 15px;
+  }
 `;
 
 const StBtn = styled.button`
@@ -202,13 +208,19 @@ const StBtn = styled.button`
   font-size: 20px;
 `;
 
-const StBox = styled.div`
-  width: 100px;
-  height: 20px;
-  background-color: #acacac;
-  color: #e8e8e8;
+const StChatBoxDiv = styled.div`
+  width: 400px;
+  display: flex;
+  justify-content: flex-end;
 `;
 
-
-const StDiv = styled.div``;
-
+const StChatDiv = styled.div`
+  background-color: #ebe3d8;
+  margin-right: -20px;
+  padding: 8px 10px;
+  margin-top: 11px;
+  width: max-content;
+  max-width: 50%;
+  border-radius: 15px 15px 0px 15px;
+  text-align: center;
+`;
