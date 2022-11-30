@@ -28,11 +28,9 @@ const StDiv = styled.div`
           left: 50vw;
           transform: translate(-50%, 0);
         `;
-      case "profileEdit":
+      case "headerModal":
         return css`
           background-color: #f8f5f0;
-          width: 290px;
-          height: 320px;
           position: absolute;
           top: 40px;
           right: 0px;

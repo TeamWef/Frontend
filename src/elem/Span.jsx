@@ -12,6 +12,7 @@ const StSpan = styled.span`
   align-self: ${({ asf }) => (asf ? asf : "")};
   color: ${({ color }) => (color ? color : "")};
   font-weight: ${({ fw }) => (fw ? fw : "")};
+  border-bottom: ${({ bb }) => (bb ? bb : "")};
 
   ${({ variant }) => {
     switch (variant) {

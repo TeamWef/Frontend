@@ -36,7 +36,7 @@ const EditMypage = ({ myProfile, openModal }) => {
   };
 
   return (
-    <Div variant="profileEdit">
+    <Div variant="headerModal" width="290px" height="320px">
       <Flex>
         <Flex fd="row" jc="space-between">
           <Span variant="bigBronze">Profile</Span>

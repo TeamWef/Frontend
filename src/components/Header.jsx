@@ -20,51 +20,53 @@ export const Header = () => {
     alert("로그아웃 되었습니다.");
     localStorage.clear();
     window.location.reload();
+    navigate("/");
   };
   // console.log(param);
 
   return (
-    <BaseContainer>
-      <CenterBox>
-        <Svg variant="mainIcon" onClick={goHome} />
-        <Flex fd="row">
-          {param.partyId !== undefined && (
-            <>
-              <MenuBtn
-                onClick={() => {
-                  navigate(`/${param.partyId}`);
-                }}
-              >
-                Home
-              </MenuBtn>
-              <MenuBtn
-                onClick={() => {
-                  navigate(`/${param.partyId}/schedule`);
-                }}
-              >
-                Schedule
-              </MenuBtn>
-              <MenuBtn
-                onClick={() => {
-                  navigate(`/${param.partyId}/album`);
-                }}
-              >
-                Album
-              </MenuBtn>
-            </>
-          )}
-          <Margin mg="5px" />
-          <Svg variant="invite" />
-          <Svg variant="notification" />
-          <MenuBtn onClick={logoutHandler}>Logout</MenuBtn>
-          <Margin mg="5px" />
-          <UserInfo>
-            <Mypage />
-          </UserInfo>
-        </Flex>
-      </CenterBox>
-      {/* <Notice></Notice> */}
-    </BaseContainer>
+    <>
+      <BaseContainer>
+        <CenterBox>
+          <Svg variant="mainIcon" onClick={goHome} />
+          <Flex fd="row">
+            {param.partyId !== undefined && (
+              <>
+                <MenuBtn
+                  onClick={() => {
+                    navigate(`/${param.partyId}`);
+                  }}
+                >
+                  Home
+                </MenuBtn>
+                <MenuBtn
+                  onClick={() => {
+                    navigate(`/${param.partyId}/schedule`);
+                  }}
+                >
+                  Schedule
+                </MenuBtn>
+                <MenuBtn
+                  onClick={() => {
+                    navigate(`/${param.partyId}/album`);
+                  }}
+                >
+                  Album
+                </MenuBtn>
+              </>
+            )}
+            <Margin mg="5px" />
+            <Svg variant="invite" />
+            <Notice />
+            <MenuBtn onClick={logoutHandler}>Logout</MenuBtn>
+            <Margin mg="5px" />
+            <UserInfo>
+              <Mypage />
+            </UserInfo>
+          </Flex>
+        </CenterBox>
+      </BaseContainer>
+    </>
   );
 };
 
