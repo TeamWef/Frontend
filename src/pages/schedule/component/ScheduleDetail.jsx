@@ -12,10 +12,8 @@ import { useModal } from "../../../hooks/useModal";
 import EditLanding from "./EditLanding";
 import styled from "styled-components";
 
-
 import { Button, Div, Flex, Margin, Span, Svg } from "../../../elem";
-
-
+import GroupTitle from "../../../components/GroupTitle";
 
 const SchdeleDetail = ({ scheduleId }) => {
   const scheduleDetail = useSelector((state) => state.schedule?.scheduleDetail);
@@ -75,9 +73,7 @@ const SchdeleDetail = ({ scheduleId }) => {
 
   return (
     <Div variant="bodyContainer">
-      <Div variant="title">
-        <h2>Group title.</h2>
-      </Div>
+      <GroupTitle />
       <StDiv>Schedule.</StDiv>
       <Flex jc="space-between" fd="row" width="1000px">
         <Flex fd="row" ai="center">
@@ -90,8 +86,8 @@ const SchdeleDetail = ({ scheduleId }) => {
           </Span>
         </Flex>
         <Flex fd="row">
-          <Button variant="small" onClick={openModal}>
-            수정
+          <Button variant="border-small" onClick={openModal}>
+            수정하기
           </Button>
           <Button
             variant="border-small"
@@ -103,7 +99,15 @@ const SchdeleDetail = ({ scheduleId }) => {
               navigate(`/${partyId}/schedule`);
             }}
           >
-            삭제
+            삭제하기
+          </Button>
+          <Button
+            variant="border-small"
+            onClick={() => {
+              navigate(-1);
+            }}
+          >
+            목록보기
           </Button>
         </Flex>
       </Flex>
@@ -282,5 +286,4 @@ const StJoinDiv = styled.div`
   background-color: #ede8e1;
   border-radius: 5px;
   margin: 50px 0px 0px 10px;
-
 `;

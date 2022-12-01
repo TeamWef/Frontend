@@ -4,12 +4,13 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { Div, Flex, Img, Margin, Span } from "../../elem";
 import { __popularSchedule } from "../../redux/modules/scheduleSlice";
+import { Chat } from "../chat/component/Chat";
 
 const GroupMain = () => {
   const partyId = useParams().partyId;
   const dispatch = useDispatch();
   const data = useSelector((state) => state.schedule?.popularSchedule);
-  const members = data.memberResponseDtoList;
+  const members = data.participantList;
 
   useEffect(() => {
     dispatch(__popularSchedule(partyId));
@@ -18,7 +19,8 @@ const GroupMain = () => {
   return (
     <>
       <Div variant="bodyContainer">
-        <Margin mg="50px" />
+        <Chat />
+        <Margin mg="38px" />
         <Flex>
           <Flex>
             <Flex ai="center">

@@ -9,12 +9,16 @@ const StImg = styled.img`
   width: ${({ width }) => (width ? width : "30px")};
   height: ${({ height }) => (height ? height : "30px")};
   border-radius: 50%;
-  object-fit: cover;
+  object-fit: ${({ obf }) => (obf ? obf : "cover")};
 
   ${({ variant }) => {
     switch (variant) {
-      case "profile":
-        return css``;
+      case "album":
+        return css`
+          width: 100%;
+          height: auto;
+          border-radius: 5px;
+        `;
       default:
         break;
     }

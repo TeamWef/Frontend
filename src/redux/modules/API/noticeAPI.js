@@ -1,14 +1,10 @@
 import instance from "../../../shared/axios";
 
 export const noticeApis = {
-  noticeList: async () => {
-    const data = await instance.get("/notification");
-    console.log("noticeAPI", data);
-  },
-  noticeReadAll: async () => await instance.post("/notification"),
-  noticeRead: async (payload) =>
-    await instance.post(`/notification/${payload}`),
-  noticeDeleteAll: async () => await instance.delete("/notification"),
-  noticeDelete: async (payload) =>
-    await instance.delete(`/notification/${payload}`),
+  noticeList: async () => await instance.get("/notifications"),
+  readNotice: async (payload) =>
+    await instance.put(`/notifications/${payload}`),
+  deleteNoticeAll: async () => await instance.delete("/notifications"),
+  deleteNotice: async (payload) =>
+    await instance.delete(`/notifications/${payload}`),
 };

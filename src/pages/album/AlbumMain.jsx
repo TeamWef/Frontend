@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
+import GroupTitle from "../../components/GroupTitle";
 import { Div, Flex, Margin, Span, Svg } from "../../elem";
 import { useModal } from "../../hooks/useModal";
 import { __getAlbumList } from "../../redux/modules/albumSlice";
@@ -23,13 +24,11 @@ const AlbumMain = () => {
 
   const albumItems = useSelector((state) => state.album?.album);
 
-
   return (
     <Div variant="bodyContainer">
-      <Margin mg="20px 0 0 0" />
+      <GroupTitle />
       <Flex ai="center">
         <Flex fd="row" jc="space-between" ai="center" width="1050px">
-
           <Span variant="bold">Album</Span>
           <Svg variant="add" onClick={openCreateModal} />
         </Flex>
@@ -60,16 +59,13 @@ const AlbumMain = () => {
 export default AlbumMain;
 
 const StImg = styled.img`
-
   position: relative;
   width: 250px;
   height: 250px;
-
   object-fit: cover;
   background-color: silver;
   margin: 10px;
   transition: 0.3s;
-
   border-radius: 5px;
   border: 0px solid white;
   :hover {
@@ -79,16 +75,29 @@ const StImg = styled.img`
     z-index: 10;
     border: 5px solid white;
     transform: translate(2%, 2%);
-
   }
 `;
 
 const StGreed = styled.div`
-
   position: relative;
-  padding-top: 15px;
+  padding: 15px 5px 15px 5px;
   display: grid;
   width: 100%;
-
+  height: 570px;
   grid-template-columns: repeat(4, 1fr);
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    background: #d9d9d9;
+    width: 6px;
+    height: 100%;
+    border-radius: 10px;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: #a4a19d;
+  }
+  &::-webkit-scrollbar-track {
+    width: 0;
+    height: auto;
+  }
 `;
