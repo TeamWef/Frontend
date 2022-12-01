@@ -12,7 +12,7 @@ import { useModal } from "../../../hooks/useModal";
 import EditLanding from "./EditLanding";
 import styled from "styled-components";
 
-import { Button, Div, Flex, Margin, Span, Svg } from "../../../elem";
+import { Button, Div, Flex, Margin, Span, Svg, Img } from "../../../elem";
 import GroupTitle from "../../../components/GroupTitle";
 
 const SchdeleDetail = ({ scheduleId }) => {
@@ -80,7 +80,12 @@ const SchdeleDetail = ({ scheduleId }) => {
           <Span variant="bold" mg="0px 20px 0px 0px">
             {scheduleDetail?.title}
           </Span>
-          <StImg src={scheduleDetail?.profileImageUrl} alt="프로필" />
+          {scheduleDetail?.profileImageUrl === null ? (
+            <Img width="20px" height="20px" src="/images/userProfile.jpg" />
+          ) : (
+            <StImg src={scheduleDetail?.profileImageUrl} alt="프로필" />
+          )}
+
           <Span variant="smallBronze" mg="0px 0px 0px 5px">
             {scheduleDetail?.writer}
           </Span>
@@ -176,9 +181,18 @@ const SchdeleDetail = ({ scheduleId }) => {
           return (
             <Flex fd="row" ai="center" key={i}>
               <StJoinDiv>
-                <StImg alt="맹짱구" src={item.profileImageUrl} />
+                {item?.profileImageUrl === null ? (
+                  <Img
+                    width="20px"
+                    height="20px"
+                    src="/images/userProfile.jpg"
+                  />
+                ) : (
+                  <StImg alt="맹짱구" src={item?.profileImageUrl} />
+                )}
+
                 <Span variant="small" mg="0px 5px">
-                  {item.memberName}
+                  {item?.memberName}
                 </Span>
               </StJoinDiv>
             </Flex>
