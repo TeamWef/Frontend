@@ -10,7 +10,8 @@ const GroupMain = () => {
   const partyId = useParams().partyId;
   const dispatch = useDispatch();
   const data = useSelector((state) => state.schedule?.popularSchedule);
-  const members = data.memberResponseDtoList;
+  const members = data?.participantList;
+  console.log(data);
 
   useEffect(() => {
     dispatch(__popularSchedule(partyId));

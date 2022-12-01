@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import { Div } from "../../../elem";
+import { Div, Svg } from "../../../elem";
 import { useModal } from "../../../hooks/useModal";
 import ChattingService from "../../../ChattingService/ChattingService";
 import { getCookie } from "../../../redux/modules/customCookies";
@@ -8,14 +8,20 @@ import { useParams } from "react-router-dom";
 
 import { Stomp } from "@stomp/stompjs";
 import sockJS from "sockjs-client";
+import { useSelector } from "react-redux";
 
 const ChattingServiceKit = new ChattingService();
 
 export const Chat = () => {
   const [Chat, openChat] = useModal();
+  const chatId = useSelector(
+    (state) => state.schedule?.popularSchedule.chatRoomId
+  );
+  console.log(chatId);
 
   const token = getCookie("token");
   const partyId = useParams().partyId;
+  console.log("???", partyId);
 
   const [chatLog, setChatLog] = useState([]);
   const [receiveMsg, setReceiveMsg] = useState();
@@ -42,6 +48,9 @@ export const Chat = () => {
     }
   };
 
+  // useEffect(() => {
+  //   const time = setTimeout(
+  //     () =>
   ChattingServiceKit.onConnect(
     `/sub/chatrooms/${partyId}`,
     { Authorization: token },
@@ -49,6 +58,10 @@ export const Chat = () => {
       setReceiveMsg(newMessage);
     }
   );
+  //     1000
+  //   );
+  //   return () => clearTimeout(time);
+  // }, [chatId, token]);
 
   useEffect(() => {
     setChatLog([...chatLog, receiveMsg]);
@@ -71,7 +84,9 @@ export const Chat = () => {
 
   return (
     <Div variant="bodyContainer">
-      <StModalDiv onClick={openChat}> 💬 </StModalDiv>
+      <StModalDiv onClick={openChat}>
+        <Svg variant="message" />
+      </StModalDiv>
       {Chat ? (
         chatLog.length > 1 ? (
           <StContainerDiv>
@@ -94,7 +109,7 @@ export const Chat = () => {
                   value={message}
                   onChange={inputMessage}
                 />
-                <StBtn type="submit"> 💌 </StBtn>
+                <StBtn type="submit"> 전송</StBtn>
               </form>
             </StBottomDiv>
           </StContainerDiv>
@@ -140,6 +155,9 @@ const StModalDiv = styled.div`
   border: 3px solid #a4a09c;
   background-color: white;
   cursor: pointer;
+  & Svg {
+    width: 24px;
+  }
 `;
 
 const StContainerDiv = styled.div`
@@ -205,7 +223,8 @@ const StBtn = styled.button`
   height: 50px;
   background-color: transparent;
   border: none;
-  font-size: 20px;
+  font-size: 12px;
+  color: #d9d3c7;
 `;
 
 const StChatBoxDiv = styled.div`

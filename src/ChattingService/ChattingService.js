@@ -11,13 +11,13 @@ class ChattingService {
   roomId = "";
   // 방 id 받기
 
-  receiveRoomId = (roomId) => {
-    this.roomId = roomId;
-  };
+  constructor(chatRoomId) {
+    this.chatRoomId = chatRoomId;
+  }
 
   // 웹소켓 연결 요청 & 구독 요청
   onConnect = (
-    roomAddress = "/sub/chatrooms/1",
+    roomAddress = `/sub/chatrooms/${this.chatRoomId}`,
     headers = {},
     callback = () => {}
   ) => {
@@ -37,7 +37,7 @@ class ChattingService {
     headers = { Authorization: getCookie("token") }
   ) => {
     this.stompClient.send(
-      "/pub/chatrooms/1",
+      `/pub/chatrooms/${this.chatRoomId}`,
       headers,
       JSON.stringify(messageObject)
     );
