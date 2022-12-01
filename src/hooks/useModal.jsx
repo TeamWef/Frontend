@@ -7,5 +7,5 @@ export function useModal() {
     setModal(!Modal);
   };
 
-  return [Modal, openModal];
+  return [Modal, openModal, setModal];
 }

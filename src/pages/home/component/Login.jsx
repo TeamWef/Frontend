@@ -27,6 +27,7 @@ const Login = () => {
     dispatch(__login({ email: email, password: password }));
     resetEmail();
     resetPW();
+    navigate("/");
   };
 
   const onKakaoLogin = () => {

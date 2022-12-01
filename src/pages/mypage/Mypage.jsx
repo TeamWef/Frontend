@@ -22,7 +22,9 @@ const Mypage = () => {
     <>
       <StDiv onClick={openModal}>
         <Flex fd="row" ai="center">
-          <Span variant="smallBold">{myProfile?.memberName}</Span>
+          <Span variant="smallBold" mg="5px">
+            {myProfile?.memberName}
+          </Span>
           {profileImageUrl === null ? (
             <Img src="/images/userProfile.jpg" />
           ) : (
