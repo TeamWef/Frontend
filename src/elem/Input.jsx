@@ -13,6 +13,7 @@ const StInput = styled.input`
   padding-left: 16px;
   width: ${({ width }) => (width ? width : "")};
 
+
   ${({ variant }) => {
     switch (variant) {
       case "large":

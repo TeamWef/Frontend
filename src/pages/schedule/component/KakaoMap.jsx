@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 const { kakao } = window;
 
-const KakaoMap = ({ searchPlace, setSchedule, schedule, openModal }) => {
+const KakaoMap = ({ searchPlace, setSchedule, schedule, openMap }) => {
   // 검색결과 배열에 담아줌
   const [Places, setPlaces] = useState([]);
 
@@ -110,7 +110,7 @@ const KakaoMap = ({ searchPlace, setSchedule, schedule, openModal }) => {
                       address: item.address_name,
                     },
                   });
-                  openModal();
+                  openMap();
                 }}
               >
                 선택하기

@@ -12,10 +12,8 @@ import { useModal } from "../../../hooks/useModal";
 import EditLanding from "./EditLanding";
 import styled from "styled-components";
 
-
 import { Button, Div, Flex, Margin, Span, Svg } from "../../../elem";
 import GroupTitle from "../../../components/GroupTitle";
-
 
 const SchdeleDetail = ({ scheduleId }) => {
   const scheduleDetail = useSelector((state) => state.schedule?.scheduleDetail);
@@ -88,8 +86,8 @@ const SchdeleDetail = ({ scheduleId }) => {
           </Span>
         </Flex>
         <Flex fd="row">
-          <Button variant="small" onClick={openModal}>
-            수정
+          <Button variant="border-small" onClick={openModal}>
+            수정하기
           </Button>
           <Button
             variant="border-small"
@@ -101,7 +99,15 @@ const SchdeleDetail = ({ scheduleId }) => {
               navigate(`/${partyId}/schedule`);
             }}
           >
-            삭제
+            삭제하기
+          </Button>
+          <Button
+            variant="border-small"
+            onClick={() => {
+              navigate(-1);
+            }}
+          >
+            목록보기
           </Button>
         </Flex>
       </Flex>

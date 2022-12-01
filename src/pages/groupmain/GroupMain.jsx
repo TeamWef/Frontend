@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { Div, Flex, Img, Margin, Span } from "../../elem";
 import { __popularSchedule } from "../../redux/modules/scheduleSlice";
+import { Chat } from "../chat/component/Chat";
 
 const GroupMain = () => {
   const partyId = useParams().partyId;
@@ -18,6 +19,7 @@ const GroupMain = () => {
   return (
     <>
       <Div variant="bodyContainer">
+        <Chat />
         <Margin mg="38px" />
         <Flex>
           <Flex>
