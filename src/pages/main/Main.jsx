@@ -1,4 +1,3 @@
-import React from "react";
 import GroupCard from "./component/GroupCard";
 import MainScheduleCard from "./component/MainScheduleCard";
 

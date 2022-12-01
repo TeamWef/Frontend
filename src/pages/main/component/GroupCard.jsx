@@ -13,7 +13,6 @@ import Svg from "../../../elem/Svg";
 import { Button, Div, Flex, Margin, Span } from "../../../elem";
 import { getCookie } from "../../../redux/modules/customCookies";
 import jwt_decode from "jwt-decode";
-import DropDown from "../../../elem/DropDown";
 import { useInput, useInputs } from "../../../hooks/useInput";
 
 const GroupCard = () => {
@@ -104,16 +103,17 @@ const GroupCard = () => {
                       data.partyId === updateId &&
                       (data.memberEmail === myId ? (
                         <Div variant="dropDown">
-                          <DropDown
+                          <Button
+                            variant="drop-top"
                             onClick={() => {
                               openEditModal();
                               openDropBox();
                             }}
                           >
                             그룹 수정
-                          </DropDown>
-                          <DropDown
-                            variant="bottom"
+                          </Button>
+                          <Button
+                            variant="drop-bottom"
                             onClick={() => {
                               if (window.confirm("정말 삭제하시겠습니까?")) {
                                 dispatch(__delGroup(data?.partyId));
@@ -123,11 +123,11 @@ const GroupCard = () => {
                             }}
                           >
                             그룹 삭제
-                          </DropDown>
+                          </Button>
                         </Div>
                       ) : (
                         <Div variant="dropDown">
-                          <DropDown variant="bottom">그룹 나가기</DropDown>
+                          <Button variant="drop-bottom">그룹 나가기</Button>
                         </Div>
                       ))}
                   </StCardDiv>
