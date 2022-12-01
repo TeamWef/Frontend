@@ -1,19 +1,21 @@
-
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import { Div } from "../../../elem";
+import { Div, Svg } from "../../../elem";
 import { useModal } from "../../../hooks/useModal";
 import ChattingService from "../../../ChattingService/ChattingService";
 import { getCookie } from "../../../redux/modules/customCookies";
 import { useParams } from "react-router-dom";
-
 import { Stomp } from "@stomp/stompjs";
 import sockJS from "sockjs-client";
+import { useSelector } from "react-redux";
 
 const ChattingServiceKit = new ChattingService();
 
 export const Chat = () => {
   const [Chat, openChat] = useModal();
+  const chatId = useSelector(
+    (state) => state.schedule?.popularSchedule.chatRoomId
+  );
 
   const token = getCookie("token");
   const partyId = useParams().partyId;
@@ -24,7 +26,7 @@ export const Chat = () => {
   console.log("chatLog==>", chatLog);
   console.log("receiveMsg===>", receiveMsg);
 
-  // console.log(partyId.partyId);
+  console.log(chatLog);
 
   // message를 키:벨류 형태로 저장해서 key 왼쪽 value 오른쪽 (노랭이)
   // class name=key, value
@@ -43,13 +45,15 @@ export const Chat = () => {
     }
   };
 
-  ChattingServiceKit.onConnect(
-    `/sub/chatrooms/${partyId}`,
-    { Authorization: token },
-    (newMessage) => {
-      setReceiveMsg(newMessage);
-    }
-  );
+  useEffect(() => {
+    ChattingServiceKit.onConnect(
+      `/sub/chatrooms/${partyId}`,
+      { Authorization: token },
+      (newMessage) => {
+        setReceiveMsg(newMessage);
+      }
+    );
+  }, []);
 
   useEffect(() => {
     setChatLog([...chatLog, receiveMsg]);
@@ -58,6 +62,7 @@ export const Chat = () => {
   const submitHandler = (e) => {
     e.preventDefault();
     ChattingServiceKit.sendMessage({
+      chatRoomId: partyId,
       content: message,
       accesstoken: token,
     });
@@ -72,14 +77,20 @@ export const Chat = () => {
 
   return (
     <Div variant="bodyContainer">
-      <StModalDiv onClick={openChat}> 💬 </StModalDiv>
+      <StModalDiv onClick={openChat}>
+        <Svg variant="message" />
+      </StModalDiv>
       {Chat ? (
-        chatLog.length > 1 ? (
+        chatLog?.length > 1 ? (
           <StContainerDiv>
-            {chatLog.map((item, i) => {
-              return (
+            {chatLog?.map((item, i) => {
+              return item?.memberId === 2 ? (
                 <StChatBoxDiv>
                   <StChatDiv key={i}>{item?.content}</StChatDiv>
+                </StChatBoxDiv>
+              ) : (
+                <StChatBoxDiv>
+                  <StUserChatDiv>{item?.content}</StUserChatDiv>
                 </StChatBoxDiv>
               );
             })}
@@ -95,7 +106,9 @@ export const Chat = () => {
                   value={message}
                   onChange={inputMessage}
                 />
-                <StBtn type="submit"> 💌 </StBtn>
+                <StBtn type="submit">
+                  <Svg variant="send" />
+                </StBtn>
               </form>
             </StBottomDiv>
           </StContainerDiv>
@@ -117,7 +130,9 @@ export const Chat = () => {
                   value={message}
                   onChange={inputMessage}
                 />
-                <StBtn type="submit"> 💌 </StBtn>
+                <StBtn type="submit">
+                  <Svg variant="send" />
+                </StBtn>
               </form>
             </StBottomDiv>
           </StContainerDiv>
@@ -141,6 +156,9 @@ const StModalDiv = styled.div`
   border: 3px solid #a4a09c;
   background-color: white;
   cursor: pointer;
+  & Svg {
+    width: 24px;
+  }
 `;
 
 const StContainerDiv = styled.div`
@@ -206,7 +224,12 @@ const StBtn = styled.button`
   height: 50px;
   background-color: transparent;
   border: none;
-  font-size: 20px;
+  font-size: 12px;
+  color: #d9d3c7;
+  & Svg {
+    width: 18px;
+    margin-top: 5px;
+  }
 `;
 
 const StChatBoxDiv = styled.div`
@@ -226,3 +249,13 @@ const StChatDiv = styled.div`
   text-align: center;
 `;
 
+const StUserChatDiv = styled.div`
+  background-color: #fff;
+  margin-right: -20px;
+  padding: 8px 10px;
+  margin-top: 11px;
+  width: max-content;
+  max-width: 50%;
+  border-radius: 15px 15px 15px 0px;
+  text-align: center;
+`;

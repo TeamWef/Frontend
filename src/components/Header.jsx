@@ -5,6 +5,7 @@ import Svg from "../elem/Svg";
 import { deleteCookie } from "../redux/modules/customCookies";
 import { Flex, Margin } from "../elem";
 import Notice from "../pages/notice/Notice";
+import { Invite } from "../pages/invite/Invite";
 
 export const Header = () => {
   const navigate = useNavigate();
@@ -57,7 +58,7 @@ export const Header = () => {
               </>
             )}
             <Margin mg="5px" />
-            <Svg variant="invite" />
+            <Invite />
             <Notice />
             <MenuBtn onClick={logoutHandler}>Logout</MenuBtn>
             <Margin mg="5px" />

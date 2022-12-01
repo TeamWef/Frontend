@@ -1,4 +1,3 @@
-
 import sockJS from "sockjs-client";
 import { Stomp } from "@stomp/stompjs";
 import { getCookie } from "../redux/modules/customCookies";
@@ -12,13 +11,27 @@ class ChattingService {
   roomId = "";
   // 방 id 받기
 
-  receiveRoomId = (roomId) => {
-    this.roomId = roomId;
-  };
+  constructor(chatRoomId) {
+    this.chatRoomId = chatRoomId;
+  }
+
+  // async connect(roomId) {
+  //   try {
+  //     await onConnect(
+  //       `/sub/chatrooms/${roomId}`,
+  //       { Authorization: token },
+  //       (newMessage) => {
+  //         setReceiveMsg(newMessage);
+  //       }
+  //     );
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
+  // }
 
   // 웹소켓 연결 요청 & 구독 요청
   onConnect = (
-    roomAddress = "/sub/chatrooms/1",
+    roomAddress = `/sub/chatrooms/${this.chatRoomId}`,
     headers = {},
     callback = () => {}
   ) => {
@@ -30,6 +43,7 @@ class ChattingService {
         callback(newMessage);
       });
     });
+    console.log("1");
     return newMessage;
   };
 
@@ -38,7 +52,7 @@ class ChattingService {
     headers = { Authorization: getCookie("token") }
   ) => {
     this.stompClient.send(
-      "/pub/chatrooms/1",
+      `/pub/chatrooms/${messageObject.chatRoomId}`,
       headers,
       JSON.stringify(messageObject)
     );
@@ -54,4 +68,3 @@ class ChattingService {
 }
 
 export default ChattingService;
-

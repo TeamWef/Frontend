@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { Div, Flex, Span, Svg } from "../../../elem";
+import { Div, Flex, Span, Svg, Input } from "../../../elem";
 import { useModal } from "../../../hooks/useModal";
 import { __addSchedule } from "../../../redux/modules/scheduleSlice";
 import GroupTitle from "../../../components/GroupTitle";
@@ -28,11 +28,8 @@ const ScheduleCreate = () => {
     place: { placeName: "", address: "" },
   });
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setPlace(InputText);
-    setInputText("");
-  };
+  console.log(schedule);
+
   const onChange = (e) => {
     setInputText(e.target.value);
   };
@@ -121,19 +118,37 @@ const ScheduleCreate = () => {
             <Flex fd="row" ai="center" jc="left" margin="20px 0px 0px 0px">
               <Svg variant="location" />
               <StSearchDiv>
-                {schedule.place ? (
-                  <>
+                {schedule?.place ? (
+                  <Flex>
+                    <StKakaoDiv>
+                      <input
+                        placeholder="Address"
+                        onChange={onChange}
+                        value={InputText}
+                      />
+                      <StBtn
+                        type="button"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setPlace(InputText);
+                          setInputText("");
+                          openMap();
+                        }}
+                      >
+                        ⏐ 장소 찾기
+                      </StBtn>
+                    </StKakaoDiv>
+                  </Flex>
+                ) : (
+                  <StBgDiv>
                     <Span variant="smallBronze" asf="center">
-                      {schedule.place.placeName}
+                      {schedule.place?.placeName}
                     </Span>
                     <Span variant="other" asf="center" mg="0px 0px 0px 5px">
-                      {schedule.place.address}
+                      {schedule.place?.address}
                     </Span>
-                  </>
-                ) : null}
-                <button type="button" onClick={openMap}>
-                  ⏐ 장소 찾기
-                </button>
+                  </StBgDiv>
+                )}
               </StSearchDiv>
             </Flex>
           </Flex>
@@ -142,23 +157,14 @@ const ScheduleCreate = () => {
 
       <Flex>
         {map && (
-          <div>
-            <form className="inputForm" onSubmit={handleSubmit}>
-              <input
-                placeholder="검색어를 입력하세요"
-                onChange={onChange}
-                value={InputText}
-                required
-              />
-              <button type="submit">검색</button>
-            </form>
+          <>
             <KakaoMap
               searchPlace={Place}
               setSchedule={setSchedule}
               schedule={schedule}
               openMap={openMap}
             />
-          </div>
+          </>
         )}
       </Flex>
     </Div>
@@ -213,12 +219,30 @@ const StSearchDiv = styled.div`
   border: none;
   padding: 10px;
   display: flex;
-  & button {
-    position: absolute;
-    right: 30px;
-    top: 597px;
-    background-color: transparent;
+`;
+
+const StBtn = styled.button`
+  position: absolute;
+  right: 10px;
+  width: 100px;
+  background-color: transparent;
+  border: none;
+  color: #a4a19d;
+`;
+
+const StKakaoDiv = styled.div`
+  display: flex;
+  align-items: center;
+  & input {
+    width: 230px;
     border: none;
-    color: #a4a19d;
   }
+  & button {
+    cursor: pointer;
+  }
+`;
+
+const StBgDiv = styled.div`
+  width: 150px;
+  background-color: white;
 `;

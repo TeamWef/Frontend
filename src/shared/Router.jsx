@@ -10,7 +10,6 @@ import Notice from "../pages/notice/Notice";
 import GroupMain from "../pages/groupmain/GroupMain";
 import ScheduleCreate from "../pages/schedule/component/ScheduleCreate";
 import ScheduleMain from "../pages/schedule/ScheduleMain";
-import { Chat } from "../pages/chat/component/Chat";
 
 const Page = () => {
   return (
@@ -27,7 +26,6 @@ const Page = () => {
             path="/:partyId/scheduledetail/:scheduleId"
             element={<ScheduleDetail />}
           />
-          <Route path=":partyId/chat" element={<Chat />} />
         </Route>
         <Route path="/signup" element={<SignUp />} />
         <Route path="/members/kakao/callback" element={<Kakao />} />
