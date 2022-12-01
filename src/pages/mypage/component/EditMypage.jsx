@@ -36,7 +36,7 @@ const EditMypage = ({ myProfile, openModal }) => {
   };
 
   return (
-    <Div variant="profileEdit">
+    <Div variant="headerModal" width="290px" height="320px">
       <Flex>
         <Flex fd="row" jc="space-between">
           <Span variant="bigBronze">Profile</Span>
@@ -48,15 +48,17 @@ const EditMypage = ({ myProfile, openModal }) => {
             }}
           />
         </Flex>
-        <Margin mg="15px" />
         {profileImageUrl === null && uploadImg === null ? (
-          <UploadForm
+          <Div
+            variant="null"
+            width="224px"
+            height="144px"
             onClick={() => {
               imgInput.current.click();
             }}
           >
-            <ErrorImg src="/images/imgError.jpg" />
-          </UploadForm>
+            <StUserImg src="/images/userProfile.jpg" />
+          </Div>
         ) : (
           <StDiv
             onClick={() => {
@@ -66,7 +68,7 @@ const EditMypage = ({ myProfile, openModal }) => {
             {uploadImg ? (
               <StImg src={previewImage} alt="preview" />
             ) : (
-              <StImg src={profileImageUrl} alt="p" />
+              <StImg src={profileImageUrl} alt="img" />
             )}
           </StDiv>
         )}
@@ -105,21 +107,8 @@ const StImg = styled.img`
   cursor: pointer;
 `;
 
-const UploadForm = styled.div`
+const StUserImg = styled.img`
   display: flex;
-  width: 224px;
-  height: 144px;
-  margin: 0 auto;
-  border: 2px dashed #d9d3c7;
-  border-radius: 5px;
-  position: relative;
-`;
-
-const ErrorImg = styled.img`
-  width: 38px;
-  height: 38px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  width: 50px;
+  height: 50px;
 `;

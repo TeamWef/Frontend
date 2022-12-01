@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import KakaoMap from "./KakaoMap";
 import { useModal } from "../../../hooks/useModal";
+import { Button, Flex, Input, Svg } from "../../../elem";
+import styled from "styled-components";
 
 function LandingKakao({ albumPlace, setAlbumPlace }) {
   const [InputText, setInputText] = useState("");
@@ -13,34 +15,43 @@ function LandingKakao({ albumPlace, setAlbumPlace }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!InputText) {
+      return alert("장소를 입력해주세요");
+    }
     setPlace(InputText);
     setInputText("");
   };
 
   return (
     <>
-      <button onClick={openModal}>장소 검색하기</button>{" "}
-      {modal && (
-        <div>
-          <button onClick={openModal}>닫기</button>
-          <form className="inputForm" onSubmit={handleSubmit}>
-            <input
-              placeholder="검색어를 입력하세요"
-              onChange={onChange}
-              value={InputText}
-            />
-            <button type="submit">검색</button>
-          </form>
-          <KakaoMap
-            searchPlace={Place}
-            albumPlace={albumPlace}
-            setAlbumPlace={setAlbumPlace}
-            openModal={openModal}
-          />
-        </div>
-      )}
+      <StForm className="inputForm" onSubmit={handleSubmit}>
+        <Input
+          variant="medium"
+          width="400px"
+          placeholder="Address"
+          onChange={onChange}
+          value={InputText}
+        />
+        <button variant="small" type="submit">
+          검색
+        </button>
+      </StForm>
+      <Flex>
+        <KakaoMap
+          searchPlace={Place}
+          albumPlace={albumPlace}
+          setAlbumPlace={setAlbumPlace}
+          openModal={openModal}
+        />
+      </Flex>
     </>
   );
 }
 
 export default LandingKakao;
+
+const StForm = styled.form`
+  display: flex;
+  align-items: center;
+  /* justify-content: center; */
+`;

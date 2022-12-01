@@ -12,6 +12,7 @@ const StSpan = styled.span`
   align-self: ${({ asf }) => (asf ? asf : "")};
   color: ${({ color }) => (color ? color : "")};
   font-weight: ${({ fw }) => (fw ? fw : "")};
+  border-bottom: ${({ bb }) => (bb ? bb : "")};
 
   ${({ variant }) => {
     switch (variant) {
@@ -36,6 +37,12 @@ const StSpan = styled.span`
         return css`
           font-size: 14px;
           color: #a4a19d;
+        `;
+      case "mediumBronzeBold":
+        return css`
+          font-size: 16px;
+          color: #a4a19d;
+          font-weight: 700;
         `;
       case "mediumBronze":
         return css`

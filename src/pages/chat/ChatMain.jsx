@@ -1,11 +1,11 @@
-import { Chat } from "./component/Chat";
+// import { Chat } from "./component/Chat";
 
-const ChatMain = () => {
-  return (
-    <div>
-      <Chat />
-    </div>
-  );
-};
+// const ChatMain = () => {
+//   return (
+//     <div>
+//       <Chat />
+//     </div>
+//   );
+// };
 
-export default ChatMain;
+// export default ChatMain;
