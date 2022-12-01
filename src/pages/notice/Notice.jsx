@@ -20,9 +20,7 @@ const Notice = () => {
   const [modal, openModal, setModal] = useModal();
   const [newNoti, setNewNoti] = useState(0);
 
-  const deleteHandler = (id) => {};
-
-  console.log(noticeList);
+  // console.log(noticeList);
   const ref = useRef(null);
   const EventSource = EventSourcePolyfill || NativeEventSource;
   const token = getCookie("token");
