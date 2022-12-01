@@ -2,7 +2,16 @@ import React, { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import GroupTitle from "../../../components/GroupTitle";
-import { Button, Div, Flex, Input, Margin, Span, Svg } from "../../../elem";
+import {
+  Button,
+  Div,
+  Flex,
+  Img,
+  Input,
+  Margin,
+  Span,
+  Svg,
+} from "../../../elem";
 import { useInput, useInputs } from "../../../hooks/useInput";
 import { __addAlbumItem } from "../../../redux/modules/albumSlice";
 import LandingKakao from "./LandingKakao";
@@ -70,14 +79,12 @@ const AlbumCreate = ({ openCreateModal, partyId }) => {
       </Flex>
       <Margin mg="30px" />
       <Flex fd="row">
-        <Div variant="albumBox" bc="#fff" pd="25px">
-          {uploadImg ? (
-            <StDashDiv
-              style={{
-                backgroundImage: `url(${previewImage})`,
-              }}
-            />
-          ) : (
+        {uploadImg ? (
+          <Div variant="albumBox">
+            <Img variant="album" src={previewImage} alt="img" />
+          </Div>
+        ) : (
+          <Div variant="albumBox" bc="#fff" pd="25px">
             <StDashDiv
               onClick={() => {
                 imgInput.current.click();
@@ -92,8 +99,9 @@ const AlbumCreate = ({ openCreateModal, partyId }) => {
               />
               <Span variant="mediumBronze">이미지 가져오기</Span>
             </StDashDiv>
-          )}
-        </Div>
+          </Div>
+        )}
+
         <Div variant="albumBox" jc="flex-start" fd="column">
           <Flex fd="row" jc="center" ai="center">
             <Svg variant="location" />

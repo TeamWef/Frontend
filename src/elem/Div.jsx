@@ -7,8 +7,8 @@ export default Div;
 
 const StDiv = styled.div`
   display: flex;
-  align-items: center;
   justify-content: ${({ jc }) => (jc ? jc : "center")};
+  align-items: ${({ ai }) => (ai ? ai : "center")};
   width: ${({ width }) => (width ? width : "")};
   height: ${({ height }) => (height ? height : "")};
   flex-direction: ${({ fd }) => (fd ? fd : "")};
@@ -16,6 +16,7 @@ const StDiv = styled.div`
   border-radius: ${({ br }) => (br ? br : "5px")};
   margin: ${({ mg }) => (mg ? mg : "")};
   padding: ${({ pd }) => (pd ? pd : "")};
+  overflow: ${({ ovf }) => (ovf ? ovf : "")};
 
   ${({ variant }) => {
     switch (variant) {
@@ -36,6 +37,8 @@ const StDiv = styled.div`
           right: 0px;
           box-shadow: 2px 1px 5px 1px #bebebe;
           z-index: 8;
+          height: auto;
+          min-height: 320px;
         `;
       case "background":
         return css`
@@ -64,15 +67,6 @@ const StDiv = styled.div`
           transform: translate(-50%, 0);
           width: 1100px;
           height: auto;
-        `;
-      case "nullBox":
-        return css`
-          flex-direction: column;
-          width: 1070px;
-          height: 227px;
-          border: 2px dashed #d9d3c7;
-          border-radius: 10px;
-          margin-top: 40px;
         `;
       case "dropDown":
         return css`
@@ -115,6 +109,13 @@ const StDiv = styled.div`
             width: 0;
             height: auto;
           }
+        `;
+      case "null":
+        return css`
+          flex-direction: column;
+          border: 2px dashed #d9d3c7;
+          border-radius: 10px;
+          margin-top: 30px;
         `;
       default:
         break;

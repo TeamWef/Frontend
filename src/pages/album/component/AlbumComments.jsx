@@ -58,7 +58,7 @@ const AlbumComments = ({ id, commentList, myId }) => {
       </StAddComment>
       <br />
       <Flex>
-        <Div variant="scroll-y" width="470px" height="179px">
+        <Div variant="scroll-y" width="470px" height="165px">
           {commentList?.map((comment) => {
             return (
               <StComment key={comment.id}>

@@ -11,6 +11,7 @@ export const Header = () => {
   const param = useParams();
 
   const goHome = () => {
+    localStorage.clear();
     navigate("/");
   };
 

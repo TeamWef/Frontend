@@ -135,7 +135,7 @@ const GroupCard = () => {
               })}
             </StContainerDiv>
           ) : (
-            <Div variant="nullBox">
+            <Div variant="null" width="1070px" height="227px">
               <Flex>
                 <Span variant="bigBronze" asf="center">
                   현재 그룹이 없습니다.

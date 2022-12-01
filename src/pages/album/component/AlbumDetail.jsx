@@ -103,7 +103,7 @@ const AlbumDetail = () => {
       <Margin />
       <Flex fd="row">
         <Div variant="albumBox">
-          <StImg src={imageUrl} alt="img" />
+          <Img variant="album" src={imageUrl} alt="img" obf="contain" />
         </Div>
         <Div variant="albumBox" fd="column">
           <Flex jc="space-between">
@@ -153,15 +153,3 @@ const AlbumDetail = () => {
 };
 
 export default AlbumDetail;
-
-const StImg = styled.img`
-  width: 100%;
-  object-fit: cover;
-  border-radius: 5px;
-`;
-
-const StContent = styled.div`
-  width: 400px;
-  height: 200px;
-  display: flex;
-`;
