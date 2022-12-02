@@ -11,7 +11,7 @@ export const __getInviteCode = createAsyncThunk(
   "get/getInvite",
   async (payload, thunkAPI) => {
     try {
-      const res = await inviteApis.getInviteCode();
+      const res = await inviteApis.getInviteCode(payload);
       return thunkAPI.fulfillWithValue(res.data);
     } catch (err) {
       console.log(err);
@@ -24,8 +24,9 @@ export const __postInvite = createAsyncThunk(
   "post/addInvite",
   async (payload, thunkAPI) => {
     try {
+      console.log(payload);
       const res = await inviteApis.addInvite(payload);
-      return thunkAPI.fulfillWithValue(res.data);
+      return thunkAPI.fulfillWithValue(res);
     } catch (err) {
       return thunkAPI.rejectWithValue(err);
     }
@@ -45,19 +46,6 @@ export const inviteSlice = createSlice({
       state.invite = action.payload;
     },
     [__getInviteCode.rejected]: (state, action) => {
-      state.isLoading = false;
-      state.error = action.payload;
-    },
-
-    [__postInvite.pending]: (state) => {
-      state.isLoading = true;
-    },
-    [__postInvite.fulfilled]: (state, action) => {
-      state.isLoading = false;
-      console.log("action??", action);
-      state.group.push(action.payload);
-    },
-    [__postInvite.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
     },
