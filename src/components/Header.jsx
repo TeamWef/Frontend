@@ -19,9 +19,8 @@ export const Header = () => {
   const logoutHandler = () => {
     deleteCookie("token");
     deleteCookie("refresh-token");
-    alert("로그아웃 되었습니다.");
     localStorage.clear();
-    window.location.reload();
+    alert("로그아웃 되었습니다.");
     navigate("/");
   };
   // console.log(param);
@@ -60,7 +59,14 @@ export const Header = () => {
             <Margin mg="5px" />
             <Invite />
             <Notice />
-            <MenuBtn onClick={logoutHandler}>Logout</MenuBtn>
+            <MenuBtn
+              onClick={() => {
+                logoutHandler();
+                window.location.reload();
+              }}
+            >
+              Logout
+            </MenuBtn>
             <Margin mg="5px" />
             <UserInfo>
               <Mypage />

@@ -20,7 +20,7 @@ const Notice = () => {
   const [modal, openModal, setModal] = useModal();
   const [newNoti, setNewNoti] = useState(0);
 
-  // console.log(noticeList);
+  console.log(noticeList);
   const ref = useRef(null);
   const EventSource = EventSourcePolyfill || NativeEventSource;
   const token = getCookie("token");
@@ -72,6 +72,12 @@ const Notice = () => {
   //     };
   //   }
   // }, [token]);
+
+  const notiNavi = (url, partyName) => {
+    navigate(`/${url}`);
+    localStorage.setItem("Group", partyName);
+    openModal();
+  };
 
   const clickOutSide = (e) => {
     if (modal && !ref.current.contains(e.target)) {
@@ -125,25 +131,35 @@ const Notice = () => {
                         <Flex fd="row">
                           <Flex>
                             <StTitleDiv>{notice.partyName}</StTitleDiv>
-                            {notice.title ? (
+                            {notice.alarmType === "schedule" ? (
                               <Flex fd="row">
-                                <span>
+                                <StSpanWrap
+                                  onClick={() => {
+                                    notiNavi(notice.url, notice.partyName);
+                                    dispatch(__readNotice(notice.id));
+                                  }}
+                                >
                                   회원님이 작성한
                                   <StSpan>{notice.title}</StSpan>
                                   일정에
                                   <StSpan>{notice.writer}</StSpan>
                                   님이 참가하였습니다.
-                                </span>
+                                </StSpanWrap>
                                 <Margin mg="10px" />
                               </Flex>
                             ) : (
                               <Flex>
                                 <Flex fd="row">
-                                  <span>
+                                  <StSpanWrap
+                                    onClick={() => {
+                                      notiNavi(notice.url, notice.partyName);
+                                      dispatch(__readNotice(notice.id));
+                                    }}
+                                  >
                                     회원님이 작성한 앨범에
                                     <StSpan>{notice.writer}</StSpan>
                                     님이 댓글을 달았습니다.
-                                  </span>
+                                  </StSpanWrap>
                                   <Margin mg="10px" />
                                 </Flex>
                                 <StCommentDiv>
@@ -152,26 +168,14 @@ const Notice = () => {
                                   ) : (
                                     <Img src="/images/userProfile.jpg" />
                                   )}
-                                  <Span variant="smallBronze" fw="700" mg="5px">
+                                  <StContentSpan mWidth="55px" fw="700">
                                     {notice.writer}
-                                  </Span>
+                                  </StContentSpan>
                                   <Vertical />
-                                  <Div width="150px" jc="flex-start">
-                                    <StContentSpan>
-                                      {notice.content}
-                                    </StContentSpan>
-                                    <Svg
-                                      variant="editDelete"
-                                      onClick={() => {
-                                        navigate(`/${notice.url}`);
-                                        localStorage.setItem(
-                                          "Group",
-                                          notice.partyName
-                                        );
-                                        openModal();
-                                      }}
-                                    />
-                                  </Div>
+                                  <StContentSpan width="145px">
+                                    {notice.content}
+                                  </StContentSpan>
+                                  {/* <Svg variant="editDelete" /> */}
                                 </StCommentDiv>
                               </Flex>
                             )}
@@ -262,6 +266,7 @@ const StCommentDiv = styled.div`
   display: flex;
   align-items: center;
   width: 100%;
+  max-width: 260px;
   height: 40px;
   background-color: #ede8e1;
   border-radius: 5px;
@@ -272,19 +277,30 @@ const StCommentDiv = styled.div`
 const Vertical = styled.div`
   width: 5px;
   height: 22px;
-  margin: 5px;
+  margin-left: 5px;
   border-left: 1px solid #d9d3c7;
 `;
 
 const StContentSpan = styled.span`
   display: flex;
-  flex-wrap: nowrap;
   align-items: center;
   font-size: 14px;
   color: #a4a19d;
-  width: 120px;
+  font-weight: ${(props) => props.fw};
+  width: ${(props) => props.width};
+  max-width: ${(props) => props.mWidth};
   height: 35px;
   white-space: nowrap;
   overflow: hidden;
-  margin-right: 10px;
+  margin: 0 5px;
+`;
+
+const StSpanWrap = styled.span`
+  cursor: pointer;
+  :hover {
+    color: #a4a19d;
+    & span {
+      color: #a4a19d;
+    }
+  }
 `;
