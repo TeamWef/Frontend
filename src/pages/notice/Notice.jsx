@@ -14,6 +14,7 @@ import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { useModal } from "../../hooks/useModal";
 import { useNavigate } from "react-router-dom";
+import { ServerUrl } from "../../server";
 
 const Notice = () => {
   const dispatch = useDispatch();
@@ -29,7 +30,7 @@ const Notice = () => {
 
   useEffect(() => {
     if (token) {
-      const sse = new EventSource("http://43.201.55.218:8080/subscriptions", {
+      const sse = new EventSource(`${ServerUrl}/subscriptions`, {
         headers: {
           Authorization: `${token}`,
         },

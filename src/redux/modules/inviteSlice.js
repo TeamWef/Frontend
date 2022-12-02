@@ -24,7 +24,8 @@ export const __postInvite = createAsyncThunk(
   "post/addInvite",
   async (payload, thunkAPI) => {
     try {
-      console.log(payload);
+      const type = typeof payload;
+      console.log(type);
       const res = await inviteApis.addInvite(payload);
       return thunkAPI.fulfillWithValue(res);
     } catch (err) {

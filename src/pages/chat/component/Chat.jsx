@@ -15,9 +15,6 @@ export const Chat = () => {
   const chatId = useSelector(
     (state) => state.schedule?.popularSchedule.chatRoomId
   );
-
-  // const ChattingServiceKit = new ChattingService();
-
   const token = getCookie("token");
   const partyId = useParams().partyId;
   const [chatLog, setChatLog] = useState([]);
@@ -54,43 +51,37 @@ export const Chat = () => {
         stompClient.current.subscribe(
           `/sub/chatrooms/${partyId}`,
           (response) => {
+            console.log("::::", response);
             const newMessage = JSON.parse(response.body);
-            console.log(":::", newMessage);
-          }
+          },
+          { Authorization: token }
         );
+        // stompClient.current.send(
+        //   `/pub/chatrooms/${partyId}`,
+        //   { token },
+        //   JSON.stringify({ content: message, token: token })
+        // );
       }
-      // { Authorization: token }
     );
-    // stompClient.current.send(
-    //   `/pub/chatrooms`,
-    //   {},
-    //   JSON.stringify({
-    //     chatRoomId: partyId,
-    //     content: message,
-    //     accesstoken: token,
-    //   })
-    // );
   };
 
   const sendMessage = (e) => {
     e.preventDefault();
     const message = e.target.chat.value;
-
     if (message === "") return false;
 
     const messageObj = {
-      chatRoomId: partyId,
       content: message,
-      accesstoken: token,
+      token: token,
     };
 
     stompClient.current.send(
       `/pub/chatrooms/${partyId}`,
-      { Authorization: `Bearer ${sessionStorage.getItem("authorization")}` },
+      {},
       JSON.stringify(messageObj)
     );
-
-    e.target.chat.value = [];
+    setMessage("");
+    // e.target.chat.value = [];
   };
 
   const socketDisconnect = () => {
@@ -111,44 +102,18 @@ export const Chat = () => {
     };
   }, []);
 
-  // useEffect(() => {
-  //   ChattingServiceKit.onConnect(
-  //     `/sub/chatrooms/${partyId}`,
-  //     { Authorization: token },
-  //     (newMessage) => {
-  //       setReceiveMsg(newMessage);
-  //     }
+  // const submitHandler = (e) => {
+  //   e.preventDefault();
+  //   stompClient.current.send(
+  //     `/pub/chatrooms/${partyId}`,
+  //     {},
+  //     JSON.stringify({
+  //       content: message,
+  //       token: token,
+  //     })
   //   );
-  // }, []);
-
-  // useEffect(() => {
-  //   setChatLog([...chatLog, receiveMsg]);
-  // }, [setChatLog, receiveMsg]);
-
-  const submitHandler = (e) => {
-    e.preventDefault();
-    // ChattingServiceKit.sendMessage({
-    //   chatRoomId: partyId,
-    //   content: message,
-    //   accesstoken: token,
-    // });
-    stompClient.current.send(
-      `/pub/chatrooms/${partyId}`,
-      {},
-      JSON.stringify({
-        chatRoomId: partyId,
-        content: message,
-        accesstoken: token,
-      })
-    );
-    setMessage("");
-  };
-
-  // useEffect(() => {
-  //   return () => {
-  //     ChattingServiceKit.onDisconnect();
-  //   };
-  // }, []);
+  //   setMessage("");
+  // };
 
   return (
     <Div variant="bodyContainer">
@@ -171,7 +136,7 @@ export const Chat = () => {
             })}
 
             <StBottomDiv>
-              <form onSubmit={submitHandler}>
+              <form onSubmit={sendMessage}>
                 <StInput
                   name="chat"
                   autoComplete="off"
@@ -195,7 +160,7 @@ export const Chat = () => {
             </StBoxDiv>
             <span>메시지를 주고 받으세요!</span>
             <StBottomDiv>
-              <form onSubmit={submitHandler}>
+              <form onSubmit={sendMessage}>
                 <StInput
                   name="chat"
                   autoComplete="off"
