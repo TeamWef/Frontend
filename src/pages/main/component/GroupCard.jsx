@@ -20,7 +20,6 @@ const GroupCard = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const groups = useSelector((state) => state.group?.group);
-  console.log(groups);
   const [createModal, openCreateModal] = useModal();
   const [editModal, openEditModal] = useModal();
   const [dropBox, openDropBox] = useModal();

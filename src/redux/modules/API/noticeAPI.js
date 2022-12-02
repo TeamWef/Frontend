@@ -7,4 +7,5 @@ export const noticeApis = {
   deleteNoticeAll: async () => await instance.delete("/notifications"),
   deleteNotice: async (payload) =>
     await instance.delete(`/notifications/${payload}`),
+  newNotice: async () => await instance.get("/notifications/count"),
 };
