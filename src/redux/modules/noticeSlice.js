@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { noticeApis } from "./API/noticeAPI";
 
 const initialState = {
-  newList: [],
+  newNoti: "",
   noticeList: [],
 };
 
