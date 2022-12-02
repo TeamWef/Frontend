@@ -9,29 +9,24 @@ import { Stomp } from "@stomp/stompjs";
 import sockJS from "sockjs-client";
 import { useSelector } from "react-redux";
 
-const ChattingServiceKit = new ChattingService();
-
 export const Chat = () => {
   const [Chat, openChat] = useModal();
+
   const chatId = useSelector(
     (state) => state.schedule?.popularSchedule.chatRoomId
   );
 
+  const ChattingServiceKit = new ChattingService();
+
   const token = getCookie("token");
   const partyId = useParams().partyId;
-
   const [chatLog, setChatLog] = useState([]);
   const [receiveMsg, setReceiveMsg] = useState();
 
-  console.log("chatLog==>", chatLog);
-  console.log("receiveMsg===>", receiveMsg);
-
-  console.log(chatLog);
-
   // message를 키:벨류 형태로 저장해서 key 왼쪽 value 오른쪽 (노랭이)
   // class name=key, value
-
   // Message User & Content
+
   const [message, setMessage] = useState("");
 
   const inputMessage = (e) => {

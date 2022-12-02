@@ -1,11 +1,11 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { __updateMypage } from "../../../redux/modules/mypageSlice";
 import { useModal } from "../../../hooks/useModal";
 import { Div, Span, Flex, Button, Margin, Svg } from "../../../elem";
 
-const EditMypage = ({ myProfile, openModal }) => {
+const EditMypage = ({ myProfile, modal, openModal, setModal }) => {
   const dispatch = useDispatch();
   const { memberName, profileImageUrl } = myProfile;
 
@@ -13,6 +13,13 @@ const EditMypage = ({ myProfile, openModal }) => {
   const [uploadImg, setUploadImg] = useState(null);
   const [previewImage, setPreviewImage] = useState(null);
   const imgInput = useRef();
+  const ref = useRef(null);
+
+  const clickOutSide = (e) => {
+    if (modal && !ref.current.contains(e.target)) {
+      setModal(false);
+    }
+  };
 
   const onChangeImg = (e) => {
     setUploadImg(e.target.files[0]);
@@ -35,56 +42,65 @@ const EditMypage = ({ myProfile, openModal }) => {
     setUploadImg("");
   };
 
+  useEffect(() => {
+    if (modal) document.addEventListener("mousedown", clickOutSide);
+    return () => {
+      document.removeEventListener("mousedown", clickOutSide);
+    };
+  });
+
   return (
-    <Div variant="headerModal" width="290px" height="320px">
-      <Flex>
-        <Flex fd="row" jc="space-between">
-          <Span variant="bigBronze">Profile</Span>
-          <Svg
-            variant="close"
-            onClick={() => {
-              openModal();
-              setUploadImg("");
-            }}
+    <div ref={ref}>
+      <Div variant="headerModal" width="290px" height="320px">
+        <Flex>
+          <Flex fd="row" jc="space-between">
+            <Span variant="bigBronze">Profile</Span>
+            <Svg
+              variant="close"
+              onClick={() => {
+                openModal();
+                setUploadImg("");
+              }}
+            />
+          </Flex>
+          {profileImageUrl === null && uploadImg === null ? (
+            <Div
+              variant="null"
+              width="224px"
+              height="144px"
+              onClick={() => {
+                imgInput.current.click();
+              }}
+            >
+              <StUserImg src="/images/userProfile.jpg" />
+            </Div>
+          ) : (
+            <StDiv
+              onClick={() => {
+                imgInput.current.click();
+              }}
+            >
+              {uploadImg ? (
+                <StImg src={previewImage} alt="preview" />
+              ) : (
+                <StImg src={profileImageUrl} alt="img" />
+              )}
+            </StDiv>
+          )}
+          <Margin mg="15px" />
+          <input
+            name="ImageUrl"
+            style={{ display: "none" }}
+            ref={imgInput}
+            type="file"
+            onChange={onChangeImg}
           />
+          <Button variant="medium" onClick={uploadHandler}>
+            Apply
+          </Button>
         </Flex>
-        {profileImageUrl === null && uploadImg === null ? (
-          <Div
-            variant="null"
-            width="224px"
-            height="144px"
-            onClick={() => {
-              imgInput.current.click();
-            }}
-          >
-            <StUserImg src="/images/userProfile.jpg" />
-          </Div>
-        ) : (
-          <StDiv
-            onClick={() => {
-              imgInput.current.click();
-            }}
-          >
-            {uploadImg ? (
-              <StImg src={previewImage} alt="preview" />
-            ) : (
-              <StImg src={profileImageUrl} alt="img" />
-            )}
-          </StDiv>
-        )}
-        <Margin mg="15px" />
-        <input
-          name="ImageUrl"
-          style={{ display: "none" }}
-          ref={imgInput}
-          type="file"
-          onChange={onChangeImg}
-        />
-        <Button variant="medium" onClick={uploadHandler}>
-          Apply
-        </Button>
-      </Flex>
-    </Div>
+      </Div>
+    </div>
   );
 };
 

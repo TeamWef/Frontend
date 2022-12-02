@@ -1,5 +1,4 @@
 // 작성 페이지
-
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
@@ -118,7 +117,27 @@ const ScheduleCreate = () => {
             <Flex fd="row" ai="center" jc="left" margin="20px 0px 0px 0px">
               <Svg variant="location" />
               <StSearchDiv>
-                {schedule?.place ? (
+                {schedule?.place.address !== "" ? (
+                  <StBgDiv>
+                    <Span variant="smallBronze">
+                      {schedule.place?.placeName}
+                    </Span>
+                    <Span variant="other" asf="center" mg="0px 0px 0px 5px">
+                      {schedule.place?.address}
+                    </Span>
+                    <StBtn
+                      type="button"
+                      onClick={() => {
+                        setSchedule({
+                          ...schedule,
+                          place: { placeName: "", address: "" },
+                        });
+                      }}
+                    >
+                      ⏐ 다시 찾기
+                    </StBtn>
+                  </StBgDiv>
+                ) : (
                   <Flex>
                     <StKakaoDiv>
                       <input
@@ -139,15 +158,6 @@ const ScheduleCreate = () => {
                       </StBtn>
                     </StKakaoDiv>
                   </Flex>
-                ) : (
-                  <StBgDiv>
-                    <Span variant="smallBronze" asf="center">
-                      {schedule.place?.placeName}
-                    </Span>
-                    <Span variant="other" asf="center" mg="0px 0px 0px 5px">
-                      {schedule.place?.address}
-                    </Span>
-                  </StBgDiv>
                 )}
               </StSearchDiv>
             </Flex>
@@ -243,6 +253,6 @@ const StKakaoDiv = styled.div`
 `;
 
 const StBgDiv = styled.div`
-  width: 150px;
+  display: flex;
   background-color: white;
 `;

@@ -11,8 +11,7 @@ const Mypage = () => {
   const myProfile = useSelector((state) => state.mypage.myProfile);
   const { memberName, profileImageUrl } = myProfile;
 
-  // 마이페이지 창 띄우기
-  const [modal, openModal] = useModal();
+  const [modal, openModal, setModal] = useModal();
 
   useEffect(() => {
     dispatch(__getMypage());
@@ -32,7 +31,14 @@ const Mypage = () => {
           )}
         </Flex>
       </StDiv>
-      {modal && <EditMypage myProfile={myProfile} openModal={openModal} />}
+      {modal && (
+        <EditMypage
+          myProfile={myProfile}
+          modal={modal}
+          openModal={openModal}
+          setModal={setModal}
+        />
+      )}
     </>
   );
 };
