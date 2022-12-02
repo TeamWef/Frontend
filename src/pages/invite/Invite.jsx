@@ -33,11 +33,11 @@ export const Invite = () => {
   };
 
   useEffect(() => {
-    if (invite) window.addEventListener("click", handleCloseModal);
+    if (invite) document.addEventListener("mousedown", handleCloseModal);
     return () => {
-      window.removeEventListener("click", handleCloseModal);
+      document.removeEventListener("mousedown", handleCloseModal);
     };
-  }, []);
+  });
 
   const postCodeHandler = () => {
     dispatch(__postInvite(code));
