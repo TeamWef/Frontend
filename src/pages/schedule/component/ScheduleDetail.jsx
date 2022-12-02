@@ -81,7 +81,7 @@ const SchdeleDetail = ({ scheduleId }) => {
             {scheduleDetail?.title}
           </Span>
           {scheduleDetail?.profileImageUrl === null ? (
-            <Img width="20px" height="20px" src="/images/userProfile.jpg" />
+            <Svg variant="profile" />
           ) : (
             <StImg src={scheduleDetail?.profileImageUrl} alt="프로필" />
           )}
@@ -182,11 +182,9 @@ const SchdeleDetail = ({ scheduleId }) => {
             <Flex fd="row" ai="center" key={i}>
               <StJoinDiv>
                 {item?.profileImageUrl === null ? (
-                  <Img
-                    width="20px"
-                    height="20px"
-                    src="/images/userProfile.jpg"
-                  />
+                  <StSizeDiv>
+                    <Svg variant="profile" />
+                  </StSizeDiv>
                 ) : (
                   <StImg alt="맹짱구" src={item?.profileImageUrl} />
                 )}
@@ -300,4 +298,10 @@ const StJoinDiv = styled.div`
   background-color: #ede8e1;
   border-radius: 5px;
   margin: 50px 0px 0px 10px;
+`;
+
+const StSizeDiv = styled.div`
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
 `;
