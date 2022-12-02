@@ -12,7 +12,7 @@ import { useModal } from "../../../hooks/useModal";
 import EditLanding from "./EditLanding";
 import styled from "styled-components";
 
-import { Button, Div, Flex, Margin, Span, Svg } from "../../../elem";
+import { Button, Div, Flex, Margin, Span, Svg, Img } from "../../../elem";
 import GroupTitle from "../../../components/GroupTitle";
 
 const SchdeleDetail = ({ scheduleId }) => {
@@ -80,7 +80,12 @@ const SchdeleDetail = ({ scheduleId }) => {
           <Span variant="bold" mg="0px 20px 0px 0px">
             {scheduleDetail?.title}
           </Span>
-          <StImg src={scheduleDetail?.profileImageUrl} alt="프로필" />
+          {scheduleDetail?.profileImageUrl === null ? (
+            <Svg variant="profile" />
+          ) : (
+            <StImg src={scheduleDetail?.profileImageUrl} alt="프로필" />
+          )}
+
           <Span variant="smallBronze" mg="0px 0px 0px 5px">
             {scheduleDetail?.writer}
           </Span>
@@ -176,9 +181,16 @@ const SchdeleDetail = ({ scheduleId }) => {
           return (
             <Flex fd="row" ai="center" key={i}>
               <StJoinDiv>
-                <StImg alt="맹짱구" src={item.profileImageUrl} />
+                {item?.profileImageUrl === null ? (
+                  <StSizeDiv>
+                    <Svg variant="profile" />
+                  </StSizeDiv>
+                ) : (
+                  <StImg alt="맹짱구" src={item?.profileImageUrl} />
+                )}
+
                 <Span variant="small" mg="0px 5px">
-                  {item.memberName}
+                  {item?.memberName}
                 </Span>
               </StJoinDiv>
             </Flex>
@@ -286,4 +298,10 @@ const StJoinDiv = styled.div`
   background-color: #ede8e1;
   border-radius: 5px;
   margin: 50px 0px 0px 10px;
+`;
+
+const StSizeDiv = styled.div`
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
 `;
