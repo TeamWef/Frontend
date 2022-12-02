@@ -55,12 +55,13 @@ export const __login = createAsyncThunk(
     try {
       const data = await axios.post(`${ServerUrl}/members/login`, userInfo);
       setCookie("token", data.headers.authorization);
-      setRFCookie("refresh-token", data.headers[`refresh-token`]);
+      setCookie("refresh-token", data.headers[`refresh-token`]);
+      setCookie("expires", data.headers.expires);
       if (data.status === 200) {
         alert(`${data.data}`);
-        window.location.reload();
       }
-      console.log(data);
+      window.location.reload();
+      // console.log(data);
       return thunkAPI.fulfillWithValue(userInfo);
     } catch (error) {
       alert("이메일 혹은 비밀번호를 확인해주세요");
