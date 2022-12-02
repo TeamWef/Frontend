@@ -2,21 +2,21 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { Div, Svg } from "../../../elem";
 import { useModal } from "../../../hooks/useModal";
-import ChattingService from "../../../ChattingService/ChattingService";
+// import ChattingService from "../../../ChattingService/ChattingService";
 import { getCookie } from "../../../redux/modules/customCookies";
 import { useParams } from "react-router-dom";
 import { Stomp } from "@stomp/stompjs";
-import sockJS from "sockjs-client";
+import SockJS from "sockjs-client";
 import { useSelector } from "react-redux";
 
 export const Chat = () => {
   const [Chat, openChat] = useModal();
-
+  const stompClient = useRef(null);
   const chatId = useSelector(
     (state) => state.schedule?.popularSchedule.chatRoomId
   );
 
-  const ChattingServiceKit = new ChattingService();
+  // const ChattingServiceKit = new ChattingService();
 
   const token = getCookie("token");
   const partyId = useParams().partyId;
@@ -40,35 +40,115 @@ export const Chat = () => {
     }
   };
 
-  useEffect(() => {
-    ChattingServiceKit.onConnect(
-      `/sub/chatrooms/${partyId}`,
-      { Authorization: token },
-      (newMessage) => {
-        setReceiveMsg(newMessage);
+  const socketConnect = () => {
+    const webSocket = new SockJS(`${process.env.REACT_APP_BASE_URL}/socket`);
+    stompClient.current = Stomp.over(webSocket);
+
+    stompClient.current.connect(
+      {
+        Authorization: token,
+      },
+
+      // 연결 성공 시 실행되는 함수
+      () => {
+        stompClient.current.subscribe(
+          `/sub/chatrooms/${partyId}`,
+          (response) => {
+            const newMessage = JSON.parse(response.body);
+            console.log(":::", newMessage);
+          }
+        );
       }
+      // { Authorization: token }
     );
-  }, []);
+    // stompClient.current.send(
+    //   `/pub/chatrooms`,
+    //   {},
+    //   JSON.stringify({
+    //     chatRoomId: partyId,
+    //     content: message,
+    //     accesstoken: token,
+    //   })
+    // );
+  };
 
-  useEffect(() => {
-    setChatLog([...chatLog, receiveMsg]);
-  }, [setChatLog, receiveMsg]);
-
-  const submitHandler = (e) => {
+  const sendMessage = (e) => {
     e.preventDefault();
-    ChattingServiceKit.sendMessage({
+    const message = e.target.chat.value;
+
+    if (message === "") return false;
+
+    const messageObj = {
       chatRoomId: partyId,
       content: message,
       accesstoken: token,
-    });
-    setMessage("");
+    };
+
+    stompClient.current.send(
+      `/pub/chatrooms/${partyId}`,
+      { Authorization: `Bearer ${sessionStorage.getItem("authorization")}` },
+      JSON.stringify(messageObj)
+    );
+
+    e.target.chat.value = [];
+  };
+
+  const socketDisconnect = () => {
+    stompClient.current.disconnect();
+    stompClient.current = null;
   };
 
   useEffect(() => {
+    // 채팅방 전환 시 기존 연결 해제 후 새 연결 요청
+    if (stompClient.current) {
+      socketDisconnect();
+    }
+    socketConnect();
+
     return () => {
-      ChattingServiceKit.onDisconnect();
+      // 언마운트 시 연결 해제
+      if (stompClient.current) socketDisconnect();
     };
   }, []);
+
+  // useEffect(() => {
+  //   ChattingServiceKit.onConnect(
+  //     `/sub/chatrooms/${partyId}`,
+  //     { Authorization: token },
+  //     (newMessage) => {
+  //       setReceiveMsg(newMessage);
+  //     }
+  //   );
+  // }, []);
+
+  // useEffect(() => {
+  //   setChatLog([...chatLog, receiveMsg]);
+  // }, [setChatLog, receiveMsg]);
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    // ChattingServiceKit.sendMessage({
+    //   chatRoomId: partyId,
+    //   content: message,
+    //   accesstoken: token,
+    // });
+    stompClient.current.send(
+      `/pub/chatrooms/${partyId}`,
+      {},
+      JSON.stringify({
+        chatRoomId: partyId,
+        content: message,
+        accesstoken: token,
+      })
+    );
+    setMessage("");
+  };
+
+  // useEffect(() => {
+  //   return () => {
+  //     ChattingServiceKit.onDisconnect();
+  //   };
+  // }, []);
 
   return (
     <Div variant="bodyContainer">
