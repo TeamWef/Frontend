@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 
-const Icon = ({ variant }) => {
-  return <StIcon variant={variant} />;
+const Icon = ({ variant, onClick }) => {
+  return <StIcon variant={variant} onClick={onClick} />;
 };
 
 export default Icon;

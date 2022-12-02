@@ -18,9 +18,12 @@ export const Header = () => {
   const logoutHandler = () => {
     deleteCookie("token");
     deleteCookie("refresh-token");
-    alert("로그아웃 되었습니다.");
     localStorage.clear();
-    window.location.reload();
+    setTimeout(() => {
+      window.location.reload();
+      alert("로그아웃 되었습니다.");
+    }, 500);
+
     navigate("/");
   };
   // console.log(param);
