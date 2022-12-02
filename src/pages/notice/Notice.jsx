@@ -4,8 +4,10 @@ import { EventSourcePolyfill, NativeEventSource } from "event-source-polyfill";
 import {
   __delNotice,
   __delNoticeAll,
+  __getNoticeCount,
   __getNoticeList,
   __readNotice,
+  __updateNoticeCount,
 } from "../../redux/modules/noticeSlice";
 import { Div, Flex, Img, Margin, Span, Svg } from "../../elem";
 import styled from "styled-components";
@@ -17,66 +19,67 @@ const Notice = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const noticeList = useSelector((state) => state.notice?.noticeList);
+  const noticeCount = useSelector((state) => state.notice?.newNoti);
   const [modal, openModal, setModal] = useModal();
-  const [newNoti, setNewNoti] = useState(0);
 
-  console.log(noticeList);
+  // console.log(noticeCount);
   const ref = useRef(null);
   const EventSource = EventSourcePolyfill || NativeEventSource;
   const token = getCookie("token");
 
-  // useEffect(() => {
-  //   console.log("첫번째 useEffect실행됐음");
-  //   if (token) {
-  //     const sse = new EventSource("http://43.201.55.218:8080/subscriptions", {
-  //       headers: {
-  //         Authorization: `${token}`,
-  //       },
-  //     });
+  useEffect(() => {
+    if (token) {
+      const sse = new EventSource("http://43.201.55.218:8080/subscriptions", {
+        headers: {
+          Authorization: `${token}`,
+        },
+      });
 
-  //     sse.onopen = (e) => {
-  //       console.log("연결완료");
-  //     };
+      sse.onopen = (e) => {
+        // console.log("연결완료");
+      };
 
-  //     sse.onmessage = async (event) => {
-  //       const res = await event.data;
-  //       console.log("res =>", res);
-  //       // const response = JSON.parse(e.data);
-  //       // console.log(response);
-  //     };
+      sse.onmessage = async (event) => {
+        const res = await event.data;
+        console.log("res =>", res);
+        // const response = JSON.parse(e.data);
+        // console.log(response);
+      };
 
-  //     // sse.addEventListener("sse", (e) => {
-  //     // const response = JSON.parse(e.data);
-  //     // console.log(response);
-  //     //     if(e.data.startsWith('{')) {
-  //     // setRealtimeAlam((prev) => [JSON.parse(e.data)])
-  //     // });
-  //     sse.addEventListener("sse", (e) => {
-  //       console.log(e.data);
-  //       if (e.data.startsWith("{")) {
-  //         const msg = JSON.parse(e.data);
-  //         console.log(msg);
-  //       }
-  //     });
+      // sse.addEventListener("sse", (e) => {
+      // const response = JSON.parse(e.data);
+      // console.log(response);
+      //     if(e.data.startsWith('{')) {
+      // setRealtimeAlam((prev) => [JSON.parse(e.data)])
+      // });
+      sse.addEventListener("sse", (e) => {
+        if (e.data.startsWith("{")) {
+          // const msg = JSON.parse(e.data);
+          dispatch(__updateNoticeCount());
+        }
+      });
 
-  //     sse.addEventListener("error", (e) => {
-  //       if (e) {
-  //         console.log(e);
-  //       }
-  //       // return () => source.close();
-  //     });
-  //     return () => {
-  //       if (token) {
-  //         sse.close();
-  //       }
-  //     };
-  //   }
-  // }, [token]);
+      sse.addEventListener("error", (e) => {
+        if (e) {
+          console.log(e);
+        }
+        // return () => source.close();
+      });
+      return () => {
+        if (token) {
+          sse.close();
+        }
+      };
+    }
+  }, [token]);
 
   const notiNavi = (url, partyName) => {
     navigate(`/${url}`);
     localStorage.setItem("Group", partyName);
     openModal();
+    setTimeout(() => {
+      dispatch(__getNoticeCount("-"));
+    }, 1);
   };
 
   const clickOutSide = (e) => {
@@ -94,12 +97,13 @@ const Notice = () => {
 
   useEffect(() => {
     // console.log("두번째 useEffect실행됐음");
+    dispatch(__getNoticeCount());
     dispatch(__getNoticeList());
   }, [dispatch, modal]);
 
   return (
     <div ref={ref}>
-      {newNoti === 0 ? (
+      {noticeCount === 0 ? (
         <Svg variant="notification" onClick={openModal} />
       ) : (
         <Svg variant="newNotification" onClick={openModal} />
