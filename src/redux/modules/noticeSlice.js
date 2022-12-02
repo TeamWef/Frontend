@@ -23,7 +23,6 @@ export const __readNotice = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const data = await noticeApis.readNotice(payload);
-      console.log(data);
       return thunkAPI.fulfillWithValue(payload);
     } catch (err) {
       return console.log(err);
@@ -35,8 +34,7 @@ export const __delNotice = createAsyncThunk(
   "delete/notice",
   async (payload, thunkAPI) => {
     try {
-      const data = await noticeApis.deleteNotice(payload);
-      console.log(data);
+      await noticeApis.deleteNotice(payload);
       return thunkAPI.fulfillWithValue(payload);
     } catch (err) {
       return console.log(err);
@@ -48,12 +46,30 @@ export const __delNoticeAll = createAsyncThunk(
   "delete/noticeAll",
   async (payload, thunkAPI) => {
     try {
-      const data = await noticeApis.deleteNoticeAll();
-      console.log(data);
+      await noticeApis.deleteNoticeAll();
       return thunkAPI.fulfillWithValue();
     } catch (err) {
       return console.log(err);
     }
+  }
+);
+
+export const __getNoticeCount = createAsyncThunk(
+  "get/noticeCount",
+  async (payload, thunkAPI) => {
+    try {
+      const data = await noticeApis.newNotice();
+      return thunkAPI.fulfillWithValue(data.data);
+    } catch (err) {
+      return console.log(err);
+    }
+  }
+);
+
+export const __updateNoticeCount = createAsyncThunk(
+  "put/noticeCount",
+  (payload, thunkAPI) => {
+    return thunkAPI.fulfillWithValue(payload);
   }
 );
 
@@ -80,6 +96,16 @@ export const noticeSlice = createSlice({
     },
     [__delNoticeAll.fulfilled]: (state, action) => {
       state.noticeList = [];
+    },
+    [__getNoticeCount.fulfilled]: (state, action) => {
+      state.newNoti = action.payload;
+    },
+    [__updateNoticeCount.fulfilled]: (state, action) => {
+      if (action.payload === "-") {
+        state.newNoti = state.newNoti - 1;
+      } else {
+        state.newNoti = state.newNoti + 1;
+      }
     },
   },
 });
