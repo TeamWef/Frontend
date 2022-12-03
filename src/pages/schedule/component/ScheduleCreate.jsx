@@ -9,16 +9,19 @@ import GroupTitle from "../../../components/GroupTitle";
 import { Button } from "../../../elem";
 import styled from "styled-components";
 import KakaoMap from "./KakaoMap";
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
+import moment from "moment";
 
 const ScheduleCreate = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { partyId } = useParams();
-  const [Modal, openModal] = useModal();
+  const [month, openMonth] = useModal();
   const [map, openMap] = useModal();
   const [InputText, setInputText] = useState("");
   const [Place, setPlace] = useState("");
-
+  const [value, onChangeDate] = useState(new Date());
   const [schedule, setSchedule] = useState({
     title: "",
     content: "",
@@ -27,7 +30,10 @@ const ScheduleCreate = () => {
     place: { placeName: "", address: "" },
   });
 
+  const date = moment(value).format("YYYY-MM-DD");
+
   console.log(schedule);
+  console.log(date);
 
   const onChange = (e) => {
     setInputText(e.target.value);
@@ -112,7 +118,31 @@ const ScheduleCreate = () => {
             </Flex>
             <Flex fd="row" ai="center" jc="left" margin="20px 0px 0px 0px">
               <Svg variant="date" />
-              <StTimeInput type="date" name="date" onChange={onChangeHandler} />
+              <StDateButton onClick={openMonth} type="button">
+                만날 날짜 지정하기
+              </StDateButton>
+              {/* 달력 */}
+              {month ? (
+                <StMonthDiv>
+                  <Calendar
+                    minDetail="month" // 상단 네비게이션에서 '월' 단위만 보이게 설정
+                    maxDetail="month" // 상단 네비게이션에서 '월' 단위만 보이게 설정
+                    calendarType="US"
+                    formatDay={(locale, date) => moment(date).format("DD")}
+                    value={value}
+                    name="date"
+                    next2Label={null}
+                    prev2Label={null}
+                    onChange={onChangeDate}
+                    onClickDay={() => {
+                      setSchedule({ ...schedule, date: date });
+                      openMonth();
+                    }}
+                  />
+                </StMonthDiv>
+              ) : null}
+
+              {/* <StTimeInput type="date" name="date" onChange={onChangeHandler} /> */}
             </Flex>
             <Flex fd="row" ai="center" jc="left" margin="20px 0px 0px 0px">
               <Svg variant="location" />
@@ -229,6 +259,24 @@ const StSearchDiv = styled.div`
   border: none;
   padding: 10px;
   display: flex;
+  margin-left: 15px;
+  margin-right: 15px;
+`;
+
+const StDateButton = styled.button`
+  width: 314px;
+  height: 38px;
+  background-color: white;
+  border-radius: 5px;
+  border: none;
+  padding: 10px;
+  display: flex;
+  margin-left: 15px;
+  margin-right: 15px;
+  cursor: pointer;
+  color: #a4a19d;
+  justify-content: center;
+  align-items: center;
 `;
 
 const StBtn = styled.button`
@@ -255,4 +303,77 @@ const StKakaoDiv = styled.div`
 const StBgDiv = styled.div`
   display: flex;
   background-color: white;
+`;
+
+const StMonthDiv = styled.div`
+  position: absolute;
+  top: 623px;
+  left: 405px;
+
+  .react-calendar {
+    width: 314px;
+    border: none;
+    border: 1px solid #a4a19d;
+    border-radius: 10px;
+    margin-bottom: 50px;
+  }
+
+  .react-calendar__navigation {
+    border-bottom: 1px solid #a4a19d;
+    margin-bottom: 5px;
+  }
+
+  .react-calendar__month-view__days__day--weekend {
+    color: #d08383;
+  }
+
+  .react-calendar__month-view__days__day--neighboringMonth {
+    opacity: 0.3;
+  }
+
+  .react-calendar__navigation button:enabled:hover,
+  .react-calendar__navigation button:enabled:focus {
+    background-color: transparent;
+  }
+
+  .react-calendar__navigation button {
+    color: #a4a19d;
+    font-size: 14px;
+    font-weight: 400;
+    text-align: center;
+    background-color: #fff;
+    cursor: pointer;
+  }
+
+  .react-calendar__month-view__weekdays {
+    text-align: center;
+    font-size: 12px;
+    font-weight: 400;
+    color: #a4a19d;
+  }
+
+  .react-calendar__tile--now {
+    background-color: #fff;
+  }
+
+  .react-calendar__tile--active {
+    background-color: #a4a19d;
+    color: #fff;
+  }
+
+  .react-calendar__navigation button:disabled {
+    background-color: transparent;
+  }
+
+  .react-calendar__tile--active:enabled:hover,
+  .react-calendar__tile--active:enabled:focus {
+    background-color: #a4a19d;
+  }
+  .react-calendar__tile {
+    height: 25px;
+    margin-top: 5px;
+    padding: 5px;
+    background: none;
+    text-align: center;
+  }
 `;

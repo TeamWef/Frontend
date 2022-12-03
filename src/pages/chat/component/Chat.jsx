@@ -20,6 +20,13 @@ export const Chat = () => {
   const [chatLog, setChatLog] = useState([]);
   const [receiveMsg, setReceiveMsg] = useState();
 
+  console.log(receiveMsg);
+  console.log(chatLog);
+
+  useEffect(() => {
+    setChatLog([...chatLog, receiveMsg]);
+  }, [setChatLog, receiveMsg]);
+
   // message를 키:벨류 형태로 저장해서 key 왼쪽 value 오른쪽 (노랭이)
   // class name=key, value
   // Message User & Content
@@ -30,12 +37,12 @@ export const Chat = () => {
     setMessage(e.target.value);
   };
 
-  const onEnter = (e) => {
-    // 만약 엔터를 해서 텍스트를 보냈을 때, 실행할 콘솔
-    if (e.keyCode === 13) {
-      console.log("메시지 전송 성공!");
-    }
-  };
+  // const onEnter = (e) => {
+  //   // 만약 엔터를 해서 텍스트를 보냈을 때, 실행할 콘솔
+  //   if (e.keyCode === 13) {
+  //     console.log("메시지 전송 성공!");
+  //   }
+  // };
 
   const socketConnect = () => {
     const webSocket = new SockJS(`${process.env.REACT_APP_BASE_URL}/socket`);
@@ -50,15 +57,17 @@ export const Chat = () => {
       () => {
         stompClient.current.subscribe(
           `/sub/chatrooms/${partyId}`,
-          (response) => {
-            console.log("::::", response);
-            const newMessage = JSON.parse(response.body);
+          (res) => {
+            console.log("::::", res);
+            const newMessage = JSON.parse(res.body);
+            setReceiveMsg(...receiveMsg, newMessage);
           },
           { Authorization: token }
         );
+
         // stompClient.current.send(
         //   `/pub/chatrooms/${partyId}`,
-        //   { token },
+        //   { },
         //   JSON.stringify({ content: message, token: token })
         // );
       }
@@ -70,15 +79,13 @@ export const Chat = () => {
     const message = e.target.chat.value;
     if (message === "") return false;
 
-    const messageObj = {
-      content: message,
-      token: token,
-    };
-
     stompClient.current.send(
       `/pub/chatrooms/${partyId}`,
       {},
-      JSON.stringify(messageObj)
+      JSON.stringify({
+        content: message,
+        token: token,
+      })
     );
     setMessage("");
     // e.target.chat.value = [];
@@ -142,7 +149,7 @@ export const Chat = () => {
                   autoComplete="off"
                   placeholder="메시지를 입력해주세요!"
                   type="text"
-                  onKeyDown={onEnter}
+                  // onKeyDown={onEnter}
                   value={message}
                   onChange={inputMessage}
                 />
@@ -166,7 +173,7 @@ export const Chat = () => {
                   autoComplete="off"
                   placeholder="메시지를 입력해주세요!"
                   type="text"
-                  onKeyDown={onEnter}
+                  // onKeyDown={onEnter}
                   value={message}
                   onChange={inputMessage}
                 />

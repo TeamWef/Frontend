@@ -33,12 +33,12 @@ export const Invite = () => {
     }
   };
 
-  // useEffect(() => {
-  //   if (invite) document.addEventListener("mousedown", handleCloseModal);
-  //   return () => {
-  //     document.removeEventListener("mousedown", handleCloseModal);
-  //   };
-  // });
+  useEffect(() => {
+    if (invite) document.addEventListener("mousedown", handleCloseModal);
+    return () => {
+      document.removeEventListener("mousedown", handleCloseModal);
+    };
+  });
 
   const postCodeHandler = (e) => {
     e.preventDefault();
@@ -59,12 +59,12 @@ export const Invite = () => {
 
   return (
     <>
-      <StBtn onClick={openInvite} ref={modalEl}>
+      <StBtn onClick={openInvite}>
         <Svg variant="invite" />
       </StBtn>
       {invite &&
         (param.partyId === undefined ? (
-          <StContainerDiv>
+          <StContainerDiv ref={modalEl}>
             <StTitleDiv>
               <Span variant="bold">Invite</Span>
               <StBtn
@@ -93,7 +93,7 @@ export const Invite = () => {
             </Button>
           </StContainerDiv>
         ) : (
-          <StContainerDiv>
+          <StContainerDiv ref={modalEl}>
             <StTitleDiv>
               <Span variant="bold">Invite</Span>
               <StBtn
