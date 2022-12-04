@@ -19,9 +19,7 @@ export const Chat = () => {
   const partyId = useParams().partyId;
   const [chatLog, setChatLog] = useState([]);
   const [receiveMsg, setReceiveMsg] = useState();
-
-  console.log(receiveMsg);
-  console.log(chatLog);
+  const headers = { Authorization: token };
 
   useEffect(() => {
     setChatLog([...chatLog, receiveMsg]);
@@ -37,13 +35,6 @@ export const Chat = () => {
     setMessage(e.target.value);
   };
 
-  // const onEnter = (e) => {
-  //   // 만약 엔터를 해서 텍스트를 보냈을 때, 실행할 콘솔
-  //   if (e.keyCode === 13) {
-  //     console.log("메시지 전송 성공!");
-  //   }
-  // };
-
   const socketConnect = () => {
     const webSocket = new SockJS(`${process.env.REACT_APP_BASE_URL}/socket`);
     stompClient.current = Stomp.over(webSocket);
@@ -52,24 +43,21 @@ export const Chat = () => {
       {
         Authorization: token,
       },
-
       // 연결 성공 시 실행되는 함수
       () => {
         stompClient.current.subscribe(
           `/sub/chatrooms/${partyId}`,
           (res) => {
-            console.log("::::", res);
             const newMessage = JSON.parse(res.body);
-            setReceiveMsg(...receiveMsg, newMessage);
+            if (newMessage.type !== "TALK") {
+              setReceiveMsg(newMessage);
+            } else {
+              setReceiveMsg((receiveMsg) => [newMessage, ...receiveMsg]);
+            }
+            console.log("::::", res);
           },
           { Authorization: token }
         );
-
-        // stompClient.current.send(
-        //   `/pub/chatrooms/${partyId}`,
-        //   { },
-        //   JSON.stringify({ content: message, token: token })
-        // );
       }
     );
   };
@@ -81,7 +69,7 @@ export const Chat = () => {
 
     stompClient.current.send(
       `/pub/chatrooms/${partyId}`,
-      {},
+      { token: token },
       JSON.stringify({
         content: message,
         token: token,

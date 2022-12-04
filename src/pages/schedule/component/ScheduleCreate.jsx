@@ -1,5 +1,5 @@
 // 작성 페이지
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { Div, Flex, Span, Svg, Input } from "../../../elem";
@@ -17,11 +17,13 @@ const ScheduleCreate = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { partyId } = useParams();
-  const [month, openMonth] = useModal();
+  const [month, openMonth, setMonth] = useModal();
   const [map, openMap] = useModal();
   const [InputText, setInputText] = useState("");
   const [Place, setPlace] = useState("");
-  const [value, onChangeDate] = useState(new Date());
+  const [value, setValue] = useState(new Date());
+  const [date, setDate] = useState("");
+  // const modalEl = useRef(null);
   const [schedule, setSchedule] = useState({
     title: "",
     content: "",
@@ -30,10 +32,23 @@ const ScheduleCreate = () => {
     place: { placeName: "", address: "" },
   });
 
-  const date = moment(value).format("YYYY-MM-DD");
+  // console.log("monthDate::", value);
+  console.log("???", schedule);
+  console.log("date", date);
 
-  console.log(schedule);
-  console.log(date);
+  // // 모달창 밖 클릭시 닫힘
+  // const handleCloseModal = (e) => {
+  //   if (month && !modalEl.current.contains(e.target)) {
+  //     setMonth(false);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   if (month) document.addEventListener("mousedown", handleCloseModal);
+  //   return () => {
+  //     document.removeEventListener("mousedown", handleCloseModal);
+  //   };
+  // });
 
   const onChange = (e) => {
     setInputText(e.target.value);
@@ -66,6 +81,14 @@ const ScheduleCreate = () => {
   const onChangeHandler = (e) => {
     const { name, value } = e.target;
     setSchedule({ ...schedule, [name]: value });
+  };
+
+  const onClickHandler = (value, event) => {
+    openMonth();
+    const day = moment(value).format("YYYY-MM-DD");
+    setDate(day);
+    console.log(date);
+    setSchedule({ ...schedule, date: day });
   };
 
   return (
@@ -118,9 +141,19 @@ const ScheduleCreate = () => {
             </Flex>
             <Flex fd="row" ai="center" jc="left" margin="20px 0px 0px 0px">
               <Svg variant="date" />
-              <StDateButton onClick={openMonth} type="button">
-                만날 날짜 지정하기
-              </StDateButton>
+              {value === null ? (
+                <StDateButton onClick={openMonth} type="button">
+                  만날 날짜 지정하기
+                </StDateButton>
+              ) : (
+                <StSearchDiv>
+                  <Span variant="other">{date}</Span>
+                  <StDateBtn type="button" onClick={openMonth}>
+                    ⏐ 다시 찾기
+                  </StDateBtn>
+                </StSearchDiv>
+              )}
+
               {/* 달력 */}
               {month ? (
                 <StMonthDiv>
@@ -128,21 +161,18 @@ const ScheduleCreate = () => {
                     minDetail="month" // 상단 네비게이션에서 '월' 단위만 보이게 설정
                     maxDetail="month" // 상단 네비게이션에서 '월' 단위만 보이게 설정
                     calendarType="US"
+                    locale="en-EN"
                     formatDay={(locale, date) => moment(date).format("DD")}
                     value={value}
                     name="date"
                     next2Label={null}
                     prev2Label={null}
-                    onChange={onChangeDate}
-                    onClickDay={() => {
-                      setSchedule({ ...schedule, date: date });
-                      openMonth();
-                    }}
+                    onChange={setValue}
+                    selectRange={false}
+                    onClickDay={onClickHandler}
                   />
                 </StMonthDiv>
               ) : null}
-
-              {/* <StTimeInput type="date" name="date" onChange={onChangeHandler} /> */}
             </Flex>
             <Flex fd="row" ai="center" jc="left" margin="20px 0px 0px 0px">
               <Svg variant="location" />
@@ -282,6 +312,16 @@ const StDateButton = styled.button`
 const StBtn = styled.button`
   position: absolute;
   right: 10px;
+  width: 100px;
+  background-color: transparent;
+  border: none;
+  color: #a4a19d;
+`;
+
+const StDateBtn = styled.button`
+  position: absolute;
+  top: 596px;
+  left: 630px;
   width: 100px;
   background-color: transparent;
   border: none;
