@@ -1,16 +1,16 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import { Div, Svg } from "../../../elem";
+import { Div, Svg, Span } from "../../../elem";
 import { useModal } from "../../../hooks/useModal";
-// import ChattingService from "../../../ChattingService/ChattingService";
 import { getCookie } from "../../../redux/modules/customCookies";
 import { useParams } from "react-router-dom";
 import { Stomp } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
 import { useDispatch, useSelector } from "react-redux";
+import { __getMessage } from "../../../redux/modules/chatSlice";
 
 export const Chat = () => {
-  const [Chat, openChat] = useModal();
+  const [Chat, openChat, setChat] = useModal();
   const stompClient = useRef(null);
   const chatId = useSelector(
     (state) => state.schedule?.popularSchedule.chatRoomId
@@ -21,14 +21,30 @@ export const Chat = () => {
   const [receiveMsg, setReceiveMsg] = useState();
   const headers = { Authorization: token };
   const dispatch = useDispatch();
+  const modalEl = useRef(null);
+  const userMessage = useSelector((state) => state.chat);
+  console.log(userMessage);
+
+  const handleCloseModal = (e) => {
+    if (Chat && !modalEl.current.contains(e.target)) {
+      setChat(false);
+    }
+  };
+
+  useEffect(() => {
+    if (Chat) document.addEventListener("mousedown", handleCloseModal);
+    return () => {
+      document.removeEventListener("mousedown", handleCloseModal);
+    };
+  });
+
+  useEffect(() => {
+    // dispatch(__getMessage(partyId));
+  });
 
   useEffect(() => {
     setChatLog([...chatLog, receiveMsg]);
   }, [setChatLog, receiveMsg]);
-
-  // message를 키:벨류 형태로 저장해서 key 왼쪽 value 오른쪽 (노랭이)
-  // class name=key, value
-  // Message User & Content
 
   const [message, setMessage] = useState("");
 
@@ -101,19 +117,27 @@ export const Chat = () => {
       </StModalDiv>
       {Chat ? (
         chatLog?.length > 1 ? (
-          <StContainerDiv>
-            {chatLog?.map((item, i) => {
-              return item?.newMessage.memberId === 2 ? (
-                <StChatBoxDiv>
-                  <StUserChatDiv>{item?.newMessage.content}</StUserChatDiv>
-                </StChatBoxDiv>
-              ) : (
-                <StChatBoxDiv key={i}>
-                  <StChatDiv>{item?.newMessage.content}</StChatDiv>
-                </StChatBoxDiv>
-              );
-            })}
-
+          <StContainerDiv ref={modalEl}>
+            <StTextDiv>
+              <p>그룹명</p>
+            </StTextDiv>
+            <StDiv>
+              {chatLog
+                ?.filter((item) => {
+                  return item !== undefined;
+                })
+                .map((item, i) => {
+                  return item?.newMessage.memberId === 2 ? (
+                    <StChatBoxDiv key={i}>
+                      <StUserChatDiv>{item?.newMessage.content}</StUserChatDiv>
+                    </StChatBoxDiv>
+                  ) : (
+                    <StChatBoxDiv>
+                      <StChatDiv>{item?.newMessage.content}</StChatDiv>
+                    </StChatBoxDiv>
+                  );
+                })}
+            </StDiv>
             <StBottomDiv>
               <form onSubmit={sendMessage}>
                 <StInput
@@ -133,11 +157,13 @@ export const Chat = () => {
           </StContainerDiv>
         ) : (
           <StContainerDiv>
-            <StBoxDiv>
+            <Div variant="chatTitle">
               <p>채팅이 없습니다 🥺</p>
               <p>첫 메시지를 친구들에게 남겨보세요!</p>
-            </StBoxDiv>
-            <span>메시지를 주고 받으세요!</span>
+            </Div>
+            <Div variant="chatText">
+              <span>친구들과 메시지를 주고 받으세요!</span>
+            </Div>
             <StBottomDiv>
               <form onSubmit={sendMessage}>
                 <StInput
@@ -163,8 +189,8 @@ export const Chat = () => {
 
 const StModalDiv = styled.div`
   position: fixed;
-  top: 700px;
-  right: 50px;
+  top: 650px;
+  right: 40px;
   display: flex;
   align-items: center;
   text-align: center;
@@ -182,8 +208,8 @@ const StModalDiv = styled.div`
 
 const StContainerDiv = styled.div`
   position: fixed;
-  top: 50px;
-  right: 120px;
+  top: 10px;
+  right: 100px;
   display: flex;
   flex-direction: column;
   justify-content: right;
@@ -192,21 +218,43 @@ const StContainerDiv = styled.div`
   background-color: #f8f5f0;
   box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.15);
   border-radius: 5px;
+`;
+
+const StDiv = styled.div`
+  width: 100%;
+  height: 560px;
+  position: absolute;
+  top: 60px;
+  overflow-y: auto;
   & span {
     color: #d9d3c7;
     font-size: 15px;
     text-align: center;
     margin-top: 50%;
   }
+  &::-webkit-scrollbar {
+    background: #d9d9d9;
+    width: 6px;
+    height: 100%;
+    border-radius: 10px;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: #a4a19d;
+  }
+  &::-webkit-scrollbar-track {
+    width: 0;
+    height: auto;
+  }
 `;
 
-const StBoxDiv = styled.div`
+const StTextDiv = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   width: 440px;
-  height: 80px;
+  height: 60px;
   border-bottom: 2px solid #d9d3c7;
   color: #d9d3c7;
   font-size: 15px;
@@ -227,12 +275,10 @@ const StInput = styled.input`
   top: 16px;
   width: 400px;
   height: 45px;
+  padding: 15px;
   background-color: transparent;
   border-radius: 55px;
   border: 2px solid #d9d3c7;
-  &::placeholder {
-    padding: 15px;
-  }
 `;
 
 const StBtn = styled.button`
