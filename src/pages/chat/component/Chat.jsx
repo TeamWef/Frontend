@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { __getMessage } from "../../../redux/modules/chatSlice";
 
 export const Chat = () => {
-  const [Chat, openChat, setChat] = useModal();
+  const [chat, openChat, setChat] = useModal();
   const stompClient = useRef(null);
   const chatId = useSelector(
     (state) => state.schedule?.popularSchedule.chatRoomId
@@ -23,16 +23,20 @@ export const Chat = () => {
   const dispatch = useDispatch();
   const modalEl = useRef(null);
   const userMessage = useSelector((state) => state.chat);
-  console.log(userMessage);
+  const [message, setMessage] = useState("");
+
+  const inputMessage = (e) => {
+    setMessage(e.target.value);
+  };
 
   const handleCloseModal = (e) => {
-    if (Chat && !modalEl.current.contains(e.target)) {
-      setChat(false);
+    if (chat && !modalEl.current.contains(e.target)) {
+      setChat(!chat);
     }
   };
 
   useEffect(() => {
-    if (Chat) document.addEventListener("mousedown", handleCloseModal);
+    if (chat) document.addEventListener("mousedown", handleCloseModal);
     return () => {
       document.removeEventListener("mousedown", handleCloseModal);
     };
@@ -46,12 +50,6 @@ export const Chat = () => {
     setChatLog([...chatLog, receiveMsg]);
   }, [setChatLog, receiveMsg]);
 
-  const [message, setMessage] = useState("");
-
-  const inputMessage = (e) => {
-    setMessage(e.target.value);
-  };
-
   const socketConnect = () => {
     const webSocket = new SockJS(`${process.env.REACT_APP_BASE_URL}/socket`);
     stompClient.current = Stomp.over(webSocket);
@@ -64,15 +62,11 @@ export const Chat = () => {
         stompClient.current.subscribe(`/sub/chatrooms/${partyId}`, (res) => {
           const newMessage = JSON.parse(res.body);
           setReceiveMsg({ ...receiveMsg, newMessage });
-          console.log("::::", res);
-          console.log("::::", receiveMsg);
         });
       },
       headers
     );
   };
-
-  console.log("드루와,,,", chatLog);
 
   const sendMessage = (e) => {
     e.preventDefault();
@@ -115,7 +109,7 @@ export const Chat = () => {
       <StModalDiv onClick={openChat}>
         <Svg variant="message" />
       </StModalDiv>
-      {Chat ? (
+      {chat ? (
         chatLog?.length > 1 ? (
           <StContainerDiv ref={modalEl}>
             <StTextDiv>
@@ -129,6 +123,7 @@ export const Chat = () => {
                 .map((item, i) => {
                   return item?.newMessage.memberId === 2 ? (
                     <StChatBoxDiv key={i}>
+                      <p>{item?.newMessage.memberName}</p>
                       <StUserChatDiv>{item?.newMessage.content}</StUserChatDiv>
                     </StChatBoxDiv>
                   ) : (

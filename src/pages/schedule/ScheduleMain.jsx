@@ -8,17 +8,15 @@ import {
   __getSchedule,
   __getGroupSchedule,
 } from "../../redux/modules/scheduleSlice";
-import { Chat } from "../chat/component/Chat";
 
 const ScheduleMain = () => {
   const scheduleList = useSelector((state) => state.schedule?.schedule);
-  console.log("!!!", scheduleList);
+
   const dispatch = useDispatch();
   const { partyId } = useParams();
   console.log({ partyId });
   const navigate = useNavigate();
   // const scheduleId = seheduleList?.scheduleId;
-  console.log(scheduleList);
 
   useEffect(() => {
     dispatch(__getSchedule({ partyId }));
