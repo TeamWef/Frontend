@@ -26,7 +26,7 @@ const SchdeleDetail = ({ scheduleId }) => {
   const [isParticipant, setIsParticipant] = useState(
     scheduleDetail.isParticipant
   );
-  console.log(isParticipant);
+
   const detailId = useParams().scheduleId;
   const partyId = useParams().partyId;
   const dispatch = useDispatch();
@@ -161,7 +161,7 @@ const SchdeleDetail = ({ scheduleId }) => {
         </Flex>
       </Flex>
       <Flex width="1000px" fd="row" jc="left">
-        {isParticipant ? (
+        {scheduleDetail?.isParticipant ? (
           <Button
             variant="small"
             margin="50px 0px 0px 0px"
