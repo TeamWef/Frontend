@@ -17,6 +17,7 @@ const StDiv = styled.div`
   margin: ${({ mg }) => (mg ? mg : "")};
   padding: ${({ pd }) => (pd ? pd : "")};
   overflow: ${({ ovf }) => (ovf ? ovf : "")};
+  border: ${({ bd }) => (bd ? bd : "")};
 
   ${({ variant }) => {
     switch (variant) {
@@ -116,6 +117,27 @@ const StDiv = styled.div`
           border: 2px dashed #d9d3c7;
           border-radius: 10px;
           margin-top: 30px;
+        `;
+      case "chatTitle":
+        return css`
+          align-items: center;
+          justify-content: center;
+          flex-direction: column;
+          width: 440px;
+          height: 80px;
+          border-bottom: 2px solid #d9d3c7;
+          color: #d9d3c7;
+          font-size: 15px;
+          border-radius: 0px;
+        `;
+      case "chatText":
+        return css`
+          position: absolute;
+          top: 250px;
+          width: 440px;
+          height: 80px;
+          color: #d9d3c7;
+          font-size: 15px;
         `;
       default:
         break;

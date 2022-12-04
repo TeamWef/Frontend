@@ -75,7 +75,7 @@ const ScheduleCreate = () => {
   return (
     <Div variant="bodyContainer">
       <GroupTitle />
-      <Div width="1100px">
+      <Div width="1000px">
         <form onSubmit={onAddScheduleHandler}>
           <Flex fd="row" jc="space-between">
             <Span variant="bold" mg="10px 0px 0px 0px">
@@ -87,6 +87,7 @@ const ScheduleCreate = () => {
               </Button>
               <Button
                 variant="border-small"
+                margin="0px 10px 0px 0px"
                 type="button"
                 onClick={() => {
                   navigate(-1);
@@ -225,7 +226,7 @@ const ScheduleCreate = () => {
 export default ScheduleCreate;
 
 const StContentDiv = styled.div`
-  width: 1088px;
+  width: 1095px;
   height: 335px;
   background: #ffffff;
   border-radius: 10px;
@@ -247,7 +248,7 @@ const StTitleInput = styled.input`
 `;
 
 const StBorderDiv = styled.div`
-  width: 1006px;
+  width: 1000px;
   border: 1px solid #d9d3c7;
   margin: 10px 0px 0px 40px;
 `;
