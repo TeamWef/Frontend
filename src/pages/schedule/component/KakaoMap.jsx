@@ -130,7 +130,7 @@ const KakaoMap = ({ searchPlace, setSchedule, schedule, openMap }) => {
             <StDiv></StDiv>
           </Flex>
         ))}
-        <div id="pagination"></div>
+        <div id="pagination" style={{ display: "none" }}></div>
       </Flex>
     </StContainerDiv>
   );

@@ -1,5 +1,5 @@
 // 작성 페이지
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { Div, Flex, Span, Svg, Input } from "../../../elem";
@@ -23,7 +23,6 @@ const ScheduleCreate = () => {
   const [Place, setPlace] = useState("");
   const [value, setValue] = useState(new Date());
   const [date, setDate] = useState("");
-  // const modalEl = useRef(null);
   const [schedule, setSchedule] = useState({
     title: "",
     content: "",
@@ -31,24 +30,6 @@ const ScheduleCreate = () => {
     date: "",
     place: { placeName: "", address: "" },
   });
-
-  // console.log("monthDate::", value);
-  console.log("???", schedule);
-  console.log("date", date);
-
-  // // 모달창 밖 클릭시 닫힘
-  // const handleCloseModal = (e) => {
-  //   if (month && !modalEl.current.contains(e.target)) {
-  //     setMonth(false);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   if (month) document.addEventListener("mousedown", handleCloseModal);
-  //   return () => {
-  //     document.removeEventListener("mousedown", handleCloseModal);
-  //   };
-  // });
 
   const onChange = (e) => {
     setInputText(e.target.value);
@@ -141,7 +122,7 @@ const ScheduleCreate = () => {
             </Flex>
             <Flex fd="row" ai="center" jc="left" margin="20px 0px 0px 0px">
               <Svg variant="date" />
-              {value === null ? (
+              {schedule.date === "" ? (
                 <StDateButton onClick={openMonth} type="button">
                   만날 날짜 지정하기
                 </StDateButton>
