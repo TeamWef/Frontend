@@ -101,7 +101,7 @@ const GroupCard = () => {
                     {dropBox &&
                       data.partyId === updateId &&
                       (data.memberEmail === myId ? (
-                        <Div variant="dropDown">
+                        <Div variant="dropDown" top="50px">
                           <Button
                             variant="drop-top"
                             onClick={() => {
@@ -113,6 +113,7 @@ const GroupCard = () => {
                           </Button>
                           <Button
                             variant="drop-bottom"
+                            top="50px"
                             onClick={() => {
                               if (window.confirm("정말 삭제하시겠습니까?")) {
                                 dispatch(__delGroup(data?.partyId));
@@ -125,7 +126,7 @@ const GroupCard = () => {
                           </Button>
                         </Div>
                       ) : (
-                        <Div variant="dropDown">
+                        <Div variant="dropDown" top="50px">
                           <Button variant="drop-bottom">그룹 나가기</Button>
                         </Div>
                       ))}

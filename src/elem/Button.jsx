@@ -48,6 +48,11 @@ const StBtn = styled.button`
           font-size: 13px;
           margin-left: 10px;
           color: #a4a19d;
+          :hover {
+            opacity: 1;
+            background-color: #a4a19d;
+            color: #fff;
+          }
         `;
       case "drop-top":
         return css`

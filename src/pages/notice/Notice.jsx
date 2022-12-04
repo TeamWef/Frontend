@@ -23,7 +23,7 @@ const Notice = () => {
   const noticeCount = useSelector((state) => state.notice?.newNoti);
   const [modal, openModal, setModal] = useModal();
 
-  console.log(noticeCount);
+  // console.log(noticeCount);
   const ref = useRef(null);
   const EventSource = EventSourcePolyfill || NativeEventSource;
   const token = getCookie("token");
@@ -43,7 +43,7 @@ const Notice = () => {
       });
 
       sse.onopen = (e) => {
-        console.log("연결완료");
+        // console.log("연결완료");
       };
 
       sse.addEventListener("sse", (e) => {
