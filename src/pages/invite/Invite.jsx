@@ -12,11 +12,12 @@ export const Invite = () => {
   const dispatch = useDispatch();
   const inviteCode = useSelector((state) => state.invite?.invite.code);
   const id = useParams()?.partyId;
-  const [code, setCode] = useState("");
+  const [code, setCode] = useState({ code: "" });
   const param = useParams();
   const modalEl = useRef(null);
   const textInput = useRef();
 
+  console.log(inviteCode);
   // 인풋 내용 복사하기
   const copy = () => {
     const el = textInput.current;
@@ -39,12 +40,14 @@ export const Invite = () => {
     };
   });
 
-  const postCodeHandler = () => {
+  const postCodeHandler = (e) => {
+    e.preventDefault();
     dispatch(__postInvite(code));
   };
 
   const onCode = (e) => {
-    setCode(e.target.value);
+    const { name, value } = e.target;
+    setCode({ ...code, [name]: value });
   };
 
   useEffect(() => {
@@ -56,12 +59,12 @@ export const Invite = () => {
 
   return (
     <>
-      <StBtn onClick={openInvite} ref={modalEl}>
+      <StBtn onClick={openInvite}>
         <Svg variant="invite" />
       </StBtn>
       {invite &&
         (param.partyId === undefined ? (
-          <StContainerDiv>
+          <StContainerDiv ref={modalEl}>
             <StTitleDiv>
               <Span variant="bold">Invite</Span>
               <StBtn
@@ -73,7 +76,7 @@ export const Invite = () => {
               </StBtn>
             </StTitleDiv>
             <Span variant="other" mg="30px 0px 0px 30px">
-              추천코드
+              초대 코드
             </Span>
             <StInput
               type="text"
@@ -90,7 +93,7 @@ export const Invite = () => {
             </Button>
           </StContainerDiv>
         ) : (
-          <StContainerDiv>
+          <StContainerDiv ref={modalEl}>
             <StTitleDiv>
               <Span variant="bold">Invite</Span>
               <StBtn
@@ -102,7 +105,7 @@ export const Invite = () => {
               </StBtn>
             </StTitleDiv>
             <Span variant="other" mg="30px 0px 0px 30px">
-              추천코드
+              초대 코드
             </Span>
             <StInput
               type="text"

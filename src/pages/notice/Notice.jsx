@@ -14,6 +14,7 @@ import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { useModal } from "../../hooks/useModal";
 import { useNavigate } from "react-router-dom";
+import { ServerUrl } from "../../server";
 
 const Notice = () => {
   const dispatch = useDispatch();
@@ -22,36 +23,29 @@ const Notice = () => {
   const noticeCount = useSelector((state) => state.notice?.newNoti);
   const [modal, openModal, setModal] = useModal();
 
-  // console.log(noticeCount);
+  console.log(noticeCount);
   const ref = useRef(null);
   const EventSource = EventSourcePolyfill || NativeEventSource;
   const token = getCookie("token");
 
   useEffect(() => {
     if (token) {
-      const sse = new EventSource("http://43.201.55.218:8080/subscriptions", {
+      const sse = new EventSource(`${ServerUrl}/subscriptions`, {
         headers: {
           Authorization: `${token}`,
+          "Content-Type": "text/event-stream",
+          "Cache-Control": "no-cache",
+          Connection: "keep-alive",
+          "X-Accel-Buffering": "no",
         },
+        heartbeatTimeout: 600000,
+        withCredentials: true,
       });
 
       sse.onopen = (e) => {
-        // console.log("연결완료");
+        console.log("연결완료");
       };
 
-      sse.onmessage = async (event) => {
-        const res = await event.data;
-        console.log("res =>", res);
-        // const response = JSON.parse(e.data);
-        // console.log(response);
-      };
-
-      // sse.addEventListener("sse", (e) => {
-      // const response = JSON.parse(e.data);
-      // console.log(response);
-      //     if(e.data.startsWith('{')) {
-      // setRealtimeAlam((prev) => [JSON.parse(e.data)])
-      // });
       sse.addEventListener("sse", (e) => {
         if (e.data.startsWith("{")) {
           // const msg = JSON.parse(e.data);
@@ -79,7 +73,7 @@ const Notice = () => {
     openModal();
     setTimeout(() => {
       dispatch(__getNoticeCount("-"));
-    }, 1);
+    }, 100);
   };
 
   const clickOutSide = (e) => {

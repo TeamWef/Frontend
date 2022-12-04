@@ -15,13 +15,15 @@ export const Chat = () => {
   const chatId = useSelector(
     (state) => state.schedule?.popularSchedule.chatRoomId
   );
-
-  // const ChattingServiceKit = new ChattingService();
-
   const token = getCookie("token");
   const partyId = useParams().partyId;
   const [chatLog, setChatLog] = useState([]);
   const [receiveMsg, setReceiveMsg] = useState();
+  const headers = { Authorization: token };
+
+  useEffect(() => {
+    setChatLog([...chatLog, receiveMsg]);
+  }, [setChatLog, receiveMsg]);
 
   // message를 키:벨류 형태로 저장해서 key 왼쪽 value 오른쪽 (노랭이)
   // class name=key, value
@@ -33,13 +35,6 @@ export const Chat = () => {
     setMessage(e.target.value);
   };
 
-  const onEnter = (e) => {
-    // 만약 엔터를 해서 텍스트를 보냈을 때, 실행할 콘솔
-    if (e.keyCode === 13) {
-      console.log("메시지 전송 성공!");
-    }
-  };
-
   const socketConnect = () => {
     const webSocket = new SockJS(`${process.env.REACT_APP_BASE_URL}/socket`);
     stompClient.current = Stomp.over(webSocket);
@@ -48,49 +43,40 @@ export const Chat = () => {
       {
         Authorization: token,
       },
-
       // 연결 성공 시 실행되는 함수
       () => {
         stompClient.current.subscribe(
           `/sub/chatrooms/${partyId}`,
-          (response) => {
-            const newMessage = JSON.parse(response.body);
-            console.log(":::", newMessage);
-          }
+          (res) => {
+            const newMessage = JSON.parse(res.body);
+            if (newMessage.type !== "TALK") {
+              setReceiveMsg(newMessage);
+            } else {
+              setReceiveMsg((receiveMsg) => [newMessage, ...receiveMsg]);
+            }
+            console.log("::::", res);
+          },
+          { Authorization: token }
         );
       }
-      // { Authorization: token }
     );
-    // stompClient.current.send(
-    //   `/pub/chatrooms`,
-    //   {},
-    //   JSON.stringify({
-    //     chatRoomId: partyId,
-    //     content: message,
-    //     accesstoken: token,
-    //   })
-    // );
   };
 
   const sendMessage = (e) => {
     e.preventDefault();
     const message = e.target.chat.value;
-
     if (message === "") return false;
-
-    const messageObj = {
-      chatRoomId: partyId,
-      content: message,
-      accesstoken: token,
-    };
 
     stompClient.current.send(
       `/pub/chatrooms/${partyId}`,
-      { Authorization: `Bearer ${sessionStorage.getItem("authorization")}` },
-      JSON.stringify(messageObj)
+      { token: token },
+      JSON.stringify({
+        content: message,
+        token: token,
+      })
     );
-
-    e.target.chat.value = [];
+    setMessage("");
+    // e.target.chat.value = [];
   };
 
   const socketDisconnect = () => {
@@ -111,44 +97,18 @@ export const Chat = () => {
     };
   }, []);
 
-  // useEffect(() => {
-  //   ChattingServiceKit.onConnect(
-  //     `/sub/chatrooms/${partyId}`,
-  //     { Authorization: token },
-  //     (newMessage) => {
-  //       setReceiveMsg(newMessage);
-  //     }
+  // const submitHandler = (e) => {
+  //   e.preventDefault();
+  //   stompClient.current.send(
+  //     `/pub/chatrooms/${partyId}`,
+  //     {},
+  //     JSON.stringify({
+  //       content: message,
+  //       token: token,
+  //     })
   //   );
-  // }, []);
-
-  // useEffect(() => {
-  //   setChatLog([...chatLog, receiveMsg]);
-  // }, [setChatLog, receiveMsg]);
-
-  const submitHandler = (e) => {
-    e.preventDefault();
-    // ChattingServiceKit.sendMessage({
-    //   chatRoomId: partyId,
-    //   content: message,
-    //   accesstoken: token,
-    // });
-    stompClient.current.send(
-      `/pub/chatrooms/${partyId}`,
-      {},
-      JSON.stringify({
-        chatRoomId: partyId,
-        content: message,
-        accesstoken: token,
-      })
-    );
-    setMessage("");
-  };
-
-  // useEffect(() => {
-  //   return () => {
-  //     ChattingServiceKit.onDisconnect();
-  //   };
-  // }, []);
+  //   setMessage("");
+  // };
 
   return (
     <Div variant="bodyContainer">
@@ -171,13 +131,13 @@ export const Chat = () => {
             })}
 
             <StBottomDiv>
-              <form onSubmit={submitHandler}>
+              <form onSubmit={sendMessage}>
                 <StInput
                   name="chat"
                   autoComplete="off"
                   placeholder="메시지를 입력해주세요!"
                   type="text"
-                  onKeyDown={onEnter}
+                  // onKeyDown={onEnter}
                   value={message}
                   onChange={inputMessage}
                 />
@@ -195,13 +155,13 @@ export const Chat = () => {
             </StBoxDiv>
             <span>메시지를 주고 받으세요!</span>
             <StBottomDiv>
-              <form onSubmit={submitHandler}>
+              <form onSubmit={sendMessage}>
                 <StInput
                   name="chat"
                   autoComplete="off"
                   placeholder="메시지를 입력해주세요!"
                   type="text"
-                  onKeyDown={onEnter}
+                  // onKeyDown={onEnter}
                   value={message}
                   onChange={inputMessage}
                 />
