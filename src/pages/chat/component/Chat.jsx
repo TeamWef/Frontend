@@ -7,7 +7,7 @@ import { getCookie } from "../../../redux/modules/customCookies";
 import { useParams } from "react-router-dom";
 import { Stomp } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 export const Chat = () => {
   const [Chat, openChat] = useModal();
@@ -20,6 +20,7 @@ export const Chat = () => {
   const [chatLog, setChatLog] = useState([]);
   const [receiveMsg, setReceiveMsg] = useState();
   const headers = { Authorization: token };
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setChatLog([...chatLog, receiveMsg]);
@@ -38,29 +39,24 @@ export const Chat = () => {
   const socketConnect = () => {
     const webSocket = new SockJS(`${process.env.REACT_APP_BASE_URL}/socket`);
     stompClient.current = Stomp.over(webSocket);
-
     stompClient.current.connect(
       {
         Authorization: token,
       },
       // 연결 성공 시 실행되는 함수
       () => {
-        stompClient.current.subscribe(
-          `/sub/chatrooms/${partyId}`,
-          (res) => {
-            const newMessage = JSON.parse(res.body);
-            if (newMessage.type !== "TALK") {
-              setReceiveMsg(newMessage);
-            } else {
-              setReceiveMsg((receiveMsg) => [newMessage, ...receiveMsg]);
-            }
-            console.log("::::", res);
-          },
-          { Authorization: token }
-        );
-      }
+        stompClient.current.subscribe(`/sub/chatrooms/${partyId}`, (res) => {
+          const newMessage = JSON.parse(res.body);
+          setReceiveMsg({ ...receiveMsg, newMessage });
+          console.log("::::", res);
+          console.log("::::", receiveMsg);
+        });
+      },
+      headers
     );
   };
+
+  console.log("드루와,,,", chatLog);
 
   const sendMessage = (e) => {
     e.preventDefault();
@@ -69,13 +65,14 @@ export const Chat = () => {
 
     stompClient.current.send(
       `/pub/chatrooms/${partyId}`,
-      { token: token },
+      headers,
       JSON.stringify({
         content: message,
         token: token,
       })
     );
     setMessage("");
+    // textRef.current.value = null;
     // e.target.chat.value = [];
   };
 
@@ -97,19 +94,6 @@ export const Chat = () => {
     };
   }, []);
 
-  // const submitHandler = (e) => {
-  //   e.preventDefault();
-  //   stompClient.current.send(
-  //     `/pub/chatrooms/${partyId}`,
-  //     {},
-  //     JSON.stringify({
-  //       content: message,
-  //       token: token,
-  //     })
-  //   );
-  //   setMessage("");
-  // };
-
   return (
     <Div variant="bodyContainer">
       <StModalDiv onClick={openChat}>
@@ -119,13 +103,13 @@ export const Chat = () => {
         chatLog?.length > 1 ? (
           <StContainerDiv>
             {chatLog?.map((item, i) => {
-              return item?.memberId === 2 ? (
+              return item?.newMessage.memberId === 2 ? (
                 <StChatBoxDiv>
-                  <StChatDiv key={i}>{item?.content}</StChatDiv>
+                  <StUserChatDiv>{item?.newMessage.content}</StUserChatDiv>
                 </StChatBoxDiv>
               ) : (
-                <StChatBoxDiv>
-                  <StUserChatDiv>{item?.content}</StUserChatDiv>
+                <StChatBoxDiv key={i}>
+                  <StChatDiv>{item?.newMessage.content}</StChatDiv>
                 </StChatBoxDiv>
               );
             })}
