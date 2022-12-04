@@ -26,6 +26,7 @@ const SchdeleDetail = ({ scheduleId }) => {
   const [isParticipant, setIsParticipant] = useState(
     scheduleDetail.isParticipant
   );
+  console.log(isParticipant);
   const detailId = useParams().scheduleId;
   const partyId = useParams().partyId;
   const dispatch = useDispatch();
@@ -162,19 +163,6 @@ const SchdeleDetail = ({ scheduleId }) => {
       <Flex width="1000px" fd="row" jc="left">
         {isParticipant ? (
           <Button
-            variant="border-small"
-            margin="50px 0px 0px 0px"
-            onClick={(e) => {
-              e.preventDefault();
-              setScheduleJoin();
-              dispatch(__joinSchedules({ detailId, participant }));
-              setIsParticipant(!isParticipant);
-            }}
-          >
-            참여하기
-          </Button>
-        ) : (
-          <Button
             variant="small"
             margin="50px 0px 0px 0px"
             onClick={(e) => {
@@ -185,6 +173,19 @@ const SchdeleDetail = ({ scheduleId }) => {
             }}
           >
             취소하기
+          </Button>
+        ) : (
+          <Button
+            variant="border-small"
+            margin="50px 0px 0px 0px"
+            onClick={(e) => {
+              e.preventDefault();
+              setScheduleJoin();
+              dispatch(__joinSchedules({ detailId, participant }));
+              setIsParticipant(!isParticipant);
+            }}
+          >
+            참여하기
           </Button>
         )}
 
