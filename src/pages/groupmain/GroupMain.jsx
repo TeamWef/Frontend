@@ -19,7 +19,6 @@ const GroupMain = () => {
   return (
     <>
       <Div variant="bodyContainer">
-        {/* <Chat /> */}
         <Margin mg="38px" />
         <Flex>
           <Flex>

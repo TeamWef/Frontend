@@ -6,6 +6,7 @@ import { deleteCookie } from "../redux/modules/customCookies";
 import { Flex, Margin } from "../elem";
 import Notice from "../pages/notice/Notice";
 import { Invite } from "../pages/invite/Invite";
+import { Chat } from "../pages/chat/component/Chat";
 
 export const Header = () => {
   const navigate = useNavigate();
@@ -71,6 +72,7 @@ export const Header = () => {
             <UserInfo>{/* <Mypage /> */}</UserInfo>
           </Flex>
         </CenterBox>
+        {param.partyId !== undefined ? <Chat /> : null}
       </BaseContainer>
     </>
   );

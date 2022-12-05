@@ -1,166 +1,304 @@
-// import { useEffect, useRef, useState } from "react";
-// import { useDispatch, useSelector } from "react-redux";
-// import { useParams } from "react-router-dom";
-// import styled from "styled-components";
-// import { Span, Button } from "../../elem";
-// import Svg from "../../elem/Svg";
-// import { useModal } from "../../hooks/useModal";
-// import { __getInviteCode, __postInvite } from "../../redux/modules/inviteSlice";
+import { useEffect, useRef, useState } from "react";
+import { getCookie } from "../../redux/modules/customCookies";
+import { EventSourcePolyfill, NativeEventSource } from "event-source-polyfill";
+import {
+  __delNotice,
+  __delNoticeAll,
+  __getNoticeCount,
+  __getNoticeList,
+  __readNotice,
+  __updateNoticeCount,
+} from "../../redux/modules/noticeSlice";
+import { Div, Flex, Img, Margin, Span, Svg } from "../../elem";
+import styled from "styled-components";
+import { useDispatch, useSelector } from "react-redux";
+import { useModal } from "../../hooks/useModal";
+import { useNavigate } from "react-router-dom";
+import { ServerUrl } from "../../server";
 
-// export const Invite = () => {
-//   const [invite, openInvite, setInvite] = useModal();
-//   const dispatch = useDispatch();
-//   const inviteCode = useSelector((state) => state.invite?.invite.code);
-//   const id = useParams()?.partyId;
-//   const [code, setCode] = useState({ code: "" });
-//   const param = useParams();
-//   const modalEl = useRef(null);
-//   const textInput = useRef();
+const Notice = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const noticeList = useSelector((state) => state.notice?.noticeList);
+  const noticeCount = useSelector((state) => state.notice?.newNoti);
+  const [modal, openModal, setModal] = useModal();
 
-//   console.log(inviteCode);
-//   // 인풋 내용 복사하기
-//   const copy = () => {
-//     const el = textInput.current;
-//     el.select();
-//     document.execCommand("copy");
-//     alert("복사되었습니다! 친구에게 코드를 공유해주세요!🥳");
-//   };
+  console.log(noticeCount);
+  const ref = useRef(null);
+  const EventSource = EventSourcePolyfill || NativeEventSource;
+  const token = getCookie("token");
 
-//   //화면 밖을 클릭 했을 때 모달창이 닫히는 로직
-//   const handleCloseModal = (e) => {
-//     if (invite && !modalEl.current.contains(e.target)) {
-//       setInvite(false);
-//     }
-//   };
+  useEffect(() => {
+    if (token) {
+      const sse = new EventSource(`${ServerUrl}/subscriptions`, {
+        headers: {
+          Authorization: `${token}`,
+          "Content-Type": "text/event-stream",
+          "Cache-Control": "no-cache",
+          Connection: "keep-alive",
+          "X-Accel-Buffering": "no",
+        },
+        heartbeatTimeout: 600000,
+        withCredentials: true,
+      });
 
-//   // useEffect(() => {
-//   //   if (invite) document.addEventListener("mousedown", handleCloseModal);
-//   //   return () => {
-//   //     document.removeEventListener("mousedown", handleCloseModal);
-//   //   };
-//   // });
+      sse.onopen = (e) => {
+        console.log("연결완료");
+      };
 
-//   const postCodeHandler = (e) => {
-//     e.preventDefault();
-//     dispatch(__postInvite(code));
-//   };
+      sse.addEventListener("sse", (e) => {
+        if (e.data.startsWith("{")) {
+          // const msg = JSON.parse(e.data);
+          dispatch(__updateNoticeCount());
+        }
+      });
 
-//   const onCode = (e) => {
-//     const { name, value } = e.target;
-//     setCode({ ...code, [name]: value });
-//   };
+      sse.addEventListener("error", (e) => {
+        if (e) {
+          console.log(e);
+        }
+        // return () => source.close();
+      });
+      return () => {
+        if (token) {
+          sse.close();
+        }
+      };
+    }
+  }, [token]);
 
-//   useEffect(() => {
-//     if (id !== undefined) {
-//       dispatch(__getInviteCode(id));
-//     }
-//     return;
-//   }, [dispatch, id]);
+  const notiNavi = (url, partyName) => {
+    navigate(`/${url}`);
+    localStorage.setItem("Group", partyName);
+    openModal();
+    setTimeout(() => {
+      dispatch(__getNoticeCount("-"));
+    }, 100);
+  };
 
-//   return (
-//     <>
-//       <StBtn onClick={openInvite} ref={modalEl}>
-//         <Svg variant="invite" />
-//       </StBtn>
-//       {invite &&
-//         (param.partyId === undefined ? (
-//           <StContainerDiv>
-//             <StTitleDiv>
-//               <Span variant="bold">Invite</Span>
-//               <StBtn
-//                 onClick={() => {
-//                   openInvite();
-//                 }}
-//               >
-//                 <Svg variant="close" onClick={openInvite} />
-//               </StBtn>
-//             </StTitleDiv>
-//             <Span variant="other" mg="30px 0px 0px 30px">
-//               초대 코드
-//             </Span>
-//             <StInput
-//               type="text"
-//               placeholder="📍 코드를 입력해주세요"
-//               name="code"
-//               onChange={onCode}
-//             />
-//             <Button
-//               variant="large"
-//               margin="20px 0px 0px 30px"
-//               onClick={postCodeHandler}
-//             >
-//               Invite
-//             </Button>
-//           </StContainerDiv>
-//         ) : (
-//           <StContainerDiv>
-//             <StTitleDiv>
-//               <Span variant="bold">Invite</Span>
-//               <StBtn
-//                 onClick={() => {
-//                   openInvite();
-//                 }}
-//               >
-//                 <Svg variant="close" />
-//               </StBtn>
-//             </StTitleDiv>
-//             <Span variant="other" mg="30px 0px 0px 30px">
-//               초대 코드
-//             </Span>
-//             <StInput
-//               type="text"
-//               value={inviteCode}
-//               name="code"
-//               onChange={onCode}
-//               ref={textInput}
-//             />
-//             <label>발급된 코드는 당일 자정까지만 사용 가능합니다!</label>
-//             <Button onClick={copy} variant="large" margin="20px 0px 0px 30px">
-//               Copy
-//             </Button>
-//           </StContainerDiv>
-//         ))}
-//     </>
-//   );
-// };
+  const clickOutSide = (e) => {
+    if (modal && !ref.current.contains(e.target)) {
+      setModal(false);
+    }
+  };
 
-// const StContainerDiv = styled.div`
-//   display: flex;
-//   flex-direction: column;
-//   position: absolute;
-//   top: 60px;
-//   width: 440px;
-//   height: 273px;
-//   background: #f8f5f0;
-//   border-radius: 5px;
-//   box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.15);
-//   & label {
-//     font-size: 12px;
-//     margin: -13px 0px 0px 32px;
-//     color: gray;
-//   }
-// `;
+  useEffect(() => {
+    if (modal) document.addEventListener("mousedown", clickOutSide);
+    return () => {
+      document.removeEventListener("mousedown", clickOutSide);
+    };
+  });
 
-// const StTitleDiv = styled.div`
-//   margin-left: 20px;
-//   margin-top: 20px;
-//   width: 400px;
-//   display: flex;
-//   justify-content: space-between;
-// `;
+  useEffect(() => {
+    // console.log("두번째 useEffect실행됐음");
+    dispatch(__getNoticeCount());
+    dispatch(__getNoticeList());
+  }, [dispatch, modal]);
 
-// const StInput = styled.input`
-//   margin: 30px 20px 20px 30px;
-//   width: 375px;
-//   border: none;
-//   border-bottom: 1px solid #b5b3af;
-//   background-color: transparent;
-//   text-align: center;
-//   font-size: 18px;
-//   font-weight: 600;
-// `;
+  return (
+    <div ref={ref}>
+      {noticeCount === 0 ? (
+        <Svg variant="notification" onClick={openModal} />
+      ) : (
+        <Svg variant="newNotification" onClick={openModal} />
+      )}
 
-// const StBtn = styled.button`
-//   background-color: transparent;
-//   border: none;
-// `;
+      {modal && (
+        <Div variant="headerModal" width="400px" ai="flex-start">
+          <Flex ai="center">
+            <Margin mg="30px 0 0 0" />
+            <Flex>
+              <Flex fd="row" jc="space-between" width="340px">
+                <Span variant="bigBronze">Update</Span>
+                <Svg variant="close" onClick={openModal} />
+              </Flex>
+              <StBtn
+                onClick={() => {
+                  dispatch(__delNoticeAll());
+                }}
+              >
+                알림 전체 지우기
+              </StBtn>
+            </Flex>
+            <Flex fd="row">
+              {noticeList.length !== 0 ? (
+                <Div variant="scroll-y" width="360px" height="380px">
+                  {noticeList.map((notice) => {
+                    return (
+                      <StNoticeDiv key={notice.id}>
+                        <Flex fd="row">
+                          <Flex>
+                            <StTitleDiv>{notice.partyName}</StTitleDiv>
+                            {notice.alarmType === "schedule" ? (
+                              <Flex fd="row">
+                                <StSpanWrap
+                                  onClick={() => {
+                                    notiNavi(notice.url, notice.partyName);
+                                    dispatch(__readNotice(notice.id));
+                                  }}
+                                >
+                                  회원님이 작성한
+                                  <StSpan>{notice.title}</StSpan>
+                                  일정에
+                                  <StSpan>{notice.writer}</StSpan>
+                                  님이 참가하였습니다.
+                                </StSpanWrap>
+                                <Margin mg="10px" />
+                              </Flex>
+                            ) : (
+                              <Flex>
+                                <Flex fd="row">
+                                  <StSpanWrap
+                                    onClick={() => {
+                                      notiNavi(notice.url, notice.partyName);
+                                      dispatch(__readNotice(notice.id));
+                                    }}
+                                  >
+                                    회원님이 작성한 앨범에
+                                    <StSpan>{notice.writer}</StSpan>
+                                    님이 댓글을 달았습니다.
+                                  </StSpanWrap>
+                                  <Margin mg="10px" />
+                                </Flex>
+                                <StCommentDiv>
+                                  {notice.profileUrl ? (
+                                    <Img src={notice.profileUrl} />
+                                  ) : (
+                                    <Img src="/images/userProfile.jpg" />
+                                  )}
+                                  <StContentSpan mWidth="55px" fw="700">
+                                    {notice.writer}
+                                  </StContentSpan>
+                                  <Vertical />
+                                  <StContentSpan width="145px">
+                                    {notice.content}
+                                  </StContentSpan>
+                                  {/* <Svg variant="editDelete" /> */}
+                                </StCommentDiv>
+                              </Flex>
+                            )}
+                          </Flex>
+                          <Margin mg="0 10px 0 0" />
+                          <Flex fd="row" ai="center">
+                            {notice.status ? (
+                              <Svg variant="readMsg" />
+                            ) : (
+                              <Svg
+                                variant="newMsg"
+                                onClick={() => {
+                                  dispatch(__readNotice(notice.id));
+                                }}
+                              />
+                            )}
+                            <Margin mg="10px" />
+                            <Svg
+                              variant="cancle"
+                              onClick={() => dispatch(__delNotice(notice.id))}
+                            />
+                          </Flex>
+                        </Flex>
+                      </StNoticeDiv>
+                    );
+                  })}
+                </Div>
+              ) : (
+                <Div variant="null" width="360px" height="165px">
+                  <Span variant="medium" color="#d9d3c7;">
+                    현재 알림이 없습니다.
+                  </Span>
+                </Div>
+              )}
+            </Flex>
+            <Margin mg="30px 0 0 0" />
+          </Flex>
+        </Div>
+      )}
+    </div>
+  );
+};
+export default Notice;
+
+const StBtn = styled.button`
+  font-size: 12px;
+  color: #a4a19d;
+  background-color: transparent;
+  border: 0;
+  border-bottom: solid 1px #a4a19d;
+  align-self: flex-end;
+  cursor: pointer;
+  margin-top: 30px;
+`;
+
+const StNoticeDiv = styled.div`
+  display: flex;
+  width: 335px;
+  height: auto;
+  font-size: 16px;
+  padding-bottom: 15px;
+  margin: 0 0 13px 10px;
+  border-bottom: 1px solid #d9d3c7;
+  line-height: 25px;
+`;
+
+const StTitleDiv = styled.div`
+  display: flex;
+  width: auto;
+  align-self: flex-start;
+  background-color: #fff;
+  font-size: 18px;
+  font-weight: bold;
+  color: #a4a19d;
+  padding: 3px 10px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+`;
+const StSpan = styled.span`
+  padding: 2px 5px;
+  margin: 0 3px;
+  color: #535353;
+  background-color: #ede8e1;
+  border-radius: 5px;
+`;
+
+const StCommentDiv = styled.div`
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 260px;
+  height: 40px;
+  background-color: #ede8e1;
+  border-radius: 5px;
+  padding: 5px;
+  margin-top: 10px;
+`;
+
+const Vertical = styled.div`
+  width: 5px;
+  height: 22px;
+  margin-left: 5px;
+  border-left: 1px solid #d9d3c7;
+`;
+
+const StContentSpan = styled.span`
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: #a4a19d;
+  font-weight: ${(props) => props.fw};
+  width: ${(props) => props.width};
+  max-width: ${(props) => props.mWidth};
+  height: 35px;
+  white-space: nowrap;
+  overflow: hidden;
+  margin: 0 5px;
+`;
+
+const StSpanWrap = styled.span`
+  cursor: pointer;
+  :hover {
+    color: #a4a19d;
+    & span {
+      color: #a4a19d;
+    }
+  }
+`;
