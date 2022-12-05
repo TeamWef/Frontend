@@ -1,19 +1,15 @@
 import React, { useEffect, useState } from "react";
+import styled from "styled-components";
+import { Div, Span, Svg, Flex } from "../../../elem";
 
 const { kakao } = window;
 
-const EditKakaoMap = ({
-  searchPlace,
-  setEditSchedule,
-  editSchedule,
-  editOpenModal,
-}) => {
+const KakaoMap = ({ searchPlace, setEditSchedule, editSchedule, openMap }) => {
   // 검색결과 배열에 담아줌
   const [Places, setPlaces] = useState([]);
 
   useEffect(() => {
     var infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
-    // var markers = [];
 
     const container = document.getElementById("myMap");
     const options = {
@@ -90,24 +86,17 @@ const EditKakaoMap = ({
   }, [searchPlace]);
 
   return (
-    <div>
-      <div id="myMap" style={{ display: "none" }}></div>
-      <div id="result-list">
+    <StContainerDiv>
+      <Div id="myMap" style={{ display: "none" }}></Div>
+      <Flex id="result-list">
         {Places?.map((item, i) => (
-          <div key={i} style={{ marginTop: "20px" }}>
-            <span>{i + 1}</span>
-            <div>
-              <h5>{item.place_name}</h5>
-              {item.road_address_name ? (
-                <div>
-                  <span>{item.road_address_name}</span>
-                  <span>{item.address_name}</span>
-                </div>
-              ) : (
-                <span>{item.address_name}</span>
-              )}
-              <span>{item.phone}</span>
-              <button
+          <Flex key={i} style={{ marginTop: "20px" }}>
+            <Flex fd="row" margin="-16px 20px 0px -10px" jc="space-between">
+              <Span variant="other" mg="5px 0px 0px 15px">
+                0{i + 1} / {item?.place_name}
+              </Span>
+              <StBtn
+                type="button"
                 onClick={() => {
                   setEditSchedule({
                     ...editSchedule,
@@ -116,18 +105,77 @@ const EditKakaoMap = ({
                       address: item.address_name,
                     },
                   });
-                  editOpenModal();
+                  openMap();
                 }}
               >
-                선택하기
-              </button>
-            </div>
-          </div>
+                <Svg variant="locationBegie" />
+              </StBtn>
+            </Flex>
+            {item?.road_address_name ? (
+              <>
+                {/* <Span variant="small">{item.road_address_name}</Span> */}
+                <Span variant="other" mg="0px 0px 0px 30px">
+                  {item?.address_name}
+                </Span>
+              </>
+            ) : (
+              <Span variant="other" mg="0px 0px 0px 30px">
+                {item?.address_name}
+              </Span>
+            )}
+
+            <Span variant="other" mg="0px 0px 0px 30px">
+              {item.phone}
+            </Span>
+            <StDiv></StDiv>
+          </Flex>
         ))}
-        <div id="pagination"></div>
-      </div>
-    </div>
+        <div id="pagination" style={{ display: "none" }}></div>
+      </Flex>
+    </StContainerDiv>
   );
 };
 
-export default EditKakaoMap;
+export default KakaoMap;
+
+const StContainerDiv = styled.div`
+  background: #ffffff;
+  border: 1px solid #d9d3c7;
+  box-shadow: 5px 5px 15px rgba(164, 161, 157, 0.15);
+  border-radius: 5px;
+  position: absolute;
+  top: 632px;
+  right: 11px;
+  width: 315px;
+  height: 290px;
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    background: #d9d9d9;
+    width: 6px;
+    height: 100%;
+    border-radius: 10px;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: #a4a19d;
+  }
+  &::-webkit-scrollbar-track {
+    width: 0;
+    height: auto;
+  }
+`;
+
+const StDiv = styled.div`
+  background-color: transparent;
+  border-bottom: 1px solid #d9d3c7;
+`;
+
+const StBtn = styled.button`
+  border: none;
+  position: absolute;
+  right: 10px;
+  background-color: transparent;
+  width: 30px;
+  font-size: 14px;
+  cursor: pointer;
+`;

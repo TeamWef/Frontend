@@ -120,14 +120,10 @@ const AlbumCreate = ({ openCreateModal, partyId }) => {
               />
             )}
           </Flex>
+          <Margin />
           <Flex fd="row" jc="center">
             <Svg variant="memo" />
-            <StText
-              variant="medium"
-              width="400px"
-              placeholder="Contents"
-              onChange={onChangeContent}
-            />
+            <StText placeholder="Contents" onChange={onChangeContent} />
           </Flex>
         </Div>
       </Flex>
@@ -168,12 +164,13 @@ const StSpan = styled.span`
 
 const StText = styled.textarea`
   background-color: #fff;
-  width: 400px;
+  width: 450px;
+  padding: 10px;
   border: 0;
   border-radius: 5px;
-  min-height: 40px;
+  min-height: 100px;
   max-height: 400px;
-  font-size: 16px;
+  font-size: 14px;
   resize: none;
   ::placeholder {
     font-size: 14px;

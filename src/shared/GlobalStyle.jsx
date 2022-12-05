@@ -9,6 +9,7 @@ const GlobalStyle = createGlobalStyle`
     outline : none;
     font-family: "Apple SD Gothic Neo",'Noto Sans KR', sans-serif;
   }
+  
   body {
     display: flex;
     max-width: 1200px;

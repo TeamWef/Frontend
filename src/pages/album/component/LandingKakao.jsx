@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import KakaoMap from "./KakaoMap";
 import { useModal } from "../../../hooks/useModal";
-import { Button, Flex, Input, Svg } from "../../../elem";
+import { Button, Flex, Input, Margin, Svg } from "../../../elem";
 import styled from "styled-components";
 
 function LandingKakao({ albumPlace, setAlbumPlace }) {
@@ -23,19 +23,22 @@ function LandingKakao({ albumPlace, setAlbumPlace }) {
   };
 
   return (
-    <>
-      <StForm className="inputForm" onSubmit={handleSubmit}>
-        <Input
-          variant="medium"
-          width="400px"
-          placeholder="Address"
-          onChange={onChange}
-          value={InputText}
-        />
-        <button variant="small" type="submit">
-          검색
-        </button>
-      </StForm>
+    <Flex>
+      <form className="inputForm" onSubmit={handleSubmit}>
+        <Flex fd="row" posi="relative">
+          <Input
+            variant="medium"
+            width="450px"
+            placeholder="Address"
+            onChange={onChange}
+            value={InputText}
+          />
+          <StDiv>
+            <Vertical />
+            <StBtn type="submit">장소 찾기</StBtn>
+          </StDiv>
+        </Flex>
+      </form>
       <Flex>
         <KakaoMap
           searchPlace={Place}
@@ -44,14 +47,32 @@ function LandingKakao({ albumPlace, setAlbumPlace }) {
           openModal={openModal}
         />
       </Flex>
-    </>
+    </Flex>
   );
 }
 
 export default LandingKakao;
 
-const StForm = styled.form`
+const StBtn = styled.button`
+  position: absolute;
+  width: 100px;
+  background-color: transparent;
+  border: none;
+  color: #a4a19d;
+`;
+
+const Vertical = styled.div`
+  position: absolute;
+  width: 5px;
+  height: 18px;
+  margin-left: 5px;
+  border-left: 1px solid #d9d3c7;
+`;
+
+const StDiv = styled.div`
+  position: relative;
   display: flex;
   align-items: center;
-  /* justify-content: center; */
+  top: 0px;
+  right: 100px;
 `;

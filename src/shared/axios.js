@@ -20,7 +20,7 @@ const setToken = async (config) => {
         refreshToken: refreshToken,
       })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         setCookie("token", res.headers.authorization);
         setCookie("refresh-token", res.headers["refresh-token"]);
       });

@@ -6,6 +6,7 @@ import album from "../modules/albumSlice";
 import mypage from "../modules/mypageSlice";
 import notice from "../modules/noticeSlice";
 import invite from "../modules/inviteSlice";
+import chat from "../modules/chatSlice";
 
 export const store = configureStore({
   reducer: {
@@ -16,6 +17,7 @@ export const store = configureStore({
     mypage,
     notice,
     invite,
+    // chat,
   },
   middleware: getDefaultMiddleware({
     serializableCheck: false,
