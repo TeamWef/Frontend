@@ -252,14 +252,14 @@ const SchdeleDetail = ({ scheduleId }) => {
               <StContentDiv>
                 <StTitleInput
                   type="text"
-                  placeholder="제목"
+                  placeholder={scheduleDetail.title}
                   name="title"
                   onChange={onChangeHandler}
                   value={editSchedule.title}
                 />
                 <StTitleInput
                   type="text"
-                  placeholder="내용"
+                  placeholder={scheduleDetail.content}
                   name="content"
                   onChange={onChangeHandler}
                   value={editSchedule.content}

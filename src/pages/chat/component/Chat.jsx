@@ -55,19 +55,26 @@ export const Chat = () => {
   const socketConnect = () => {
     const webSocket = new SockJS(`${process.env.REACT_APP_BASE_URL}/socket`);
     stompClient.current = Stomp.over(webSocket);
-    stompClient.current.connect(
-      {
-        Authorization: token,
-      },
-      // 연결 성공 시 실행되는 함수
-      () => {
-        stompClient.current.subscribe(`/sub/chatrooms/${partyId}`, (res) => {
-          const newMessage = JSON.parse(res.body);
-          setReceiveMsg({ ...receiveMsg, newMessage });
-        });
-      },
-      headers
-    );
+
+    try {
+      // stompClient.current.debug = function (str) {};
+      // stompClient.current.debug = null;
+      stompClient.current.connect(
+        {
+          Authorization: token,
+        },
+        // 연결 성공 시 실행되는 함수
+        () => {
+          stompClient.current.subscribe(`/sub/chatrooms/${partyId}`, (res) => {
+            const newMessage = JSON.parse(res.body);
+            setReceiveMsg({ ...receiveMsg, newMessage });
+          });
+        },
+        headers
+      );
+    } catch (err) {
+      console.log("err");
+    }
   };
 
   const sendMessage = (e) => {
@@ -75,6 +82,7 @@ export const Chat = () => {
     const message = e.target.chat.value;
     if (message === "") return false;
 
+    stompClient.current.debug = null;
     stompClient.current.send(
       `/pub/chatrooms/${partyId}`,
       headers,
@@ -83,6 +91,7 @@ export const Chat = () => {
         token: token,
       })
     );
+
     setMessage("");
     // textRef.current.value = null;
     // e.target.chat.value = [];
@@ -375,6 +384,7 @@ const StBtn = styled.button`
 const StChatBoxDiv = styled.div`
   width: 98%;
   display: flex;
+
   justify-content: ${(props) => props.align};
   & p {
     margin-left: 5px;
@@ -394,6 +404,7 @@ const StChatDiv = styled.div`
   padding: 8px 10px;
   margin-top: 11px;
   width: max-content;
+  margin-bottom: 10px;
   border-radius: 15px 15px 0px 15px;
   text-align: right;
 `;
@@ -404,6 +415,7 @@ const StUserChatDiv = styled.div`
   margin-left: 10px;
   padding: 10px 5px 5px 5px;
   width: max-content;
+  margin-bottom: 10px;
   border-radius: 15px 15px 15px 0px;
   text-align: left;
   white-space: normal;
