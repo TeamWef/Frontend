@@ -73,19 +73,21 @@ export const __login = createAsyncThunk(
 export const kakaoLogin = createAsyncThunk(
   "users/kakaoLogin",
   async ({ code, navigate }, thunkAPI) => {
-    const data = await axios.get(
-      `${ServerUrl}/members/kakao/callback?code=${code}`
-    );
-    setCookie("token", data.headers.authorization);
-    setRFCookie("refresh-token", data.headers[`refresh-token`]);
-    navigate("/");
-    return thunkAPI.fulfillWithValue(data);
+    try {
+      const data = await axios.get(
+        `${ServerUrl}/members/kakao/callback?code=${code}`
+      );
+      setCookie("token", data.headers.authorization);
+      setCookie("refresh-token", data.headers[`refresh-token`]);
+      navigate("/");
+      window.location.reload();
+      return thunkAPI.fulfillWithValue(data);
+    } catch (error) {
+      alert(`오류가 발생했습니다`);
+      navigate("/");
+    }
   }
 );
-//  ).then((res) => {
-//     console.log(res);
-//   });
-// };
 
 export const membersSlice = createSlice({
   name: "members",

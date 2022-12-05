@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import { Div, Flex, Img, Margin, Span } from "../../elem";
+import { Div, Flex, Img, Margin, Span, Svg } from "../../elem";
 import { __popularSchedule } from "../../redux/modules/scheduleSlice";
 import { Chat } from "../chat/component/Chat";
 
@@ -41,7 +41,7 @@ const GroupMain = () => {
                     return (
                       <Flex key={i} fd="row" ai="center">
                         {item.profileImageUrl === null ? (
-                          <Img src="/images/userProfile.jpg" />
+                          <Svg variant="profile" />
                         ) : (
                           <Img src={item.profileImageUrl} alt="profileImg" />
                         )}
