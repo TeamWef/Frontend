@@ -17,7 +17,10 @@ const StDiv = styled.div`
   margin: ${({ mg }) => (mg ? mg : "")};
   padding: ${({ pd }) => (pd ? pd : "")};
   overflow: ${({ ovf }) => (ovf ? ovf : "")};
+  top: ${({ top }) => (top ? top : "")};
+  left: ${({ left }) => (left ? left : "")};
   border: ${({ bd }) => (bd ? bd : "")};
+
 
   ${({ variant }) => {
     switch (variant) {
@@ -72,7 +75,7 @@ const StDiv = styled.div`
       case "dropDown":
         return css`
           position: absolute;
-          top: 50px;
+          /* top: 50px; */
           width: 80px;
           height: auto;
           margin-left: 215px;

@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { Button, Div, Flex, Img, Margin, Span } from "../../../elem";
+import { Button, Div, Flex, Img, Margin, Span, Svg } from "../../../elem";
 import { useInput } from "../../../hooks/useInput";
+import { useModal } from "../../../hooks/useModal";
 import {
   __addComment,
   __delComment,
@@ -12,12 +13,11 @@ import {
 const AlbumComments = ({ id, commentList, myId }) => {
   const dispatch = useDispatch();
   const myProfile = useSelector((state) => state.mypage?.myProfile);
-  //등록시 State
   const [comment, onChange, reset] = useInput("");
-
-  //수정시 State
   const [updateTarget, setUpdateTarget] = useState("");
   const [Input, changeInput, inputReset, setInput] = useInput("");
+  const [updateMode, setUpdateMode] = useState("");
+  const [edit, onEdit] = useModal();
 
   const addCommentHandler = () => {
     dispatch(__addComment({ id, comment }));
@@ -32,7 +32,7 @@ const AlbumComments = ({ id, commentList, myId }) => {
   };
   return (
     <StContainer>
-      <StAddComment>
+      <StAddDiv>
         <Flex ai="flex-start">
           <Flex fd="row" ai="center">
             {myProfile.profileImageUrl ? (
@@ -46,6 +46,7 @@ const AlbumComments = ({ id, commentList, myId }) => {
           </Flex>
           <Flex fd="row">
             <StInput
+              bc="transparent"
               placeholder="댓글 내용 작성하기"
               value={comment}
               onChange={onChange}
@@ -55,67 +56,95 @@ const AlbumComments = ({ id, commentList, myId }) => {
             </Button>
           </Flex>
         </Flex>
-      </StAddComment>
+      </StAddDiv>
       <br />
       <Flex>
         <Div variant="scroll-y" width="470px" height="165px">
           {commentList?.map((comment) => {
             return (
-              <StComment key={comment.id}>
-                <Flex fd="row" ai="center" jc="flex-start">
-                  {comment.profileImageUrl ? (
-                    <Img src={comment.profileImageUrl} alt="profileImg" />
-                  ) : (
-                    <Img src="/images/userProfile.jpg" alt="profileImg" />
-                  )}
-                  <Span variant="mediumBronze" mg="0 25px 0 5px">
-                    {comment.writer}
-                  </Span>
-                  <Span variant="smallBronze">{comment.beforeTime}</Span>
-                </Flex>
-                <Margin mg="5px" />
-                {comment.id === updateTarget ? (
-                  <>
-                    <input value={Input} onChange={changeInput} />
-                  </>
-                ) : (
-                  <Span variant="smallBronze">{comment.content}</Span>
-                )}
-                {comment.id === updateTarget ? (
-                  <>
-                    <button
-                      onClick={() => {
-                        dispatch(
-                          __updateComment({ id: comment.id, content: Input })
-                        );
-                        setUpdateTarget("");
-                        inputReset();
-                      }}
-                    >
-                      수정 완료
-                    </button>
-                    <button onClick={() => setUpdateTarget("")}>취소</button>
-                  </>
-                ) : (
-                  <>
-                    {myId === comment.memberEmail ? (
-                      <>
-                        <button
+              <StCommentDiv key={comment.id}>
+                <Flex fd="row" ai="center" jc="space-between" width="">
+                  <Flex fd="row" ai="center">
+                    {comment.profileImageUrl ? (
+                      <Img src={comment.profileImageUrl} alt="profileImg" />
+                    ) : (
+                      <Img src="/images/userProfile.jpg" alt="profileImg" />
+                    )}
+                    <Span variant="mediumBronze" mg="0 25px 0 5px">
+                      {comment.writer}
+                    </Span>
+                    <Span variant="smallBronze">{comment.beforeTime}</Span>
+                  </Flex>
+                  {myId === comment.memberEmail && (
+                    <>
+                      <Div>
+                        <Svg
+                          variant="editDelete"
                           onClick={() => {
+                            onEdit();
                             setUpdateTarget(comment.id);
-                            setInput(comment.content);
                           }}
-                        >
-                          수정
-                        </button>
-                        <button onClick={() => delCommentHandler(comment.id)}>
-                          삭제
-                        </button>
-                      </>
-                    ) : null}
-                  </>
-                )}
-              </StComment>
+                        />
+                        <Margin mg="10px" />
+                      </Div>
+                      {edit && comment.id === updateTarget && (
+                        <Div variant="dropDown" top="25px" left="140px">
+                          <Button
+                            variant="drop-top"
+                            onClick={() => {
+                              setUpdateTarget(comment.id);
+                              setInput(comment.content);
+                              setUpdateMode(true);
+                              onEdit();
+                            }}
+                          >
+                            수정하기
+                          </Button>
+                          <Button
+                            variant="drop-bottom"
+                            onClick={() => delCommentHandler(comment.id)}
+                          >
+                            삭제하기
+                          </Button>
+                        </Div>
+                      )}
+                    </>
+                  )}
+                </Flex>
+                <Flex fd="row" jc="flex-start">
+                  {updateMode && comment.id === updateTarget ? (
+                    <>
+                      <StInput bc="#fff" value={Input} onChange={changeInput} />
+                      <StButton
+                        onClick={() => {
+                          dispatch(
+                            __updateComment({
+                              id: comment.id,
+                              content: Input,
+                            })
+                          );
+                          setUpdateTarget("");
+                          inputReset();
+                          setUpdateMode(false);
+                        }}
+                      >
+                        수정
+                      </StButton>
+                      <StButton
+                        onClick={() => {
+                          setUpdateTarget("");
+                          setUpdateMode(false);
+                        }}
+                      >
+                        취소
+                      </StButton>
+                    </>
+                  ) : (
+                    <StContentSpan>{comment.content}</StContentSpan>
+                  )}
+                  <Margin mg="5px" />
+                </Flex>
+              </StCommentDiv>
             );
           })}
         </Div>
@@ -127,10 +156,11 @@ const AlbumComments = ({ id, commentList, myId }) => {
 export default AlbumComments;
 
 const StInput = styled.input`
-  background-color: transparent;
+  background-color: ${(props) => props.bc};
   border: 0;
   width: 322px;
   color: #a4a19d;
+  border-radius: 5px;
   ::placeholder {
     opacity: 0.5;
   }
@@ -145,7 +175,7 @@ const StContainer = styled.div`
   height: 260px;
 `;
 
-const StAddComment = styled.div`
+const StAddDiv = styled.div`
   display: flex;
   width: 100%;
   padding: 10px;
@@ -153,10 +183,31 @@ const StAddComment = styled.div`
   border-radius: 5px;
 `;
 
-const StComment = styled.div`
+const StCommentDiv = styled.div`
+  position: relative;
   width: 455px;
   height: auto;
   padding-bottom: 15px;
   margin: 0 5px 15px 5px;
   border-bottom: 1px solid #d9d3c7;
+`;
+
+const StContentSpan = styled.span`
+  margin-top: 5px;
+  width: 450px;
+  height: auto;
+  display: block;
+  align-items: center;
+  font-size: 14px;
+  color: #a4a19d;
+  overflow-wrap: break-word;
+`;
+
+const StButton = styled.button`
+  font-size: 14px;
+  color: #a4a19d;
+  border: 0;
+  background-color: transparent;
+  cursor: pointer;
+  margin: 5px;
 `;

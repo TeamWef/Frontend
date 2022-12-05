@@ -1,13 +1,34 @@
 import axios from "axios";
-import { getCookie } from "../redux/modules/customCookies";
+import { getCookie, setCookie } from "../redux/modules/customCookies";
+import jwt_decode from "jwt-decode";
 
 const token = getCookie("token");
 const baseURL = process.env.REACT_APP_BASE_URL;
-
 const instance = axios.create({ baseURL });
 
-const setToken = (config) => {
-  config.headers["Authorization"] = `${token}`;
+const setToken = async (config) => {
+  const accesstoken = getCookie("token");
+  const expireTime = jwt_decode(accesstoken).exp;
+  const date = new Date(expireTime * 1000);
+  const now = new Date();
+  const diffSec = date.getTime() - now.getTime();
+  const refreshToken = getCookie("refresh-token");
+  if (diffSec < 30000) {
+    await axios
+      .post(`${baseURL}/members/reissue`, {
+        accessToken: accesstoken,
+        refreshToken: refreshToken,
+      })
+      .then((res) => {
+        console.log(res);
+        setCookie("token", res.headers.authorization);
+        setCookie("refresh-token", res.headers["refresh-token"]);
+      });
+    config.headers["Authorization"] = getCookie("token");
+    console.log(config);
+  } else {
+    config.headers["Authorization"] = getCookie("token");
+  }
   return config;
 };
 
@@ -23,53 +44,5 @@ instance.interceptors.response.use(
     console.log(error);
   }
 );
-
-// instance.interceptors.response.use(
-//   (response) => {
-//     return response;
-//   },
-//   async (error) => {
-//     const { response, config } = error;
-//     const originalRequest = config;
-//     if (response.status === 403 || response.status === 401) {
-//       let refreshToken = getCookie("refreshToken");
-//       let accessToken = getCookie("token");
-//       let userId = localStorage.getItem("id");
-//       const tokens = {
-//         refreshToken,
-//         accessToken,
-//         userId,
-//       };
-//       if (refreshToken) {
-//         const { data } = await checkToken(tokens);
-//         const access = data.data.accessToken;
-//         const refresh = data.data.refreshToken;
-//         localStorage.setItem("token", access);
-//         localStorage.setItem("retoken", refresh);
-//         window.location.reload();
-//       }
-//       return axios(originalRequest);
-//     }
-//     if (response.status === 404) {
-//       return window.location.replace("/notfound");
-//     }
-//     if (response.status === 504) {
-//       return window.location.replace("/connectfail");
-//     }
-//     if (response.status === 400) {
-//       return response;
-//     }
-//     return Promise.reject(error);
-//   }
-// );
-
-// const checkToken = async ({ accessToken, refreshToken, userId }) => {
-//   const response = await axios.post(`${baseURL}/user/reissue`, {
-//     accessToken,
-//     refreshToken,
-//     userId,
-//   });
-//   return response;
-// };
 
 export default instance;

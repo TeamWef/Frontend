@@ -71,6 +71,7 @@ export const __updateAlbumItem = createAsyncThunk(
       if (data.status === 200) {
         alert(`${data.data}`);
       }
+      // console.log(data);
       return thunkAPI.fulfillWithValue(payload);
     } catch (err) {
       return console.log(err);
@@ -148,7 +149,7 @@ export const albumSlice = createSlice({
     },
     // Update
     [__updateAlbumItem.fulfilled]: (state, action) => {
-      const editContent = action.payload.contentInput;
+      const editContent = action.payload.editContent;
       state.albumItem = { ...state.albumItem, content: editContent };
       state.album = state.album.map((item) => {
         if (item.id === action.payload.id) {
