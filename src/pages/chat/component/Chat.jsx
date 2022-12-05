@@ -186,7 +186,7 @@ export const Chat = () => {
                           {item?.newMessage.memberName}
                         </Span>
                         <Flex fd="row">
-                          {message?.profileImg === null ? (
+                          {item?.newMessage.profileImg === null ? (
                             <StSizeDiv>
                               <Svg variant="profile" />
                             </StSizeDiv>
