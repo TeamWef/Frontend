@@ -1,14 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import {
-  addScheduleApi,
-  getScheduleApi,
-  getScheduleDetailApi,
-  delScheduleApi,
-  getGroupScheduleApi,
-  putScheduleEditApi,
-  postSchedulejoinApi,
-  getSchedulePopularApi,
-} from "./API/scheduleAPI";
+import { scheduleApis } from "./API/scheduleAPI";
 
 const initialState = {
   schedule: [],
@@ -24,11 +15,9 @@ const initialState = {
 export const __addSchedule = createAsyncThunk(
   "post/addSchedule",
   async (payload, thunkAPI) => {
-    console.log("payload", payload);
     try {
-      const response = await addScheduleApi(payload);
-      console.log("res===>", response);
-      return thunkAPI.fulfillWithValue(response);
+      const response = await scheduleApis.addSchedule(payload);
+      return thunkAPI.fulfillWithValue(response.data);
     } catch (err) {
       console.log("error");
       return thunkAPI.rejectWithValue(err);
@@ -41,7 +30,7 @@ export const __getSchedule = createAsyncThunk(
   "get/getSchedule",
   async (payload, thunkAPI) => {
     try {
-      const res = await getScheduleApi(payload);
+      const res = await scheduleApis.getSchedule(payload);
       return thunkAPI.fulfillWithValue(res.data);
     } catch (err) {
       console.log("error", err);
@@ -55,7 +44,7 @@ export const __getScheduleDetail = createAsyncThunk(
   "get/getScheduleDetail",
   async (payload, thunkAPI) => {
     try {
-      const res = await getScheduleDetailApi(payload);
+      const res = await scheduleApis.getScheduleDetail(payload);
       return thunkAPI.fulfillWithValue(res.data);
     } catch (err) {
       console.log("error", err);
@@ -69,7 +58,7 @@ export const __getGroupSchedule = createAsyncThunk(
   "get/getGroupSchedule",
   async (payload, thunkAPI) => {
     try {
-      const res = await getGroupScheduleApi();
+      const res = await scheduleApis.getGroupSchedule();
       return thunkAPI.fulfillWithValue(res);
     } catch (err) {
       console.log("error", err);
@@ -82,8 +71,7 @@ export const __delSchedule = createAsyncThunk(
   "delete/delSchedule",
   async (payload, thunkAPI) => {
     try {
-      await delScheduleApi(payload);
-      console.log("???????=>", payload);
+      await scheduleApis.delSchedule(payload);
       return thunkAPI.fulfillWithValue(payload);
     } catch (err) {
       console.log("error ::::::", err.response);
@@ -95,9 +83,8 @@ export const __delSchedule = createAsyncThunk(
 export const __editSchedules = createAsyncThunk(
   "put/editSchedules",
   async (payload, thunkAPI) => {
-    console.log("수정 페이로드", payload);
     try {
-      await putScheduleEditApi(payload);
+      await scheduleApis.putSchedule(payload);
       return thunkAPI.fulfillWithValue(payload);
     } catch (err) {
       console.log("error ::::::", err.response);
@@ -111,7 +98,8 @@ export const __popularSchedule = createAsyncThunk(
   "get/popularSchedule",
   async (payload, thunkAPI) => {
     try {
-      const res = await getSchedulePopularApi(payload);
+      const res = await scheduleApis.getSchedulePopular(payload);
+      console.log(res);
       return thunkAPI.fulfillWithValue(res.data);
     } catch (err) {
       console.log("error ::::::", err.response);
@@ -127,7 +115,10 @@ export const __joinSchedules = createAsyncThunk(
     try {
       console.log(payload);
       const { detailId, participant } = payload;
-      const res = await postSchedulejoinApi({ detailId, participant });
+      const res = await scheduleApis.postSchedulejoin({
+        detailId,
+        participant,
+      });
       const isJoin = res.data;
       const myProfile = payload.participant;
       return thunkAPI.fulfillWithValue({ isJoin, myProfile });
