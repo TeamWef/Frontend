@@ -6,7 +6,7 @@ export const albumApis = {
   delAlbum: async (payload) => await instance.delete(`/album/${payload}`),
   updateAlbum: async (payload) =>
     await instance.patch(`/album/${payload.id}`, {
-      content: payload.contentInput,
+      content: payload.editContent,
     }),
 };
 

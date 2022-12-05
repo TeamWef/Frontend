@@ -4,7 +4,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { useInput } from "../../../hooks/useInput";
 import {
-  __changed,
   __delAlbumItem,
   __getAlbumItem,
   __updateAlbumItem,
@@ -42,11 +41,12 @@ const AlbumDetail = () => {
 
   //수정시 state
   const [updateMode, setUpdateMode] = useState(false);
-  const [contentInput, onChange, reset, setContentInput] = useInput(content);
+  const myContent = content?.replaceAll("<br>", "\n");
+  const [contentInput, onChange, reset, setContentInput] = useInput(myContent);
 
   useEffect(() => {
     dispatch(__getAlbumItem(id));
-    setContentInput(content);
+    setContentInput(myContent);
   }, [dispatch, navigate]);
 
   const updateClick = () => {
@@ -54,12 +54,14 @@ const AlbumDetail = () => {
     if (!contentInput) {
       return alert("내용을 입력해주세요");
     }
-    dispatch(__updateAlbumItem({ id, contentInput }));
+    const editContent = contentInput.replace(/(?:\r\n|\r|\n)/g, "<br>");
+    // console.log(editContent);
+    dispatch(__updateAlbumItem({ id, editContent }));
     reset();
-    setContentInput(content);
+    setContentInput(myContent);
     setUpdateMode(false);
   };
-  console.log(albumItem);
+
   return (
     <Div variant="bodyContainer">
       <GroupTitle />
@@ -68,17 +70,24 @@ const AlbumDetail = () => {
         <Flex fd="row">
           {myId === memberEmail && (
             <>
+              {updateMode ? (
+                <Button variant="small" onClick={updateClick}>
+                  수정완료
+                </Button>
+              ) : (
+                <Button
+                  variant="border-small"
+                  onClick={() => {
+                    setUpdateMode(true);
+                    setContentInput(myContent);
+                  }}
+                >
+                  수정
+                </Button>
+              )}
+
               <Button
-                variant="small"
-                onClick={() => {
-                  setUpdateMode(true);
-                  setContentInput(content);
-                }}
-              >
-                수정
-              </Button>
-              <Button
-                variant="small"
+                variant="border-small"
                 onClick={() => {
                   if (window.confirm("정말 삭제하시겠습니까?")) {
                     dispatch(__delAlbumItem(id));
@@ -91,13 +100,15 @@ const AlbumDetail = () => {
               </Button>
             </>
           )}
-          <Margin mg="10px" />
-          <Svg
-            variant="close"
+          <Button
+            variant="border-small"
             onClick={() => {
               navigate(`/${partyId}/album`);
             }}
-          />
+          >
+            목록보기
+          </Button>
+          <Margin mg="15px" />
         </Flex>
       </Flex>
       <Margin />
@@ -131,21 +142,19 @@ const AlbumDetail = () => {
               </Flex>
               <Div variant="scroll-y" width="470px" height="162px" mg="0">
                 {updateMode ? (
-                  <input value={contentInput} onChange={onChange} />
+                  <StText value={contentInput} onChange={onChange} />
                 ) : (
-                  <Span variant="smallBronze">{content}</Span>
+                  <Span variant="smallBronze" ws="pre-wrap">
+                    {myContent}
+                  </Span>
                 )}
               </Div>
-              <Span variant="smallBronze" asf="flex-start" mg="0 0 0 15px">
+              <Span variant="smallBronze" asf="flex-start" mg="0 0 10px 0">
                 {beforeTime}
               </Span>
             </Flex>
           </Flex>
-          {updateMode ? (
-            <button onClick={updateClick}>수정완료</button>
-          ) : (
-            <AlbumComments id={id} commentList={commentList} myId={myId} />
-          )}
+          <AlbumComments id={id} commentList={commentList} myId={myId} />
         </Div>
       </Flex>
     </Div>
@@ -153,3 +162,10 @@ const AlbumDetail = () => {
 };
 
 export default AlbumDetail;
+
+const StText = styled.textarea`
+  width: 100%;
+  height: 100%;
+  border: none;
+  resize: none;
+`;

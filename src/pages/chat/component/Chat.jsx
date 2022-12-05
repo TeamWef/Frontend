@@ -8,13 +8,11 @@ import { Stomp } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
 import { useDispatch, useSelector } from "react-redux";
 import { __getMessage } from "../../../redux/modules/chatSlice";
+import jwt_decode from "jwt-decode";
 
 export const Chat = () => {
   const [chat, openChat, setChat] = useModal();
   const stompClient = useRef(null);
-  const chatId = useSelector(
-    (state) => state.schedule?.popularSchedule.chatRoomId
-  );
   const token = getCookie("token");
   const partyId = useParams().partyId;
   const [chatLog, setChatLog] = useState([]);
@@ -24,6 +22,12 @@ export const Chat = () => {
   const modalEl = useRef(null);
   const userMessage = useSelector((state) => state.chat);
   const [message, setMessage] = useState("");
+
+  const tokens = getCookie("token").replace("Bearer ", "");
+  const decode = jwt_decode(tokens);
+  const myId = decode.sub;
+
+  console.log(myId);
 
   const inputMessage = (e) => {
     setMessage(e.target.value);
@@ -43,8 +47,8 @@ export const Chat = () => {
   });
 
   useEffect(() => {
-    // dispatch(__getMessage(partyId));
-  });
+    dispatch(__getMessage(partyId));
+  }, [dispatch, partyId]);
 
   useEffect(() => {
     setChatLog([...chatLog, receiveMsg]);
@@ -121,13 +125,15 @@ export const Chat = () => {
                   return item !== undefined;
                 })
                 .map((item, i) => {
-                  return item?.newMessage.memberId === 2 ? (
-                    <StChatBoxDiv key={i}>
-                      <p>{item?.newMessage.memberName}</p>
+                  return item?.newMessage.memberEmail === myId ? (
+                    <StChatBoxDiv key={item?.newMessage.messageId}>
+                      <Span>{item?.newMessage.memberName}</Span>
                       <StUserChatDiv>{item?.newMessage.content}</StUserChatDiv>
+                      <p>{item?.newMessage.createdAt.substring(10)}</p>
                     </StChatBoxDiv>
                   ) : (
                     <StChatBoxDiv>
+                      <p>{item?.newMessage.createdAt.substring(10)}</p>
                       <StChatDiv>{item?.newMessage.content}</StChatDiv>
                     </StChatBoxDiv>
                   );

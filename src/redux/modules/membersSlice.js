@@ -22,9 +22,9 @@ export const __emailCheck = createAsyncThunk(
       if (data.status === 200) {
         alert(`${data.data}`);
       }
-      return console.log(data);
+      return null;
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       alert(`${error.response.data}`);
     }
   }
