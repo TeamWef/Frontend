@@ -144,10 +144,17 @@ export const Chat = () => {
                     align={message?.memberEmail !== myId ? "start" : "end"}
                   >
                     <Flex>
-                      <Span variant="other" mg="8px 0px 3px 5px" fw="600">
+                      <Span variant="other" mg="15px 0px 3px 45px" fw="600">
                         {message?.memberName}
                       </Span>
                       <Flex fd="row">
+                        {message?.profileImg === null ? (
+                          <StSizeDiv>
+                            <Svg variant="profile" />
+                          </StSizeDiv>
+                        ) : (
+                          <StImg alt="맹짱구" src={message?.profileImg} />
+                        )}
                         <StUserChatDiv>{message?.content}</StUserChatDiv>
                         <Span
                           variant="other"
@@ -175,10 +182,17 @@ export const Chat = () => {
                       }
                     >
                       <Flex>
-                        <Span variant="other" mg="8px 0px 3px 5px" fw="600">
+                        <Span variant="other" mg="8px 0px 3px 45px" fw="600">
                           {item?.newMessage.memberName}
                         </Span>
                         <Flex fd="row">
+                          {message?.profileImg === null ? (
+                            <StSizeDiv>
+                              <Svg variant="profile" />
+                            </StSizeDiv>
+                          ) : (
+                            <StImg alt="" src={item?.newMessage.profileImg} />
+                          )}
                           <StUserChatDiv>
                             {item?.newMessage.content}
                           </StUserChatDiv>
@@ -395,9 +409,23 @@ const StUserChatDiv = styled.div`
   width: 150px;
   background-color: #fff;
   margin-left: 10px;
-  padding: 5px 5px 5px 5px;
+  padding: 10px 5px 5px 5px;
   width: max-content;
   border-radius: 15px 15px 15px 0px;
   text-align: left;
   white-space: normal;
+`;
+
+const StSizeDiv = styled.div`
+  width: 30px;
+  height: 30px;
+  margin-left: 10px;
+  border-radius: 50%;
+`;
+
+const StImg = styled.img`
+  width: 30px;
+  height: 30px;
+  margin-left: 10px;
+  border-radius: 50%;
 `;
