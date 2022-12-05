@@ -161,6 +161,8 @@ export const Chat = () => {
                   </StChatBoxDiv>
                 );
               })}
+            </StDiv>
+            <StDiv>
               {chatLog
                 ?.filter((item) => {
                   return item !== undefined;
