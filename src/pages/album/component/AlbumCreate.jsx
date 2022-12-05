@@ -2,17 +2,8 @@ import React, { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import GroupTitle from "../../../components/GroupTitle";
-import {
-  Button,
-  Div,
-  Flex,
-  Img,
-  Input,
-  Margin,
-  Span,
-  Svg,
-} from "../../../elem";
-import { useInput, useInputs } from "../../../hooks/useInput";
+import { Button, Div, Flex, Img, Margin, Span, Svg } from "../../../elem";
+import { useInput } from "../../../hooks/useInput";
 import { __addAlbumItem } from "../../../redux/modules/albumSlice";
 import LandingKakao from "./LandingKakao";
 
@@ -20,7 +11,7 @@ const AlbumCreate = ({ openCreateModal, partyId }) => {
   const dispatch = useDispatch();
 
   // 내용 State
-  const [content, onChangeContent, contentReset, setContent] = useInput("");
+  const [content, onChangeContent] = useInput("");
   const [albumPlace, , placeReset, setAlbumPlace] = useInput("");
   const albumItem = {
     content: content,
@@ -61,7 +52,6 @@ const AlbumCreate = ({ openCreateModal, partyId }) => {
     dispatch(__addAlbumItem({ newAlbum, partyId }));
     setUploadImg("");
     openCreateModal();
-    // setChange(!Change);
   };
   // console.log(albumPlace);
   return (
@@ -103,26 +93,21 @@ const AlbumCreate = ({ openCreateModal, partyId }) => {
             </StDashDiv>
           </Div>
         )}
-
         <Div variant="albumBox" jc="flex-start" fd="column">
-          <Flex fd="row" jc="center" ai="center">
-            <Svg variant="location" />
-            {albumPlace ? (
-              <Div width="400px" height="40px" bc="#fff">
-                <Span variant="smallBronze">
-                  {albumPlace.placeName} : {albumPlace.address}
-                </Span>
-              </Div>
-            ) : (
-              <LandingKakao
-                albumPlace={albumPlace}
-                setAlbumPlace={setAlbumPlace}
-              />
-            )}
+          <Flex fd="row" jc="center">
+            <StSvgWrap>
+              <Svg variant="location" />
+            </StSvgWrap>
+            <LandingKakao
+              albumPlace={albumPlace}
+              setAlbumPlace={setAlbumPlace}
+            />
           </Flex>
           <Margin />
           <Flex fd="row" jc="center">
-            <Svg variant="memo" />
+            <StSvgWrap mg="5px">
+              <Svg variant="memo" />
+            </StSvgWrap>
             <StText placeholder="Contents" onChange={onChangeContent} />
           </Flex>
         </Div>
@@ -176,4 +161,10 @@ const StText = styled.textarea`
     font-size: 14px;
     opacity: 0.5;
   }
+`;
+
+const StSvgWrap = styled.div`
+  display: flex;
+  align-self: flex-start;
+  margin: ${(props) => (props.mg ? props.mg : "10px 7px")};
 `;

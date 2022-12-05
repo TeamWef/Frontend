@@ -38,7 +38,7 @@ const Notice = () => {
           Connection: "keep-alive",
           "X-Accel-Buffering": "no",
         },
-        heartbeatTimeout: 600000,
+        heartbeatTimeout: 3600000,
         withCredentials: true,
       });
 
