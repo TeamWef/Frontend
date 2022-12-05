@@ -161,8 +161,7 @@ export const Chat = () => {
                   </StChatBoxDiv>
                 );
               })}
-            </StDiv>
-            <StDiv>
+
               {chatLog
                 ?.filter((item) => {
                   return item !== undefined;
@@ -172,7 +171,7 @@ export const Chat = () => {
                     <StChatBoxDiv
                       key={item?.newMessage.messageId}
                       align={
-                        item.newMessage.memberEmail === myId ? "start" : "end"
+                        item.newMessage.memberEmail !== myId ? "start" : "end"
                       }
                     >
                       <Flex>
@@ -298,8 +297,8 @@ const StContainerDiv = styled.div`
 const StDiv = styled.div`
   width: 100%;
   height: 560px;
-  position: absolute;
-  top: 60px;
+  /* position: absolute;
+  top: 60px; */
   overflow-y: auto;
   &::-webkit-scrollbar {
     background: #d9d9d9;
