@@ -12,6 +12,7 @@ const setToken = async (config) => {
   const date = new Date(expireTime * 1000);
   const now = new Date();
   const diffSec = date.getTime() - now.getTime();
+
   const refreshToken = getCookie("refresh-token");
   if (diffSec < 30000) {
     await axios
@@ -25,7 +26,7 @@ const setToken = async (config) => {
         setCookie("refresh-token", res.headers["refresh-token"]);
       });
     config.headers["Authorization"] = getCookie("token");
-    console.log(config);
+    // console.log(config);
   } else {
     config.headers["Authorization"] = getCookie("token");
   }
@@ -42,6 +43,18 @@ instance.interceptors.response.use(
   },
   async (error) => {
     console.log(error);
+    //     if (response.status === 404) {
+    //       return window.location.replace("/notfound");
+    //     }
+    //     if (response.status === 504) {
+    //       return window.location.replace("/connectfail");
+    //     }
+    //     if (response.status === 400) {
+    //       return response;
+    //     }
+    //     return Promise.reject(error);
+    //   }
+    // );
   }
 );
 
