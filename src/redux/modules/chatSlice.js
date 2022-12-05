@@ -12,7 +12,6 @@ export const __getMessage = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const res = await chatApis.getMessage(payload);
-      console.log("???", res);
       return thunkAPI.fulfillWithValue(res.data);
     } catch (err) {
       console.log(err);

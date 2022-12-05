@@ -17,7 +17,6 @@ export const Invite = () => {
   const modalEl = useRef(null);
   const textInput = useRef();
 
-  console.log(inviteCode);
   // 인풋 내용 복사하기
   const copy = () => {
     const el = textInput.current;
@@ -33,12 +32,12 @@ export const Invite = () => {
     }
   };
 
-  // useEffect(() => {
-  //   if (invite) document.addEventListener("mousedown", handleCloseModal);
-  //   return () => {
-  //     document.removeEventListener("mousedown", handleCloseModal);
-  //   };
-  // });
+  useEffect(() => {
+    if (invite) document.addEventListener("mousedown", handleCloseModal);
+    return () => {
+      document.removeEventListener("mousedown", handleCloseModal);
+    };
+  });
 
   const postCodeHandler = (e) => {
     e.preventDefault();
@@ -59,12 +58,12 @@ export const Invite = () => {
 
   return (
     <>
-      <StBtn onClick={openInvite} ref={modalEl}>
+      <StBtn onClick={openInvite}>
         <Svg variant="invite" />
       </StBtn>
       {invite &&
         (param.partyId === undefined ? (
-          <StContainerDiv>
+          <StContainerDiv ref={modalEl}>
             <StTitleDiv>
               <Span variant="bold">Invite</Span>
               <StBtn
@@ -93,7 +92,7 @@ export const Invite = () => {
             </Button>
           </StContainerDiv>
         ) : (
-          <StContainerDiv>
+          <StContainerDiv ref={modalEl}>
             <StTitleDiv>
               <Span variant="bold">Invite</Span>
               <StBtn
@@ -163,4 +162,5 @@ const StInput = styled.input`
 const StBtn = styled.button`
   background-color: transparent;
   border: none;
+  cursor: pointer;
 `;

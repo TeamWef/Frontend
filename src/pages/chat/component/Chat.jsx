@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import { Div, Svg, Span } from "../../../elem";
+import { Div, Svg, Span, Flex } from "../../../elem";
 import { useModal } from "../../../hooks/useModal";
 import { getCookie } from "../../../redux/modules/customCookies";
 import { useParams } from "react-router-dom";
@@ -8,13 +8,11 @@ import { Stomp } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
 import { useDispatch, useSelector } from "react-redux";
 import { __getMessage } from "../../../redux/modules/chatSlice";
+import jwt_decode from "jwt-decode";
 
 export const Chat = () => {
   const [chat, openChat, setChat] = useModal();
   const stompClient = useRef(null);
-  const chatId = useSelector(
-    (state) => state.schedule?.popularSchedule.chatRoomId
-  );
   const token = getCookie("token");
   const partyId = useParams().partyId;
   const [chatLog, setChatLog] = useState([]);
@@ -22,8 +20,12 @@ export const Chat = () => {
   const headers = { Authorization: token };
   const dispatch = useDispatch();
   const modalEl = useRef(null);
-  const userMessage = useSelector((state) => state.chat);
+  const userMessage = useSelector((state) => state.chat.chat);
+  console.log(userMessage);
   const [message, setMessage] = useState("");
+  const tokens = getCookie("token").replace("Bearer ", "");
+  const decode = jwt_decode(tokens);
+  const myId = decode.sub;
 
   const inputMessage = (e) => {
     setMessage(e.target.value);
@@ -43,8 +45,8 @@ export const Chat = () => {
   });
 
   useEffect(() => {
-    // dispatch(__getMessage(partyId));
-  });
+    dispatch(__getMessage(partyId));
+  }, [dispatch, partyId]);
 
   useEffect(() => {
     setChatLog([...chatLog, receiveMsg]);
@@ -116,18 +118,47 @@ export const Chat = () => {
               <p>그룹명</p>
             </StTextDiv>
             <StDiv>
+              {userMessage.map((message) => {
+                return (
+                  <StChatBoxDiv
+                    align={message.memberEmail === myId ? "end" : "start"}
+                  >
+                    <StRightDiv>
+                      <p>{message?.createdAt.substring(10)}</p>
+                      <StChatDiv>{message?.content}</StChatDiv>
+                    </StRightDiv>
+                  </StChatBoxDiv>
+                );
+              })}
               {chatLog
                 ?.filter((item) => {
                   return item !== undefined;
                 })
                 .map((item, i) => {
-                  return item?.newMessage.memberId === 2 ? (
-                    <StChatBoxDiv key={i}>
-                      <p>{item?.newMessage.memberName}</p>
-                      <StUserChatDiv>{item?.newMessage.content}</StUserChatDiv>
+                  return item?.newMessage.memberEmail !== myId ? (
+                    <StChatBoxDiv
+                      key={item?.newMessage.messageId}
+                      align={
+                        item.newMessage.memberEmail !== myId ? "end" : "start"
+                      }
+                    >
+                      <Flex>
+                        <Span variant="other">
+                          {item?.newMessage.memberName}
+                        </Span>
+                        <StUserChatDiv>
+                          {item?.newMessage.content}
+                        </StUserChatDiv>
+                        <p>{item?.newMessage.createdAt.substring(10)}</p>
+                      </Flex>
                     </StChatBoxDiv>
                   ) : (
-                    <StChatBoxDiv>
+                    <StChatBoxDiv
+                      align={
+                        item.newMessage.memberEmail === myId ? "end" : "start"
+                      }
+                    >
+                      <p>{item?.newMessage.createdAt.substring(10)}</p>
                       <StChatDiv>{item?.newMessage.content}</StChatDiv>
                     </StChatBoxDiv>
                   );
@@ -221,12 +252,6 @@ const StDiv = styled.div`
   position: absolute;
   top: 60px;
   overflow-y: auto;
-  & span {
-    color: #d9d3c7;
-    font-size: 15px;
-    text-align: center;
-    margin-top: 50%;
-  }
   &::-webkit-scrollbar {
     background: #d9d9d9;
     width: 6px;
@@ -293,29 +318,38 @@ const StBtn = styled.button`
 `;
 
 const StChatBoxDiv = styled.div`
-  width: 400px;
+  width: 100%;
   display: flex;
-  justify-content: flex-end;
+  justify-content: ${(props) => props.align};
+`;
+
+const StRightDiv = styled.div`
+  margin-right: 5px;
+`;
+
+const StLeftDiv = styled.div`
+  margin-left: 5px;
 `;
 
 const StChatDiv = styled.div`
   background-color: #ebe3d8;
-  margin-right: -20px;
   padding: 8px 10px;
   margin-top: 11px;
   width: max-content;
-  max-width: 50%;
   border-radius: 15px 15px 0px 15px;
-  text-align: center;
+  text-align: right;
 `;
 
 const StUserChatDiv = styled.div`
+  width: 150px;
   background-color: #fff;
   margin-right: -20px;
-  padding: 8px 10px;
-  margin-top: 11px;
+  padding: 5px 5px 5px 5px;
   width: max-content;
-  max-width: 50%;
   border-radius: 15px 15px 15px 0px;
-  text-align: center;
+  text-align: left;
+  white-space: normal;
+  & p {
+    white-space: normal;
+  }
 `;

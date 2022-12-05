@@ -16,25 +16,31 @@ import "react-calendar/dist/Calendar.css";
 import moment from "moment";
 import { Button, Div, Flex, Margin, Span, Svg } from "../../../elem";
 import GroupTitle from "../../../components/GroupTitle";
+import jwt_decode from "jwt-decode";
+import { getCookie } from "../../../redux/modules/customCookies";
 
 const SchdeleDetail = ({ scheduleId }) => {
   const scheduleDetail = useSelector((state) => state.schedule?.scheduleDetail);
   const participant = useSelector((state) => state.mypage?.myProfile);
-  const participanter = useSelector((state) => state.schedule?.join);
   const [InputText, setInputText] = useState("");
   const [Place, setPlace] = useState("");
   const [isParticipant, setIsParticipant] = useState(
     scheduleDetail.isParticipant
   );
-
   const detailId = useParams().scheduleId;
   const partyId = useParams().partyId;
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(__getScheduleDetail(detailId));
-  }, [dispatch, detailId]);
   const navigate = useNavigate();
-
+  const tokens = getCookie("token").replace("Bearer ", "");
+  const decode = jwt_decode(tokens);
+  const myId = decode.sub;
+  const [scheduleJoin, setScheduleJoin] = useState(false);
+  const joiner = scheduleDetail?.participantResponseDtoList;
+  const [modal, openModal] = useModal();
+  const [map, openMap] = useModal();
+  const [month, openMonth, setMonth] = useModal();
+  const [value, setValue] = useState(new Date());
+  const [date, setDate] = useState("");
   const [editSchedule, setEditSchedule] = useState({
     title: "",
     content: "",
@@ -43,19 +49,14 @@ const SchdeleDetail = ({ scheduleId }) => {
     place: { placeName: "", address: "" },
   });
 
-  const [scheduleJoin, setScheduleJoin] = useState(false);
-  const joiner = scheduleDetail?.participantResponseDtoList;
-
   const onChangeHandler = (e) => {
     const { name, value } = e.target;
     setEditSchedule({ ...editSchedule, [name]: value });
   };
 
-  const [modal, openModal] = useModal();
-  const [map, openMap] = useModal();
-  const [month, openMonth, setMonth] = useModal();
-  const [value, setValue] = useState(new Date());
-  const [date, setDate] = useState("");
+  useEffect(() => {
+    dispatch(__getScheduleDetail(detailId));
+  }, [dispatch, detailId]);
 
   const onEditScheduleHandler = (e) => {
     e.preventDefault();
@@ -106,21 +107,25 @@ const SchdeleDetail = ({ scheduleId }) => {
           </Span>
         </Flex>
         <Flex fd="row">
-          <Button variant="border-small" onClick={openModal}>
-            수정하기
-          </Button>
-          <Button
-            variant="border-small"
-            onClick={() => {
-              if (window.confirm("정말 삭제하시겠습니까?")) {
-                dispatch(__delSchedule(detailId));
-                alert("삭제가 완료되었습니다.");
-              }
-              navigate(`/${partyId}/schedule`);
-            }}
-          >
-            삭제하기
-          </Button>
+          {myId !== scheduleDetail?.memberEmail ? null : (
+            <>
+              <Button variant="border-small" onClick={openModal}>
+                수정하기
+              </Button>
+              <Button
+                variant="border-small"
+                onClick={() => {
+                  if (window.confirm("정말 삭제하시겠습니까?")) {
+                    dispatch(__delSchedule(detailId));
+                    alert("삭제가 완료되었습니다.");
+                  }
+                  navigate(`/${partyId}/schedule`);
+                }}
+              >
+                삭제하기
+              </Button>
+            </>
+          )}
           <Button
             variant="border-small"
             onClick={() => {

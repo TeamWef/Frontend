@@ -12,6 +12,7 @@ const setToken = async (config) => {
   const date = new Date(expireTime * 1000);
   const now = new Date();
   const diffSec = date.getTime() - now.getTime();
+
   const refreshToken = getCookie("refresh-token");
   if (diffSec < 30000) {
     await axios

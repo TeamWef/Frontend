@@ -17,7 +17,7 @@ export const store = configureStore({
     mypage,
     notice,
     invite,
-    // chat,
+    chat,
   },
   middleware: getDefaultMiddleware({
     serializableCheck: false,
