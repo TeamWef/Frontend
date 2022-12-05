@@ -22,6 +22,11 @@ export const Chat = () => {
   const modalEl = useRef(null);
   const userMessage = useSelector((state) => state.chat.chat);
   console.log(userMessage);
+  // const sortMessage = userMessage.sort((a, b) => {
+  //   return new Date(a.date).getTime() - new Date(b.date).getTime();
+  // });
+  // // .reverse();
+  // console.log(sortMessage);
   const [message, setMessage] = useState("");
   const tokens = getCookie("token").replace("Bearer ", "");
   const decode = jwt_decode(tokens);
@@ -114,15 +119,16 @@ export const Chat = () => {
         <Svg variant="message" />
       </StModalDiv>
       {chat ? (
-        chatLog?.length > 1 ? (
+        userMessage?.length > 1 ? (
           <StContainerDiv ref={modalEl}>
             <StTextDiv>
               <p>🥳 위프, we are friends 💖</p>
             </StTextDiv>
             <StDiv>
-              {userMessage.map((message) => {
+              {userMessage?.map((message) => {
                 return message?.memberEmail === myId ? (
                   <StChatBoxDiv
+                    key={message.messageId}
                     align={message.memberEmail === myId ? "end" : "start"}
                   >
                     <Flex fd="row">
