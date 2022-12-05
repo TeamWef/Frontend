@@ -71,10 +71,11 @@ const AlbumCreate = ({ openCreateModal, partyId }) => {
         <Span variant="bold">Album</Span>
         <Flex fd="row">
           <Button variant="small" onClick={uploadHandler}>
-            Upload
+            게시하기
           </Button>
-          <Margin mg="10px" />
-          <Svg variant="close" onClick={openCreateModal} />
+          <Button variant="border-small" onClick={openCreateModal}>
+            취소
+          </Button>
         </Flex>
       </Flex>
       <Margin mg="30px" />
@@ -97,7 +98,8 @@ const AlbumCreate = ({ openCreateModal, partyId }) => {
                 type="file"
                 onChange={onChangeImg}
               />
-              <Span variant="mediumBronze">이미지 가져오기</Span>
+              <Svg variant="photo"></Svg>
+              <StSpan>이미지 가져오기</StSpan>
             </StDashDiv>
           </Div>
         )}
@@ -118,14 +120,10 @@ const AlbumCreate = ({ openCreateModal, partyId }) => {
               />
             )}
           </Flex>
+          <Margin />
           <Flex fd="row" jc="center">
             <Svg variant="memo" />
-            <StText
-              variant="medium"
-              width="400px"
-              placeholder="Contents"
-              onChange={onChangeContent}
-            />
+            <StText placeholder="Contents" onChange={onChangeContent} />
           </Flex>
         </Div>
       </Flex>
@@ -147,6 +145,7 @@ const StContainer = styled.div`
 
 const StDashDiv = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 100%;
@@ -157,14 +156,21 @@ const StDashDiv = styled.div`
   background-repeat: no-repeat;
 `;
 
+const StSpan = styled.span`
+  margin-top: 10px;
+  font-size: 16px;
+  color: #d9d3c7;
+`;
+
 const StText = styled.textarea`
   background-color: #fff;
-  width: 400px;
+  width: 450px;
+  padding: 10px;
   border: 0;
   border-radius: 5px;
-  min-height: 40px;
+  min-height: 100px;
   max-height: 400px;
-  font-size: 16px;
+  font-size: 14px;
   resize: none;
   ::placeholder {
     font-size: 14px;

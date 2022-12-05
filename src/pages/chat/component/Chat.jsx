@@ -48,6 +48,8 @@ export const Chat = () => {
     dispatch(__getMessage(partyId));
   }, [dispatch, partyId]);
 
+  console.log("??", chatLog);
+
   useEffect(() => {
     setChatLog([...chatLog, receiveMsg]);
   }, [setChatLog, receiveMsg]);
@@ -115,18 +117,41 @@ export const Chat = () => {
         chatLog?.length > 1 ? (
           <StContainerDiv ref={modalEl}>
             <StTextDiv>
-              <p>그룹명</p>
+              <p>🥳 위프, we are friends 💖</p>
             </StTextDiv>
             <StDiv>
               {userMessage.map((message) => {
-                return (
+                return message?.memberEmail === myId ? (
                   <StChatBoxDiv
                     align={message.memberEmail === myId ? "end" : "start"}
                   >
-                    <StRightDiv>
-                      <p>{message?.createdAt.substring(10)}</p>
+                    <Flex fd="row">
+                      <Span variant="other" asf="flex-end" mg="0px 5px 2px 0px">
+                        {message?.createdAt.substring(10)}
+                      </Span>
                       <StChatDiv>{message?.content}</StChatDiv>
-                    </StRightDiv>
+                    </Flex>
+                  </StChatBoxDiv>
+                ) : (
+                  <StChatBoxDiv
+                    key={message?.messageId}
+                    align={message?.memberEmail !== myId ? "start" : "end"}
+                  >
+                    <Flex>
+                      <Span variant="other" mg="8px 0px 3px 5px" fw="600">
+                        {message?.memberName}
+                      </Span>
+                      <Flex fd="row">
+                        <StUserChatDiv>{message?.content}</StUserChatDiv>
+                        <Span
+                          variant="other"
+                          asf="flex-end"
+                          mg="0px 0px 2px 5px"
+                        >
+                          {message?.createdAt.substring(10)}
+                        </Span>
+                      </Flex>
+                    </Flex>
                   </StChatBoxDiv>
                 );
               })}
@@ -139,17 +164,25 @@ export const Chat = () => {
                     <StChatBoxDiv
                       key={item?.newMessage.messageId}
                       align={
-                        item.newMessage.memberEmail !== myId ? "end" : "start"
+                        item.newMessage.memberEmail === myId ? "start" : "end"
                       }
                     >
                       <Flex>
-                        <Span variant="other">
+                        <Span variant="other" mg="8px 0px 3px 5px" fw="600">
                           {item?.newMessage.memberName}
                         </Span>
-                        <StUserChatDiv>
-                          {item?.newMessage.content}
-                        </StUserChatDiv>
-                        <p>{item?.newMessage.createdAt.substring(10)}</p>
+                        <Flex fd="row">
+                          <StUserChatDiv>
+                            {item?.newMessage.content}
+                          </StUserChatDiv>
+                          <Span
+                            variant="other"
+                            asf="flex-end"
+                            mg="0px 0px 2px 5px"
+                          >
+                            {item?.newMessage.createdAt.substring(10)}
+                          </Span>
+                        </Flex>
                       </Flex>
                     </StChatBoxDiv>
                   ) : (
@@ -158,8 +191,16 @@ export const Chat = () => {
                         item.newMessage.memberEmail === myId ? "end" : "start"
                       }
                     >
-                      <p>{item?.newMessage.createdAt.substring(10)}</p>
-                      <StChatDiv>{item?.newMessage.content}</StChatDiv>
+                      <Flex fd="row">
+                        <Span
+                          variant="other"
+                          asf="flex-end"
+                          mg="0px 5px 2px 0px"
+                        >
+                          {item?.newMessage.createdAt.substring(10)}
+                        </Span>
+                        <StChatDiv>{item?.newMessage.content}</StChatDiv>
+                      </Flex>
                     </StChatBoxDiv>
                   );
                 })}
@@ -318,9 +359,12 @@ const StBtn = styled.button`
 `;
 
 const StChatBoxDiv = styled.div`
-  width: 100%;
+  width: 98%;
   display: flex;
   justify-content: ${(props) => props.align};
+  & p {
+    margin-left: 5px;
+  }
 `;
 
 const StRightDiv = styled.div`
@@ -343,13 +387,10 @@ const StChatDiv = styled.div`
 const StUserChatDiv = styled.div`
   width: 150px;
   background-color: #fff;
-  margin-right: -20px;
+  margin-left: 10px;
   padding: 5px 5px 5px 5px;
   width: max-content;
   border-radius: 15px 15px 15px 0px;
   text-align: left;
   white-space: normal;
-  & p {
-    white-space: normal;
-  }
 `;

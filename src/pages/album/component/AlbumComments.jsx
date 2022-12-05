@@ -20,6 +20,9 @@ const AlbumComments = ({ id, commentList, myId }) => {
   const [edit, onEdit] = useModal();
 
   const addCommentHandler = () => {
+    if (!comment) {
+      return alert("내용을 입력해주세요");
+    }
     dispatch(__addComment({ id, comment }));
     reset();
   };
