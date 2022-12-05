@@ -20,7 +20,6 @@ import GroupTitle from "../../../components/GroupTitle";
 const SchdeleDetail = ({ scheduleId }) => {
   const scheduleDetail = useSelector((state) => state.schedule?.scheduleDetail);
   const participant = useSelector((state) => state.mypage?.myProfile);
-  const participanter = useSelector((state) => state.schedule?.join);
   const [InputText, setInputText] = useState("");
   const [Place, setPlace] = useState("");
   const [isParticipant, setIsParticipant] = useState(

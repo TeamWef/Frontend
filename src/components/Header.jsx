@@ -58,7 +58,7 @@ export const Header = () => {
               </>
             )}
             <Margin mg="5px" />
-            {/* <Invite /> */}
+            <Invite />
             <Notice />
             <MenuBtn
               onClick={() => {
@@ -69,7 +69,9 @@ export const Header = () => {
               Logout
             </MenuBtn>
             <Margin mg="5px" />
-            <UserInfo>{/* <Mypage /> */}</UserInfo>
+            <UserInfo>
+              <Mypage />
+            </UserInfo>
           </Flex>
         </CenterBox>
         {param.partyId !== undefined ? <Chat /> : null}
