@@ -21,12 +21,6 @@ export const Chat = () => {
   const dispatch = useDispatch();
   const modalEl = useRef(null);
   const userMessage = useSelector((state) => state.chat.chat);
-  console.log(userMessage);
-  // const sortMessage = userMessage.sort((a, b) => {
-  //   return new Date(a.date).getTime() - new Date(b.date).getTime();
-  // });
-  // // .reverse();
-  // console.log(sortMessage);
   const [message, setMessage] = useState("");
   const tokens = getCookie("token").replace("Bearer ", "");
   const decode = jwt_decode(tokens);
@@ -53,8 +47,6 @@ export const Chat = () => {
   useEffect(() => {
     dispatch(__getMessage(partyId));
   }, [dispatch, partyId]);
-
-  console.log("??", chatLog);
 
   useEffect(() => {
     setChatLog([...chatLog, receiveMsg]);

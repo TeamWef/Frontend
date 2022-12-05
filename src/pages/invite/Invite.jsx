@@ -17,6 +17,7 @@ export const Invite = () => {
   const modalEl = useRef(null);
   const textInput = useRef();
 
+  console.log(inviteCode);
   // 인풋 내용 복사하기
   const copy = () => {
     const el = textInput.current;
@@ -108,15 +109,27 @@ export const Invite = () => {
             </Span>
             <StInput
               type="text"
-              value={inviteCode}
+              value={
+                inviteCode ||
+                (inviteCode === null && "새로운 그룹을 생성해주세요!")
+              }
               name="code"
               onChange={onCode}
               ref={textInput}
             />
-            <label>발급된 코드는 당일 자정까지만 사용 가능합니다!</label>
-            <Button onClick={copy} variant="large" margin="20px 0px 0px 30px">
-              Copy
-            </Button>
+
+            {inviteCode === null ? null : (
+              <>
+                <label>발급된 코드는 당일 자정까지만 사용 가능합니다!</label>
+                <Button
+                  onClick={copy}
+                  variant="large"
+                  margin="20px 0px 0px 30px"
+                >
+                  Copy
+                </Button>
+              </>
+            )}
           </StContainerDiv>
         ))}
     </>
