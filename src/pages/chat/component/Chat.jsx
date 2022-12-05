@@ -31,6 +31,7 @@ export const Chat = () => {
   const tokens = getCookie("token").replace("Bearer ", "");
   const decode = jwt_decode(tokens);
   const myId = decode.sub;
+  const Group = localStorage.getItem("Group");
 
   const inputMessage = (e) => {
     setMessage(e.target.value);
@@ -119,10 +120,10 @@ export const Chat = () => {
         <Svg variant="message" />
       </StModalDiv>
       {chat ? (
-        userMessage?.length > 1 ? (
+        chatLog?.length > 1 || userMessage?.length > 1 ? (
           <StContainerDiv ref={modalEl}>
             <StTextDiv>
-              <p>🥳 위프, we are friends 💖</p>
+              <p>{Group}</p>
             </StTextDiv>
             <StDiv>
               {userMessage?.map((message) => {
