@@ -25,7 +25,7 @@ export const __getGroup = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const res = await groupApis.getGroup();
-      return thunkAPI.fulfillWithValue(res.data);
+      return thunkAPI.fulfillWithValue(res?.data);
     } catch (err) {
       console.log(err);
       return thunkAPI.rejectWithValue(err);
