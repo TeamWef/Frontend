@@ -197,6 +197,9 @@ const ScheduleCreate = () => {
                         type="button"
                         onClick={(e) => {
                           e.preventDefault();
+                          if (InputText === "") {
+                            return alert("검색어를 입력해주세요!");
+                          }
                           setPlace(InputText);
                           setInputText("");
                           openMap();

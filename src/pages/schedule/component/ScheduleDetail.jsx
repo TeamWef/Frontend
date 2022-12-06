@@ -348,6 +348,9 @@ const SchdeleDetail = ({ scheduleId }) => {
                             type="button"
                             onClick={(e) => {
                               e.preventDefault();
+                              if (InputText === "") {
+                                return alert("검색어를 입력해주세요!");
+                              }
                               setPlace(InputText);
                               setInputText("");
                               openMap();
@@ -481,6 +484,7 @@ const StTimeInput = styled.input`
   border: none;
   margin-right: 20px;
   margin-left: 10px;
+  cursor: pointer;
 `;
 
 const StSearchDiv = styled.div`
