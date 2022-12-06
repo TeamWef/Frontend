@@ -1,9 +1,11 @@
+import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { Button, Div, Flex, Input, Margin, Span, Svg } from "../../../elem";
 import { useInputs } from "../../../hooks/useInput";
 import { __emailCheck, __signup } from "../../../redux/modules/membersSlice";
+import { checkAll, checkName, checkEmail, checkPassword } from "./check";
 
 const SignUp = () => {
   const dispatch = useDispatch();
@@ -14,15 +16,23 @@ const SignUp = () => {
     password: "",
     passwordCheck: "",
   });
+  const [failed, setFailed] = useState("");
   const { email, name, password, passwordCheck } = values;
+  const ref = useRef(null);
+
+  const focusOut = (e) => {
+    setFailed("");
+  };
+  useEffect(() => {
+    if (failed) document.addEventListener("focusout", focusOut);
+    return () => {
+      document.removeEventListener("focusout", focusOut);
+    };
+  });
 
   const onSignup = (e) => {
     e.preventDefault();
-    if (!email || !name || !password || !passwordCheck) {
-      alert("모든 항목을 입력해주세요.");
-      return null;
-    } else if (password !== passwordCheck) {
-      alert("password가 다릅니다");
+    if (!checkAll(values)) {
       return null;
     }
     dispatch(__signup({ email, name, password }));
@@ -48,19 +58,33 @@ const SignUp = () => {
         <form onSubmit={onSignup}>
           <Input
             variant="large"
+            bd={failed === "Name" ? "2px solid red" : ""}
             name="name"
             value={name}
-            onChange={onChange}
+            onChange={(e) => {
+              onChange(e);
+              setFailed(checkName(e.target.value));
+            }}
             placeholder="Username"
           />
+          {failed === "Name" && (
+            <Span variant="warning">2~4자리 한글을 입력해주세요.</Span>
+          )}
           <StDiv>
             <Input
               variant="large"
+              bd={failed === "Email" ? "2px solid red" : ""}
               name="email"
               value={email}
-              onChange={onChange}
+              onChange={(e) => {
+                onChange(e);
+                setFailed(checkEmail(e.target.value));
+              }}
               placeholder="Email"
             />
+            {failed === "Email" && (
+              <Span variant="warning">Email 형식이 올바르지 않습니다.</Span>
+            )}
             <StBtn
               variant="large"
               type="button"
@@ -75,12 +99,21 @@ const SignUp = () => {
           </StDiv>
           <Input
             variant="large"
+            bd={failed === "Password" ? "2px solid red" : ""}
             type="password"
             name="password"
             value={password}
-            onChange={onChange}
+            onChange={(e) => {
+              onChange(e);
+              setFailed(checkPassword(e.target.value));
+            }}
             placeholder="Password"
           />
+          {failed === "Password" && (
+            <Span variant="warning">
+              4~12자 영문 대 소문자 혹은 숫자를 입력해주세요.
+            </Span>
+          )}
           <Input
             variant="large"
             type="password"
