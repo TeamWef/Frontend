@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { Flex, Img, Span } from "../../elem";
+import { Flex, Img, Span, Svg } from "../../elem";
 import { useModal } from "../../hooks/useModal";
 import { __getMypage } from "../../redux/modules/mypageSlice";
 import EditMypage from "./component/EditMypage";
@@ -25,7 +25,7 @@ const Mypage = () => {
             {myProfile?.memberName}
           </Span>
           {profileImageUrl === null ? (
-            <Img src="/images/userProfile.jpg" />
+            <Svg variant="profile" />
           ) : (
             <Img src={profileImageUrl} alt="profileImg" />
           )}

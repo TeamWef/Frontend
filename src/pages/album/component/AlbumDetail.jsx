@@ -124,7 +124,7 @@ const AlbumDetail = () => {
                   {profileImageUrl ? (
                     <Img src={profileImageUrl} alt="img" />
                   ) : (
-                    <Img src="/images/userProfile.jpg" alt="img" />
+                    <Svg variant="profile" />
                   )}
                   <Span variant="mediumBronze" mg="0 0 0 5px">
                     {writer}

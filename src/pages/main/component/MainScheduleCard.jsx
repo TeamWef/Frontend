@@ -36,6 +36,7 @@ const ScheduleCard = () => {
                       </StItemDiv>
                       <StbtnDiv
                         onClick={() => {
+                          localStorage.setItem("Group", item.partyName);
                           navigate(
                             `/${item.partyId}/scheduledetail/${item.scheduleId}`
                           );

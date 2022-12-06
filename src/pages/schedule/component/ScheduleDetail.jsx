@@ -202,9 +202,7 @@ const SchdeleDetail = ({ scheduleId }) => {
             <Flex fd="row" ai="center" key={i}>
               <StJoinDiv>
                 {item?.profileImageUrl === null ? (
-                  <StSizeDiv>
-                    <Svg variant="profile" />
-                  </StSizeDiv>
+                  <Svg variant="profile" />
                 ) : (
                   <StImg alt="맹짱구" src={item?.profileImageUrl} />
                 )}
