@@ -7,6 +7,7 @@ export const checkAll = (values) => {
   if (!email || !name || !password || !passwordCheck) {
     alert("모든 항목을 입력해주세요.");
     return false;
+
   } else if (!nameRegExp.test(name)) {
     alert("Username 형식이 올바르지 않습니다.");
     return false;
@@ -15,6 +16,8 @@ export const checkAll = (values) => {
     return false;
   } else if (!passwordRegexp.test(password)) {
     alert("Password 형식이 올바르지 않습니다.");
+
+
     return false;
   } else if (password !== passwordCheck) {
     alert("Password가 다릅니다");
@@ -27,6 +30,7 @@ export const checkAll = (values) => {
     return false;
   }
   return true;
+
 };
 
 const nameRegExp2 = /^[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]{2,4}$/;

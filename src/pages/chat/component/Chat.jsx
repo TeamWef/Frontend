@@ -47,7 +47,7 @@ export const Chat = () => {
 
   useEffect(() => {
     // 채팅 메시지 내역 자동 스크롤
-    if (chat && scrollRef.current.contains)
+    if (chat && scrollRef.current?.contains)
       scrollRef.current.scrollIntoView({
         behavior: "auto",
         block: "end",
@@ -135,7 +135,7 @@ export const Chat = () => {
               {userMessage?.map((message) => {
                 return message?.memberEmail === myId ? (
                   <StChatBoxDiv
-                    key={message.messageId}
+                    // key={message.messageId}
                     align={message.memberEmail === myId ? "end" : "start"}
                   >
                     <Flex fd="row">
@@ -148,7 +148,7 @@ export const Chat = () => {
                   </StChatBoxDiv>
                 ) : (
                   <StChatBoxDiv
-                    key={message?.messageId}
+                    // key={message?.messageId}
                     align={message?.memberEmail !== myId ? "start" : "end"}
                   >
                     <Flex>
@@ -393,19 +393,10 @@ const StBtn = styled.button`
 const StChatBoxDiv = styled.div`
   width: 98%;
   display: flex;
-
   justify-content: ${(props) => props.align};
   & p {
     margin-left: 5px;
   }
-`;
-
-const StRightDiv = styled.div`
-  margin-right: 5px;
-`;
-
-const StLeftDiv = styled.div`
-  margin-left: 5px;
 `;
 
 const StChatDiv = styled.div`

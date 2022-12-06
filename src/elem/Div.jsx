@@ -21,7 +21,6 @@ const StDiv = styled.div`
   left: ${({ left }) => (left ? left : "")};
   border: ${({ bd }) => (bd ? bd : "")};
 
-
   ${({ variant }) => {
     switch (variant) {
       case "sign":
@@ -75,14 +74,13 @@ const StDiv = styled.div`
       case "dropDown":
         return css`
           position: absolute;
-          /* top: 50px; */
           width: 80px;
           height: auto;
           margin-left: 215px;
           background-color: white;
           border: 1px solid #d9d3c7;
           border-radius: 5px;
-          z-index: 10;
+          z-index: 99;
           box-shadow: 5px 5px 15px rgba(164, 161, 157, 0.15);
           flex-direction: column;
         `;
