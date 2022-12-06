@@ -21,7 +21,6 @@ export const Header = () => {
     deleteCookie("token");
     deleteCookie("refresh-token");
     localStorage.clear();
-    alert("로그아웃 되었습니다.");
     navigate("/");
   };
   // console.log(param);
@@ -63,6 +62,7 @@ export const Header = () => {
             <MenuBtn
               onClick={() => {
                 logoutHandler();
+                alert("로그아웃 되었습니다.");
                 window.location.reload();
               }}
             >

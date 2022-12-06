@@ -43,7 +43,7 @@ export const __signup = createAsyncThunk(
       // console.log(data);
       return thunkAPI.fulfillWithValue(payload);
     } catch (error) {
-      console.log(error);
+      alert(`${error.response.data}`);
     }
   }
 );
