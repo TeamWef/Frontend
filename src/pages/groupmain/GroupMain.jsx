@@ -63,7 +63,7 @@ const GroupMain = () => {
             <Span variant="mediumBronze" fw="700" mg="0 0 20px 0">
               Favorite Schedule.
             </Span>
-            {data.scheduleId === null ? (
+            {data.scheduleId !== null ? (
               <StButton
                 pd="25px"
                 width="600px"

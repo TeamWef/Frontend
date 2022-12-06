@@ -248,7 +248,7 @@ const StContentInput = styled.textarea`
   resize: none;
   background-color: transparent;
   border: none;
-  padding: 30px;
+  padding: 11px;
   word-break: break-all;
   &::placeholder {
     word-break: break-all;
