@@ -135,7 +135,7 @@ const GroupCard = () => {
                                 window.confirm("정말 그룹을 나가시겠습니까?🥺")
                               ) {
                                 dispatch(__getOutGroup(data?.partyId));
-                                alert("삭제가 완료되었습니다.");
+                                alert("다음에 또 만나요! 👋🏻 ");
                               }
                               openDropBox();
                             }}

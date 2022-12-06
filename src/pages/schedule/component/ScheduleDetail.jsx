@@ -26,8 +26,9 @@ const SchdeleDetail = ({ scheduleId }) => {
   const [Place, setPlace] = useState("");
 
   const [isParticipant, setIsParticipant] = useState(
-    scheduleDetail?.isParticipant
+    setTimeout(() => scheduleDetail?.isParticipant, 1000)
   );
+  console.log(isParticipant);
   const detailId = useParams().scheduleId;
   const partyId = useParams().partyId;
   const dispatch = useDispatch();
@@ -54,13 +55,13 @@ const SchdeleDetail = ({ scheduleId }) => {
     setEditSchedule({ ...editSchedule, [name]: value });
   };
 
-  useEffect(() => {
-    setTimeout(() => isParticipant, 2000);
-  }, [isParticipant]);
+  // useEffect(() => {
+  //   setTimeout(() => isParticipant, 2000);
+  // }, [isParticipant]);
 
   useEffect(() => {
     dispatch(__getScheduleDetail(detailId));
-  }, [dispatch, detailId, isParticipant]);
+  }, [dispatch, detailId]);
 
   const onEditScheduleHandler = (e) => {
     e.preventDefault();
@@ -255,7 +256,7 @@ const SchdeleDetail = ({ scheduleId }) => {
                   onChange={onChangeHandler}
                   value={editSchedule.title}
                 />
-                <StTitleInput
+                <StContentInput
                   type="text"
                   placeholder={scheduleDetail.content}
                   name="content"
@@ -400,6 +401,8 @@ const StBorderDiv = styled.div`
 
 const StBaseDiv = styled.div`
   width: 1000px;
+  white-space: normal;
+  word-break: break-all;
 `;
 
 const StJoinDiv = styled.div`
@@ -413,12 +416,6 @@ const StJoinDiv = styled.div`
   background-color: #ede8e1;
   border-radius: 5px;
   margin: 50px 0px 0px 10px;
-`;
-
-const StSizeDiv = styled.div`
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
 `;
 
 const StContentDiv = styled.div`
@@ -440,6 +437,21 @@ const StTitleInput = styled.input`
   &::placeholder {
     padding: 10px;
     font-size: 18px;
+  }
+`;
+
+const StContentInput = styled.textarea`
+  margin: 20px 0px 0px 40px;
+  width: 900px;
+  height: 200px;
+  background-color: transparent;
+  border: none;
+  padding: 30px;
+  word-break: break-all;
+  &::placeholder {
+    word-break: break-all;
+    white-space: normal;
+    font-size: 16px;
   }
 `;
 
