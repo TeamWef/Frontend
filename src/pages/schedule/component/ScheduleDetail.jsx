@@ -62,9 +62,6 @@ const SchdeleDetail = ({ scheduleId }) => {
     }
   }, [scheduleDetail]);
 
-  console.log("Redux=>", scheduleDetail.isParticipant);
-  console.log("State=>", isParticipant);
-
   const onEditScheduleHandler = (e) => {
     e.preventDefault();
     if (
