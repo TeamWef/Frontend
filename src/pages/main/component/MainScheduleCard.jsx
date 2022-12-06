@@ -8,7 +8,6 @@ import { Div, Flex, Margin, Span } from "../../../elem";
 
 const ScheduleCard = () => {
   const data = useSelector((state) => state.schedule.groupSchedule.data);
-
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -37,6 +36,7 @@ const ScheduleCard = () => {
                       </StItemDiv>
                       <StbtnDiv
                         onClick={() => {
+                          localStorage.setItem("Group", item.partyName);
                           navigate(
                             `/${item.partyId}/scheduledetail/${item.scheduleId}`
                           );

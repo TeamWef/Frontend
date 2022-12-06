@@ -336,7 +336,7 @@ const StMonthDiv = styled.div`
     width: 314px;
     border: none;
     border: 1px solid #a4a19d;
-    border-radius: 10px;
+    border-radius: 5px;
     margin-bottom: 50px;
   }
 
@@ -376,11 +376,12 @@ const StMonthDiv = styled.div`
 
   .react-calendar__tile--now {
     background-color: #fff;
+    color: black;
   }
 
   .react-calendar__tile--active {
     background-color: #a4a19d;
-    color: #fff;
+    color: black;
   }
 
   .react-calendar__navigation button:disabled {

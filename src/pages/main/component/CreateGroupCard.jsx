@@ -20,8 +20,12 @@ const CreateGroupCard = ({ openModal, modal }) => {
 
   const onAddGroupHandler = (e) => {
     e.preventDefault();
+    if (!group.partyName || !group.partyIntroduction) {
+      return alert("그룹 내용을 입력해주세요!");
+    }
     dispatch(__addGroup(group));
     openModal();
+    alert("그룹이 생성 되었습니다!");
   };
 
   return (

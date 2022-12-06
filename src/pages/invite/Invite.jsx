@@ -5,7 +5,8 @@ import styled from "styled-components";
 import { Span, Button } from "../../elem";
 import Svg from "../../elem/Svg";
 import { useModal } from "../../hooks/useModal";
-import { __getInviteCode, __postInvite } from "../../redux/modules/inviteSlice";
+import { __getInviteCode } from "../../redux/modules/inviteSlice";
+import { __postInvite } from "../../redux/modules/groupSlice";
 
 export const Invite = () => {
   const [invite, openInvite, setInvite] = useModal();
@@ -17,6 +18,7 @@ export const Invite = () => {
   const modalEl = useRef(null);
   const textInput = useRef();
 
+  // console.log(inviteCode);
   // 인풋 내용 복사하기
   const copy = () => {
     const el = textInput.current;
@@ -108,15 +110,27 @@ export const Invite = () => {
             </Span>
             <StInput
               type="text"
-              value={inviteCode}
+              value={
+                inviteCode ||
+                (inviteCode === null && "새로운 그룹을 생성해주세요!")
+              }
               name="code"
               onChange={onCode}
               ref={textInput}
             />
-            <label>발급된 코드는 당일 자정까지만 사용 가능합니다!</label>
-            <Button onClick={copy} variant="large" margin="20px 0px 0px 30px">
-              Copy
-            </Button>
+
+            {inviteCode === null ? null : (
+              <>
+                <label>발급된 코드는 당일 자정까지만 사용 가능합니다!</label>
+                <Button
+                  onClick={copy}
+                  variant="large"
+                  margin="20px 0px 0px 30px"
+                >
+                  Copy
+                </Button>
+              </>
+            )}
           </StContainerDiv>
         ))}
     </>
@@ -127,7 +141,7 @@ const StContainerDiv = styled.div`
   display: flex;
   flex-direction: column;
   position: absolute;
-  top: 60px;
+  top: 40px;
   width: 440px;
   height: 273px;
   background: #f8f5f0;

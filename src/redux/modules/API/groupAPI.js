@@ -6,4 +6,6 @@ export const groupApis = {
   delGroup: async (id) => await instance.delete(`/party/${id}`),
   putGroup: async ({ id, partyName, partyIntroduction }) =>
     await instance.put(`/party/${id}`, { partyIntroduction, partyName }),
+  getOutGroup: async (payload) =>
+    await instance.delete(`party/${payload}/withdrawals`),
 };

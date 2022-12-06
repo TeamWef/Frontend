@@ -59,6 +59,7 @@ export const __getGroupSchedule = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const res = await scheduleApis.getGroupSchedule();
+      console.log(res);
       return thunkAPI.fulfillWithValue(res);
     } catch (err) {
       console.log("error", err);
@@ -99,7 +100,6 @@ export const __popularSchedule = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const res = await scheduleApis.getSchedulePopular(payload);
-      console.log(res);
       return thunkAPI.fulfillWithValue(res.data);
     } catch (err) {
       console.log("error ::::::", err.response);
@@ -113,7 +113,6 @@ export const __joinSchedules = createAsyncThunk(
   "post/joinSchedules",
   async (payload, thunkAPI) => {
     try {
-      console.log(payload);
       const { detailId, participant } = payload;
       const res = await scheduleApis.postSchedulejoin({
         detailId,
@@ -121,6 +120,7 @@ export const __joinSchedules = createAsyncThunk(
       });
       const isJoin = res.data;
       const myProfile = payload.participant;
+      console.log(isJoin);
       return thunkAPI.fulfillWithValue({ isJoin, myProfile });
     } catch (err) {
       console.log("error ::::::", err.response);
@@ -184,7 +184,10 @@ export const scheduleSlice = createSlice({
     },
     [__getScheduleDetail.fulfilled]: (state, action) => {
       state.isLoading = false;
+      console.log(action.payload.isParticipant);
+      console.log(state.join);
       state.scheduleDetail = action.payload;
+      state.join = action.payload.isParticipant;
     },
     [__getScheduleDetail.rejected]: (state, action) => {
       state.isLoading = false;
@@ -211,7 +214,6 @@ export const scheduleSlice = createSlice({
     },
     [__delSchedule.fulfilled]: (state, action) => {
       state.isLoading = false;
-      console.log("스케쥴 액션", state.scheduleDetail);
       state.schedule = state.schedule.filter(
         (item) => item.scheduleId !== action.payload
       );
@@ -227,7 +229,6 @@ export const scheduleSlice = createSlice({
     },
     [__editSchedules.fulfilled]: (state, action) => {
       state.isLoading = false;
-      console.log(action.payload);
       state.scheduleDetail = {
         ...state.scheduleDetail,
         content: action.payload.editSchedule.content,

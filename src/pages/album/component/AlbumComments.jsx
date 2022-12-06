@@ -41,7 +41,7 @@ const AlbumComments = ({ id, commentList, myId }) => {
             {myProfile.profileImageUrl ? (
               <Img src={myProfile.profileImageUrl} alt="img" />
             ) : (
-              <Img src="/images/userProfile.jpg" alt="img" />
+              <Svg variant="profile" />
             )}
             <Span variant="mediumBronze" mg="0 0 0 5px">
               {myProfile.memberName}
@@ -71,7 +71,7 @@ const AlbumComments = ({ id, commentList, myId }) => {
                     {comment.profileImageUrl ? (
                       <Img src={comment.profileImageUrl} alt="profileImg" />
                     ) : (
-                      <Img src="/images/userProfile.jpg" alt="profileImg" />
+                      <Svg variant="profile" />
                     )}
                     <Span variant="mediumBronze" mg="0 25px 0 5px">
                       {comment.writer}

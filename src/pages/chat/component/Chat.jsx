@@ -21,16 +21,12 @@ export const Chat = () => {
   const dispatch = useDispatch();
   const modalEl = useRef(null);
   const userMessage = useSelector((state) => state.chat.chat);
-  console.log(userMessage);
-  // const sortMessage = userMessage.sort((a, b) => {
-  //   return new Date(a.date).getTime() - new Date(b.date).getTime();
-  // });
-  // // .reverse();
-  // console.log(sortMessage);
   const [message, setMessage] = useState("");
   const tokens = getCookie("token").replace("Bearer ", "");
   const decode = jwt_decode(tokens);
   const myId = decode.sub;
+  const Group = localStorage.getItem("Group");
+  const scrollRef = useRef();
 
   const inputMessage = (e) => {
     setMessage(e.target.value);
@@ -50,10 +46,18 @@ export const Chat = () => {
   });
 
   useEffect(() => {
+    // 채팅 메시지 내역 자동 스크롤
+    if (chat && scrollRef.current.contains)
+      scrollRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "end",
+      });
+    return () => {};
+  }, [chatLog, userMessage, chat]);
+
+  useEffect(() => {
     dispatch(__getMessage(partyId));
   }, [dispatch, partyId]);
-
-  console.log("??", chatLog);
 
   useEffect(() => {
     setChatLog([...chatLog, receiveMsg]);
@@ -62,6 +66,8 @@ export const Chat = () => {
   const socketConnect = () => {
     const webSocket = new SockJS(`${process.env.REACT_APP_BASE_URL}/socket`);
     stompClient.current = Stomp.over(webSocket);
+
+    stompClient.current.debug = function (str) {};
     stompClient.current.connect(
       {
         Authorization: token,
@@ -90,6 +96,7 @@ export const Chat = () => {
         token: token,
       })
     );
+
     setMessage("");
     // textRef.current.value = null;
     // e.target.chat.value = [];
@@ -119,10 +126,10 @@ export const Chat = () => {
         <Svg variant="message" />
       </StModalDiv>
       {chat ? (
-        userMessage?.length > 1 ? (
+        chatLog?.length > 1 || userMessage?.length > 1 ? (
           <StContainerDiv ref={modalEl}>
             <StTextDiv>
-              <p>🥳 위프, we are friends 💖</p>
+              <p>{Group}</p>
             </StTextDiv>
             <StDiv>
               {userMessage?.map((message) => {
@@ -137,6 +144,7 @@ export const Chat = () => {
                       </Span>
                       <StChatDiv>{message?.content}</StChatDiv>
                     </Flex>
+                    <div ref={scrollRef} />
                   </StChatBoxDiv>
                 ) : (
                   <StChatBoxDiv
@@ -165,6 +173,7 @@ export const Chat = () => {
                         </Span>
                       </Flex>
                     </Flex>
+                    <div ref={scrollRef} />
                   </StChatBoxDiv>
                 );
               })}
@@ -186,7 +195,7 @@ export const Chat = () => {
                           {item?.newMessage.memberName}
                         </Span>
                         <Flex fd="row">
-                          {message?.profileImg === null ? (
+                          {item?.newMessage.profileImg === null ? (
                             <StSizeDiv>
                               <Svg variant="profile" />
                             </StSizeDiv>
@@ -205,6 +214,7 @@ export const Chat = () => {
                           </Span>
                         </Flex>
                       </Flex>
+                      <div ref={scrollRef} />
                     </StChatBoxDiv>
                   ) : (
                     <StChatBoxDiv
@@ -222,6 +232,7 @@ export const Chat = () => {
                         </Span>
                         <StChatDiv>{item?.newMessage.content}</StChatDiv>
                       </Flex>
+                      <div ref={scrollRef} />
                     </StChatBoxDiv>
                   );
                 })}
@@ -382,6 +393,7 @@ const StBtn = styled.button`
 const StChatBoxDiv = styled.div`
   width: 98%;
   display: flex;
+
   justify-content: ${(props) => props.align};
   & p {
     margin-left: 5px;
@@ -401,6 +413,7 @@ const StChatDiv = styled.div`
   padding: 8px 10px;
   margin-top: 11px;
   width: max-content;
+  margin-bottom: 10px;
   border-radius: 15px 15px 0px 15px;
   text-align: right;
 `;
@@ -411,6 +424,7 @@ const StUserChatDiv = styled.div`
   margin-left: 10px;
   padding: 10px 5px 5px 5px;
   width: max-content;
+  margin-bottom: 10px;
   border-radius: 15px 15px 15px 0px;
   text-align: left;
   white-space: normal;

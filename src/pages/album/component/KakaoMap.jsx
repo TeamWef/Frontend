@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import styled from "styled-components";
+import { Div, Flex, Margin, Span, Svg } from "../../../elem";
 
 const { kakao } = window;
 
@@ -85,42 +87,81 @@ const KakaoMap = ({ searchPlace, albumPlace, setAlbumPlace, openModal }) => {
   }, [searchPlace]);
 
   return (
-    <div>
+    <StCotainer>
       <div id="myMap" style={{ display: "none" }}></div>
-      <div id="result-list">
+      <Margin mg="-10px" />
+      <Div id="result-list" variant="scroll-y" width="448px" height="300px">
         {Places?.map((item, i) => (
-          <div key={i} style={{ marginTop: "20px" }}>
-            <span>{i + 1}</span>
-            <div>
-              <h5>{item.place_name}</h5>
-              {item.road_address_name ? (
+          <StListDiv
+            key={i}
+            onClick={() => {
+              setAlbumPlace({
+                placeName: item.place_name,
+                address: item.address_name,
+              });
+              openModal();
+              setPlaces([]);
+            }}
+          >
+            <Flex fd="row">
+              <StSpan>{i < 9 ? "0" + (i + 1) : i + 1}</StSpan>
+              <Flex fd="row" jc="space-between" width="370px">
                 <div>
-                  <span>{item.road_address_name}</span>
-                  <span>{item.address_name}</span>
+                  <h4>{item.place_name}</h4>
+                  {item.road_address_name ? (
+                    <>
+                      <div>
+                        <span>{item.road_address_name}</span>
+                      </div>
+                      <div>
+                        <span>({item.address_name})</span>
+                      </div>
+                    </>
+                  ) : (
+                    <span>{item.address_name}</span>
+                  )}
+                  <span>{item.phone}</span>
                 </div>
-              ) : (
-                <span>{item.address_name}</span>
-              )}
-              <span>{item.phone}</span>
-              <button
-                onClick={() => {
-                  setAlbumPlace({
-                    placeName: item.place_name,
-                    address: item.address_name,
-                  });
-                  openModal();
-                  setPlaces([]);
-                }}
-              >
-                선택하기
-              </button>
-            </div>
-          </div>
+                <Margin mg="5px" />
+                <Flex>
+                  <Svg variant="locationBegie" />
+                </Flex>
+              </Flex>
+            </Flex>
+          </StListDiv>
         ))}
-        <div id="pagination"></div>
-      </div>
-    </div>
+        <div id="pagination" style={{ display: "none" }}></div>
+      </Div>
+      <Margin mg="-10px" />
+    </StCotainer>
   );
 };
 
 export default KakaoMap;
+
+const StCotainer = styled.div`
+  width: 450px;
+  background-color: #fff;
+  border: 1px solid #d9d3c7;
+  border-radius: 5px;
+  font-size: 12px;
+  cursor: pointer;
+`;
+const StListDiv = styled.div`
+  width: 100%;
+  padding: 10px 0;
+  display: flex;
+  border-top: 1px solid #faf7f2;
+  border-bottom: 1px solid #faf7f2;
+  color: #d9d3c7;
+  :hover {
+    background-color: #ede8e1;
+    color: #736e69;
+  }
+`;
+
+const StSpan = styled.span`
+  display: flex;
+  margin: 0 20px;
+  font-weight: bold;
+`;
