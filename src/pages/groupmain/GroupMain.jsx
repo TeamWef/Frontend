@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { Div, Flex, Img, Margin, Span, Svg } from "../../elem";
 import { __popularSchedule } from "../../redux/modules/scheduleSlice";
@@ -11,6 +11,7 @@ const GroupMain = () => {
   const dispatch = useDispatch();
   const data = useSelector((state) => state.schedule?.popularSchedule);
   const members = data.participantList;
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(__popularSchedule(partyId));
@@ -60,7 +61,13 @@ const GroupMain = () => {
             <Span variant="mediumBronze" fw="700" mg="0 0 20px 0">
               Favorite Schedule.
             </Span>
-            <StDiv pd="25px" width="600px">
+            <StButton
+              pd="25px"
+              width="600px"
+              onClick={() => {
+                navigate(`/${partyId}/scheduledetail/${data?.scheduleId}`);
+              }}
+            >
               <Flex fd="row" jc="space-between" ai="center">
                 <Flex fd="row" ai="center">
                   <Span color="#a4a19d" fw="700" mg="0 10px 0 0">
@@ -76,12 +83,24 @@ const GroupMain = () => {
                 {data.content}
               </Span>
               <Flex>
-                <Span variant="mediumBronze">{data.date}</Span>
-                <Span variant="mediumBronze">{data.meetTime}</Span>
-                <Span variant="mediumBronze">{data.placeName}</Span>
-                <Span variant="mediumBronze">{data.address}</Span>
+                <Flex fd="row" jc="flex-start" ai="center">
+                  <Svg variant="date" />
+                  <Span variant="mediumBronze">{data.date}</Span>
+                </Flex>
+                <Flex fd="row" jc="flex-start" ai="center">
+                  <Svg variant="time" />
+                  <Span variant="mediumBronze">{data.meetTime}</Span>
+                </Flex>
+                <Flex fd="row" jc="flex-start" ai="center">
+                  <Svg variant="location" />
+                  <Span variant="mediumBronze">{data.placeName}</Span>
+                </Flex>
+                <Flex fd="row" jc="flex-start" ai="center">
+                  <Svg variant="locationBegie" />
+                  <Span variant="mediumBronze">{data.address}</Span>
+                </Flex>
               </Flex>
-            </StDiv>
+            </StButton>
           </Flex>
         </Flex>
       </Div>
@@ -98,6 +117,20 @@ const StDiv = styled.div`
   border-radius: 10px;
   align-items: center;
   justify-content: center;
+`;
+
+const StButton = styled.button`
+  width: ${({ width }) => (width ? width : "")};
+  padding: ${({ pd }) => (pd ? pd : "")};
+  border: solid 1px #d9d3c7;
+  border-radius: 10px;
+  align-items: center;
+  background-color: transparent;
+  justify-content: center;
+  cursor: pointer;
+  &:hover {
+    box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.15);
+  }
 `;
 
 const StMembers = styled.div`
