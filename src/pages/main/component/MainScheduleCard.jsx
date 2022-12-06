@@ -32,7 +32,13 @@ const ScheduleCard = () => {
                           <Span variant="smallBronze">{item?.partyName}</Span>
                         </StTitleDiv>
                         <p>{item?.title}</p>
-                        <p>{item?.writer}</p>
+                        <Span
+                          variant="other"
+                          mg="20px 0px 0px 0px"
+                          asf="center"
+                        >
+                          {item?.writer}
+                        </Span>
                       </StItemDiv>
                       <StbtnDiv
                         onClick={() => {
@@ -116,8 +122,11 @@ const StItemDiv = styled.div`
   display: flex;
   justify-content: space-between;
   & p {
+    width: 250px;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
     margin-top: 28px;
-    margin-left: 30px;
     color: #b5b3af;
   }
 `;
