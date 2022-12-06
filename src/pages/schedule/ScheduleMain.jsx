@@ -11,12 +11,9 @@ import {
 
 const ScheduleMain = () => {
   const scheduleList = useSelector((state) => state.schedule?.schedule);
-
   const dispatch = useDispatch();
   const { partyId } = useParams();
-  console.log({ partyId });
   const navigate = useNavigate();
-  // const scheduleId = seheduleList?.scheduleId;
 
   useEffect(() => {
     dispatch(__getSchedule({ partyId }));

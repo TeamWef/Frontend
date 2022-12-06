@@ -99,7 +99,6 @@ export const __popularSchedule = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const res = await scheduleApis.getSchedulePopular(payload);
-      console.log(res);
       return thunkAPI.fulfillWithValue(res.data);
     } catch (err) {
       console.log("error ::::::", err.response);
@@ -113,7 +112,6 @@ export const __joinSchedules = createAsyncThunk(
   "post/joinSchedules",
   async (payload, thunkAPI) => {
     try {
-      console.log(payload);
       const { detailId, participant } = payload;
       const res = await scheduleApis.postSchedulejoin({
         detailId,

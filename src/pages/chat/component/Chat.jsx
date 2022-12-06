@@ -21,11 +21,11 @@ export const Chat = () => {
   const dispatch = useDispatch();
   const modalEl = useRef(null);
   const userMessage = useSelector((state) => state.chat.chat);
-  console.log(userMessage);
   const [message, setMessage] = useState("");
   const tokens = getCookie("token").replace("Bearer ", "");
   const decode = jwt_decode(tokens);
   const myId = decode.sub;
+  const Group = localStorage.getItem("Group");
 
   const inputMessage = (e) => {
     setMessage(e.target.value);
@@ -55,19 +55,26 @@ export const Chat = () => {
   const socketConnect = () => {
     const webSocket = new SockJS(`${process.env.REACT_APP_BASE_URL}/socket`);
     stompClient.current = Stomp.over(webSocket);
-    stompClient.current.connect(
-      {
-        Authorization: token,
-      },
-      // 연결 성공 시 실행되는 함수
-      () => {
-        stompClient.current.subscribe(`/sub/chatrooms/${partyId}`, (res) => {
-          const newMessage = JSON.parse(res.body);
-          setReceiveMsg({ ...receiveMsg, newMessage });
-        });
-      },
-      headers
-    );
+
+    try {
+      // stompClient.current.debug = function (str) {};
+      // stompClient.current.debug = null;
+      stompClient.current.connect(
+        {
+          Authorization: token,
+        },
+        // 연결 성공 시 실행되는 함수
+        () => {
+          stompClient.current.subscribe(`/sub/chatrooms/${partyId}`, (res) => {
+            const newMessage = JSON.parse(res.body);
+            setReceiveMsg({ ...receiveMsg, newMessage });
+          });
+        },
+        headers
+      );
+    } catch (err) {
+      console.log("err");
+    }
   };
 
   const sendMessage = (e) => {
@@ -75,6 +82,7 @@ export const Chat = () => {
     const message = e.target.chat.value;
     if (message === "") return false;
 
+    stompClient.current.debug = null;
     stompClient.current.send(
       `/pub/chatrooms/${partyId}`,
       headers,
@@ -83,6 +91,7 @@ export const Chat = () => {
         token: token,
       })
     );
+
     setMessage("");
     // textRef.current.value = null;
     // e.target.chat.value = [];
@@ -112,24 +121,56 @@ export const Chat = () => {
         <Svg variant="message" />
       </StModalDiv>
       {chat ? (
-        chatLog?.length > 1 ? (
+        chatLog?.length > 1 || userMessage?.length > 1 ? (
           <StContainerDiv ref={modalEl}>
             <StTextDiv>
-              <p>그룹명</p>
+              <p>{Group}</p>
             </StTextDiv>
             <StDiv>
-              {userMessage.map((message) => {
-                return (
+              {userMessage?.map((message) => {
+                return message?.memberEmail === myId ? (
                   <StChatBoxDiv
+                    key={message.messageId}
                     align={message.memberEmail === myId ? "end" : "start"}
                   >
-                    <StRightDiv>
-                      <p>{message?.createdAt.substring(10)}</p>
+                    <Flex fd="row">
+                      <Span variant="other" asf="flex-end" mg="0px 5px 2px 0px">
+                        {message?.createdAt.substring(10)}
+                      </Span>
                       <StChatDiv>{message?.content}</StChatDiv>
-                    </StRightDiv>
+                    </Flex>
+                  </StChatBoxDiv>
+                ) : (
+                  <StChatBoxDiv
+                    key={message?.messageId}
+                    align={message?.memberEmail !== myId ? "start" : "end"}
+                  >
+                    <Flex>
+                      <Span variant="other" mg="15px 0px 3px 45px" fw="600">
+                        {message?.memberName}
+                      </Span>
+                      <Flex fd="row">
+                        {message?.profileImg === null ? (
+                          <StSizeDiv>
+                            <Svg variant="profile" />
+                          </StSizeDiv>
+                        ) : (
+                          <StImg alt="맹짱구" src={message?.profileImg} />
+                        )}
+                        <StUserChatDiv>{message?.content}</StUserChatDiv>
+                        <Span
+                          variant="other"
+                          asf="flex-end"
+                          mg="0px 0px 2px 5px"
+                        >
+                          {message?.createdAt.substring(10)}
+                        </Span>
+                      </Flex>
+                    </Flex>
                   </StChatBoxDiv>
                 );
               })}
+
               {chatLog
                 ?.filter((item) => {
                   return item !== undefined;
@@ -139,17 +180,32 @@ export const Chat = () => {
                     <StChatBoxDiv
                       key={item?.newMessage.messageId}
                       align={
-                        item.newMessage.memberEmail !== myId ? "end" : "start"
+                        item.newMessage.memberEmail !== myId ? "start" : "end"
                       }
                     >
                       <Flex>
-                        <Span variant="other">
+                        <Span variant="other" mg="8px 0px 3px 45px" fw="600">
                           {item?.newMessage.memberName}
                         </Span>
-                        <StUserChatDiv>
-                          {item?.newMessage.content}
-                        </StUserChatDiv>
-                        <p>{item?.newMessage.createdAt.substring(10)}</p>
+                        <Flex fd="row">
+                          {item?.newMessage.profileImg === null ? (
+                            <StSizeDiv>
+                              <Svg variant="profile" />
+                            </StSizeDiv>
+                          ) : (
+                            <StImg alt="" src={item?.newMessage.profileImg} />
+                          )}
+                          <StUserChatDiv>
+                            {item?.newMessage.content}
+                          </StUserChatDiv>
+                          <Span
+                            variant="other"
+                            asf="flex-end"
+                            mg="0px 0px 2px 5px"
+                          >
+                            {item?.newMessage.createdAt.substring(10)}
+                          </Span>
+                        </Flex>
                       </Flex>
                     </StChatBoxDiv>
                   ) : (
@@ -158,8 +214,16 @@ export const Chat = () => {
                         item.newMessage.memberEmail === myId ? "end" : "start"
                       }
                     >
-                      <p>{item?.newMessage.createdAt.substring(10)}</p>
-                      <StChatDiv>{item?.newMessage.content}</StChatDiv>
+                      <Flex fd="row">
+                        <Span
+                          variant="other"
+                          asf="flex-end"
+                          mg="0px 5px 2px 0px"
+                        >
+                          {item?.newMessage.createdAt.substring(10)}
+                        </Span>
+                        <StChatDiv>{item?.newMessage.content}</StChatDiv>
+                      </Flex>
                     </StChatBoxDiv>
                   );
                 })}
@@ -249,8 +313,8 @@ const StContainerDiv = styled.div`
 const StDiv = styled.div`
   width: 100%;
   height: 560px;
-  position: absolute;
-  top: 60px;
+  /* position: absolute;
+  top: 60px; */
   overflow-y: auto;
   &::-webkit-scrollbar {
     background: #d9d9d9;
@@ -318,9 +382,13 @@ const StBtn = styled.button`
 `;
 
 const StChatBoxDiv = styled.div`
-  width: 100%;
+  width: 98%;
   display: flex;
+
   justify-content: ${(props) => props.align};
+  & p {
+    margin-left: 5px;
+  }
 `;
 
 const StRightDiv = styled.div`
@@ -336,6 +404,7 @@ const StChatDiv = styled.div`
   padding: 8px 10px;
   margin-top: 11px;
   width: max-content;
+  margin-bottom: 10px;
   border-radius: 15px 15px 0px 15px;
   text-align: right;
 `;
@@ -343,13 +412,25 @@ const StChatDiv = styled.div`
 const StUserChatDiv = styled.div`
   width: 150px;
   background-color: #fff;
-  margin-right: -20px;
-  padding: 5px 5px 5px 5px;
+  margin-left: 10px;
+  padding: 10px 5px 5px 5px;
   width: max-content;
+  margin-bottom: 10px;
   border-radius: 15px 15px 15px 0px;
   text-align: left;
   white-space: normal;
-  & p {
-    white-space: normal;
-  }
+`;
+
+const StSizeDiv = styled.div`
+  width: 30px;
+  height: 30px;
+  margin-left: 10px;
+  border-radius: 50%;
+`;
+
+const StImg = styled.img`
+  width: 30px;
+  height: 30px;
+  margin-left: 10px;
+  border-radius: 50%;
 `;

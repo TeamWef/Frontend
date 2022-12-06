@@ -8,7 +8,6 @@ import { Div, Flex, Margin, Span } from "../../../elem";
 
 const ScheduleCard = () => {
   const data = useSelector((state) => state.schedule.groupSchedule.data);
-
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
