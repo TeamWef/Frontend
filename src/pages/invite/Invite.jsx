@@ -5,7 +5,8 @@ import styled from "styled-components";
 import { Span, Button } from "../../elem";
 import Svg from "../../elem/Svg";
 import { useModal } from "../../hooks/useModal";
-import { __getInviteCode, __postInvite } from "../../redux/modules/inviteSlice";
+import { __getInviteCode } from "../../redux/modules/inviteSlice";
+import { __postInvite } from "../../redux/modules/groupSlice";
 
 export const Invite = () => {
   const [invite, openInvite, setInvite] = useModal();
@@ -140,7 +141,7 @@ const StContainerDiv = styled.div`
   display: flex;
   flex-direction: column;
   position: absolute;
-  top: 60px;
+  top: 40px;
   width: 440px;
   height: 273px;
   background: #f8f5f0;

@@ -20,20 +20,6 @@ export const __getInviteCode = createAsyncThunk(
   }
 );
 
-export const __postInvite = createAsyncThunk(
-  "post/addInvite",
-  async (payload, thunkAPI) => {
-    try {
-      const type = typeof payload;
-      console.log(type);
-      const res = await inviteApis.addInvite(payload);
-      return thunkAPI.fulfillWithValue(res);
-    } catch (err) {
-      return thunkAPI.rejectWithValue(err);
-    }
-  }
-);
-
 export const inviteSlice = createSlice({
   name: "invite",
   initialState,

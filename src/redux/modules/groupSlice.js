@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { groupApis } from "./API/groupAPI";
+import { inviteApis } from "./API/inviteAPI";
 
 const initialState = {
   group: [],
@@ -10,7 +11,6 @@ const initialState = {
 export const __addGroup = createAsyncThunk(
   "post/addGroup",
   async (payload, thunkAPI) => {
-    console.log("payload==>", payload);
     try {
       const res = await groupApis.addGroup(payload);
       return thunkAPI.fulfillWithValue(res.data);
@@ -25,7 +25,6 @@ export const __getGroup = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const res = await groupApis.getGroup();
-      // console.log(res);
       return thunkAPI.fulfillWithValue(res.data);
     } catch (err) {
       console.log(err);
@@ -51,13 +50,37 @@ export const __delGroup = createAsyncThunk(
 export const __updateGroup = createAsyncThunk(
   "put/updateGroup",
   async (payload, thunkAPI) => {
-    console.log("put payload=>", payload);
     try {
       await groupApis.putGroup(payload);
       return thunkAPI.fulfillWithValue(payload);
     } catch (err) {
       console.log("error ::::::", err.response);
       return thunkAPI.rejectWithValue("<<", err);
+    }
+  }
+);
+
+export const __getOutGroup = createAsyncThunk(
+  "del/getOutGroup",
+  async (payload, thunkAPI) => {
+    try {
+      await groupApis.getOutGroup(payload);
+      return thunkAPI.fulfillWithValue(payload);
+    } catch (err) {
+      console.log("error : ", err.response);
+      return thunkAPI.rejectWithValue("<<", err);
+    }
+  }
+);
+
+export const __postInvite = createAsyncThunk(
+  "post/addInvite",
+  async (payload, thunkAPI) => {
+    try {
+      const res = await inviteApis.addInvite(payload);
+      return thunkAPI.fulfillWithValue(res.data);
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err);
     }
   }
 );
@@ -73,10 +96,21 @@ export const groupSlice = createSlice({
     },
     [__addGroup.fulfilled]: (state, action) => {
       state.isLoading = false;
-      console.log("action??", action);
       state.group.push(action.payload);
     },
     [__addGroup.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+
+    [__postInvite.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [__postInvite.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.group.push(action.payload);
+    },
+    [__postInvite.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
     },
@@ -105,6 +139,20 @@ export const groupSlice = createSlice({
       );
     },
     [__delGroup.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+
+    [__getOutGroup.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [__getOutGroup.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.group = state.group.filter(
+        (item) => item.partyId !== action.payload
+      );
+    },
+    [__getOutGroup.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
     },

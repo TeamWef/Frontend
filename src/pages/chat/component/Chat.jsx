@@ -26,6 +26,7 @@ export const Chat = () => {
   const decode = jwt_decode(tokens);
   const myId = decode.sub;
   const Group = localStorage.getItem("Group");
+  const scrollRef = useRef();
 
   const inputMessage = (e) => {
     setMessage(e.target.value);
@@ -45,6 +46,16 @@ export const Chat = () => {
   });
 
   useEffect(() => {
+    // 채팅 메시지 내역 자동 스크롤
+    if (chat && scrollRef.current.contains)
+      scrollRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "end",
+      });
+    return () => {};
+  }, [chatLog, userMessage, chat]);
+
+  useEffect(() => {
     dispatch(__getMessage(partyId));
   }, [dispatch, partyId]);
 
@@ -56,25 +67,20 @@ export const Chat = () => {
     const webSocket = new SockJS(`${process.env.REACT_APP_BASE_URL}/socket`);
     stompClient.current = Stomp.over(webSocket);
 
-    try {
-      // stompClient.current.debug = function (str) {};
-      // stompClient.current.debug = null;
-      stompClient.current.connect(
-        {
-          Authorization: token,
-        },
-        // 연결 성공 시 실행되는 함수
-        () => {
-          stompClient.current.subscribe(`/sub/chatrooms/${partyId}`, (res) => {
-            const newMessage = JSON.parse(res.body);
-            setReceiveMsg({ ...receiveMsg, newMessage });
-          });
-        },
-        headers
-      );
-    } catch (err) {
-      console.log("err");
-    }
+    stompClient.current.debug = function (str) {};
+    stompClient.current.connect(
+      {
+        Authorization: token,
+      },
+      // 연결 성공 시 실행되는 함수
+      () => {
+        stompClient.current.subscribe(`/sub/chatrooms/${partyId}`, (res) => {
+          const newMessage = JSON.parse(res.body);
+          setReceiveMsg({ ...receiveMsg, newMessage });
+        });
+      },
+      headers
+    );
   };
 
   const sendMessage = (e) => {
@@ -82,7 +88,6 @@ export const Chat = () => {
     const message = e.target.chat.value;
     if (message === "") return false;
 
-    stompClient.current.debug = null;
     stompClient.current.send(
       `/pub/chatrooms/${partyId}`,
       headers,
@@ -139,6 +144,7 @@ export const Chat = () => {
                       </Span>
                       <StChatDiv>{message?.content}</StChatDiv>
                     </Flex>
+                    <div ref={scrollRef} />
                   </StChatBoxDiv>
                 ) : (
                   <StChatBoxDiv
@@ -167,6 +173,7 @@ export const Chat = () => {
                         </Span>
                       </Flex>
                     </Flex>
+                    <div ref={scrollRef} />
                   </StChatBoxDiv>
                 );
               })}
@@ -207,6 +214,7 @@ export const Chat = () => {
                           </Span>
                         </Flex>
                       </Flex>
+                      <div ref={scrollRef} />
                     </StChatBoxDiv>
                   ) : (
                     <StChatBoxDiv
@@ -224,6 +232,7 @@ export const Chat = () => {
                         </Span>
                         <StChatDiv>{item?.newMessage.content}</StChatDiv>
                       </Flex>
+                      <div ref={scrollRef} />
                     </StChatBoxDiv>
                   );
                 })}

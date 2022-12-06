@@ -5,6 +5,7 @@ import CreateGroupCard from "../component/CreateGroupCard";
 import {
   __delGroup,
   __getGroup,
+  __getOutGroup,
   __updateGroup,
 } from "../../../redux/modules/groupSlice";
 import { useModal } from "../../../hooks/useModal";
@@ -127,7 +128,20 @@ const GroupCard = () => {
                         </Div>
                       ) : (
                         <Div variant="dropDown" top="50px">
-                          <Button variant="drop-bottom">그룹 나가기</Button>
+                          <Button
+                            variant="drop-bottom"
+                            onClick={() => {
+                              if (
+                                window.confirm("정말 그룹을 나가시겠습니까?🥺")
+                              ) {
+                                dispatch(__getOutGroup(data?.partyId));
+                                alert("삭제가 완료되었습니다.");
+                              }
+                              openDropBox();
+                            }}
+                          >
+                            그룹 나가기
+                          </Button>
                         </Div>
                       ))}
                   </StCardDiv>

@@ -24,9 +24,11 @@ const SchdeleDetail = ({ scheduleId }) => {
   const participant = useSelector((state) => state.mypage?.myProfile);
   const [InputText, setInputText] = useState("");
   const [Place, setPlace] = useState("");
+
   const [isParticipant, setIsParticipant] = useState(
     scheduleDetail.isParticipant
   );
+
   const detailId = useParams().scheduleId;
   const partyId = useParams().partyId;
   const dispatch = useDispatch();
@@ -34,7 +36,6 @@ const SchdeleDetail = ({ scheduleId }) => {
   const tokens = getCookie("token").replace("Bearer ", "");
   const decode = jwt_decode(tokens);
   const myId = decode.sub;
-  const [scheduleJoin, setScheduleJoin] = useState(false);
   const joiner = scheduleDetail?.participantResponseDtoList;
   const [modal, openModal] = useModal();
   const [map, openMap] = useModal();
@@ -166,15 +167,14 @@ const SchdeleDetail = ({ scheduleId }) => {
         </Flex>
       </Flex>
       <Flex width="1000px" fd="row" jc="left">
-        {scheduleDetail?.isParticipant ? (
+        {isParticipant ? (
           <Button
             variant="small"
             margin="50px 0px 0px 0px"
             onClick={(e) => {
               e.preventDefault();
-              setScheduleJoin();
-              dispatch(__joinSchedules({ detailId, participant }));
               setIsParticipant(!isParticipant);
+              dispatch(__joinSchedules({ detailId, participant }));
             }}
           >
             취소하기
@@ -185,9 +185,8 @@ const SchdeleDetail = ({ scheduleId }) => {
             margin="50px 0px 0px 0px"
             onClick={(e) => {
               e.preventDefault();
-              setScheduleJoin();
-              dispatch(__joinSchedules({ detailId, participant }));
               setIsParticipant(!isParticipant);
+              dispatch(__joinSchedules({ detailId, participant }));
             }}
           >
             참여하기
@@ -195,7 +194,7 @@ const SchdeleDetail = ({ scheduleId }) => {
         )}
 
         <Margin mg="55px 0px 0px 15px">
-          {isParticipant ? <Svg variant="handOff" /> : <Svg variant="handOn" />}
+          {isParticipant ? <Svg variant="handOn" /> : <Svg variant="handOff" />}
         </Margin>
         {joiner?.map((item, i) => {
           return (
