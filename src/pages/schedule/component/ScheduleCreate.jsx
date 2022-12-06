@@ -283,6 +283,7 @@ const StTimeInput = styled.input`
   border: none;
   margin-right: 20px;
   margin-left: 10px;
+  cursor: pointer;
 `;
 
 const StSearchDiv = styled.div`
@@ -320,6 +321,7 @@ const StBtn = styled.button`
   background-color: transparent;
   border: none;
   color: #a4a19d;
+  cursor: pointer;
 `;
 
 const StDateBtn = styled.button`
@@ -330,6 +332,7 @@ const StDateBtn = styled.button`
   background-color: transparent;
   border: none;
   color: #a4a19d;
+  cursor: pointer;
 `;
 
 const StKakaoDiv = styled.div`

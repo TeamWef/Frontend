@@ -112,6 +112,8 @@ const UserInfo = styled.div`
 `;
 
 const MenuBtn = styled.button`
+  height: 40px;
+  border-radius: 15px;
   background-color: transparent;
   border: none;
   display: flex;

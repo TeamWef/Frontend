@@ -545,7 +545,7 @@ const StKakaoDiv = styled.div`
 
 const StBgDiv = styled.div`
   width: 220px;
-  /* display: flex; */
+  display: flex;
   background-color: white;
   white-space: nowrap;
 `;
@@ -613,7 +613,7 @@ const StMonthDiv = styled.div`
 
   .react-calendar__tile--active {
     background-color: #a4a19d;
-    color: #fff;
+    color: black;
   }
 
   .react-calendar__navigation button:disabled {
