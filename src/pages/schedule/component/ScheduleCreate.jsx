@@ -68,7 +68,6 @@ const ScheduleCreate = () => {
     openMonth();
     const day = moment(value).format("YYYY-MM-DD");
     setDate(day);
-    console.log(date);
     setSchedule({ ...schedule, date: day });
   };
 
