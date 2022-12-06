@@ -138,7 +138,6 @@ export const scheduleSlice = createSlice({
     },
     [__addSchedule.fulfilled]: (state, action) => {
       state.isLoading = false;
-      console.log(action.payload);
       state.schedule?.push(action.payload);
     },
     [__addSchedule.rejected]: (state, action) => {
@@ -167,7 +166,6 @@ export const scheduleSlice = createSlice({
     },
     [__getGroupSchedule.fulfilled]: (state, action) => {
       state.isLoading = false;
-      // console.log("그룹 일정 전체조회===>", action);
       state.groupSchedule = action.payload;
     },
     [__getGroupSchedule.rejected]: (state, action) => {
