@@ -25,7 +25,6 @@ const SchdeleDetail = ({ scheduleId }) => {
   const [isParticipant, setIsParticipant] = useState("");
   const [InputText, setInputText] = useState("");
   const [Place, setPlace] = useState("");
-
   const detailId = useParams().scheduleId;
   const partyId = useParams().partyId;
   const dispatch = useDispatch();
