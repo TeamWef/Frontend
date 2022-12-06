@@ -18,7 +18,7 @@ const ScheduleCard = () => {
   return (
     <Div variant="bodyContainer">
       <Margin />
-      <Flex fd="row">
+      <Flex>
         <Span variant="bold">Schedule.</Span>
         <StContainerDiv>
           {data?.length !== 0 ? (
