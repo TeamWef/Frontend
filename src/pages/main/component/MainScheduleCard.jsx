@@ -18,7 +18,6 @@ const ScheduleCard = () => {
   return (
     <Div variant="bodyContainer">
       <Margin />
-
       <Flex fd="row">
         <Span variant="bold">Schedule.</Span>
         <StContainerDiv>
@@ -35,11 +34,7 @@ const ScheduleCard = () => {
                           </StTitleDiv>
                           <p>{item?.title}</p>
                           <StTextDiv>
-                            <Span
-                              variant="other"
-                              mg="0px 0px 0px 0px"
-                              asf="center"
-                            >
+                            <Span variant="other" asf="center">
                               {item?.writer}
                             </Span>
                           </StTextDiv>
@@ -105,7 +100,6 @@ const StTitleDiv = styled.div`
   height: 35px;
   background-color: #ede8e1;
   color: #a4a19d;
-  /* margin-top: 20px; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -129,7 +123,6 @@ const StItemDiv = styled.div`
     text-align: center;
     align-items: center;
     justify-content: center;
-    /* margin-top: 15px; */
     color: #b5b3af;
   }
 `;
