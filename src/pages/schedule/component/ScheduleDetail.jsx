@@ -22,12 +22,10 @@ import { getCookie } from "../../../redux/modules/customCookies";
 const SchdeleDetail = ({ scheduleId }) => {
   const scheduleDetail = useSelector((state) => state.schedule?.scheduleDetail);
   const participant = useSelector((state) => state.mypage?.myProfile);
+  const [isParticipant, setIsParticipant] = useState("");
   const [InputText, setInputText] = useState("");
   const [Place, setPlace] = useState("");
 
-  const [isParticipant, setIsParticipant] = useState(
-    scheduleDetail?.isParticipant
-  );
   const detailId = useParams().scheduleId;
   const partyId = useParams().partyId;
   const dispatch = useDispatch();
@@ -55,12 +53,17 @@ const SchdeleDetail = ({ scheduleId }) => {
   };
 
   useEffect(() => {
-    setTimeout(() => isParticipant, 2000);
-  }, [isParticipant]);
+    dispatch(__getScheduleDetail(detailId));
+  }, [dispatch]);
 
   useEffect(() => {
-    dispatch(__getScheduleDetail(detailId));
-  }, [dispatch, detailId, isParticipant]);
+    if (scheduleDetail) {
+      setIsParticipant(scheduleDetail.isParticipant);
+    }
+  }, [scheduleDetail]);
+
+  console.log("Redux=>", scheduleDetail.isParticipant);
+  console.log("State=>", isParticipant);
 
   const onEditScheduleHandler = (e) => {
     e.preventDefault();
