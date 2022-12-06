@@ -71,9 +71,7 @@ const Notice = () => {
     navigate(`/${url}`);
     localStorage.setItem("Group", partyName);
     openModal();
-    setTimeout(() => {
-      dispatch(__getNoticeCount("-"));
-    }, 100);
+    dispatch(__getNoticeCount("-"));
   };
 
   const clickOutSide = (e) => {
@@ -91,8 +89,10 @@ const Notice = () => {
 
   useEffect(() => {
     // console.log("두번째 useEffect실행됐음");
-    dispatch(__getNoticeCount());
     dispatch(__getNoticeList());
+    setTimeout(() => {
+      dispatch(__getNoticeCount());
+    }, 1000);
   }, [dispatch, modal]);
 
   return (

@@ -13,7 +13,7 @@ const GroupMain = () => {
   const members = data.participantList;
   const navigate = useNavigate();
 
-  console.log(data);
+  // console.log(data);
 
   useEffect(() => {
     dispatch(__popularSchedule(partyId));
