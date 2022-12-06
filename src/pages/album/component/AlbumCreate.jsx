@@ -150,7 +150,7 @@ const StSpan = styled.span`
 const StText = styled.textarea`
   background-color: #fff;
   width: 450px;
-  padding: 10px;
+  padding: 10px 10px 0 15px;
   border: 0;
   border-radius: 5px;
   min-height: 100px;
