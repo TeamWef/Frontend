@@ -265,6 +265,7 @@ const IconSvg = ({ variant, onClick }) => {
           height="20"
           viewBox="0 0 20 20"
           fill="none"
+          cursor="pointer"
           onClick={onClick}
         >
           <circle cx="10" cy="10" r="10" fill="#B5B3AF" />

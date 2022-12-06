@@ -48,7 +48,7 @@ const ScheduleCard = () => {
                           );
                         }}
                       >
-                        <Svg variant={"more"} />
+                        <Svg variant="more" />
                       </StbtnDiv>
                     </Flex>
                   </StDiv>
@@ -141,4 +141,5 @@ const StbtnDiv = styled.div`
   margin-left: 5px;
   border-radius: 5px;
   border: none;
+  cursor: pointer;
 `;
