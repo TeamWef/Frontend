@@ -104,7 +104,7 @@ const ScheduleCreate = () => {
               onChange={onChangeHandler}
             />
             <StBorderDiv />
-            <StTitleInput
+            <StContentInput
               type="text"
               placeholder="내용"
               name="content"
@@ -232,6 +232,21 @@ const StContentDiv = styled.div`
   margin-top: 20px;
   display: flex;
   flex-direction: column;
+`;
+
+const StContentInput = styled.textarea`
+  margin: 20px 0px 0px 40px;
+  width: 900px;
+  height: 200px;
+  background-color: transparent;
+  border: none;
+  padding: 30px;
+  word-break: break-all;
+  &::placeholder {
+    word-break: break-all;
+    white-space: normal;
+    font-size: 16px;
+  }
 `;
 
 const StTitleInput = styled.input`

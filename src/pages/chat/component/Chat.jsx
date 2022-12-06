@@ -135,7 +135,7 @@ export const Chat = () => {
               {userMessage?.map((message) => {
                 return message?.memberEmail === myId ? (
                   <StChatBoxDiv
-                    key={message.messageId}
+                    // key={message.messageId}
                     align={message.memberEmail === myId ? "end" : "start"}
                   >
                     <Flex fd="row">
@@ -148,7 +148,7 @@ export const Chat = () => {
                   </StChatBoxDiv>
                 ) : (
                   <StChatBoxDiv
-                    key={message?.messageId}
+                    // key={message?.messageId}
                     align={message?.memberEmail !== myId ? "start" : "end"}
                   >
                     <Flex>

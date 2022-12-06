@@ -26,7 +26,7 @@ const SchdeleDetail = ({ scheduleId }) => {
   const [Place, setPlace] = useState("");
 
   const [isParticipant, setIsParticipant] = useState(
-    setTimeout(() => scheduleDetail?.isParticipant, 2000)
+    setTimeout(() => scheduleDetail?.isParticipant, 1000)
   );
   console.log(isParticipant);
   const detailId = useParams().scheduleId;
@@ -55,13 +55,13 @@ const SchdeleDetail = ({ scheduleId }) => {
     setEditSchedule({ ...editSchedule, [name]: value });
   };
 
-  useEffect(() => {
-    setTimeout(() => isParticipant, 2000);
-  }, [isParticipant]);
+  // useEffect(() => {
+  //   setTimeout(() => isParticipant, 2000);
+  // }, [isParticipant]);
 
   useEffect(() => {
     dispatch(__getScheduleDetail(detailId));
-  }, [dispatch, detailId, isParticipant]);
+  }, [dispatch, detailId]);
 
   const onEditScheduleHandler = (e) => {
     e.preventDefault();
@@ -447,7 +447,6 @@ const StContentInput = styled.textarea`
   background-color: transparent;
   border: none;
   padding: 30px;
-  white-space: normal;
   word-break: break-all;
   &::placeholder {
     word-break: break-all;
