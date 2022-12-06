@@ -6,7 +6,7 @@ const initialState = {
   scheduleDetail: {},
   groupSchedule: [],
   popularSchedule: {},
-  join: false,
+  join: null,
   isLoading: false,
   error: null,
 };
@@ -59,7 +59,6 @@ export const __getGroupSchedule = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const res = await scheduleApis.getGroupSchedule();
-      console.log(res);
       return thunkAPI.fulfillWithValue(res);
     } catch (err) {
       console.log("error", err);
@@ -247,7 +246,7 @@ export const scheduleSlice = createSlice({
     [__joinSchedules.fulfilled]: (state, action) => {
       state.isLoading = false;
       console.log("payload=>", action.payload.isJoin);
-      state.join = action.payload.isJoin;
+      state.scheduleDetail.isParticipant = action.payload.isJoin;
       if (action.payload.isJoin) {
         state.scheduleDetail.participantResponseDtoList.push(
           action.payload.myProfile
