@@ -132,10 +132,10 @@ export const Chat = () => {
               <p>{Group}</p>
             </StTextDiv>
             <StDiv>
-              {userMessage?.map((message) => {
+              {userMessage?.map((message, i) => {
                 return message?.memberEmail === myId ? (
                   <StChatBoxDiv
-                    // key={message.messageId}
+                    key={i}
                     align={message.memberEmail === myId ? "end" : "start"}
                   >
                     <Flex fd="row">
@@ -148,7 +148,7 @@ export const Chat = () => {
                   </StChatBoxDiv>
                 ) : (
                   <StChatBoxDiv
-                    // key={message?.messageId}
+                    // key={message?.messageId.toString()}
                     align={message?.memberEmail !== myId ? "start" : "end"}
                   >
                     <Flex>
@@ -185,7 +185,7 @@ export const Chat = () => {
                 .map((item, i) => {
                   return item?.newMessage.memberEmail !== myId ? (
                     <StChatBoxDiv
-                      key={item?.newMessage.messageId}
+                      key={i}
                       align={
                         item.newMessage.memberEmail !== myId ? "start" : "end"
                       }

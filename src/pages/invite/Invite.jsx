@@ -43,6 +43,10 @@ export const Invite = () => {
   const postCodeHandler = (e) => {
     e.preventDefault();
     dispatch(__postInvite(code));
+    alert(
+      "초대받은 그룹에 참가하였습니다! 친구들과 소중한 추억을 쌓아보세요 🍀 "
+    );
+    setInvite();
   };
 
   const onCode = (e) => {

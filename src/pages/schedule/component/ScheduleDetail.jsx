@@ -22,13 +22,9 @@ import { getCookie } from "../../../redux/modules/customCookies";
 const SchdeleDetail = ({ scheduleId }) => {
   const scheduleDetail = useSelector((state) => state.schedule?.scheduleDetail);
   const participant = useSelector((state) => state.mypage?.myProfile);
+  const [isParticipant, setIsParticipant] = useState("");
   const [InputText, setInputText] = useState("");
   const [Place, setPlace] = useState("");
-
-  const [isParticipant, setIsParticipant] = useState(
-    setTimeout(() => scheduleDetail?.isParticipant, 1000)
-  );
-  console.log(isParticipant);
   const detailId = useParams().scheduleId;
   const partyId = useParams().partyId;
   const dispatch = useDispatch();
@@ -55,13 +51,16 @@ const SchdeleDetail = ({ scheduleId }) => {
     setEditSchedule({ ...editSchedule, [name]: value });
   };
 
-  // useEffect(() => {
-  //   setTimeout(() => isParticipant, 2000);
-  // }, [isParticipant]);
 
   useEffect(() => {
     dispatch(__getScheduleDetail(detailId));
-  }, [dispatch, detailId]);
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (scheduleDetail) {
+      setIsParticipant(scheduleDetail.isParticipant);
+    }
+  }, [scheduleDetail]);
 
   const onEditScheduleHandler = (e) => {
     e.preventDefault();
@@ -316,7 +315,14 @@ const SchdeleDetail = ({ scheduleId }) => {
                         <Span variant="smallBronze">
                           {editSchedule.place?.placeName}
                         </Span>
-                        <Span variant="other" asf="center" mg="0px 0px 0px 5px">
+                        <Span
+                          variant="other"
+                          asf="center"
+                          mg="0px 0px 0px 5px"
+                          to="ellipsis"
+                          ws="nowrap"
+                          of="hidden"
+                        >
                           {editSchedule.place?.address}
                         </Span>
                         <StBtn
@@ -447,6 +453,7 @@ const StContentInput = styled.textarea`
   background-color: transparent;
   border: none;
   padding: 30px;
+  resize: none;
   word-break: break-all;
   &::placeholder {
     word-break: break-all;
@@ -538,8 +545,10 @@ const StKakaoDiv = styled.div`
 `;
 
 const StBgDiv = styled.div`
-  display: flex;
+  width: 220px;
+  /* display: flex; */
   background-color: white;
+  white-space: nowrap;
 `;
 
 const StMonthDiv = styled.div`
