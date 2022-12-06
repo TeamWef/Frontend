@@ -47,7 +47,7 @@ export const Chat = () => {
 
   useEffect(() => {
     // 채팅 메시지 내역 자동 스크롤
-    if (chat && scrollRef.current.contains)
+    if (chat && scrollRef.current?.contains)
       scrollRef.current.scrollIntoView({
         behavior: "auto",
         block: "end",
