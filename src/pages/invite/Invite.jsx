@@ -24,6 +24,7 @@ export const Invite = () => {
     el.select();
     document.execCommand("copy");
     alert("복사되었습니다! 친구에게 코드를 공유해주세요!🥳");
+    invite();
   };
 
   //화면 밖을 클릭 했을 때 모달창이 닫히는 로직
