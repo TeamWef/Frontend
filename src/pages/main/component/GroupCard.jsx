@@ -15,6 +15,7 @@ import { Button, Div, Flex, Margin, Span } from "../../../elem";
 import { getCookie } from "../../../redux/modules/customCookies";
 import jwt_decode from "jwt-decode";
 import { useInput, useInputs } from "../../../hooks/useInput";
+import { __delGroupSchedule } from "../../../redux/modules/scheduleSlice";
 
 const GroupCard = () => {
   const dispatch = useDispatch();
@@ -49,7 +50,7 @@ const GroupCard = () => {
   const onEdit = (e) => {
     e.preventDefault();
     if (!editGroup.partyName || !editGroup.partyIntroduction) {
-      return alert("모든 항목을 입력해주세요.");
+      return alert("항목이 비어있어요! 🫢 모든 항목을 입력해주세요.");
     }
     dispatch(__updateGroup(groupItem));
     setUpdateId("");
@@ -118,6 +119,7 @@ const GroupCard = () => {
                             onClick={() => {
                               if (window.confirm("정말 삭제하시겠습니까?")) {
                                 dispatch(__delGroup(data?.partyId));
+                                dispatch(__delGroupSchedule(data?.partyId));
                                 alert("삭제가 완료되었습니다.");
                               }
                               openDropBox();
@@ -135,6 +137,7 @@ const GroupCard = () => {
                                 window.confirm("정말 그룹을 나가시겠습니까?🥺")
                               ) {
                                 dispatch(__getOutGroup(data?.partyId));
+                                dispatch(__delGroupSchedule(data.partyId));
                                 alert("다음에 또 만나요! 👋🏻 ");
                               }
                               openDropBox();

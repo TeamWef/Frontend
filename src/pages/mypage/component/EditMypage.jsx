@@ -36,7 +36,7 @@ const EditMypage = ({ myProfile, modal, openModal, setModal }) => {
   };
   const uploadHandler = () => {
     if (!uploadImg) {
-      return alert("수정할 내용이 없습니다");
+      return alert("수정할 내용이 없습니다🫣");
     }
     dispatch(__updateMypage(uploadImg));
     setUploadImg("");

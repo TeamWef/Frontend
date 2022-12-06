@@ -43,7 +43,7 @@ export const __signup = createAsyncThunk(
       // console.log(data);
       return thunkAPI.fulfillWithValue(payload);
     } catch (error) {
-      alert(`${error.response.data}`);
+      alert(`오류가 발생했습니다`);
     }
   }
 );
@@ -56,7 +56,6 @@ export const __login = createAsyncThunk(
       const data = await axios.post(`${ServerUrl}/members/login`, userInfo);
       setCookie("token", data.headers.authorization);
       setCookie("refresh-token", data.headers[`refresh-token`]);
-      setCookie("expires", data.headers.expires);
       if (data.status === 200) {
         alert(`${data.data}`);
       }

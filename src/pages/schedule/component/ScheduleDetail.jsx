@@ -51,7 +51,6 @@ const SchdeleDetail = ({ scheduleId }) => {
     setEditSchedule({ ...editSchedule, [name]: value });
   };
 
-
   useEffect(() => {
     dispatch(__getScheduleDetail(detailId));
   }, [dispatch]);
@@ -452,7 +451,7 @@ const StContentInput = styled.textarea`
   height: 200px;
   background-color: transparent;
   border: none;
-  padding: 30px;
+  padding: 11px;
   resize: none;
   word-break: break-all;
   &::placeholder {

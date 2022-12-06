@@ -13,6 +13,8 @@ const GroupMain = () => {
   const members = data.participantList;
   const navigate = useNavigate();
 
+  console.log(data);
+
   useEffect(() => {
     dispatch(__popularSchedule(partyId));
   }, [dispatch, partyId]);
@@ -61,46 +63,65 @@ const GroupMain = () => {
             <Span variant="mediumBronze" fw="700" mg="0 0 20px 0">
               Favorite Schedule.
             </Span>
-            <StButton
-              pd="25px"
-              width="600px"
-              onClick={() => {
-                navigate(`/${partyId}/scheduledetail/${data?.scheduleId}`);
-              }}
-            >
-              <Flex fd="row" jc="space-between" ai="center">
-                <Flex fd="row" ai="center">
-                  <Span color="#a4a19d" fw="700" mg="0 10px 0 0">
-                    {data.title}
+            {data.scheduleId !== null ? (
+              <StButton
+                pd="25px"
+                width="600px"
+                onClick={() => {
+                  navigate(`/${partyId}/scheduledetail/${data?.scheduleId}`);
+                }}
+              >
+                <Flex fd="row" jc="space-between" ai="center">
+                  <Flex fd="row" ai="center">
+                    <Span color="#a4a19d" fw="700" mg="0 10px 0 0">
+                      {data.title}
+                    </Span>
+                    <Span variant="smallBronze">{data.writer}</Span>
+                  </Flex>
+                  <Span variant="smallBronze">
+                    참여 인원 : {data.participantSize}명
                   </Span>
-                  <Span variant="smallBronze">{data.writer}</Span>
                 </Flex>
-                <Span variant="smallBronze">
-                  참여 인원 : {data.participantSize}명
+                <Span variant="mediumBronze" mg="35px 0">
+                  {data.content}
                 </Span>
-              </Flex>
-              <Span variant="mediumBronze" mg="35px 0">
-                {data.content}
-              </Span>
-              <Flex>
-                <Flex fd="row" jc="flex-start" ai="center">
-                  <Svg variant="date" />
-                  <Span variant="mediumBronze">{data.date}</Span>
+                <Flex>
+                  <Flex fd="row" jc="flex-start" ai="center">
+                    <Svg variant="date" />
+                    <Span variant="mediumBronze">{data.date}</Span>
+                  </Flex>
+                  <Flex fd="row" jc="flex-start" ai="center">
+                    <Svg variant="time" />
+                    <Span variant="mediumBronze">{data.meetTime}</Span>
+                  </Flex>
+                  <Flex fd="row" jc="flex-start" ai="center">
+                    <Svg variant="location" />
+                    <Span variant="mediumBronze">{data.placeName}</Span>
+                  </Flex>
+                  <Flex fd="row" jc="flex-start" ai="center">
+                    <Svg variant="locationBegie" />
+                    <Span variant="mediumBronze">{data.address}</Span>
+                  </Flex>
                 </Flex>
-                <Flex fd="row" jc="flex-start" ai="center">
-                  <Svg variant="time" />
-                  <Span variant="mediumBronze">{data.meetTime}</Span>
-                </Flex>
-                <Flex fd="row" jc="flex-start" ai="center">
-                  <Svg variant="location" />
-                  <Span variant="mediumBronze">{data.placeName}</Span>
-                </Flex>
-                <Flex fd="row" jc="flex-start" ai="center">
-                  <Svg variant="locationBegie" />
-                  <Span variant="mediumBronze">{data.address}</Span>
-                </Flex>
-              </Flex>
-            </StButton>
+              </StButton>
+            ) : (
+              <StButton
+                width="600px"
+                pd="25px"
+                onClick={() => {
+                  navigate(`/${partyId}/schedule/create`);
+                }}
+              >
+                <Div fd="column">
+                  <Span variant="bigBronze" asf="center">
+                    🔥 인기 일정이 없습니다!
+                  </Span>
+                  <Span variant="smallBronze">
+                    내가 먼저 첫 약속 잡으러 가기 🛵 =3
+                  </Span>
+                </Div>
+              </StButton>
+            )}
           </Flex>
         </Flex>
       </Div>

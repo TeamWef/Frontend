@@ -52,7 +52,7 @@ const AlbumDetail = () => {
   const updateClick = () => {
     // console.log(id, contentInput);
     if (!contentInput) {
-      return alert("내용을 입력해주세요");
+      return alert("앗! 내용을 입력해주세요!");
     }
     const editContent = contentInput.replace(/(?:\r\n|\r|\n)/g, "<br>");
     // console.log(editContent);
@@ -91,7 +91,7 @@ const AlbumDetail = () => {
                 onClick={() => {
                   if (window.confirm("정말 삭제하시겠습니까?")) {
                     dispatch(__delAlbumItem(id));
-                    alert("삭제가 완료되었습니다.");
+                    alert("삭제가 완료되었습니다!");
                     navigate(`/${partyId}/album`);
                   }
                 }}

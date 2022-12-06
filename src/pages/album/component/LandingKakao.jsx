@@ -16,7 +16,7 @@ function LandingKakao({ albumPlace, setAlbumPlace }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!InputText) {
-      return alert("장소를 입력해주세요");
+      return alert("장소를 입력해주세요!");
     }
     setPlace(InputText);
     setModal(true);
