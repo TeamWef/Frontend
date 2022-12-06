@@ -163,7 +163,14 @@ const ScheduleCreate = () => {
                     <Span variant="smallBronze">
                       {schedule.place?.placeName}
                     </Span>
-                    <Span variant="other" asf="center" mg="0px 0px 0px 5px">
+                    <Span
+                      variant="other"
+                      asf="center"
+                      mg="0px 0px 0px 5px"
+                      to="ellipsis"
+                      ws="nowrap"
+                      of="hidden"
+                    >
                       {schedule.place?.address}
                     </Span>
                     <StBtn
@@ -238,6 +245,7 @@ const StContentInput = styled.textarea`
   margin: 20px 0px 0px 40px;
   width: 900px;
   height: 200px;
+  resize: none;
   background-color: transparent;
   border: none;
   padding: 30px;
@@ -296,7 +304,7 @@ const StDateButton = styled.button`
   border-radius: 5px;
   border: none;
   padding: 10px;
-  display: flex;
+  /* display: flex; */
   margin-left: 15px;
   margin-right: 15px;
   cursor: pointer;
@@ -337,8 +345,10 @@ const StKakaoDiv = styled.div`
 `;
 
 const StBgDiv = styled.div`
+  width: 220px;
   display: flex;
   background-color: white;
+  white-space: nowrap;
 `;
 
 const StMonthDiv = styled.div`

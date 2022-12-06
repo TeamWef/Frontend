@@ -24,6 +24,7 @@ export const Invite = () => {
     el.select();
     document.execCommand("copy");
     alert("복사되었습니다! 친구에게 코드를 공유해주세요!🥳");
+    invite();
   };
 
   //화면 밖을 클릭 했을 때 모달창이 닫히는 로직
@@ -43,6 +44,10 @@ export const Invite = () => {
   const postCodeHandler = (e) => {
     e.preventDefault();
     dispatch(__postInvite(code));
+    alert(
+      "초대받은 그룹에 참가하였습니다! 친구들과 소중한 추억을 쌓아보세요 🍀 "
+    );
+    setInvite();
   };
 
   const onCode = (e) => {

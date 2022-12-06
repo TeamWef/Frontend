@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { Div, Flex, Img, Margin, Span, Svg } from "../../elem";
 import { __popularSchedule } from "../../redux/modules/scheduleSlice";
@@ -11,6 +11,9 @@ const GroupMain = () => {
   const dispatch = useDispatch();
   const data = useSelector((state) => state.schedule?.popularSchedule);
   const members = data.participantList;
+  const navigate = useNavigate();
+
+  console.log(data);
 
   useEffect(() => {
     dispatch(__popularSchedule(partyId));
@@ -60,28 +63,65 @@ const GroupMain = () => {
             <Span variant="mediumBronze" fw="700" mg="0 0 20px 0">
               Favorite Schedule.
             </Span>
-            <StDiv pd="25px" width="600px">
-              <Flex fd="row" jc="space-between" ai="center">
-                <Flex fd="row" ai="center">
-                  <Span color="#a4a19d" fw="700" mg="0 10px 0 0">
-                    {data.title}
+            {data.scheduleId === null ? (
+              <StButton
+                pd="25px"
+                width="600px"
+                onClick={() => {
+                  navigate(`/${partyId}/scheduledetail/${data?.scheduleId}`);
+                }}
+              >
+                <Flex fd="row" jc="space-between" ai="center">
+                  <Flex fd="row" ai="center">
+                    <Span color="#a4a19d" fw="700" mg="0 10px 0 0">
+                      {data.title}
+                    </Span>
+                    <Span variant="smallBronze">{data.writer}</Span>
+                  </Flex>
+                  <Span variant="smallBronze">
+                    참여 인원 : {data.participantSize}명
                   </Span>
-                  <Span variant="smallBronze">{data.writer}</Span>
                 </Flex>
-                <Span variant="smallBronze">
-                  참여 인원 : {data.participantSize}명
+                <Span variant="mediumBronze" mg="35px 0">
+                  {data.content}
                 </Span>
-              </Flex>
-              <Span variant="mediumBronze" mg="35px 0">
-                {data.content}
-              </Span>
-              <Flex>
-                <Span variant="mediumBronze">{data.date}</Span>
-                <Span variant="mediumBronze">{data.meetTime}</Span>
-                <Span variant="mediumBronze">{data.placeName}</Span>
-                <Span variant="mediumBronze">{data.address}</Span>
-              </Flex>
-            </StDiv>
+                <Flex>
+                  <Flex fd="row" jc="flex-start" ai="center">
+                    <Svg variant="date" />
+                    <Span variant="mediumBronze">{data.date}</Span>
+                  </Flex>
+                  <Flex fd="row" jc="flex-start" ai="center">
+                    <Svg variant="time" />
+                    <Span variant="mediumBronze">{data.meetTime}</Span>
+                  </Flex>
+                  <Flex fd="row" jc="flex-start" ai="center">
+                    <Svg variant="location" />
+                    <Span variant="mediumBronze">{data.placeName}</Span>
+                  </Flex>
+                  <Flex fd="row" jc="flex-start" ai="center">
+                    <Svg variant="locationBegie" />
+                    <Span variant="mediumBronze">{data.address}</Span>
+                  </Flex>
+                </Flex>
+              </StButton>
+            ) : (
+              <StButton
+                width="600px"
+                pd="25px"
+                onClick={() => {
+                  navigate(`/${partyId}/schedule/create`);
+                }}
+              >
+                <Div fd="column">
+                  <Span variant="bigBronze" asf="center">
+                    🔥 인기 일정이 없습니다!
+                  </Span>
+                  <Span variant="smallBronze">
+                    내가 먼저 첫 약속 잡으러 가기 🛵 =3
+                  </Span>
+                </Div>
+              </StButton>
+            )}
           </Flex>
         </Flex>
       </Div>
@@ -98,6 +138,20 @@ const StDiv = styled.div`
   border-radius: 10px;
   align-items: center;
   justify-content: center;
+`;
+
+const StButton = styled.button`
+  width: ${({ width }) => (width ? width : "")};
+  padding: ${({ pd }) => (pd ? pd : "")};
+  border: solid 1px #d9d3c7;
+  border-radius: 10px;
+  align-items: center;
+  background-color: transparent;
+  justify-content: center;
+  cursor: pointer;
+  &:hover {
+    box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.15);
+  }
 `;
 
 const StMembers = styled.div`

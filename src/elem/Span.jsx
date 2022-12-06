@@ -14,6 +14,8 @@ const StSpan = styled.span`
   font-weight: ${({ fw }) => (fw ? fw : "")};
   border-bottom: ${({ bb }) => (bb ? bb : "")};
   white-space: ${({ ws }) => (ws ? ws : "")};
+  text-overflow: ${({ to }) => (to ? to : "")};
+  overflow: ${({ of }) => (of ? of : "")};
 
   ${({ variant }) => {
     switch (variant) {

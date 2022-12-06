@@ -315,7 +315,14 @@ const SchdeleDetail = ({ scheduleId }) => {
                         <Span variant="smallBronze">
                           {editSchedule.place?.placeName}
                         </Span>
-                        <Span variant="other" asf="center" mg="0px 0px 0px 5px">
+                        <Span
+                          variant="other"
+                          asf="center"
+                          mg="0px 0px 0px 5px"
+                          to="ellipsis"
+                          ws="nowrap"
+                          of="hidden"
+                        >
                           {editSchedule.place?.address}
                         </Span>
                         <StBtn
@@ -446,6 +453,7 @@ const StContentInput = styled.textarea`
   background-color: transparent;
   border: none;
   padding: 30px;
+  resize: none;
   word-break: break-all;
   &::placeholder {
     word-break: break-all;
@@ -537,8 +545,10 @@ const StKakaoDiv = styled.div`
 `;
 
 const StBgDiv = styled.div`
-  display: flex;
+  width: 220px;
+  /* display: flex; */
   background-color: white;
+  white-space: nowrap;
 `;
 
 const StMonthDiv = styled.div`

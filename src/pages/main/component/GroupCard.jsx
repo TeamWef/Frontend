@@ -49,7 +49,7 @@ const GroupCard = () => {
   const onEdit = (e) => {
     e.preventDefault();
     if (!editGroup.partyName || !editGroup.partyIntroduction) {
-      return alert("모든 항목을 입력해주세요.");
+      return alert("항목이 비어있어요! 🫢 모든 항목을 입력해주세요.");
     }
     dispatch(__updateGroup(groupItem));
     setUpdateId("");

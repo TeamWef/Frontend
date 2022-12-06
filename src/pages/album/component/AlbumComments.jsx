@@ -21,7 +21,7 @@ const AlbumComments = ({ id, commentList, myId }) => {
 
   const addCommentHandler = () => {
     if (!comment) {
-      return alert("내용을 입력해주세요");
+      return alert("앗! 내용이 없어요!");
     }
     dispatch(__addComment({ id, comment }));
     reset();
@@ -30,7 +30,7 @@ const AlbumComments = ({ id, commentList, myId }) => {
   const delCommentHandler = (id) => {
     if (window.confirm("정말 삭제하시겠습니까?")) {
       dispatch(__delComment(id));
-      alert("삭제가 완료되었습니다.");
+      alert("삭제가 완료되었습니다!");
     }
   };
   return (
