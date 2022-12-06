@@ -24,11 +24,11 @@ const SchdeleDetail = ({ scheduleId }) => {
   const participant = useSelector((state) => state.mypage?.myProfile);
   const [InputText, setInputText] = useState("");
   const [Place, setPlace] = useState("");
-
+  console.log(scheduleDetail);
   const [isParticipant, setIsParticipant] = useState(
-    scheduleDetail.isParticipant
+    scheduleDetail?.isParticipant
   );
-
+  console.log(isParticipant);
   const detailId = useParams().scheduleId;
   const partyId = useParams().partyId;
   const dispatch = useDispatch();
@@ -57,7 +57,7 @@ const SchdeleDetail = ({ scheduleId }) => {
 
   useEffect(() => {
     dispatch(__getScheduleDetail(detailId));
-  }, [dispatch, detailId]);
+  }, [dispatch, detailId, isParticipant]);
 
   const onEditScheduleHandler = (e) => {
     e.preventDefault();
