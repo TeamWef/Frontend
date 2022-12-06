@@ -67,6 +67,17 @@ export const __getGroupSchedule = createAsyncThunk(
   }
 );
 
+export const __delGroupSchedule = createAsyncThunk(
+  "delete/delGroupSchedule",
+  async (payload, thunkAPI) => {
+    try {
+      return thunkAPI.fulfillWithValue(payload);
+    } catch (err) {
+      return console.log("error", err);
+    }
+  }
+);
+
 export const __delSchedule = createAsyncThunk(
   "delete/delSchedule",
   async (payload, thunkAPI) => {
@@ -171,6 +182,12 @@ export const scheduleSlice = createSlice({
     [__getGroupSchedule.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
+    },
+    [__delGroupSchedule.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.groupSchedule.data = state.groupSchedule.data.filter(
+        (item) => item.partyId !== action.payload
+      );
     },
 
     //상세조회
