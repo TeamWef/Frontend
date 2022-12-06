@@ -60,6 +60,12 @@ const StSpan = styled.span`
           font-size: 12px;
           color: #a4a19d;
         `;
+      case "warning":
+        return css`
+          font-size: 12px;
+          color: red;
+          margin: 0 0 10px 10px;
+        `;
       default:
         break;
     }
