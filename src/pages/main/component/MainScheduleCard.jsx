@@ -18,7 +18,7 @@ const ScheduleCard = () => {
   return (
     <Div variant="bodyContainer">
       <Margin />
-      <Flex>
+      <Flex fd="row">
         <Span variant="bold">Schedule.</Span>
         <StContainerDiv>
           {data?.length !== 0 ? (
@@ -26,20 +26,20 @@ const ScheduleCard = () => {
               {data?.map((item) => {
                 return (
                   <StDiv key={item.scheduleId}>
-                    <StFlexDiv>
-                      <StItemDiv>
-                        <StTitleDiv>
-                          <Span variant="smallBronze">{item?.partyName}</Span>
-                        </StTitleDiv>
-                        <p>{item?.title}</p>
-                        <Span
-                          variant="other"
-                          mg="20px 0px 0px 0px"
-                          asf="center"
-                        >
-                          {item?.writer}
-                        </Span>
-                      </StItemDiv>
+                    <Flex fd="row">
+                      <Flex fd="row" asg="center" margin="10px">
+                        <StItemDiv>
+                          <StTitleDiv>
+                            <Span variant="smallBronze">{item?.partyName}</Span>
+                          </StTitleDiv>
+                          <p>{item?.title}</p>
+                          <StTextDiv>
+                            <Span variant="other" asf="center">
+                              {item?.writer}
+                            </Span>
+                          </StTextDiv>
+                        </StItemDiv>
+                      </Flex>
                       <StbtnDiv
                         onClick={() => {
                           localStorage.setItem("Group", item.partyName);
@@ -50,7 +50,7 @@ const ScheduleCard = () => {
                       >
                         <Svg variant={"more"} />
                       </StbtnDiv>
-                    </StFlexDiv>
+                    </Flex>
                   </StDiv>
                 );
               })}
@@ -100,7 +100,6 @@ const StTitleDiv = styled.div`
   height: 35px;
   background-color: #ede8e1;
   color: #a4a19d;
-  margin-top: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -108,34 +107,38 @@ const StTitleDiv = styled.div`
 `;
 
 const StDiv = styled.div`
-  width: 1075px;
+  width: 1055px;
   height: 75px;
   border-bottom: 1px solid #d9d3c7;
 `;
 
-const StFlexDiv = styled.div`
-  display: flex;
-`;
-
 const StItemDiv = styled.div`
-  width: 1075px;
+  width: 1000px;
   display: flex;
+  align-items: center;
+  margin-top: 5px;
   justify-content: space-between;
   & p {
     width: 250px;
     text-align: center;
     align-items: center;
     justify-content: center;
-    margin-top: 28px;
     color: #b5b3af;
   }
+`;
+
+const StTextDiv = styled.div`
+  width: 50px;
+  text-align: center;
+  /* margin-top: 10px; */
+  color: #b5b3af;
 `;
 
 const StbtnDiv = styled.div`
   width: 50px;
   height: 30px;
   margin-top: 26px;
-  margin-left: 26px;
+  margin-left: 5px;
   border-radius: 5px;
   border: none;
 `;

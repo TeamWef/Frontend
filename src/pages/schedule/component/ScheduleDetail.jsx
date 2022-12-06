@@ -56,6 +56,10 @@ const SchdeleDetail = ({ scheduleId }) => {
   };
 
   useEffect(() => {
+    setTimeout(() => isParticipant, 2000);
+  }, [isParticipant]);
+
+  useEffect(() => {
     dispatch(__getScheduleDetail(detailId));
   }, [dispatch, detailId, isParticipant]);
 
@@ -205,7 +209,6 @@ const SchdeleDetail = ({ scheduleId }) => {
                 ) : (
                   <StImg alt="맹짱구" src={item?.profileImageUrl} />
                 )}
-
                 <Span variant="small" mg="0px 5px">
                   {item?.memberName}
                 </Span>
@@ -542,6 +545,10 @@ const StMonthDiv = styled.div`
     border-radius: 10px;
     margin-bottom: 50px;
     color: #a4a19d;
+    & button {
+      border-radius: 20px;
+      width: 40px;
+    }
   }
 
   .react-calendar__navigation {

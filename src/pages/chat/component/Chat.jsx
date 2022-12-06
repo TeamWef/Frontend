@@ -49,7 +49,7 @@ export const Chat = () => {
     // 채팅 메시지 내역 자동 스크롤
     if (chat && scrollRef.current.contains)
       scrollRef.current.scrollIntoView({
-        behavior: "smooth",
+        behavior: "auto",
         block: "end",
       });
     return () => {};

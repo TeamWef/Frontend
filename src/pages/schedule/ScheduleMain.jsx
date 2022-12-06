@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import GroupTitle from "../../components/GroupTitle";
-import { Div, Svg } from "../../elem";
+import { Div, Svg, Flex, Span } from "../../elem";
 import {
   __getSchedule,
   __getGroupSchedule,
@@ -36,14 +36,20 @@ const ScheduleMain = () => {
       {scheduleList?.map((data) => {
         return (
           <StDiv key={data?.scheduleId}>
-            <StFlexDiv>
-              <StItemDiv>
-                <StTitleDiv>
-                  <h4>{data?.partyName}</h4>
-                </StTitleDiv>
-                <p>{data?.title}</p>
-                <p>{data?.writer}</p>
-              </StItemDiv>
+            <Flex fd="row" asg="center">
+              <Flex fd="row" asg="center" margin="0px 0px 0px 0px">
+                <StScheduleItemDiv>
+                  <StTitleDiv>
+                    <h4>{data?.partyName}</h4>
+                  </StTitleDiv>
+                  <p>{data?.title}</p>
+                  <StTextDiv>
+                    <Span variant="other" asf="center">
+                      {data?.writer}
+                    </Span>
+                  </StTextDiv>
+                </StScheduleItemDiv>
+              </Flex>
               <StbtnDiv
                 onClick={() => {
                   navigate(`/${partyId}/scheduledetail/${data?.scheduleId}`);
@@ -51,7 +57,7 @@ const ScheduleMain = () => {
               >
                 <Svg variant={"more"} />
               </StbtnDiv>
-            </StFlexDiv>
+            </Flex>
           </StDiv>
         );
       })}
@@ -64,25 +70,40 @@ export default ScheduleMain;
 const StDiv = styled.div`
   width: 1075px;
   height: 75px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-bottom: 1px solid #d9d3c7;
 `;
 
-const StFlexDiv = styled.div`
-  display: flex;
-`;
-
 const StItemDiv = styled.div`
-  width: 1075px;
+  width: 1060px;
   display: flex;
+  align-items: center;
+  text-align: center;
+  margin-top: 5px;
+  margin-bottom: 30px;
   justify-content: space-between;
-  & p {
-    margin-top: 28px;
-    margin-left: 30px;
-    color: #b5b3af;
-  }
   & button {
+    cursor: pointer;
     border: none;
     background-color: transparent;
+  }
+`;
+
+const StScheduleItemDiv = styled.div`
+  width: 1000px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin-top: 5px;
+  justify-content: space-between;
+  & p {
+    width: 250px;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    color: #b5b3af;
   }
 `;
 
@@ -91,7 +112,6 @@ const StTitleDiv = styled.div`
   height: 35px;
   background-color: #ede8e1;
   color: #a4a19d;
-  margin-top: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -99,10 +119,16 @@ const StTitleDiv = styled.div`
 `;
 
 const StbtnDiv = styled.div`
-  width: 50px;
+  width: 100%;
   height: 30px;
-  margin-top: 26px;
-  margin-left: 26px;
+  margin-top: 15px;
+  margin-left: 5px;
   border-radius: 5px;
   border: none;
+`;
+
+const StTextDiv = styled.div`
+  width: 70px;
+  text-align: center;
+  color: #b5b3af;
 `;

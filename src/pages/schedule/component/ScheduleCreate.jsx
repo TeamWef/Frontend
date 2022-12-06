@@ -336,8 +336,12 @@ const StMonthDiv = styled.div`
     width: 314px;
     border: none;
     border: 1px solid #a4a19d;
-    border-radius: 5px;
+    border-radius: 10px;
     margin-bottom: 50px;
+    & button {
+      border-radius: 20px;
+      width: 40px;
+    }
   }
 
   .react-calendar__navigation {
