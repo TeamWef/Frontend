@@ -18,7 +18,6 @@ export const Invite = () => {
   const modalEl = useRef(null);
   const textInput = useRef();
 
-  // console.log(inviteCode);
   // 인풋 내용 복사하기
   const copy = () => {
     const el = textInput.current;

@@ -24,11 +24,10 @@ const SchdeleDetail = ({ scheduleId }) => {
   const participant = useSelector((state) => state.mypage?.myProfile);
   const [InputText, setInputText] = useState("");
   const [Place, setPlace] = useState("");
-  console.log(scheduleDetail);
+
   const [isParticipant, setIsParticipant] = useState(
     scheduleDetail?.isParticipant
   );
-  console.log(isParticipant);
   const detailId = useParams().scheduleId;
   const partyId = useParams().partyId;
   const dispatch = useDispatch();
@@ -88,7 +87,6 @@ const SchdeleDetail = ({ scheduleId }) => {
     openMonth();
     const day = moment(value).format("YYYY-MM-DD");
     setDate(day);
-    console.log(date);
     setEditSchedule({ ...editSchedule, date: day });
   };
 

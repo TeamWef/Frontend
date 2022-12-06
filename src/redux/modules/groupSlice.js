@@ -36,7 +36,6 @@ export const __getGroup = createAsyncThunk(
 export const __delGroup = createAsyncThunk(
   "delete/delGroup",
   async (payload, thunkAPI) => {
-    console.log("async=>", payload);
     try {
       await groupApis.delGroup(payload);
       return thunkAPI.fulfillWithValue(payload);

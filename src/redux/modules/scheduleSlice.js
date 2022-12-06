@@ -245,7 +245,6 @@ export const scheduleSlice = createSlice({
     },
     [__joinSchedules.fulfilled]: (state, action) => {
       state.isLoading = false;
-      console.log("payload=>", action.payload.isJoin);
       state.scheduleDetail.isParticipant = action.payload.isJoin;
       if (action.payload.isJoin) {
         state.scheduleDetail.participantResponseDtoList.push(
