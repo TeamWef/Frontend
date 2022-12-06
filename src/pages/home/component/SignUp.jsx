@@ -91,7 +91,7 @@ const SignUp = () => {
               onClick={() =>
                 email
                   ? dispatch(__emailCheck(email))
-                  : alert("Email을 입력해주세요")
+                  : alert("Email을 입력해주세요!")
               }
             >
               중복확인
@@ -111,7 +111,7 @@ const SignUp = () => {
           />
           {failed === "Password" && (
             <Span variant="warning">
-              4~12자 영문 대 소문자 혹은 숫자를 입력해주세요.
+              4~12자 영문 대/소문자 혹은 숫자를 입력해주세요.
             </Span>
           )}
           <Input
