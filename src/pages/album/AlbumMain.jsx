@@ -12,7 +12,6 @@ const AlbumMain = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const partyId = useParams().partyId;
-  // console.log(partyId);
   //모달 컨트롤
   const [createModal, openCreateModal] = useModal();
   const [Change, setChange] = useState(false);
