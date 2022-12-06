@@ -393,19 +393,10 @@ const StBtn = styled.button`
 const StChatBoxDiv = styled.div`
   width: 98%;
   display: flex;
-
   justify-content: ${(props) => props.align};
   & p {
     margin-left: 5px;
   }
-`;
-
-const StRightDiv = styled.div`
-  margin-right: 5px;
-`;
-
-const StLeftDiv = styled.div`
-  margin-left: 5px;
 `;
 
 const StChatDiv = styled.div`
