@@ -1,6 +1,6 @@
 const nameRegExp = /^[가-힣]{2,4}$/;
 const emailRegexp = /^[A-Za-z0-9_\\-]+@[A-Za-z0-9-]+[.]{1}[A-Za-z]{1,3}$/;
-const passwordRegexp = /^[a-zA-z0-9]{4,12}$/;
+const passwordRegexp = /^[0-9a-zA-Z!@#$%^&*]{4,12}$/;
 
 export const checkAll = (values) => {
   const { email, name, password, passwordCheck } = values;

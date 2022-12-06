@@ -61,7 +61,9 @@ export const Header = () => {
             <Notice />
             <MenuBtn
               onClick={() => {
-                logoutHandler();
+                if (window.confirm("정말 로그아웃 하시겠습니까?")) {
+                  logoutHandler();
+                }
                 alert("로그아웃 되었습니다.");
                 window.location.reload();
               }}
@@ -112,6 +114,8 @@ const UserInfo = styled.div`
 `;
 
 const MenuBtn = styled.button`
+  height: 40px;
+  border-radius: 15px;
   background-color: transparent;
   border: none;
   display: flex;
