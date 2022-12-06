@@ -7,12 +7,11 @@ export default Input;
 
 const StInput = styled.input`
   background-color: #fff;
-  border: 0px;
+  border: ${({ bd }) => (bd ? bd : "0")};
   border-radius: 5px;
   display: flex;
   padding-left: 16px;
   width: ${({ width }) => (width ? width : "")};
-
 
   ${({ variant }) => {
     switch (variant) {
