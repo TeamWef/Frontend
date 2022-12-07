@@ -77,10 +77,10 @@ const GroupMain = () => {
               >
                 <Flex fd="row" jc="space-between" ai="center">
                   <Flex fd="row" ai="center">
-                    <Span color="#a4a19d" fw="700" mg="0 10px 0 0">
-                      {data?.title}
+                    <StSpan>{data?.title}</StSpan>
+                    <Span mg="0px 4px 0px 4px" variant="smallBronze">
+                      {data?.writer}
                     </Span>
-                    <Span variant="smallBronze">{data?.writer}</Span>
                   </Flex>
                   <Span variant="smallBronze">
                     참여 인원 : {data?.participantSize}명
@@ -189,4 +189,17 @@ const StHr = styled.hr`
   height: 1px;
   width: 140px;
   margin-top: 10px;
+`;
+
+const StSpan = styled.span`
+  width: 400px;
+  margin-right: 15px;
+  display: block;
+  word-break: break-all;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 16px;
+  color: #a4a19d;
+  font-weight: 700;
 `;
