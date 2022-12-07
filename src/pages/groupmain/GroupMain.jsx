@@ -78,12 +78,12 @@ const GroupMain = () => {
                 <Flex fd="row" jc="space-between" ai="center">
                   <Flex fd="row" ai="center">
                     <StSpan>{data?.title}</StSpan>
-                    <Span mg="0px 4px 0px 4px" variant="smallBronze">
+                    <Span wd="80px" variant="smallBronze">
                       {data?.writer}
                     </Span>
                   </Flex>
-                  <Span variant="smallBronze">
-                    참여 인원 : {data?.participantSize}명
+                  <Span wd="80px" variant="smallBronze">
+                    🎈 {data?.participantSize}명
                   </Span>
                 </Flex>
                 <Span variant="mediumBronze" mg="35px 0">
@@ -194,6 +194,7 @@ const StHr = styled.hr`
 const StSpan = styled.span`
   width: 400px;
   margin-right: 15px;
+  text-align: left;
   display: block;
   word-break: break-all;
   white-space: nowrap;
