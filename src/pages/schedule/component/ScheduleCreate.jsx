@@ -251,7 +251,6 @@ const StContentInput = styled.textarea`
   resize: none;
   background-color: transparent;
   border: none;
-  padding: 11px;
   word-break: break-all;
   &::placeholder {
     word-break: break-all;
@@ -267,8 +266,7 @@ const StTitleInput = styled.input`
   background-color: transparent;
   border: none;
   &::placeholder {
-    padding: 10px;
-    font-size: 18px;
+    font-size: 16px;
   }
 `;
 

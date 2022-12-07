@@ -27,10 +27,10 @@ const GroupMain = () => {
           <Flex>
             <Flex ai="center">
               <Span variant="bold" asf="center">
-                {data.partyName}
+                {data?.partyName}
               </Span>
               <Span variant="mediumBronze" mg="30px 0">
-                {data.partyIntroduction}
+                {data?.partyIntroduction}
               </Span>
               <StDiv pd="15px 0 0 0">
                 <Flex ai="center">
@@ -46,7 +46,11 @@ const GroupMain = () => {
                         {item.profileImageUrl === null ? (
                           <Svg variant="profile" />
                         ) : (
-                          <Img src={item.profileImageUrl} alt="profileImg" />
+                          <Img
+                            mg="3px 0px 0px 0px"
+                            src={item.profileImageUrl}
+                            alt="profileImg"
+                          />
                         )}
                         <Span variant="smallBronze" mg="0 0 0 4px">
                           {item.memberName}
@@ -63,7 +67,7 @@ const GroupMain = () => {
             <Span variant="mediumBronze" fw="700" mg="0 0 20px 0">
               Favorite Schedule.
             </Span>
-            {data.scheduleId !== null ? (
+            {data?.scheduleId !== null ? (
               <StButton
                 pd="25px"
                 width="600px"
@@ -74,33 +78,33 @@ const GroupMain = () => {
                 <Flex fd="row" jc="space-between" ai="center">
                   <Flex fd="row" ai="center">
                     <Span color="#a4a19d" fw="700" mg="0 10px 0 0">
-                      {data.title}
+                      {data?.title}
                     </Span>
-                    <Span variant="smallBronze">{data.writer}</Span>
+                    <Span variant="smallBronze">{data?.writer}</Span>
                   </Flex>
                   <Span variant="smallBronze">
-                    참여 인원 : {data.participantSize}명
+                    참여 인원 : {data?.participantSize}명
                   </Span>
                 </Flex>
                 <Span variant="mediumBronze" mg="35px 0">
-                  {data.content}
+                  {data?.content}
                 </Span>
                 <Flex>
                   <Flex fd="row" jc="flex-start" ai="center">
                     <Svg variant="date" />
-                    <Span variant="mediumBronze">{data.date}</Span>
+                    <Span variant="mediumBronze">{data?.date}</Span>
                   </Flex>
                   <Flex fd="row" jc="flex-start" ai="center">
                     <Svg variant="time" />
-                    <Span variant="mediumBronze">{data.meetTime}</Span>
+                    <Span variant="mediumBronze">{data?.meetTime}</Span>
                   </Flex>
                   <Flex fd="row" jc="flex-start" ai="center">
                     <Svg variant="location" />
-                    <Span variant="mediumBronze">{data.placeName}</Span>
+                    <Span variant="mediumBronze">{data?.placeName}</Span>
                   </Flex>
                   <Flex fd="row" jc="flex-start" ai="center">
                     <Svg variant="locationBegie" />
-                    <Span variant="mediumBronze">{data.address}</Span>
+                    <Span variant="mediumBronze">{data?.address}</Span>
                   </Flex>
                 </Flex>
               </StButton>
