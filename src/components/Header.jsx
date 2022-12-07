@@ -64,8 +64,8 @@ export const Header = () => {
                 if (window.confirm("정말 로그아웃 하시겠습니까?")) {
                   logoutHandler();
                   alert("로그아웃 되었습니다.");
+                  window.location.reload();
                 }
-                window.location.reload();
               }}
             >
               Logout
