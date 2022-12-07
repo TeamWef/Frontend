@@ -368,7 +368,7 @@ const StInput = styled.input`
   top: 16px;
   width: 400px;
   height: 45px;
-  padding: 15px;
+  padding: 15px 50px 15px 15px;
   background-color: transparent;
   border-radius: 55px;
   border: 2px solid #d9d3c7;
@@ -394,6 +394,8 @@ const StChatBoxDiv = styled.div`
   width: 98%;
   display: flex;
   justify-content: ${(props) => props.align};
+  word-break: break-all;
+  white-space: normal;
   & p {
     margin-left: 5px;
   }
@@ -404,9 +406,12 @@ const StChatDiv = styled.div`
   padding: 8px 10px;
   margin-top: 11px;
   width: max-content;
+  max-width: 230px;
   margin-bottom: 10px;
   border-radius: 15px 15px 0px 15px;
   text-align: right;
+  word-break: break-all;
+  white-space: normal;
 `;
 
 const StUserChatDiv = styled.div`
@@ -415,10 +420,12 @@ const StUserChatDiv = styled.div`
   margin-left: 10px;
   padding: 10px 5px 5px 5px;
   width: max-content;
+  max-width: 230px;
   margin-bottom: 10px;
   border-radius: 15px 15px 15px 0px;
   text-align: left;
   white-space: normal;
+  word-break: break-all;
 `;
 
 const StSizeDiv = styled.div`
