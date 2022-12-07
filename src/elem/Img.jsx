@@ -10,6 +10,7 @@ const StImg = styled.img`
   height: ${({ height }) => (height ? height : "30px")};
   border-radius: 50%;
   object-fit: ${({ obf }) => (obf ? obf : "cover")};
+  margin: ${({ mg }) => (mg ? mg : "")};
 
   ${({ variant }) => {
     switch (variant) {
