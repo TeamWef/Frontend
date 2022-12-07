@@ -369,7 +369,7 @@ const StInput = styled.input`
   width: 400px;
   height: 45px;
   padding: 15px 50px 15px 15px;
-  background-color: pink;
+  background-color: transparent;
   border-radius: 55px;
   border: 2px solid #d9d3c7;
 `;
