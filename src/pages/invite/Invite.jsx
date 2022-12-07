@@ -178,8 +178,8 @@ const StInput = styled.input`
   border-bottom: 1px solid #b5b3af;
   background-color: transparent;
   text-align: center;
-  font-size: 14px;
-  font-weight: 600;
+  font-size: 12px;
+  font-weight: 400;
 `;
 
 const StBtn = styled.button`
