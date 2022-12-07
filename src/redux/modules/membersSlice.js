@@ -15,12 +15,13 @@ export const __emailCheck = createAsyncThunk(
   "users/idcheck",
   async (payload, thunkAPI) => {
     try {
-      const email = payload;
+      const { email, setIsChecked } = payload;
       const data = await axios.get(`${ServerUrl}/members/check-email`, {
         params: { email },
       });
       if (data.status === 200) {
         alert(`${data.data}`);
+        setIsChecked(true);
       }
       return null;
     } catch (error) {
@@ -76,13 +77,15 @@ export const kakaoLogin = createAsyncThunk(
       const data = await axios.get(
         `${ServerUrl}/members/kakao/callback?code=${code}`
       );
+      console.log(data);
       setCookie("token", data.headers.authorization);
       setCookie("refresh-token", data.headers[`refresh-token`]);
       navigate("/");
       window.location.reload();
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
-      alert(`오류가 발생했습니다`);
+      // console.log(error);
+      alert(`${error.response.data}`);
       navigate("/");
     }
   }

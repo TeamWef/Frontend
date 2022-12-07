@@ -16,30 +16,46 @@ const SignUp = () => {
     password: "",
     passwordCheck: "",
   });
-  const [failed, setFailed] = useState("");
-  const { email, name, password, passwordCheck } = values;
-  const ref = useRef(null);
-
-  const focusOut = (e) => {
-    setFailed("");
-  };
-  useEffect(() => {
-    if (failed) document.addEventListener("focusout", focusOut);
-    return () => {
-      document.removeEventListener("focusout", focusOut);
-    };
+  const [failed, setFailed] = useState({
+    name: "",
+    email: "",
+    password: "",
   });
+  const [isChecked, setIsChecked] = useState();
+  const { email, name, password, passwordCheck } = values;
+  console.log(failed);
+  // const focusOut = (e) => {
+  //   setFailed("");
+  // };
+  // useEffect(() => {
+  //   if (failed) document.addEventListener("focusout", focusOut);
+  //   return () => {
+  //     document.removeEventListener("focusout", focusOut);
+  //   };
+  // });
+  const oncheckEmail = () => {
+    if (!email) {
+      return alert("Email을 입력해주세요!");
+    } else if (failed.email === "Email") {
+      return alert("Email 형식이 올바르지 않습니다");
+    }
+    dispatch(__emailCheck({ email, setIsChecked }));
+  };
 
   const onSignup = (e) => {
     e.preventDefault();
     if (!checkAll(values)) {
       return null;
     }
-    dispatch(__signup({ email, name, password }));
-    reset();
-    navigate("/");
+    if (isChecked) {
+      dispatch(__signup({ email, name, password }));
+      reset();
+      navigate("/");
+    } else {
+      alert("Email 중복 확인이 필요합니다.");
+    }
   };
-
+  console.log(isChecked);
   return (
     <Div variant="sign">
       <Flex>
@@ -58,58 +74,55 @@ const SignUp = () => {
         <form onSubmit={onSignup}>
           <Input
             variant="large"
-            bd={failed === "Name" ? "2px solid red" : ""}
+            bd={failed.name === "Name" && name ? "2px solid red" : ""}
             name="name"
             value={name}
             onChange={(e) => {
               onChange(e);
-              setFailed(checkName(e.target.value));
+              setFailed({ ...failed, name: checkName(e.target.value) });
             }}
             placeholder="Username"
           />
-          {failed === "Name" && (
+          {failed.name === "Name" && name && (
             <Span variant="warning">2~4자리 한글을 입력해주세요.</Span>
           )}
           <StDiv>
             <Input
               variant="large"
-              bd={failed === "Email" ? "2px solid red" : ""}
+              bd={failed.email === "Email" && email ? "2px solid red" : ""}
               name="email"
               value={email}
               onChange={(e) => {
                 onChange(e);
-                setFailed(checkEmail(e.target.value));
+                setFailed({ ...failed, email: checkEmail(e.target.value) });
               }}
               placeholder="Email"
             />
-            {failed === "Email" && (
+            {failed.email === "Email" && email && (
               <Span variant="warning">Email 형식이 올바르지 않습니다.</Span>
             )}
-            <StBtn
-              variant="large"
-              type="button"
-              onClick={() =>
-                email
-                  ? dispatch(__emailCheck(email))
-                  : alert("Email을 입력해주세요!")
-              }
-            >
+            <StBtn variant="large" type="button" onClick={oncheckEmail}>
               중복확인
             </StBtn>
           </StDiv>
           <Input
             variant="large"
-            bd={failed === "Password" ? "2px solid red" : ""}
+            bd={
+              failed.password === "Password" && password ? "2px solid red" : ""
+            }
             type="password"
             name="password"
             value={password}
             onChange={(e) => {
               onChange(e);
-              setFailed(checkPassword(e.target.value));
+              setFailed({
+                ...failed,
+                password: checkPassword(e.target.value),
+              });
             }}
             placeholder="Password"
           />
-          {failed === "Password" && (
+          {failed.password === "Password" && password && (
             <Span variant="warning">
               4~12자 영문 대/소문자 혹은 숫자를 입력해주세요.
             </Span>

@@ -47,7 +47,7 @@ const Notice = () => {
       };
 
       sse.addEventListener("sse", (e) => {
-        if (e.data.startsWith("{")) {
+        if (e.data?.startsWith("{")) {
           // const msg = JSON.parse(e.data);
           dispatch(__updateNoticeCount());
         }
@@ -55,7 +55,7 @@ const Notice = () => {
 
       sse.addEventListener("error", (e) => {
         if (e) {
-          console.log(e);
+          // console.log(e);
         }
         // return () => source.close();
       });

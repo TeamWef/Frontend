@@ -63,9 +63,9 @@ export const Header = () => {
               onClick={() => {
                 if (window.confirm("정말 로그아웃 하시겠습니까?")) {
                   logoutHandler();
+                  alert("로그아웃 되었습니다.");
+                  window.location.reload();
                 }
-                alert("로그아웃 되었습니다.");
-                window.location.reload();
               }}
             >
               Logout

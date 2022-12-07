@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { kakaoLogin } from "../../../redux/modules/membersSlice";
+import { Div, Margin, Span } from "../../../elem";
 
 const Kakao = () => {
   const navigate = useNavigate();
@@ -12,7 +13,12 @@ const Kakao = () => {
   useEffect(() => {
     dispatch(kakaoLogin({ code, navigate }));
   }, []);
-  return <div>KaKao Login ...</div>;
+  return (
+    <Div variant="bodyContainer">
+      <Margin />
+      <Span>KaKao Login ...</Span>
+    </Div>
+  );
 };
 
 export default Kakao;
