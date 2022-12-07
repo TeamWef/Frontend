@@ -23,7 +23,9 @@ export const Invite = () => {
     const el = textInput.current;
     el.select();
     document.execCommand("copy");
-    alert("복사되었습니다! 친구에게 코드를 공유해주세요!🥳");
+    alert(
+      "복사되었습니다! 친구에게 코드를 공유해주세요🥳  복사된 코드는 메인에서 사용 가능합니다!"
+    );
     invite();
   };
 
@@ -110,16 +112,21 @@ export const Invite = () => {
             <Span variant="other" mg="30px 0px 0px 30px">
               초대 코드
             </Span>
+
             <StInput
               type="text"
               value={
                 inviteCode ||
-                (inviteCode === null && "새로운 그룹을 생성해주세요!")
+                (inviteCode === null &&
+                  "기본 그룹은 초대코드가 없습니다! 다른 그룹에서 이용해주세요!")
               }
               name="code"
               onChange={onCode}
               ref={textInput}
             />
+            {inviteCode === null && (
+              <label>발급된 코드는 메인페이지에서 사용 가능합니다!</label>
+            )}
 
             {inviteCode === null ? null : (
               <>
@@ -171,7 +178,7 @@ const StInput = styled.input`
   border-bottom: 1px solid #b5b3af;
   background-color: transparent;
   text-align: center;
-  font-size: 18px;
+  font-size: 14px;
   font-weight: 600;
 `;
 
