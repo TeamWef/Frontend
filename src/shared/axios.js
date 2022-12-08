@@ -42,7 +42,7 @@ instance.interceptors.response.use(
     return response;
   },
   async (error) => {
-    console.log(error);
+    // console.log(error);
     //     if (response.status === 404) {
     //       return window.location.replace("/notfound");
     //     }
@@ -52,7 +52,7 @@ instance.interceptors.response.use(
     //     if (response.status === 400) {
     //       return response;
     //     }
-    //     return Promise.reject(error);
+    return Promise.reject(error);
     //   }
     // );
   }

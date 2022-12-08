@@ -77,8 +77,18 @@ export const __postInvite = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const res = await inviteApis.addInvite(payload);
-      return thunkAPI.fulfillWithValue(res.data);
+      console.log(res);
+      if (res?.status === 200) {
+        alert(
+          "초대받은 그룹에 참가하였습니다! 친구들과 소중한 추억을 쌓아보세요 🍀"
+        );
+        return thunkAPI.fulfillWithValue(res.data);
+      }
     } catch (err) {
+      console.log(err);
+      if (err.response.status === 500) {
+        alert("만료된 초대코드입니다🥲 코드를 재발급해 주세요!");
+      }
       return thunkAPI.rejectWithValue(err);
     }
   }

@@ -169,17 +169,19 @@ const SchdeleDetail = ({ scheduleId }) => {
       </Flex>
       <StJoinerDiv>
         {isParticipant ? (
-          <Button
-            variant="small"
-            margin="50px 0px 0px 0px"
-            onClick={(e) => {
-              e.preventDefault();
-              setIsParticipant(!isParticipant);
-              dispatch(__joinSchedules({ detailId, participant }));
-            }}
-          >
-            취소하기
-          </Button>
+          <>
+            <Button
+              variant="small"
+              margin="50px 0px 0px 0px"
+              onClick={(e) => {
+                e.preventDefault();
+                setIsParticipant(!isParticipant);
+                dispatch(__joinSchedules({ detailId, participant }));
+              }}
+            >
+              취소하기
+            </Button>
+          </>
         ) : (
           <Button
             variant="border-small"
@@ -425,6 +427,7 @@ const StJoinDiv = styled.div`
   border-radius: 5px;
   margin: 50px 0px 0px 10px;
   word-break: break-all;
+  white-space: nowrap;
 `;
 
 const StContentDiv = styled.div`
@@ -641,4 +644,8 @@ const StJoinerDiv = styled.div`
   width: 1000px;
   display: grid;
   grid-template-columns: repeat(8, 1fr);
+`;
+
+const StAlineDiv = styled.div`
+  width: 100%;
 `;
