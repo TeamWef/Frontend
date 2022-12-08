@@ -14,7 +14,7 @@ const StBtn = styled.button`
   margin: ${({ margin }) => (margin ? margin : "")};
   transition: 0.3s;
   :hover {
-    opacity: 0.6;
+    opacity: 0.4;
   }
   color: #fff;
   background-color: #a4a19d;
@@ -49,7 +49,20 @@ const StBtn = styled.button`
           margin-left: 10px;
           color: #a4a19d;
           :hover {
-            opacity: 1;
+            background-color: #a4a19d;
+            color: #fff;
+          }
+        `;
+      case "border-medium":
+        return css`
+          border: 1px solid #a4a19d;
+          background-color: transparent;
+          width: 225px;
+          height: 38px;
+          font-size: 16px;
+          margin-top: 10px;
+          color: #a4a19d;
+          :hover {
             background-color: #a4a19d;
             color: #fff;
           }

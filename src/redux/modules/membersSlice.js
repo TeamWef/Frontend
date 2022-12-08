@@ -58,9 +58,8 @@ export const __login = createAsyncThunk(
       setCookie("token", data.headers.authorization);
       setCookie("refresh-token", data.headers[`refresh-token`]);
       if (data.status === 200) {
-        alert(`${data.data}`);
+        window.location.reload();
       }
-      window.location.reload();
       // console.log(data);
       return thunkAPI.fulfillWithValue(userInfo);
     } catch (error) {

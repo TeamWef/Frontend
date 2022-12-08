@@ -53,7 +53,7 @@ const AlbumCreate = ({ openCreateModal, partyId }) => {
     setUploadImg("");
     openCreateModal();
   };
-  // console.log(albumPlace);
+  console.log(imgInput);
   return (
     <StContainer>
       <GroupTitle />
@@ -70,8 +70,20 @@ const AlbumCreate = ({ openCreateModal, partyId }) => {
       </Flex>
       <Margin mg="30px" />
       <Flex fd="row">
+        <input
+          name="ImageUrl"
+          style={{ display: "none" }}
+          ref={imgInput}
+          type="file"
+          onChange={onChangeImg}
+        />
         {uploadImg ? (
-          <Div variant="albumBox">
+          <Div
+            variant="albumBox"
+            onClick={() => {
+              imgInput.current.click();
+            }}
+          >
             <Img variant="album" src={previewImage} alt="img" />
           </Div>
         ) : (
@@ -81,13 +93,6 @@ const AlbumCreate = ({ openCreateModal, partyId }) => {
                 imgInput.current.click();
               }}
             >
-              <input
-                name="ImageUrl"
-                style={{ display: "none" }}
-                ref={imgInput}
-                type="file"
-                onChange={onChangeImg}
-              />
               <Svg variant="photo"></Svg>
               <StSpan>이미지 가져오기</StSpan>
             </StDashDiv>
