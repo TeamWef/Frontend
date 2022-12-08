@@ -33,7 +33,7 @@ export const checkAll = (values) => {
 const nameRegExp2 = /^[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]{2,4}$/;
 
 export const checkName = (name) => {
-  if (!nameRegExp2.test(name)) {
+  if (!nameRegExp.test(name)) {
     return "Name";
   }
   return null;

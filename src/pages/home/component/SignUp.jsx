@@ -21,9 +21,8 @@ const SignUp = () => {
     email: "",
     password: "",
   });
-  const [isChecked, setIsChecked] = useState();
+  const [isChecked, setIsChecked] = useState(false);
   const { email, name, password, passwordCheck } = values;
-  console.log(failed);
   // const focusOut = (e) => {
   //   setFailed("");
   // };
@@ -95,6 +94,7 @@ const SignUp = () => {
               onChange={(e) => {
                 onChange(e);
                 setFailed({ ...failed, email: checkEmail(e.target.value) });
+                setIsChecked(false);
               }}
               placeholder="Email"
             />

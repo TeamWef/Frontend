@@ -28,7 +28,7 @@ const StInput = styled.input`
         `;
       case "medium":
         return css`
-          height: 40px;
+          height: 38px;
           font-size: 14px;
           ::placeholder {
             font-size: 14px;

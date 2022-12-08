@@ -2,7 +2,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import Mypage from "../pages/mypage/Mypage";
 import Svg from "../elem/Svg";
-import { deleteCookie } from "../redux/modules/customCookies";
 import { Flex, Margin } from "../elem";
 import Notice from "../pages/notice/Notice";
 import { Invite } from "../pages/invite/Invite";
@@ -17,12 +16,6 @@ export const Header = () => {
     navigate("/");
   };
 
-  const logoutHandler = () => {
-    deleteCookie("token");
-    deleteCookie("refresh-token");
-    localStorage.clear();
-    navigate("/");
-  };
   // console.log(param);
 
   return (
@@ -59,17 +52,6 @@ export const Header = () => {
             <Margin mg="5px" />
             <Invite />
             <Notice />
-            <MenuBtn
-              onClick={() => {
-                if (window.confirm("정말 로그아웃 하시겠습니까?")) {
-                  logoutHandler();
-                  alert("로그아웃 되었습니다.");
-                  window.location.reload();
-                }
-              }}
-            >
-              Logout
-            </MenuBtn>
             <Margin mg="5px" />
             <UserInfo>
               <Mypage />
