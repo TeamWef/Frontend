@@ -102,6 +102,7 @@ const ScheduleCreate = () => {
               placeholder="Title"
               name="title"
               onChange={onChangeHandler}
+              maxLength={30}
             />
             <StBorderDiv />
             <StContentInput

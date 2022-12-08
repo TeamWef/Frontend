@@ -18,6 +18,7 @@ const StSpan = styled.span`
   overflow: ${({ of }) => (of ? of : "")};
   word-break: ${({ wb }) => (wb ? wb : "")};
   width: ${({ wd }) => (wd ? wd : "")};
+  text-align: ${({ ta }) => (ta ? ta : "")};
 
   ${({ variant }) => {
     switch (variant) {

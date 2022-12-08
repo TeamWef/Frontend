@@ -64,13 +64,14 @@ const GroupCard = () => {
           <Margin />
           <Flex fd="row" jc="space-between">
             <Span variant="bold">Group.</Span>
-            <Div
+            <Button
+              variant="border-small"
               onClick={() => {
                 openCreateModal();
               }}
             >
-              <Svg variant="add" />
-            </Div>
+              그룹 만들기
+            </Button>
           </Flex>
           {groups?.length !== 0 ? (
             <StContainerDiv>
@@ -88,16 +89,18 @@ const GroupCard = () => {
                         <Svg variant="editDelete" />
                       </button>
                     </StTitleDiv>
+
                     <p>{data?.partyIntroduction}</p>
                     <StbuttonDiv>
                       <Button
                         variant="small"
+                        margin="0px 0px 0px 0px"
                         onClick={() => {
                           navigate(`/${data.partyId}`);
                           localStorage.setItem("Group", data.partyName);
                         }}
                       >
-                        Join
+                        들어가기
                       </Button>
                     </StbuttonDiv>
                     {dropBox &&
@@ -246,9 +249,12 @@ const StCardDiv = styled.div`
   margin-left: 15px;
   box-shadow: 1px 1px 1px 1px #dadada52;
   & p {
+    word-break: break-all;
+    overflow: hidden;
+    text-overflow: ellipsis;
     white-space: normal;
     color: #949494;
-    padding: 20px;
+    padding: 23px;
   }
 `;
 
@@ -256,9 +262,15 @@ const StTitleDiv = styled.div`
   width: 223px;
   margin: 0 auto;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   & h2 {
+    width: 150px;
     margin-top: 23px;
+    margin-right: 30px;
+    white-space: nowrap;
+    word-break: break-all;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   & button {
     width: 20px;
@@ -286,6 +298,7 @@ const StInput = styled.input`
 
 const StbuttonDiv = styled.div`
   position: absolute;
-  left: 70px;
+  left: 26.5%;
   bottom: 20px;
+  margin-left: -10px;
 `;
