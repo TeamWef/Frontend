@@ -46,13 +46,30 @@ const ScheduleMain = () => {
               <Flex fd="row" asg="center">
                 <StScheduleItemDiv>
                   <StTitleDiv>
-                    <Span variant="small" fw="600" color="#535353">
+                    <Span
+                      variant="small"
+                      fw="600"
+                      color="#535353"
+                      of="hidden"
+                      to="ellipsis"
+                      wb="break-all"
+                    >
                       {data?.partyName}
                     </Span>
                   </StTitleDiv>
-                  <Span variant="small" fw="400" color="#535353">
+
+                  <Span
+                    variant="small"
+                    color="#535353"
+                    of="hidden"
+                    to="ellipsis"
+                    wb="break-all"
+                    ws="nowrap"
+                    wd="600px"
+                  >
                     {data?.title}
                   </Span>
+
                   <StTextDiv>
                     <Span variant="small" asf="center" fw="400" color="#535353">
                       {data?.writer}
@@ -84,6 +101,10 @@ const StDiv = styled.button`
   border: 1px solid #d9d3c7;
   margin-bottom: 20px;
   cursor: pointer;
+  white-space: nowrap;
+  word-break: break-all;
+  overflow: hidden;
+  text-overflow: ellipsis;
   &:hover {
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.15);
   }
@@ -119,9 +140,12 @@ const StTitleDiv = styled.div`
   height: 35px;
   background-color: #ede8e1;
   display: flex;
-  justify-content: center;
+
   align-items: center;
+
   border-radius: 5px;
+  padding: 10px;
+  white-space: nowrap;
 `;
 
 const StbtnDiv = styled.div`
