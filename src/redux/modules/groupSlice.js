@@ -87,7 +87,7 @@ export const __postInvite = createAsyncThunk(
     } catch (err) {
       console.log(err);
       if (err.response.status === 500) {
-        alert("만료된 초대코드입니다🥲 코드를 재발급해 주세요!");
+        alert("유효하지 않은 초대코드입니다🥲 코드를 재발급해 주세요!");
       }
       return thunkAPI.rejectWithValue(err);
     }
