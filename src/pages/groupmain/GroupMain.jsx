@@ -85,6 +85,7 @@ const GroupMain = () => {
                   <Span wd="80px" variant="smallBronze">
                     🎈 {data?.participantSize}명
                   </Span>
+                  ㄴ
                 </Flex>
                 <Span variant="mediumBronze" mg="35px 0">
                   {data?.content}
