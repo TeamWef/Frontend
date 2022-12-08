@@ -43,25 +43,19 @@ const CreateGroupCard = ({ openModal, modal }) => {
           </Flex>
           <Margin />
           <form onSubmit={onAddGroupHandler}>
-            <Span variant="mediumBronze">Group title</Span>
-            <Margin mg="12px" />
-            <Input
-              variant="large"
+            <StInput
               name="partyName"
               type="text"
-              placeholder="그룹이름을 설정해주세요!"
+              placeholder="Group title"
               onChange={onChangeHandler}
             />
-            <Span variant="mediumBronze">Group contents</Span>
-            <Margin mg="12px" />
-            <Input
-              variant="large"
+            <StInput
               name="partyIntroduction"
               type="text"
-              placeholder="그룹을 소개해 주세요!"
+              placeholder="Group Introduction"
               onChange={onChangeHandler}
             />
-            <Margin mg="20px" />
+            <Margin mg="50px" />
             <Button variant="large" onClick={onAddGroupHandler}>
               Apply
             </Button>
@@ -73,3 +67,18 @@ const CreateGroupCard = ({ openModal, modal }) => {
 };
 
 export default CreateGroupCard;
+
+const StInput = styled.input`
+  display: flex;
+  flex-direction: row;
+  margin-top: 20px;
+  width: 375px;
+  height: 55px;
+  border: none;
+  border-bottom: 1px solid #a4a19d;
+  background-color: transparent;
+  &::placeholder {
+    font-size: 16px;
+    font-weight: 500;
+  }
+`;

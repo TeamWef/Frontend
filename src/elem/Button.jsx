@@ -18,6 +18,7 @@ const StBtn = styled.button`
   }
   color: #fff;
   background-color: #a4a19d;
+
   ${({ variant }) => {
     switch (variant) {
       case "large":

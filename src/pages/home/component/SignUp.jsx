@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
@@ -55,7 +55,7 @@ const SignUp = () => {
       alert("Email 중복 확인이 필요합니다.");
     }
   };
-  console.log(isChecked);
+  // console.log(isChecked);
   return (
     <Div variant="sign">
       <Flex>
@@ -141,10 +141,12 @@ const SignUp = () => {
           <Margin mg="30px" />
           <Flex ai="center">
             <UnderLine onClick={() => navigate("/")}>
-              <Span variant="small">
-                이미 회원이에요!
-                <Margin mg="2px" />
-                <Span variant="smallBold">로그인 하러가기🖐</Span>
+              <Span variant="small">이미 회원이에요!</Span>
+              <Span variant="smallBold" mg="0px 4px 0px 2px">
+                로그인 하러가기
+              </Span>
+              <Span variant="small" mg="0px 0px 3px">
+                🛵 =3
               </Span>
             </UnderLine>
           </Flex>
@@ -184,6 +186,8 @@ const StBtn = styled.button`
 
 const UnderLine = styled.div`
   display: flex;
+  align-items: center;
+  justify-content: center;
   border-bottom: 1px solid black;
   cursor: pointer;
 `;

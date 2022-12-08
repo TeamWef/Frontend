@@ -101,10 +101,12 @@ const SchdeleDetail = ({ scheduleId }) => {
           {scheduleDetail?.profileImageUrl === null ? (
             <Svg variant="profile" />
           ) : (
-            <StImg src={scheduleDetail?.profileImageUrl} alt="프로필" />
+            <Flex width="30px">
+              <StImg src={scheduleDetail?.profileImageUrl} alt="프로필" />
+            </Flex>
           )}
 
-          <Span variant="smallBronze" mg="0px 0px 0px 5px">
+          <Span variant="smallBronze" mg="0px 0px 0px 5px" wd="100px">
             {scheduleDetail?.writer}
           </Span>
         </Flex>
@@ -131,7 +133,7 @@ const SchdeleDetail = ({ scheduleId }) => {
           <Button
             variant="border-small"
             onClick={() => {
-              navigate(-1);
+              navigate(`/${partyId}/schedule`);
             }}
           >
             목록보기
