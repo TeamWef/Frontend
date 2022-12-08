@@ -167,7 +167,7 @@ const SchdeleDetail = ({ scheduleId }) => {
           </Span>
         </Flex>
       </Flex>
-      <Flex width="1000px" fd="row" jc="left">
+      <StJoinerDiv>
         {isParticipant ? (
           <Button
             variant="small"
@@ -213,7 +213,7 @@ const SchdeleDetail = ({ scheduleId }) => {
             </Flex>
           );
         })}
-      </Flex>
+      </StJoinerDiv>
 
       {modal && (
         <Div variant="bodyContainer">
@@ -424,6 +424,7 @@ const StJoinDiv = styled.div`
   background-color: #ede8e1;
   border-radius: 5px;
   margin: 50px 0px 0px 10px;
+  word-break: break-all;
 `;
 
 const StContentDiv = styled.div`
@@ -634,4 +635,10 @@ const StMonthDiv = styled.div`
     background: none;
     text-align: center;
   }
+`;
+
+const StJoinerDiv = styled.div`
+  width: 1000px;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
 `;
