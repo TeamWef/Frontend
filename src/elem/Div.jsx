@@ -11,6 +11,7 @@ const StDiv = styled.div`
   align-items: ${({ ai }) => (ai ? ai : "center")};
   width: ${({ width }) => (width ? width : "")};
   height: ${({ height }) => (height ? height : "")};
+  min-height: ${({ mh }) => (mh ? mh : "")};
   flex-direction: ${({ fd }) => (fd ? fd : "")};
   background-color: ${({ bc }) => (bc ? bc : "")};
   border-radius: ${({ br }) => (br ? br : "5px")};

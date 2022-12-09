@@ -21,7 +21,7 @@ const ScheduleMain = () => {
   }, [dispatch, partyId]);
 
   return (
-    <Div variant="bodyContainer">
+    <Div variant="bodyContainer" jc="flex-start" mh="800px">
       <GroupTitle />
       <StItemDiv>
         <h2>Schedule.</h2>
@@ -91,7 +91,7 @@ const ScheduleMain = () => {
 export default ScheduleMain;
 
 const StDiv = styled.button`
-  width: 1060px;
+  width: 1050px;
   height: 60px;
   display: flex;
   align-items: center;
@@ -111,11 +111,10 @@ const StDiv = styled.button`
 `;
 
 const StItemDiv = styled.div`
-  width: 1060px;
+  width: 1050px;
   display: flex;
   align-items: center;
   text-align: center;
-  margin-top: 5px;
   margin-bottom: 30px;
   justify-content: space-between;
 `;

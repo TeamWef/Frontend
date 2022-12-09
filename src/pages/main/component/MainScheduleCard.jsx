@@ -17,10 +17,10 @@ const ScheduleCard = () => {
 
   return (
     <Div variant="bodyContainer">
-      <Margin />
-      <Flex>
+      <Flex width="1075px">
         <Span variant="bold">Schedule.</Span>
-        <StContainerDiv>
+        <Margin mg="10px" />
+        <Div variant="scroll-y" width="1070px" height="300px">
           {data?.length !== 0 ? (
             <>
               {data?.map((item) => {
@@ -74,7 +74,7 @@ const ScheduleCard = () => {
               </Flex>
             </Div>
           )}
-        </StContainerDiv>
+        </Div>
       </Flex>
     </Div>
   );
