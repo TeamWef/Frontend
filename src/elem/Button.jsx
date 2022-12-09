@@ -12,6 +12,7 @@ const StBtn = styled.button`
   border-radius: 5px;
   font-weight: ${({ fw }) => (fw ? fw : "")};
   margin: ${({ margin }) => (margin ? margin : "")};
+  border-bottom: ${({ bb }) => (bb ? bb : "")};
   transition: 0.3s;
   :hover {
     opacity: 0.5;
@@ -68,22 +69,11 @@ const StBtn = styled.button`
             color: #fff;
           }
         `;
-      case "drop-top":
+      case "drop":
         return css`
           width: 80px;
           height: 30px;
-          border: none;
-          border-bottom: 1px solid #ede8e1;
-          background-color: transparent;
-          color: #a4a19d;
-          cursor: pointer;
-        `;
-      case "drop-bottom":
-        return css`
-          font-size: 13px;
-          width: 80px;
-          height: 30px;
-          border: none;
+          border-radius: 0;
           background-color: transparent;
           color: #a4a19d;
           cursor: pointer;

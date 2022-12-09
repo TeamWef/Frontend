@@ -80,8 +80,7 @@ const StDiv = styled.div`
           height: auto;
           margin-left: 215px;
           background-color: white;
-          border: 1px solid #d9d3c7;
-          border-radius: 5px;
+          /* border: 1px solid #d9d3c7; */
           z-index: 99;
           box-shadow: 5px 5px 15px rgba(164, 161, 157, 0.15);
           flex-direction: column;

@@ -43,7 +43,7 @@ const GroupCard = () => {
   const token = getCookie("token").replace("Bearer ", "");
   const decode = jwt_decode(token);
   const myId = decode.sub;
-  // const modalEl = useRef(null);
+  const modalEl = useRef(null);
 
   useEffect(() => {
     dispatch(__getGroup());
@@ -59,18 +59,18 @@ const GroupCard = () => {
     openEditModal();
   };
 
-  // const handleCloseModal = (e) => {
-  //   if (dropBox && !modalEl.current.contains(e.target)) {
-  //     setDropBox(false);
-  //   }
-  // };
+  const closeModal = (e) => {
+    if (dropBox && !modalEl.current.contains(e.target)) {
+      setDropBox(false);
+    }
+  };
 
-  // useEffect(() => {
-  //   if (dropBox) document.addEventListener("mousedown", handleCloseModal);
-  //   return () => {
-  //     document.removeEventListener("mousedown", handleCloseModal);
-  //   };
-  // });
+  useEffect(() => {
+    if (dropBox) document.addEventListener("mousedown", closeModal);
+    return () => {
+      document.removeEventListener("mousedown", closeModal);
+    };
+  });
 
   return (
     <>
@@ -118,12 +118,20 @@ const GroupCard = () => {
                         들어가기
                       </Button>
                     </StbuttonDiv>
+
                     {dropBox &&
                       data.partyId === updateId &&
                       (data.memberEmail === myId ? (
-                        <Div variant="dropDown" top="50px">
+                        <Div
+                          variant="dropDown"
+                          top="50px"
+                          ref={modalEl}
+                          ovf="hidden"
+                          bd={dropBox ? "1px solid #d9d3c7" : "none"}
+                        >
                           <Button
-                            variant="drop-top"
+                            variant="drop"
+                            bb="1px solid #d9d3c7"
                             onClick={() => {
                               openEditModal();
                               openDropBox();
@@ -132,7 +140,7 @@ const GroupCard = () => {
                             그룹 수정
                           </Button>
                           <Button
-                            variant="drop-bottom"
+                            variant="drop"
                             top="50px"
                             onClick={() => {
                               if (window.confirm("정말 삭제하시겠습니까?")) {
@@ -147,9 +155,15 @@ const GroupCard = () => {
                           </Button>
                         </Div>
                       ) : (
-                        <Div variant="dropDown" top="50px">
+                        <Div
+                          variant="dropDown"
+                          top="50px"
+                          ref={modalEl}
+                          ovf="hidden"
+                          bd={dropBox ? "1px solid #d9d3c7" : "none"}
+                        >
                           <Button
-                            variant="drop-bottom"
+                            variant="drop"
                             onClick={() => {
                               if (
                                 window.confirm("정말 그룹을 나가시겠습니까?🥺")

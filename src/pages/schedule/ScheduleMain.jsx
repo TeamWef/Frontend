@@ -58,16 +58,7 @@ const ScheduleMain = () => {
                     </Span>
                   </StTitleDiv>
 
-                  <Span
-                    variant="small"
-                    color="#535353"
-                    of="hidden"
-                    to="ellipsis"
-                    wb="break-all"
-                    wd="600px"
-                  >
-                    {data?.title}
-                  </Span>
+                  <p>{data?.title}</p>
 
                   <StTextDiv>
                     <Span variant="small" asf="center" fw="400" color="#535353">
@@ -125,11 +116,15 @@ const StScheduleItemDiv = styled.div`
   text-align: center;
   justify-content: space-between;
   & p {
-    width: 250px;
+    width: 400px;
     text-align: center;
     align-items: center;
     justify-content: center;
-    color: black;
+    color: #535353;
+    white-space: nowrap;
+    word-break: break-all;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 `;
 

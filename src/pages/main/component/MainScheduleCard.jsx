@@ -50,18 +50,7 @@ const ScheduleCard = () => {
                             </Span>
                           </StTitleDiv>
 
-                          <Span
-                            variant="small"
-                            fw="400"
-                            color="#535353"
-                            of="hidden"
-                            to="ellipsis"
-                            wb="break-all"
-                            ws="nowrap"
-                            wd="600px"
-                          >
-                            {item?.title}
-                          </Span>
+                          <p>{item?.title}</p>
 
                           <StTextDiv>
                             <Span
@@ -136,6 +125,10 @@ const StTitleDiv = styled.div`
   align-items: center;
   border-radius: 5px;
   white-space: nowrap;
+  & p {
+    color: #535353;
+    font-size: 16px;
+  }
 `;
 
 const StDiv = styled.button`
@@ -160,11 +153,15 @@ const StItemDiv = styled.div`
   align-items: center;
   justify-content: space-between;
   & p {
-    width: 250px;
+    width: 400px;
     text-align: center;
     align-items: center;
     justify-content: center;
-    color: #b5b3af;
+    color: #535353;
+    white-space: nowrap;
+    word-break: break-all;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 `;
 
