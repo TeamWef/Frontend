@@ -66,7 +66,15 @@ export const Invite = () => {
 
   return (
     <>
-      <Svg variant="invite" onClick={openInvite} />
+      {param.partyId === undefined ? (
+        <Margin mg="8px 5px">
+          <Svg variant="invite2" onClick={openInvite} />
+        </Margin>
+      ) : (
+        <Margin mg="5px 5px 0px">
+          <Svg variant="invite" onClick={openInvite} />
+        </Margin>
+      )}
       {invite &&
         (param.partyId === undefined ? (
           <StContainerDiv ref={modalEl}>
@@ -186,4 +194,12 @@ const StBtn = styled.button`
   background-color: transparent;
   border: none;
   cursor: pointer;
+`;
+
+const StDiv = styled.div`
+  margin-top: 5px;
+`;
+
+const StSubDiv = styled.div`
+  margin-top: 8px;
 `;

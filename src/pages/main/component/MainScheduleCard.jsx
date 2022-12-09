@@ -34,23 +34,42 @@ const ScheduleCard = () => {
                       );
                     }}
                   >
-                    <Flex fd="row">
-                      <Flex fd="row" asg="center" margin="5px">
+                    <Flex fd="row" ai="center">
+                      <Flex fd="row" ai="center" margin="5px">
                         <StItemDiv>
                           <StTitleDiv>
-                            <Span variant="small" fw="600" color="#535353">
+                            <Span
+                              variant="small"
+                              fw="600"
+                              color="#535353"
+                              of="hidden"
+                              to="ellipsis"
+                              wb="break-all"
+                            >
                               {item?.partyName}
                             </Span>
                           </StTitleDiv>
-                          <Span variant="small" fw="400" color="#535353">
+
+                          <Span
+                            variant="small"
+                            fw="400"
+                            color="#535353"
+                            of="hidden"
+                            to="ellipsis"
+                            wb="break-all"
+                            ws="nowrap"
+                            wd="600px"
+                          >
                             {item?.title}
                           </Span>
+
                           <StTextDiv>
                             <Span
                               variant="small"
                               asf="center"
                               fw="400"
                               color="#535353"
+                              width="100%"
                             >
                               {item?.writer}
                             </Span>
@@ -112,14 +131,17 @@ const StTitleDiv = styled.div`
   background-color: #ede8e1;
   color: #a4a19d;
   display: flex;
+  padding: 10px;
   justify-content: center;
   align-items: center;
   border-radius: 5px;
+  white-space: nowrap;
 `;
 
 const StDiv = styled.button`
   background-color: transparent;
   display: flex;
+  align-items: center;
   width: 1055px;
   height: 75px;
   padding: 5px;
@@ -136,7 +158,6 @@ const StItemDiv = styled.div`
   width: 1000px;
   display: flex;
   align-items: center;
-  /* margin-top: 5px; */
   justify-content: space-between;
   & p {
     width: 250px;
@@ -148,7 +169,7 @@ const StItemDiv = styled.div`
 `;
 
 const StTextDiv = styled.div`
-  width: 50px;
+  width: 60px;
   text-align: center;
   color: #b5b3af;
 `;

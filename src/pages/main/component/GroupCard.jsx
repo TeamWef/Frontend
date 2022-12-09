@@ -16,6 +16,7 @@ import { getCookie } from "../../../redux/modules/customCookies";
 import jwt_decode from "jwt-decode";
 import { useInput, useInputs } from "../../../hooks/useInput";
 import { __delGroupSchedule } from "../../../redux/modules/scheduleSlice";
+import { useRef } from "react";
 
 const GroupCard = () => {
   const dispatch = useDispatch();
@@ -23,7 +24,7 @@ const GroupCard = () => {
   const groups = useSelector((state) => state.group?.group);
   const [createModal, openCreateModal] = useModal();
   const [editModal, openEditModal] = useModal();
-  const [dropBox, openDropBox] = useModal();
+  const [dropBox, openDropBox, setDropBox] = useModal();
   const [updateId, setUpdateId] = useState("");
   const [editGroup, onChange, reset] = useInputs({
     partyName: "",
@@ -42,6 +43,7 @@ const GroupCard = () => {
   const token = getCookie("token").replace("Bearer ", "");
   const decode = jwt_decode(token);
   const myId = decode.sub;
+  // const modalEl = useRef(null);
 
   useEffect(() => {
     dispatch(__getGroup());
@@ -56,6 +58,19 @@ const GroupCard = () => {
     setUpdateId("");
     openEditModal();
   };
+
+  // const handleCloseModal = (e) => {
+  //   if (dropBox && !modalEl.current.contains(e.target)) {
+  //     setDropBox(false);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   if (dropBox) document.addEventListener("mousedown", handleCloseModal);
+  //   return () => {
+  //     document.removeEventListener("mousedown", handleCloseModal);
+  //   };
+  // });
 
   return (
     <>
