@@ -62,10 +62,6 @@ const EditMypage = ({ myProfile, modal, openModal, setModal }) => {
     deleteCookie("token");
     deleteCookie("refresh-token");
     localStorage.clear();
-    setTimeout(() => {
-      navigate("/");
-      window.location.reload();
-    }, 1000);
   };
 
   useEffect(() => {
@@ -154,6 +150,10 @@ const EditMypage = ({ myProfile, modal, openModal, setModal }) => {
             onClick={() => {
               if (window.confirm("정말 로그아웃 하시겠습니까?")) {
                 logoutHandler();
+                setTimeout(() => {
+                  navigate("/");
+                  window.location.reload();
+                }, 1000);
               }
             }}
           >

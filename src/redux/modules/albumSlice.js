@@ -5,6 +5,8 @@ import { commentApis } from "./API/commentAPI";
 const initialState = {
   album: [],
   albumItem: [],
+  isLoding: false,
+  error: null,
 };
 
 // 앨범
@@ -127,15 +129,28 @@ export const __updateComment = createAsyncThunk(
 export const albumSlice = createSlice({
   name: "album",
   initialState,
-  reducers: {},
+  reducers: {
+    initAlbum: (state, action) => {
+      state.album = initialState.album;
+      state.albumItem = initialState.albumItem;
+    },
+  },
   extraReducers: {
     /// Album
     // Get
+    [__getAlbumList.pending]: (state, action) => {
+      state.isLoading = true;
+    },
     [__getAlbumList.fulfilled]: (state, action) => {
       state.album = action.payload;
+      state.isLoading = false;
+    },
+    [__getAlbumItem.pending]: (state, action) => {
+      state.isLoading = true;
     },
     [__getAlbumItem.fulfilled]: (state, action) => {
       state.albumItem = action.payload;
+      state.isLoading = false;
     },
     // Add
     [__addAlbumItem.fulfilled]: (state, action) => {
@@ -183,5 +198,5 @@ export const albumSlice = createSlice({
   },
 });
 //
-export const { schedule } = albumSlice.actions;
+export const { initAlbum } = albumSlice.actions;
 export default albumSlice.reducer;

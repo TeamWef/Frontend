@@ -3,9 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import GroupTitle from "../../components/GroupTitle";
-import { Div, Flex, Margin, Span, Svg } from "../../elem";
+import { Button, Div, Flex, Margin, Span, Svg } from "../../elem";
 import { useModal } from "../../hooks/useModal";
-import { __getAlbumList } from "../../redux/modules/albumSlice";
+import { initAlbum, __getAlbumList } from "../../redux/modules/albumSlice";
 import AlbumCreate from "../album/component/AlbumCreate";
 
 const AlbumMain = () => {
@@ -19,9 +19,17 @@ const AlbumMain = () => {
   // 앨범 불러오기
   useEffect(() => {
     dispatch(__getAlbumList(partyId));
+    return () => {
+      dispatch(initAlbum());
+    };
   }, [dispatch]);
 
-  const albumItems = useSelector((state) => state.album?.album);
+  const albumList = useSelector((state) => state.album);
+  const { album, isLoding, error } = albumList;
+
+  if (isLoding) {
+    return <Div variant="bodyContainer">로딩중</Div>;
+  }
 
   return (
     <Div variant="bodyContainer">
@@ -29,10 +37,12 @@ const AlbumMain = () => {
       <Flex ai="center">
         <Flex fd="row" jc="space-between" ai="center" width="1050px">
           <Span variant="bold">Album</Span>
-          <Svg variant="add" onClick={openCreateModal} />
+          <Button variant="border-small" onClick={openCreateModal}>
+            사진 올리기
+          </Button>
         </Flex>
         <StGreed>
-          {albumItems.map((albumItem) => (
+          {album.map((albumItem) => (
             <StImg
               onClick={() => {
                 navigate(`/${partyId}/album/${albumItem.id}`);

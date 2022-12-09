@@ -14,7 +14,7 @@ const StBtn = styled.button`
   margin: ${({ margin }) => (margin ? margin : "")};
   transition: 0.3s;
   :hover {
-    opacity: 0.4;
+    opacity: 0.5;
   }
   color: #fff;
   background-color: #a4a19d;

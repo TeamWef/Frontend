@@ -20,6 +20,12 @@ const StImg = styled.img`
           height: auto;
           border-radius: 5px;
         `;
+      case "albumSmall":
+        return css`
+          width: 50px;
+          height: auto;
+          border-radius: 5px;
+        `;
       default:
         break;
     }
