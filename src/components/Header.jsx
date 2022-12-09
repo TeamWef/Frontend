@@ -16,8 +16,6 @@ export const Header = () => {
     navigate("/");
   };
 
-  // console.log(param);
-
   return (
     <>
       <BaseContainer>
