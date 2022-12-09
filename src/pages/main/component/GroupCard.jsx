@@ -225,6 +225,7 @@ const GroupCard = () => {
           </Div>
         </Div>
       )}
+      <Margin />
     </>
   );
 };

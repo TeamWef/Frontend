@@ -50,9 +50,10 @@ const AlbumComments = ({ id, commentList, myId }) => {
           <Flex fd="row">
             <StInput
               bc="transparent"
-              placeholder="댓글 내용 작성하기"
+              placeholder="댓글을 입력해주세요 (최대 250자)"
               value={comment}
               onChange={onChange}
+              maxLength="250"
             />
             <Button variant="small" onClick={addCommentHandler}>
               댓글쓰기

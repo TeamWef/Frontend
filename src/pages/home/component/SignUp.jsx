@@ -54,7 +54,6 @@ const SignUp = () => {
       alert("Email 중복 확인이 필요합니다.");
     }
   };
-  // console.log(isChecked);
   return (
     <Div variant="sign">
       <Flex>
@@ -129,12 +128,18 @@ const SignUp = () => {
           )}
           <Input
             variant="large"
+            bd={
+              password !== passwordCheck && passwordCheck ? "2px solid red" : ""
+            }
             type="password"
             name="passwordCheck"
             value={passwordCheck}
             onChange={onChange}
             placeholder="Confirm Password"
           />
+          {password !== passwordCheck && passwordCheck && (
+            <Span variant="warning">Password가 다릅니다.</Span>
+          )}
           <Button variant="large" type="submit">
             Sign up
           </Button>

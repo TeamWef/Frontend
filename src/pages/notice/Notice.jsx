@@ -94,10 +94,13 @@ const Notice = () => {
       dispatch(__getNoticeCount());
     }, 1000);
   }, [dispatch, modal]);
-
+  // console.log(noticeCount);
   return (
     <div ref={ref}>
-      {noticeCount === 0 ? (
+      {noticeCount === 0 ||
+      noticeCount === undefined ||
+      noticeCount === null ||
+      noticeCount === "" ? (
         <Svg variant="notification" onClick={openModal} />
       ) : (
         <Svg variant="newNotification" onClick={openModal} />
