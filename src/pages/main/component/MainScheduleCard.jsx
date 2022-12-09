@@ -16,7 +16,7 @@ const ScheduleCard = () => {
   }, [dispatch]);
 
   return (
-    <Div variant="bodyContainer">
+    <Div variant="bodyContainer" mh="400px">
       <Flex width="1075px">
         <Span variant="bold">Schedule.</Span>
         <Margin mg="10px" />

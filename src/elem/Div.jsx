@@ -21,6 +21,7 @@ const StDiv = styled.div`
   top: ${({ top }) => (top ? top : "")};
   left: ${({ left }) => (left ? left : "")};
   border: ${({ bd }) => (bd ? bd : "")};
+  position: ${({ pi }) => (pi ? pi : "")};
 
   ${({ variant }) => {
     switch (variant) {
