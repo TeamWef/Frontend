@@ -64,7 +64,6 @@ const ScheduleMain = () => {
                     of="hidden"
                     to="ellipsis"
                     wb="break-all"
-                    ws="nowrap"
                     wd="600px"
                   >
                     {data?.title}
@@ -141,8 +140,15 @@ const StTitleDiv = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  text-align: center;
   border-radius: 5px;
   padding: 10px;
+  white-space: nowrap;
+`;
+
+const StContentDiv = styled.div`
+  width: 160px;
+  display: block;
   white-space: nowrap;
 `;
 
