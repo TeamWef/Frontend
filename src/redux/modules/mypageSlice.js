@@ -25,6 +25,7 @@ export const __updateMypage = createAsyncThunk(
     try {
       const data = await updateMypageApi(payload);
       if (data.status === 200) {
+        alert("수정이 완료되었습니다");
       }
       // console.log(data);
       return thunkAPI.fulfillWithValue(data.data);
@@ -44,7 +45,6 @@ export const mypageSlice = createSlice({
     },
     [__updateMypage.fulfilled]: (state, action) => {
       state.myProfile = action.payload;
-      alert("수정이 완료되었습니다");
     },
   },
 });
