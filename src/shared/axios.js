@@ -42,10 +42,9 @@ instance.interceptors.response.use(
     return response;
   },
   async (error) => {
-    // console.log(error);
-    //     if (response.status === 404) {
-    //       return window.location.replace("/notfound");
-    //     }
+    if (error.status === 404) {
+      return window.location.replace("/notfound");
+    }
     //     if (response.status === 504) {
     //       return window.location.replace("/connectfail");
     //     }
