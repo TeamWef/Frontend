@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
@@ -21,9 +21,8 @@ const SignUp = () => {
     email: "",
     password: "",
   });
-  const [isChecked, setIsChecked] = useState();
+  const [isChecked, setIsChecked] = useState(false);
   const { email, name, password, passwordCheck } = values;
-  console.log(failed);
   // const focusOut = (e) => {
   //   setFailed("");
   // };
@@ -55,7 +54,6 @@ const SignUp = () => {
       alert("Email 중복 확인이 필요합니다.");
     }
   };
-  console.log(isChecked);
   return (
     <Div variant="sign">
       <Flex>
@@ -95,6 +93,7 @@ const SignUp = () => {
               onChange={(e) => {
                 onChange(e);
                 setFailed({ ...failed, email: checkEmail(e.target.value) });
+                setIsChecked(false);
               }}
               placeholder="Email"
             />
@@ -129,22 +128,30 @@ const SignUp = () => {
           )}
           <Input
             variant="large"
+            bd={
+              password !== passwordCheck && passwordCheck ? "2px solid red" : ""
+            }
             type="password"
             name="passwordCheck"
             value={passwordCheck}
             onChange={onChange}
             placeholder="Confirm Password"
           />
+          {password !== passwordCheck && passwordCheck && (
+            <Span variant="warning">Password가 다릅니다.</Span>
+          )}
           <Button variant="large" type="submit">
             Sign up
           </Button>
           <Margin mg="30px" />
           <Flex ai="center">
             <UnderLine onClick={() => navigate("/")}>
-              <Span variant="small">
-                이미 회원이에요!
-                <Margin mg="2px" />
-                <Span variant="smallBold">로그인 하러가기🖐</Span>
+              <Span variant="small">이미 회원이에요!</Span>
+              <Span variant="smallBold" mg="0px 4px 0px 2px">
+                로그인 하러가기
+              </Span>
+              <Span variant="small" mg="0px 0px 3px">
+                🛵 =3
               </Span>
             </UnderLine>
           </Flex>
@@ -184,6 +191,8 @@ const StBtn = styled.button`
 
 const UnderLine = styled.div`
   display: flex;
+  align-items: center;
+  justify-content: center;
   border-bottom: 1px solid black;
   cursor: pointer;
 `;

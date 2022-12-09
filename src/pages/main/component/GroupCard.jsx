@@ -16,6 +16,7 @@ import { getCookie } from "../../../redux/modules/customCookies";
 import jwt_decode from "jwt-decode";
 import { useInput, useInputs } from "../../../hooks/useInput";
 import { __delGroupSchedule } from "../../../redux/modules/scheduleSlice";
+import { useRef } from "react";
 
 const GroupCard = () => {
   const dispatch = useDispatch();
@@ -23,7 +24,7 @@ const GroupCard = () => {
   const groups = useSelector((state) => state.group?.group);
   const [createModal, openCreateModal] = useModal();
   const [editModal, openEditModal] = useModal();
-  const [dropBox, openDropBox] = useModal();
+  const [dropBox, openDropBox, setDropBox] = useModal();
   const [updateId, setUpdateId] = useState("");
   const [editGroup, onChange, reset] = useInputs({
     partyName: "",
@@ -42,6 +43,7 @@ const GroupCard = () => {
   const token = getCookie("token").replace("Bearer ", "");
   const decode = jwt_decode(token);
   const myId = decode.sub;
+  const modalEl = useRef(null);
 
   useEffect(() => {
     dispatch(__getGroup());
@@ -57,6 +59,19 @@ const GroupCard = () => {
     openEditModal();
   };
 
+  const closeModal = (e) => {
+    if (dropBox && !modalEl.current.contains(e.target)) {
+      setDropBox(false);
+    }
+  };
+
+  useEffect(() => {
+    if (dropBox) document.addEventListener("mousedown", closeModal);
+    return () => {
+      document.removeEventListener("mousedown", closeModal);
+    };
+  });
+
   return (
     <>
       <Div variant="bodyContainer">
@@ -64,13 +79,14 @@ const GroupCard = () => {
           <Margin />
           <Flex fd="row" jc="space-between">
             <Span variant="bold">Group.</Span>
-            <Div
+            <Button
+              variant="border-small"
               onClick={() => {
                 openCreateModal();
               }}
             >
-              <Svg variant="add" />
-            </Div>
+              그룹 만들기
+            </Button>
           </Flex>
           {groups?.length !== 0 ? (
             <StContainerDiv>
@@ -88,24 +104,34 @@ const GroupCard = () => {
                         <Svg variant="editDelete" />
                       </button>
                     </StTitleDiv>
+
                     <p>{data?.partyIntroduction}</p>
                     <StbuttonDiv>
                       <Button
                         variant="small"
+                        margin="0px 0px 0px 0px"
                         onClick={() => {
                           navigate(`/${data.partyId}`);
                           localStorage.setItem("Group", data.partyName);
                         }}
                       >
-                        Join
+                        들어가기
                       </Button>
                     </StbuttonDiv>
+
                     {dropBox &&
                       data.partyId === updateId &&
                       (data.memberEmail === myId ? (
-                        <Div variant="dropDown" top="50px">
+                        <Div
+                          variant="dropDown"
+                          top="50px"
+                          ref={modalEl}
+                          ovf="hidden"
+                          bd={dropBox ? "1px solid #d9d3c7" : "none"}
+                        >
                           <Button
-                            variant="drop-top"
+                            variant="drop"
+                            bb="1px solid #d9d3c7"
                             onClick={() => {
                               openEditModal();
                               openDropBox();
@@ -114,7 +140,7 @@ const GroupCard = () => {
                             그룹 수정
                           </Button>
                           <Button
-                            variant="drop-bottom"
+                            variant="drop"
                             top="50px"
                             onClick={() => {
                               if (window.confirm("정말 삭제하시겠습니까?")) {
@@ -129,9 +155,15 @@ const GroupCard = () => {
                           </Button>
                         </Div>
                       ) : (
-                        <Div variant="dropDown" top="50px">
+                        <Div
+                          variant="dropDown"
+                          top="50px"
+                          ref={modalEl}
+                          ovf="hidden"
+                          bd={dropBox ? "1px solid #d9d3c7" : "none"}
+                        >
                           <Button
-                            variant="drop-bottom"
+                            variant="drop"
                             onClick={() => {
                               if (
                                 window.confirm("정말 그룹을 나가시겠습니까?🥺")
@@ -207,6 +239,7 @@ const GroupCard = () => {
           </Div>
         </Div>
       )}
+      <Margin />
     </>
   );
 };
@@ -246,9 +279,12 @@ const StCardDiv = styled.div`
   margin-left: 15px;
   box-shadow: 1px 1px 1px 1px #dadada52;
   & p {
+    word-break: break-all;
+    overflow: hidden;
+    text-overflow: ellipsis;
     white-space: normal;
     color: #949494;
-    padding: 20px;
+    padding: 23px;
   }
 `;
 
@@ -256,9 +292,15 @@ const StTitleDiv = styled.div`
   width: 223px;
   margin: 0 auto;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   & h2 {
+    width: 150px;
     margin-top: 23px;
+    margin-right: 30px;
+    white-space: nowrap;
+    word-break: break-all;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   & button {
     width: 20px;
@@ -286,6 +328,7 @@ const StInput = styled.input`
 
 const StbuttonDiv = styled.div`
   position: absolute;
-  left: 70px;
+  left: 26.5%;
   bottom: 20px;
+  margin-left: -10px;
 `;

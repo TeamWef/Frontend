@@ -16,38 +16,56 @@ const ScheduleCard = () => {
   }, [dispatch]);
 
   return (
-    <Div variant="bodyContainer">
-      <Margin />
-      <Flex>
+    <Div variant="bodyContainer" mh="400px">
+      <Flex width="1075px">
         <Span variant="bold">Schedule.</Span>
-        <StContainerDiv>
+        <Margin mg="10px" />
+        <Div variant="scroll-y" width="1070px" height="300px">
           {data?.length !== 0 ? (
             <>
               {data?.map((item) => {
                 return (
-                  <StDiv key={item.scheduleId}>
-                    <Flex fd="row">
-                      <Flex fd="row" asg="center" margin="10px">
+                  <StDiv
+                    key={item.scheduleId}
+                    onClick={() => {
+                      localStorage.setItem("Group", item.partyName);
+                      navigate(
+                        `/${item.partyId}/scheduledetail/${item.scheduleId}`
+                      );
+                    }}
+                  >
+                    <Flex fd="row" ai="center">
+                      <Flex fd="row" ai="center" margin="5px">
                         <StItemDiv>
                           <StTitleDiv>
-                            <Span variant="smallBronze">{item?.partyName}</Span>
+                            <Span
+                              variant="small"
+                              fw="600"
+                              color="#535353"
+                              of="hidden"
+                              to="ellipsis"
+                              wb="break-all"
+                            >
+                              {item?.partyName}
+                            </Span>
                           </StTitleDiv>
+
                           <p>{item?.title}</p>
+
                           <StTextDiv>
-                            <Span variant="other" asf="center">
+                            <Span
+                              variant="small"
+                              asf="center"
+                              fw="400"
+                              color="#535353"
+                              width="100%"
+                            >
                               {item?.writer}
                             </Span>
                           </StTextDiv>
                         </StItemDiv>
                       </Flex>
-                      <StbtnDiv
-                        onClick={() => {
-                          localStorage.setItem("Group", item.partyName);
-                          navigate(
-                            `/${item.partyId}/scheduledetail/${item.scheduleId}`
-                          );
-                        }}
-                      >
+                      <StbtnDiv>
                         <Svg variant="more" />
                       </StbtnDiv>
                     </Flex>
@@ -64,7 +82,7 @@ const ScheduleCard = () => {
               </Flex>
             </Div>
           )}
-        </StContainerDiv>
+        </Div>
       </Flex>
     </Div>
   );
@@ -98,47 +116,66 @@ const StContainerDiv = styled.div`
 const StTitleDiv = styled.div`
   width: 160px;
   height: 35px;
+  margin: 0px 0px 0px 10px;
   background-color: #ede8e1;
   color: #a4a19d;
   display: flex;
+  padding: 10px;
   justify-content: center;
   align-items: center;
   border-radius: 5px;
+  white-space: nowrap;
+  & p {
+    color: #535353;
+    font-size: 16px;
+  }
 `;
 
-const StDiv = styled.div`
+const StDiv = styled.button`
+  background-color: transparent;
+  display: flex;
+  align-items: center;
   width: 1055px;
   height: 75px;
-  border-bottom: 1px solid #d9d3c7;
+  padding: 5px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  border: 1px solid #d9d3c7;
+  cursor: pointer;
+  &:hover {
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.15);
+  }
 `;
 
 const StItemDiv = styled.div`
   width: 1000px;
   display: flex;
   align-items: center;
-  margin-top: 5px;
   justify-content: space-between;
   & p {
-    width: 250px;
+    width: 400px;
     text-align: center;
     align-items: center;
     justify-content: center;
-    color: #b5b3af;
+    color: #535353;
+    white-space: nowrap;
+    word-break: break-all;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 `;
 
 const StTextDiv = styled.div`
-  width: 50px;
+  width: 60px;
   text-align: center;
-  /* margin-top: 10px; */
   color: #b5b3af;
 `;
 
 const StbtnDiv = styled.div`
   width: 50px;
   height: 30px;
-  margin-top: 26px;
-  margin-left: 5px;
+  margin-top: 12px;
+  margin-left: -10px;
   border-radius: 5px;
   border: none;
   cursor: pointer;

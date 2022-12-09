@@ -9,9 +9,13 @@ export const getMypageApi = async () => {
 // 마이페이지 수정
 export const updateMypageApi = async (payload) => {
   // 폼데이터
+  const { memberName, uploadImg } = payload;
+  console.log(payload);
   const form = new FormData();
-  form.append("profileImageUrl", payload);
-
+  if (uploadImg !== null) {
+    form.append("profileImageUrl", uploadImg);
+  }
+  form.append("memberName", memberName);
   // console.log(payload);
   const data = await instance.patch(`/members/mypage`, form, {
     headers: {

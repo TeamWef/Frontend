@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import GroupTitle from "../../components/GroupTitle";
-import { Div, Svg, Flex, Span } from "../../elem";
+import { Div, Svg, Flex, Span, Button } from "../../elem";
 import {
   __getSchedule,
   __getGroupSchedule,
@@ -21,40 +21,53 @@ const ScheduleMain = () => {
   }, [dispatch, partyId]);
 
   return (
-    <Div variant="bodyContainer">
+    <Div variant="bodyContainer" jc="flex-start" mh="800px">
       <GroupTitle />
       <StItemDiv>
         <h2>Schedule.</h2>
-        <button
+        <Button
+          variant="border-small"
           onClick={() => {
             navigate(`/${partyId}/schedule/create`);
           }}
         >
-          <Svg variant="add" />
-        </button>
+          일정 만들기
+        </Button>
       </StItemDiv>
       {scheduleList?.map((data) => {
         return (
-          <StDiv key={data?.scheduleId}>
+          <StDiv
+            key={data?.scheduleId}
+            onClick={() => {
+              navigate(`/${partyId}/scheduledetail/${data?.scheduleId}`);
+            }}
+          >
             <Flex fd="row" asg="center">
-              <Flex fd="row" asg="center" margin="0px 0px 0px 0px">
+              <Flex fd="row" asg="center">
                 <StScheduleItemDiv>
                   <StTitleDiv>
-                    <h4>{data?.partyName}</h4>
+                    <Span
+                      variant="small"
+                      fw="600"
+                      color="#535353"
+                      of="hidden"
+                      to="ellipsis"
+                      wb="break-all"
+                    >
+                      {data?.partyName}
+                    </Span>
                   </StTitleDiv>
+
                   <p>{data?.title}</p>
+
                   <StTextDiv>
-                    <Span variant="other" asf="center">
+                    <Span variant="small" asf="center" fw="400" color="#535353">
                       {data?.writer}
                     </Span>
                   </StTextDiv>
                 </StScheduleItemDiv>
               </Flex>
-              <StbtnDiv
-                onClick={() => {
-                  navigate(`/${partyId}/scheduledetail/${data?.scheduleId}`);
-                }}
-              >
+              <StbtnDiv>
                 <Svg variant={"more"} />
               </StbtnDiv>
             </Flex>
@@ -67,28 +80,33 @@ const ScheduleMain = () => {
 
 export default ScheduleMain;
 
-const StDiv = styled.div`
-  width: 1075px;
-  height: 75px;
+const StDiv = styled.button`
+  width: 1050px;
+  height: 60px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-bottom: 1px solid #d9d3c7;
+  background-color: transparent;
+  border-radius: 10px;
+  border: 1px solid #d9d3c7;
+  margin-bottom: 20px;
+  cursor: pointer;
+  white-space: nowrap;
+  word-break: break-all;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  &:hover {
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.15);
+  }
 `;
 
 const StItemDiv = styled.div`
-  width: 1060px;
+  width: 1050px;
   display: flex;
   align-items: center;
   text-align: center;
-  margin-top: 5px;
   margin-bottom: 30px;
   justify-content: space-between;
-  & button {
-    cursor: pointer;
-    border: none;
-    background-color: transparent;
-  }
 `;
 
 const StScheduleItemDiv = styled.div`
@@ -96,14 +114,17 @@ const StScheduleItemDiv = styled.div`
   display: flex;
   align-items: center;
   text-align: center;
-  margin-top: 5px;
   justify-content: space-between;
   & p {
-    width: 250px;
+    width: 400px;
     text-align: center;
     align-items: center;
     justify-content: center;
-    color: #b5b3af;
+    color: #535353;
+    white-space: nowrap;
+    word-break: break-all;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 `;
 
@@ -111,17 +132,25 @@ const StTitleDiv = styled.div`
   width: 160px;
   height: 35px;
   background-color: #ede8e1;
-  color: #a4a19d;
   display: flex;
   justify-content: center;
   align-items: center;
+  text-align: center;
   border-radius: 5px;
+  padding: 10px;
+  white-space: nowrap;
+`;
+
+const StContentDiv = styled.div`
+  width: 160px;
+  display: block;
+  white-space: nowrap;
 `;
 
 const StbtnDiv = styled.div`
   width: 100%;
   height: 30px;
-  margin-top: 15px;
+  margin-top: 8px;
   margin-left: 5px;
   border-radius: 5px;
   border: none;

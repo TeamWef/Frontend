@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { useInput } from "../../../hooks/useInput";
 import {
+  initAlbum,
   __delAlbumItem,
   __getAlbumItem,
   __updateAlbumItem,
@@ -26,7 +27,8 @@ const AlbumDetail = () => {
   const myId = decode.sub;
 
   // 앨범 정보
-  const albumItem = useSelector((state) => state.album.albumItem);
+  const album = useSelector((state) => state.album);
+  const { albumItem, isLoding, error } = album;
   // console.log(albumItem);
   const {
     writer,
@@ -47,6 +49,9 @@ const AlbumDetail = () => {
   useEffect(() => {
     dispatch(__getAlbumItem(id));
     setContentInput(myContent);
+    return () => {
+      dispatch(initAlbum());
+    };
   }, [dispatch, navigate]);
 
   const updateClick = () => {
@@ -61,6 +66,10 @@ const AlbumDetail = () => {
     setContentInput(myContent);
     setUpdateMode(false);
   };
+
+  if (isLoding) {
+    return <Div variant="bodyContainer">로딩중</Div>;
+  }
 
   return (
     <Div variant="bodyContainer">
@@ -144,9 +153,7 @@ const AlbumDetail = () => {
                 {updateMode ? (
                   <StText value={contentInput} onChange={onChange} />
                 ) : (
-                  <Span variant="smallBronze" ws="pre-wrap">
-                    {myContent}
-                  </Span>
+                  <StContentDiv>{myContent}</StContentDiv>
                 )}
               </Div>
               <Span variant="smallBronze" asf="flex-start" mg="0 0 10px 0">
@@ -168,4 +175,12 @@ const StText = styled.textarea`
   height: 100%;
   border: none;
   resize: none;
+`;
+
+const StContentDiv = styled.div`
+  width: 470px;
+  font-size: 14px;
+  color: #a4a19d;
+  word-wrap: break-word;
+  white-space: pre-wrap;
 `;

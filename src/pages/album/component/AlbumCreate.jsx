@@ -20,11 +20,14 @@ const AlbumCreate = ({ openCreateModal, partyId }) => {
   // console.log(albumItem);
   // 이미지 State
   const [uploadImg, setUploadImg] = useState(null);
+  const [images, setImages] = useState([]);
   const [previewImage, setPreviewImage] = useState(null);
+  const [previewImages, setPreviewImages] = useState([]);
   const imgInput = useRef();
 
   const onChangeImg = (e) => {
     setUploadImg(e.target.files[0]);
+    setImages([...images, e.target.files[0]]);
     // 미리보기
     const reader = new FileReader();
     if (e.target.files[0]) {
@@ -33,6 +36,7 @@ const AlbumCreate = ({ openCreateModal, partyId }) => {
     reader.onload = () => {
       if (reader.result) {
         setPreviewImage(reader.result);
+        setPreviewImages([...previewImages, reader.result]);
       }
     };
   };
@@ -53,7 +57,6 @@ const AlbumCreate = ({ openCreateModal, partyId }) => {
     setUploadImg("");
     openCreateModal();
   };
-  // console.log(albumPlace);
   return (
     <StContainer>
       <GroupTitle />
@@ -70,8 +73,20 @@ const AlbumCreate = ({ openCreateModal, partyId }) => {
       </Flex>
       <Margin mg="30px" />
       <Flex fd="row">
+        <input
+          name="ImageUrl"
+          style={{ display: "none" }}
+          ref={imgInput}
+          type="file"
+          onChange={onChangeImg}
+        />
         {uploadImg ? (
-          <Div variant="albumBox">
+          <Div
+            variant="albumBox"
+            onClick={() => {
+              imgInput.current.click();
+            }}
+          >
             <Img variant="album" src={previewImage} alt="img" />
           </Div>
         ) : (
@@ -81,13 +96,6 @@ const AlbumCreate = ({ openCreateModal, partyId }) => {
                 imgInput.current.click();
               }}
             >
-              <input
-                name="ImageUrl"
-                style={{ display: "none" }}
-                ref={imgInput}
-                type="file"
-                onChange={onChangeImg}
-              />
               <Svg variant="photo"></Svg>
               <StSpan>이미지 가져오기</StSpan>
             </StDashDiv>
@@ -111,6 +119,19 @@ const AlbumCreate = ({ openCreateModal, partyId }) => {
             <StText placeholder="Contents" onChange={onChangeContent} />
           </Flex>
         </Div>
+      </Flex>
+      <Flex fd="row">
+        {/* {previewImages.map((image, i) => {
+          return (
+            <>
+              {i === images.length - 1 ? null : (
+                <>
+                  <img src={image} alt="img" /> <button>삭제</button>
+                </>
+              )}
+            </>
+          );
+        })} */}
       </Flex>
     </StContainer>
   );
