@@ -115,11 +115,9 @@ const ScheduleCreate = () => {
           <Flex fd="row" ai="center" jc="left">
             <Flex fd="row" ai="center" jc="left" margin="20px 0px 0px 0px">
               <Svg variant="time" />
-              <StTimeInput
-                type="time"
-                name="meetTime"
-                onChange={onChangeHandler}
-              />
+              <StTimeInput>
+                <input type="time" name="meetTime" onChange={onChangeHandler} />
+              </StTimeInput>
             </Flex>
             <Flex fd="row" ai="center" jc="left" margin="20px 0px 0px 0px">
               <Svg variant="date" />
@@ -144,6 +142,7 @@ const ScheduleCreate = () => {
                     maxDetail="month" // 상단 네비게이션에서 '월' 단위만 보이게 설정
                     calendarType="US"
                     locale="en-EN"
+                    minDate={new Date()}
                     formatDay={(locale, date) => moment(date).format("DD")}
                     value={value}
                     name="date"
@@ -277,7 +276,7 @@ const StBorderDiv = styled.div`
   margin: 10px 0px 0px 40px;
 `;
 
-const StTimeInput = styled.input`
+const StTimeInput = styled.div`
   width: 314px;
   height: 38px;
   background-color: white;

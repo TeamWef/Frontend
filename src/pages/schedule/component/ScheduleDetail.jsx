@@ -21,6 +21,7 @@ import { getCookie } from "../../../redux/modules/customCookies";
 
 const SchdeleDetail = ({ scheduleId }) => {
   const scheduleDetail = useSelector((state) => state.schedule?.scheduleDetail);
+  console.log(scheduleDetail);
   const participant = useSelector((state) => state.mypage?.myProfile);
   const [isParticipant, setIsParticipant] = useState("");
   const [InputText, setInputText] = useState("");
@@ -33,23 +34,30 @@ const SchdeleDetail = ({ scheduleId }) => {
   const decode = jwt_decode(tokens);
   const myId = decode.sub;
   const joiner = scheduleDetail?.participantResponseDtoList;
+  const [yoyo, setYoyo] = useState("");
+  console.log(yoyo);
   const [modal, openModal] = useModal();
   const [map, openMap] = useModal();
   const [month, openMonth, setMonth] = useModal();
   const [value, setValue] = useState(new Date());
   const [date, setDate] = useState("");
   const [editSchedule, setEditSchedule] = useState({
-    title: "",
-    content: "",
-    meetTime: "",
-    date: "",
-    place: { placeName: "", address: "" },
+    title: scheduleDetail.title,
+    content: scheduleDetail.content,
+    meetTime: scheduleDetail.meetTime,
+    date: new Date(scheduleDetail.date),
+    place: {
+      placeName: scheduleDetail.placeName,
+      address: scheduleDetail.address,
+    },
   });
 
   const onChangeHandler = (e) => {
     const { name, value } = e.target;
     setEditSchedule({ ...editSchedule, [name]: value });
   };
+
+  console.log(editSchedule);
 
   useEffect(() => {
     dispatch(__getScheduleDetail(detailId));
@@ -301,6 +309,7 @@ const SchdeleDetail = ({ scheduleId }) => {
                         value={value}
                         name="date"
                         next2Label={null}
+                        minDate={new Date()}
                         prev2Label={null}
                         onChange={setValue}
                         selectRange={false}
@@ -476,9 +485,11 @@ const StContentInput = styled.textarea`
 // `;
 
 const StMainDiv = styled.div`
+  width: 100%;
+  height: 700px;
   background-color: #f8f5f0;
-  position: absolute;
-  top: -440px;
+  position: fixed;
+  top: -600px;
 `;
 
 const StTimeInput = styled.input`
@@ -650,4 +661,5 @@ const StJoinerDiv = styled.div`
 
 const StAlineDiv = styled.div`
   width: 100%;
+  position: fixed;
 `;

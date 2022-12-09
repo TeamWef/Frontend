@@ -74,7 +74,7 @@ const BaseContainer = styled.div`
 `;
 
 const CenterBox = styled.div`
-  width: 1075px;
+  width: 1100px;
   position: absolute;
   left: 50%;
   transform: translate(-50%, 0);
