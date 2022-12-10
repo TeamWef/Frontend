@@ -92,9 +92,15 @@ const AlbumComments = ({ id, commentList, myId }) => {
                         <Margin mg="10px" />
                       </Div>
                       {edit && comment.id === updateTarget && (
-                        <Div variant="dropDown" top="25px" left="140px">
+                        <Div
+                          variant="dropDown"
+                          top="25px"
+                          left="140px"
+                          bd="1px solid #d9d3c7"
+                        >
                           <Button
-                            variant="drop-top"
+                            variant="drop"
+                            bb="1px solid #d9d3c7"
                             onClick={() => {
                               setUpdateTarget(comment.id);
                               setInput(comment.content);
@@ -105,7 +111,7 @@ const AlbumComments = ({ id, commentList, myId }) => {
                             수정하기
                           </Button>
                           <Button
-                            variant="drop-bottom"
+                            variant="drop"
                             onClick={() => delCommentHandler(comment.id)}
                           >
                             삭제하기
