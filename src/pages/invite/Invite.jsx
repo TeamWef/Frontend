@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import { Span, Button, Margin } from "../../elem";
+import { Span, Button, Margin, Div } from "../../elem";
 import Svg from "../../elem/Svg";
 import { useModal } from "../../hooks/useModal";
 import { __getInviteCode } from "../../redux/modules/inviteSlice";
@@ -67,9 +67,9 @@ export const Invite = () => {
   return (
     <>
       {param.partyId === undefined ? (
-        <Margin mg="8px 5px">
+        <StDiv>
           <Svg variant="invite2" onClick={openInvite} />
-        </Margin>
+        </StDiv>
       ) : (
         <Margin mg="5px 5px 0px">
           <Svg variant="invite" onClick={openInvite} />

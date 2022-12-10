@@ -2,14 +2,19 @@ import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import Mypage from "../pages/mypage/Mypage";
 import Svg from "../elem/Svg";
-import { Flex, Margin } from "../elem";
+import { Div, Flex, Margin } from "../elem";
 import Notice from "../pages/notice/Notice";
 import { Invite } from "../pages/invite/Invite";
 import { Chat } from "../pages/chat/component/Chat";
+import { useState } from "react";
+import { useRef } from "react";
+import { useEffect } from "react";
 
 export const Header = () => {
   const navigate = useNavigate();
   const param = useParams();
+
+  const [color, setColor] = useState(false);
 
   const goHome = () => {
     localStorage.clear();
@@ -21,40 +26,47 @@ export const Header = () => {
       <BaseContainer>
         <CenterBox>
           <Svg variant="mainIcon" onClick={goHome} />
-          <Flex fd="row">
+          <Div fd="row">
             {param.partyId !== undefined && (
-              <>
+              <Div fd="row">
                 <MenuBtn
+                  bc={color ? "#F8F5F0" : ""}
                   onClick={() => {
                     navigate(`/${param.partyId}`);
+                    setColor(!color);
                   }}
                 >
                   Home
                 </MenuBtn>
+
                 <MenuBtn
+                  bc={
+                    color ? (`/${param.partyId}/schedule` ? "#F8F5F0" : "") : ""
+                  }
                   onClick={() => {
                     navigate(`/${param.partyId}/schedule`);
+                    setColor(!color);
                   }}
                 >
                   Schedule
                 </MenuBtn>
                 <MenuBtn
+                  bc={color ? (`/${param.partyId}/album` ? "#F8F5F0" : "") : ""}
                   onClick={() => {
                     navigate(`/${param.partyId}/album`);
+                    setColor(!color);
                   }}
                 >
                   Album
                 </MenuBtn>
-              </>
+              </Div>
             )}
-            <Margin mg="5px" />
             <Invite />
             <Notice />
-            <Margin mg="5px" />
             <UserInfo>
               <Mypage />
             </UserInfo>
-          </Flex>
+          </Div>
         </CenterBox>
         {param.partyId !== undefined ? <Chat /> : null}
       </BaseContainer>
@@ -94,12 +106,14 @@ const UserInfo = styled.div`
 `;
 
 const MenuBtn = styled.button`
+  position: relative;
+  top: 2px;
+  width: 90px;
   height: 40px;
-  border-radius: 15px;
-  background-color: transparent;
+  border-radius: 20px;
+  background-color: ${({ bc }) => (bc ? bc : "transparent")};
   border: none;
-  display: flex;
-  padding: 10px;
-  font-size: 13px;
+  font-size: 16px;
+  margin-right: 10px;
   cursor: pointer;
 `;
