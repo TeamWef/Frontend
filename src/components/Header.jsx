@@ -14,7 +14,7 @@ export const Header = () => {
   const navigate = useNavigate();
   const param = useParams();
 
-  const [color, setColor] = useState(false);
+  // const [color, setColor] = useState(false);
 
   const goHome = () => {
     localStorage.clear();
@@ -30,31 +30,31 @@ export const Header = () => {
             {param.partyId !== undefined && (
               <Div fd="row">
                 <MenuBtn
-                  bc={color ? "#F8F5F0" : ""}
+                  // bc={color ? "#F8F5F0" : ""}
                   onClick={() => {
                     navigate(`/${param.partyId}`);
-                    setColor(!color);
+                    // setColor(!color);
                   }}
                 >
                   Home
                 </MenuBtn>
 
                 <MenuBtn
-                  bc={
-                    color ? (`/${param.partyId}/schedule` ? "#F8F5F0" : "") : ""
-                  }
+                  // bc={
+                  //   color ? (`/${param.partyId}/schedule` ? "#F8F5F0" : "") : ""
+                  // }
                   onClick={() => {
                     navigate(`/${param.partyId}/schedule`);
-                    setColor(!color);
+                    // setColor(!color);
                   }}
                 >
                   Schedule
                 </MenuBtn>
                 <MenuBtn
-                  bc={color ? (`/${param.partyId}/album` ? "#F8F5F0" : "") : ""}
+                  // bc={color ? (`/${param.partyId}/album` ? "#F8F5F0" : "") : ""}
                   onClick={() => {
                     navigate(`/${param.partyId}/album`);
-                    setColor(!color);
+                    // setColor(!color);
                   }}
                 >
                   Album
