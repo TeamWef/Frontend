@@ -2,23 +2,22 @@ import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import Mypage from "../pages/mypage/Mypage";
 import Svg from "../elem/Svg";
-import { Div, Flex, Margin } from "../elem";
+import { Div } from "../elem";
 import Notice from "../pages/notice/Notice";
 import { Invite } from "../pages/invite/Invite";
 import { Chat } from "../pages/chat/component/Chat";
 import { useState } from "react";
-import { useRef } from "react";
-import { useEffect } from "react";
 
 export const Header = () => {
   const navigate = useNavigate();
   const param = useParams();
 
-  // const [color, setColor] = useState(false);
+  const [color, setColor] = useState("1");
 
   const goHome = () => {
     localStorage.clear();
     navigate("/");
+    setColor("1");
   };
 
   return (
@@ -28,33 +27,32 @@ export const Header = () => {
           <Svg variant="mainIcon" onClick={goHome} />
           <Div fd="row">
             {param.partyId !== undefined && (
-              <Div fd="row">
+              <Div fd="row" jc="center" ai="center">
                 <MenuBtn
-                  // bc={color ? "#F8F5F0" : ""}
+                  bc={color === "1" ? "#F8F5F0" : ""}
+                  name="Home"
                   onClick={() => {
                     navigate(`/${param.partyId}`);
-                    // setColor(!color);
+                    setColor("1");
                   }}
                 >
                   Home
                 </MenuBtn>
 
                 <MenuBtn
-                  // bc={
-                  //   color ? (`/${param.partyId}/schedule` ? "#F8F5F0" : "") : ""
-                  // }
+                  bc={color === "2" ? "#F8F5F0" : ""}
                   onClick={() => {
                     navigate(`/${param.partyId}/schedule`);
-                    // setColor(!color);
+                    setColor("2");
                   }}
                 >
                   Schedule
                 </MenuBtn>
                 <MenuBtn
-                  // bc={color ? (`/${param.partyId}/album` ? "#F8F5F0" : "") : ""}
+                  bc={color === "3" ? "#F8F5F0" : ""}
                   onClick={() => {
                     navigate(`/${param.partyId}/album`);
-                    // setColor(!color);
+                    setColor("3");
                   }}
                 >
                   Album

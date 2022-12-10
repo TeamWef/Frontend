@@ -141,7 +141,15 @@ export const __joinSchedules = createAsyncThunk(
 export const scheduleSlice = createSlice({
   name: "schedule",
   initialState,
-  reducers: {},
+  reducers: {
+    initSchedule: (state, action) => {
+      state.schedule = initialState.schedule;
+      state.scheduleDetail = initialState.scheduleDetail;
+    },
+    initGroupMain: (state, action) => {
+      state.popularSchedule = initialState.popularSchedule;
+    },
+  },
   extraReducers: {
     // create
     [__addSchedule.pending]: (state) => {
@@ -281,5 +289,5 @@ export const scheduleSlice = createSlice({
   },
 });
 
-export const { schedule } = scheduleSlice.actions;
+export const { initSchedule, initGroupMain } = scheduleSlice.actions;
 export default scheduleSlice.reducer;
