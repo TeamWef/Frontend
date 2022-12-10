@@ -43,7 +43,7 @@ const SchdeleDetail = ({ scheduleId }) => {
     title: scheduleDetail.title,
     content: scheduleDetail.content,
     meetTime: scheduleDetail.meetTime,
-    date: new Date(scheduleDetail.date),
+    date: scheduleDetail.date,
     place: {
       placeName: scheduleDetail.placeName,
       address: scheduleDetail.address,
@@ -464,7 +464,6 @@ const StContentInput = styled.textarea`
   height: 200px;
   background-color: transparent;
   border: none;
-
   resize: none;
   word-break: break-all;
   &::placeholder {
