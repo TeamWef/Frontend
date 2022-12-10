@@ -3,7 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { Div, Flex, Img, Margin, Span, Svg } from "../../elem";
-import { __popularSchedule } from "../../redux/modules/scheduleSlice";
+import {
+  initGroupMain,
+  __popularSchedule,
+} from "../../redux/modules/scheduleSlice";
 import { Chat } from "../chat/component/Chat";
 
 const GroupMain = () => {
@@ -17,6 +20,9 @@ const GroupMain = () => {
 
   useEffect(() => {
     dispatch(__popularSchedule(partyId));
+    return () => {
+      dispatch(initGroupMain());
+    };
   }, [dispatch, partyId]);
 
   return (

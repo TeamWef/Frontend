@@ -7,6 +7,7 @@ import { Div, Svg, Flex, Span, Button } from "../../elem";
 import {
   __getSchedule,
   __getGroupSchedule,
+  initSchedule,
 } from "../../redux/modules/scheduleSlice";
 
 const ScheduleMain = () => {
@@ -18,6 +19,9 @@ const ScheduleMain = () => {
   useEffect(() => {
     dispatch(__getSchedule({ partyId }));
     dispatch(__getGroupSchedule());
+    return () => {
+      dispatch(initSchedule());
+    };
   }, [dispatch, partyId]);
 
   return (
