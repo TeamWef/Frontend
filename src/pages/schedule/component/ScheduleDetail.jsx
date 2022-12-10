@@ -21,7 +21,7 @@ import { getCookie } from "../../../redux/modules/customCookies";
 
 const SchdeleDetail = ({ scheduleId }) => {
   const scheduleDetail = useSelector((state) => state.schedule?.scheduleDetail);
-  console.log(scheduleDetail);
+
   const participant = useSelector((state) => state.mypage?.myProfile);
   const [isParticipant, setIsParticipant] = useState("");
   const [InputText, setInputText] = useState("");
@@ -34,8 +34,6 @@ const SchdeleDetail = ({ scheduleId }) => {
   const decode = jwt_decode(tokens);
   const myId = decode.sub;
   const joiner = scheduleDetail?.participantResponseDtoList;
-  const [yoyo, setYoyo] = useState("");
-  console.log(yoyo);
   const [modal, openModal] = useModal();
   const [map, openMap] = useModal();
   const [month, openMonth, setMonth] = useModal();
@@ -56,8 +54,6 @@ const SchdeleDetail = ({ scheduleId }) => {
     const { name, value } = e.target;
     setEditSchedule({ ...editSchedule, [name]: value });
   };
-
-  console.log(editSchedule);
 
   useEffect(() => {
     dispatch(__getScheduleDetail(detailId));
