@@ -46,12 +46,12 @@ instance.interceptors.response.use(
       return window.location.replace("/notfound");
     }
     //     if (response.status === 504) {
-    //       return window.location.replace("/connectfail");
+    //       return window.location.replace("");
     //     }
     //     if (response.status === 400) {
     //       return response;
     //     }
-    return Promise.reject(error);
+    return window.location.replace("/error");
     //   }
     // );
   }

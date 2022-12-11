@@ -7,7 +7,7 @@ export default Span;
 
 const StSpan = styled.span`
   display: flex;
-  font-size: 20px;
+  font-size: ${({ fs }) => (fs ? fs : "20px")};
   margin: ${({ mg }) => (mg ? mg : "")};
   align-self: ${({ asf }) => (asf ? asf : "")};
   color: ${({ color }) => (color ? color : "")};
