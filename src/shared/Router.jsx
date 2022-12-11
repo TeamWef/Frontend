@@ -10,6 +10,8 @@ import Notice from "../pages/notice/Notice";
 import GroupMain from "../pages/groupmain/GroupMain";
 import ScheduleCreate from "../pages/schedule/component/ScheduleCreate";
 import ScheduleMain from "../pages/schedule/ScheduleMain";
+import NotFound from "../components/NotFound";
+import Error from "../components/Error";
 
 const Page = () => {
   return (
@@ -29,7 +31,8 @@ const Page = () => {
         </Route>
         <Route path="/signup" element={<SignUp />} />
         <Route path="/members/kakao/callback" element={<Kakao />} />
-        <Route path="/notice" element={<Notice />} />
+        <Route path="/notfound" element={<NotFound />} />
+        <Route path="/error" element={<Error />} />
       </Routes>
     </BrowserRouter>
   );

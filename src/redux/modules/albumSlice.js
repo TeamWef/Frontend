@@ -5,7 +5,7 @@ import { commentApis } from "./API/commentAPI";
 const initialState = {
   album: [],
   albumItem: [],
-  isLoding: false,
+  isLoading: false,
   error: null,
 };
 
@@ -137,7 +137,7 @@ export const albumSlice = createSlice({
   },
   extraReducers: {
     /// Album
-    // Get
+    // Get List
     [__getAlbumList.pending]: (state, action) => {
       state.isLoading = true;
     },
@@ -145,6 +145,7 @@ export const albumSlice = createSlice({
       state.album = action.payload;
       state.isLoading = false;
     },
+    // Get Item
     [__getAlbumItem.pending]: (state, action) => {
       state.isLoading = true;
     },

@@ -7,6 +7,7 @@ import {
   __delSchedule,
   __editSchedules,
   __joinSchedules,
+  initSchedule,
 } from "../../../redux/modules/scheduleSlice";
 import { useModal } from "../../../hooks/useModal";
 import EditKakaoMap from "../component/EditKakaoMap";
@@ -57,6 +58,9 @@ const SchdeleDetail = ({ scheduleId }) => {
 
   useEffect(() => {
     dispatch(__getScheduleDetail(detailId));
+    return () => {
+      dispatch(initSchedule());
+    };
   }, [dispatch]);
 
   useEffect(() => {
