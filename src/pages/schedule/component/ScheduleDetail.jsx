@@ -21,38 +21,50 @@ import jwt_decode from "jwt-decode";
 import { getCookie } from "../../../redux/modules/customCookies";
 
 const SchdeleDetail = ({ scheduleId }) => {
-  const scheduleDetail = useSelector((state) => state.schedule?.scheduleDetail);
-  console.log(scheduleDetail);
-  const participant = useSelector((state) => state.mypage?.myProfile);
-  const [isParticipant, setIsParticipant] = useState("");
-  const [InputText, setInputText] = useState("");
-  const [kakaoPlace, setPlace] = useState("");
   const detailId = useParams().scheduleId;
   const partyId = useParams().partyId;
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [InputText, setInputText] = useState("");
+  const [kakaoPlace, setPlace] = useState("");
   const tokens = getCookie("token").replace("Bearer ", "");
   const decode = jwt_decode(tokens);
   const myId = decode.sub;
-  const joiner = scheduleDetail?.participantResponseDtoList;
   const [modal, openModal] = useModal();
   const [map, openMap] = useModal();
   const [month, openMonth, setMonth] = useModal();
   const [value, setValue] = useState(new Date());
   const [monthDate, setMonthDate] = useState("");
-  const { title, content, meetTime, date, placeName, address } = scheduleDetail;
-  const [editSchedule, setEditSchedule] = useState({
-    title: title,
-    content: content,
-    meetTime: meetTime,
-    date: date,
-    place: {
-      placeName: placeName,
-      address: address,
-    },
-  });
+  useEffect(() => {
+    dispatch(__getScheduleDetail(detailId));
+    return () => {
+      if (!detailId) dispatch(initSchedule());
+    };
+  }, [dispatch, detailId]);
 
-  console.log("??", editSchedule);
+  const scheduleDetail = useSelector((state) => state.schedule?.scheduleDetail);
+  const participant = useSelector((state) => state.mypage?.myProfile);
+  const [isParticipant, setIsParticipant] = useState("");
+  const { title, content, meetTime, date, placeName, address } = scheduleDetail;
+  const joiner = scheduleDetail?.participantResponseDtoList;
+  const [editSchedule, setEditSchedule] = useState("");
+  useEffect(() => {
+    if (scheduleDetail) {
+      setIsParticipant(scheduleDetail.isParticipant);
+      setEditSchedule({
+        title: title,
+        content: content,
+        meetTime: meetTime,
+        date: date,
+        place: {
+          placeName: placeName,
+          address: address,
+        },
+      });
+    }
+  }, [scheduleDetail]);
+
+  // console.log("Detail", scheduleDetail);
 
   // useEffect(() => {
   //   setTimeout(() => editSchedule, 1000);
@@ -62,19 +74,6 @@ const SchdeleDetail = ({ scheduleId }) => {
     const { name, value } = e.target;
     setEditSchedule({ ...editSchedule, [name]: value });
   };
-
-  useEffect(() => {
-    dispatch(__getScheduleDetail(detailId));
-    return () => {
-      dispatch(initSchedule());
-    };
-  }, [dispatch, detailId]);
-
-  useEffect(() => {
-    if (scheduleDetail) {
-      setIsParticipant(scheduleDetail.isParticipant);
-    }
-  }, [scheduleDetail]);
 
   const onEditScheduleHandler = (e) => {
     e.preventDefault();
@@ -344,7 +343,7 @@ const SchdeleDetail = ({ scheduleId }) => {
                           ws="nowrap"
                           of="hidden"
                         >
-                          {scheduleDetail.place?.address}
+                          {editSchedule.place?.address}
                         </Span>
                         <StBtn
                           type="button"
