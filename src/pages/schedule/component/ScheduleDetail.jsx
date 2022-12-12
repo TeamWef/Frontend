@@ -31,7 +31,7 @@ const SchdeleDetail = ({ scheduleId }) => {
   const decode = jwt_decode(tokens);
   const myId = decode.sub;
   const [modal, openModal] = useModal();
-  const [map, openMap] = useModal();
+  const [map, openMap, setMap] = useModal();
   const [month, openMonth, setMonth] = useModal();
   const [value, setValue] = useState(new Date());
   const [monthDate, setMonthDate] = useState("");
@@ -65,10 +65,6 @@ const SchdeleDetail = ({ scheduleId }) => {
   }, [scheduleDetail]);
 
   // console.log("Detail", scheduleDetail);
-
-  // useEffect(() => {
-  //   setTimeout(() => editSchedule, 1000);
-  // }, [editSchedule]);
 
   const onChangeHandler = (e) => {
     const { name, value } = e.target;
@@ -258,8 +254,8 @@ const SchdeleDetail = ({ scheduleId }) => {
                     type="button"
                     onClick={() => {
                       openModal();
-                      openMonth();
-                      openMap();
+                      setMonth(false);
+                      setMap(false);
                     }}
                   >
                     뒤로가기
