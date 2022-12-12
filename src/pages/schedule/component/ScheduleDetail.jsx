@@ -258,6 +258,8 @@ const SchdeleDetail = ({ scheduleId }) => {
                     type="button"
                     onClick={() => {
                       openModal();
+                      openMonth();
+                      openMap();
                     }}
                   >
                     뒤로가기
@@ -298,7 +300,7 @@ const SchdeleDetail = ({ scheduleId }) => {
                     </StDateButton>
                   ) : (
                     <StSearchDiv>
-                      <Span variant="other">{scheduleDetail.date}</Span>
+                      <Span variant="other">{editSchedule.date}</Span>
                       <StDateBtn type="button" onClick={openMonth}>
                         ⏐ 다시 찾기
                       </StDateBtn>
@@ -311,9 +313,9 @@ const SchdeleDetail = ({ scheduleId }) => {
                         maxDetail="month" // 상단 네비게이션에서 '월' 단위만 보이게 설정
                         calendarType="US"
                         locale="en-EN"
-                        formatDay={(locale, date) =>
-                          moment(monthDate).format("DD")
-                        }
+                        // formatDay={(locale, date) =>
+                        //   moment(monthDate).format("DD")
+                        // }
                         value={value}
                         name="date"
                         next2Label={null}
@@ -556,6 +558,7 @@ const StDateBtn = styled.button`
   background-color: transparent;
   border: none;
   color: #a4a19d;
+  cursor: pointer;
 `;
 
 const StKakaoDiv = styled.div`
