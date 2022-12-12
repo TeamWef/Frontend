@@ -67,7 +67,7 @@ team Notion ⏩️ https://sumptuous-devourer-e77.notion.site/2-we-are-friends-b
 
 
 ## ERD
-<img src="https://velog.velcdn.com/images/resyve/post/f636d45f-f7f2-4098-af99-9a830e73f107/image.png">
+![](https://velog.velcdn.com/images/resyve/post/6609befd-9ff0-4756-b938-a8cde5449bd0/image.png)
 
 ## skill stack
 
@@ -78,11 +78,14 @@ team Notion ⏩️ https://sumptuous-devourer-e77.notion.site/2-we-are-friends-b
 <img src="https://img.shields.io/badge/styled-components-DB7093?style=flat-square&logo=styled-components&logoColor=white"/> <br/> 
 <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=JavaScript&logoColor=white"/> 
 <img src="https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=React&logoColor=white"/> 
-<img src="https://img.shields.io/badge/redux-%23593d88.svg?style=flat-square&logo=redux&logoColor=white"> 
+<img src="https://img.shields.io/badge/reduxToolkit-%23593d88.svg?style=flat-square&logo=redux&logoColor=white"> 
 <img src="https://img.shields.io/badge/Axios-5A29E4.svg?style=flat-square&logo=Axios&logoColor=white"/>
 <img src="https://img.shields.io/badge/github-181717.svg?style=flat-square&logo=github&logoColor=white"> 
 <img src="https://img.shields.io/badge/kakao login-FFCD00?style=flat-square&logo=kakao&logoColor=black">
  <img src="https://img.shields.io/badge/kakao map-FFCD00?style=flat-square&logo=kakao&logoColor=black">
+ <img src="https://img.shields.io/badge/SockJS-010101?style=flat-square&logoColor=white"/> 
+ <img src="https://img.shields.io/badge/Stomp-353535?style=flat-square&logoColor=white">
+ <img src="https://img.shields.io/badge/SSE-010101?style=flat-square&logoColor=white"/> 
 </div>
 
 🧵 BackEnd <br>
@@ -99,15 +102,12 @@ team Notion ⏩️ https://sumptuous-devourer-e77.notion.site/2-we-are-friends-b
 <img src="https://img.shields.io/badge/codedeploy-6DB33F?style=flat-square&logo=codedeploy&logoColor=white">
 <img src="https://img.shields.io/badge/kakao login-FFCD00?style=flat-square&logo=kakao&logoColor=black">
 <img src="https://img.shields.io/badge/Swagger-85EA2D?style=flat-square&logo=Swagger&logoColor=white">
-</div>
-
-[사용 예정]<br/>
-
-
+<img src="https://img.shields.io/badge/SSE-010101?style=flat-square&logoColor=white"/> 
 <img src="https://img.shields.io/badge/SockJS-010101?style=flat-square&logoColor=white"/> <img src="https://img.shields.io/badge/Stomp-353535?style=flat-square&logoColor=white">
 <img src="https://img.shields.io/badge/google login-4285F4?style=flat-square&logo=google&logoColor=white">
 <img src="https://img.shields.io/badge/Redis-DC382D?style=flat-square&logo=Redis&logoColor=white">
 <img src="https://img.shields.io/badge/QueryDSL-0769AD?style=flat-square&logo=jQuery&logoColor=white">
+ </div>
 
 ## 📝 skill stack & library cause of utilization
 | **기술 스택** | **사용이유** |
@@ -124,10 +124,10 @@ team Notion ⏩️ https://sumptuous-devourer-e77.notion.site/2-we-are-friends-b
 
 
 
-## to be continue...
+## challenge skill
 | **구현 기능** | **사용할 스킬** | **사용 이유** |
 | :--- | :--- | :--- |
-| 이벤트 알림 | SSE 통신 | 프론트에서 이벤트를 감지해 서버에서 단방향으로 알림 메시지를 전달해주어야 하기 때문에 SSE 통신을 도입할 예정입니다 |
-| 그룹 내 친구들과의 채팅 | SockJS, Stomp | 그룹 내 친구들끼리 메시지를 주고 받는 형식으로 채팅방을 만들 예정이기 때문에 양방향 통신이 필요하다 생각되어 도입할 예정입니다 |
-| 초대 코드 | uuid | 초대 코드를 임의의 숫자, 문자 조합 6자리를 사용하기 위해 랜덤으로 id값을 받아올 예정입니다 |
-| 구글 로그인 | Google cloud consol | 구글 api를 이용해 구글 소셜 로그인 방식을 도입할 예정입니다 |
+| 이벤트 알림 | SSE 통신 | 프론트에서 이벤트를 감지해 서버에서 단방향으로 알림 메시지를 전달해주어야 하기 때문에 SSE 통신을 도입하였습니다 |
+| 그룹 내 친구들과의 채팅 | SockJS, Stomp | 그룹 내 친구들끼리 메시지를 주고 받는 형식으로 채팅방을 만들 예정이기 때문에 양방향 통신이 필요하다 생각되어 도입하였습니다 |
+| 초대 코드 | uuid | 초대 코드를 임의의 숫자, 문자 조합 6자리를 사용하기 위해 랜덤으로 id값을 받아와 구현하였습니다 |
+| 구글 로그인 | Google cloud consol | 구글 api를 이용해 구글 소셜 로그인 방식을 도입하였습니다 |
