@@ -285,6 +285,14 @@ const StTimeInput = styled.div`
   margin-right: 20px;
   margin-left: 10px;
   cursor: pointer;
+  & input {
+    margin-left: 30px;
+    margin-top: 4px;
+    width: 100px;
+    height: 30px;
+    background-color: transparent;
+    border: none;
+  }
 `;
 
 const StSearchDiv = styled.div`
