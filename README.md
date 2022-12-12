@@ -103,7 +103,7 @@ team Notion ⏩️ https://sumptuous-devourer-e77.notion.site/2-we-are-friends-b
 [사용 예정]<br/>
 
 
-<img src="https://img.shields.io/badge/SockJS-010101?style=flat-square&logoColor=white"/> <img src="https://img.shields.io/badge/Stromp-353535?style=flat-square&logoColor=white">
+<img src="https://img.shields.io/badge/SockJS-010101?style=flat-square&logoColor=white"/> <img src="https://img.shields.io/badge/Stomp-353535?style=flat-square&logoColor=white">
 <img src="https://img.shields.io/badge/google login-4285F4?style=flat-square&logo=google&logoColor=white">
 <img src="https://img.shields.io/badge/Redis-DC382D?style=flat-square&logo=Redis&logoColor=white">
 <img src="https://img.shields.io/badge/QueryDSL-0769AD?style=flat-square&logo=jQuery&logoColor=white">
