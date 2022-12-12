@@ -63,7 +63,8 @@ team Notion ⏩️ https://sumptuous-devourer-e77.notion.site/2-we-are-friends-b
 ✨ 댓글 달기 <br>
 
 ## project architecture
-<img src="https://velog.velcdn.com/images/resyve/post/df4a13ab-b696-4f2a-89a1-99a602487895/image.png">
+![](https://velog.velcdn.com/images/resyve/post/f2ba18c2-c186-43f1-b68f-92fee80de06d/image.png)
+
 
 ## ERD
 <img src="https://velog.velcdn.com/images/resyve/post/f636d45f-f7f2-4098-af99-9a830e73f107/image.png">
