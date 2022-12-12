@@ -161,7 +161,7 @@ export const Chat = () => {
                             <Svg variant="profile" />
                           </StSizeDiv>
                         ) : (
-                          <StImg alt="맹짱구" src={message?.profileImg} />
+                          <StImg alt="" src={message?.profileImg} />
                         )}
                         <StUserChatDiv>{message?.content}</StUserChatDiv>
                         <Span
@@ -244,7 +244,6 @@ export const Chat = () => {
                   autoComplete="off"
                   placeholder="메시지를 입력해주세요!"
                   type="text"
-                  // onKeyDown={onEnter}
                   value={message}
                   onChange={inputMessage}
                 />
@@ -270,7 +269,6 @@ export const Chat = () => {
                   autoComplete="off"
                   placeholder="메시지를 입력해주세요!"
                   type="text"
-                  // onKeyDown={onEnter}
                   value={message}
                   onChange={inputMessage}
                 />
