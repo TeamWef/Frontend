@@ -64,7 +64,7 @@ instance.interceptors.response.use(
     // if (error.status === 400) {
     //   return window.location.replace("/error");
     // }
-    return window.location.replace("/error");
+    return console.log(error);
   }
 );
 
