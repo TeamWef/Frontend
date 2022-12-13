@@ -1,4 +1,5 @@
 import React, { useRef, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import GroupTitle from "../../../components/GroupTitle";
@@ -20,26 +21,51 @@ const AlbumCreate = ({ openCreateModal, partyId }) => {
   // console.log(albumItem);
   // 이미지 State
   const [uploadImg, setUploadImg] = useState(null);
-  const [images, setImages] = useState([]);
+  // const [images, setImages] = useState([]);
   const [previewImage, setPreviewImage] = useState(null);
-  const [previewImages, setPreviewImages] = useState([]);
+  // const [previewImages, setPreviewImages] = useState([]);
   const imgInput = useRef();
+  const imgBox = useRef();
 
-  const onChangeImg = (e) => {
-    setUploadImg(e.target.files[0]);
-    setImages([...images, e.target.files[0]]);
+  const handleImg = (img) => {
+    setUploadImg(img);
+    // setImages([...images, e.target.files[0]]);
     // 미리보기
     const reader = new FileReader();
-    if (e.target.files[0]) {
-      reader.readAsDataURL(e.target.files[0]);
+    if (img) {
+      reader.readAsDataURL(img);
     }
     reader.onload = () => {
       if (reader.result) {
         setPreviewImage(reader.result);
-        setPreviewImages([...previewImages, reader.result]);
+        // setPreviewImages([...previewImages, reader.result]);
       }
     };
   };
+  const onChangeHandler = (e) => {
+    handleImg(e.target.files[0]);
+  };
+  const dropHandler = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    handleImg(e.dataTransfer.files[0]);
+  };
+
+  const dragOverHandler = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+  };
+
+  useEffect(() => {
+    const imgBoxRef = imgBox.current;
+    imgBoxRef.addEventListener("drop", dropHandler);
+    imgBoxRef.addEventListener("dragover", dragOverHandler);
+    return () => {
+      imgBoxRef.removeEventListener("drop", dropHandler);
+      imgBoxRef.removeEventListener("dragover", dragOverHandler);
+    };
+  }, [imgBox]);
+
   const uploadHandler = () => {
     const newAlbum = { ...albumItem, imageUrl: uploadImg };
     // console.log(newAlbum, partyId);
@@ -78,29 +104,31 @@ const AlbumCreate = ({ openCreateModal, partyId }) => {
           style={{ display: "none" }}
           ref={imgInput}
           type="file"
-          onChange={onChangeImg}
+          onChange={onChangeHandler}
         />
-        {uploadImg ? (
-          <Div
-            variant="albumBox"
-            onClick={() => {
-              imgInput.current.click();
-            }}
-          >
-            <Img variant="album" src={previewImage} alt="img" />
-          </Div>
-        ) : (
-          <Div variant="albumBox" bc="#fff" pd="25px">
-            <StDashDiv
+        <div ref={imgBox}>
+          {uploadImg ? (
+            <Div
+              variant="albumBox"
               onClick={() => {
                 imgInput.current.click();
               }}
             >
-              <Svg variant="photo"></Svg>
-              <StSpan>이미지 가져오기</StSpan>
-            </StDashDiv>
-          </Div>
-        )}
+              <Img variant="album" src={previewImage} alt="img" />
+            </Div>
+          ) : (
+            <Div variant="albumBox" bc="#fff" pd="25px">
+              <StDashDiv
+                onClick={() => {
+                  imgInput.current.click();
+                }}
+              >
+                <Svg variant="photo"></Svg>
+                <StSpan>이미지 가져오기</StSpan>
+              </StDashDiv>
+            </Div>
+          )}
+        </div>
         <Div variant="albumBox" jc="flex-start" fd="column">
           <Flex fd="row" jc="center">
             <StSvgWrap>

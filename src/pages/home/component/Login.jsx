@@ -15,6 +15,7 @@ import {
 import { useInput } from "../../../hooks/useInput";
 import { __login } from "../../../redux/modules/membersSlice";
 import { KAKAO_AUTH_URL } from "../../../server";
+import Google from "./Google";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -71,7 +72,7 @@ const Login = () => {
           <Span variant="smallBronze">SNS 계정으로 로그인</Span>
           <Flex fd="row">
             <Icon variant="kakao" onClick={onKakaoLogin} />
-            {/* <Icon variant="google" /> */}
+            {/* <Google /> */}
           </Flex>
           <UnderLine onClick={() => navigate("/signup")}>
             <Span variant="small">
