@@ -53,12 +53,10 @@ const Notice = () => {
         }
       });
 
-      sse.addEventListener("error", (e) => {
-        if (e) {
-          // console.log(e);
-        }
-        // return () => source.close();
-      });
+      sse.onerror = (e) => {
+        // console.log(e);
+      };
+
       return () => {
         if (token) {
           sse.close();

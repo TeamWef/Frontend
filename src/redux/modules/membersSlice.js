@@ -76,7 +76,7 @@ export const kakaoLogin = createAsyncThunk(
       const data = await axios.get(
         `${ServerUrl}/members/kakao/callback?code=${code}`
       );
-      console.log(data);
+      // console.log(data);
       setCookie("token", data.headers.authorization);
       setCookie("refresh-token", data.headers[`refresh-token`]);
       navigate("/");
