@@ -32,6 +32,7 @@ const Page = () => {
         </Route>
         <Route path="/signup" element={<SignUp />} />
         <Route path="/members/kakao/callback" element={<Kakao />} />
+        <Route path="/members/google/callback" element={<Google />} />
         <Route path="/notfound" element={<NotFound />} />
         <Route path="/error" element={<Error />} />
       </Routes>

@@ -8,21 +8,24 @@ import {
 import { useDispatch } from "react-redux";
 import { googleLogin } from "../../../redux/modules/membersSlice";
 import { useNavigate } from "react-router-dom";
-import { Icon } from "../../../elem";
+import { Div, Icon } from "../../../elem";
+import { useEffect } from "react";
 
 const Google = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const code = new URL(window.location.href).searchParams.get("code");
+
+  useEffect(() => {
+    dispatch(googleLogin({ code, navigate }));
+  }, [dispatch, code]);
 
   const login = useGoogleLogin({
     onSuccess: (res) => {
       console.log(res);
-      const { code } = res;
-      dispatch(googleLogin({ code, navigate }));
     },
     flow: "auth-code",
   });
-
   // const onSuccess = (res) => {
   //   const { clientId, credential, select_by } = res;
   //   dispatch(googleLogin({ credential, navigate }));
@@ -34,14 +37,14 @@ const Google = () => {
   //   console.log(res);
   // };
   return (
-    <>
+    <Div variant="bodyContainer">
       {/* <GoogleLogin
         buttonText="Login"
         onSuccess={onSuccess}
         onFailure={onFail}
       /> */}
-      <Icon variant="google" onClick={() => login()} />
-    </>
+      Google Login...
+    </Div>
   );
 };
 

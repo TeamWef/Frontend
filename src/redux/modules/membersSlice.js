@@ -99,10 +99,10 @@ export const googleLogin = createAsyncThunk(
         `${ServerUrl}/members/google/callback?code=${code}`
       );
       console.log(data);
-      // setCookie("token", data.headers.authorization);
-      // setCookie("refresh-token", data.headers[`refresh-token`]);
-      // navigate("/");
-      // window.location.reload();
+      setCookie("token", data.headers.authorization);
+      setCookie("refresh-token", data.headers[`refresh-token`]);
+      navigate("/");
+      window.location.reload();
       return thunkAPI.fulfillWithValue();
     } catch (error) {
       console.log(error);
