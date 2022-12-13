@@ -21,9 +21,9 @@ const AlbumCreate = ({ openCreateModal, partyId }) => {
   // console.log(albumItem);
   // 이미지 State
   const [uploadImg, setUploadImg] = useState(null);
-  const [images, setImages] = useState([]);
+  // const [images, setImages] = useState([]);
   const [previewImage, setPreviewImage] = useState(null);
-  const [previewImages, setPreviewImages] = useState([]);
+  // const [previewImages, setPreviewImages] = useState([]);
   const imgInput = useRef();
   const imgBox = useRef();
 
@@ -45,16 +45,6 @@ const AlbumCreate = ({ openCreateModal, partyId }) => {
   const onChangeHandler = (e) => {
     handleImg(e.target.files[0]);
   };
-  useEffect(() => {
-    const imgBoxRef = imgBox.current;
-    imgBoxRef.addEventListener("drop", dropHandler);
-    imgBoxRef.addEventListener("dragover", dragOverHandler);
-    return () => {
-      imgBoxRef.removeEventListener("drop", dropHandler);
-      imgBoxRef.removeEventListener("dragover", dragOverHandler);
-    };
-  }, [imgBox]);
-
   const dropHandler = (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -65,6 +55,16 @@ const AlbumCreate = ({ openCreateModal, partyId }) => {
     event.preventDefault();
     event.stopPropagation();
   };
+
+  useEffect(() => {
+    const imgBoxRef = imgBox.current;
+    imgBoxRef.addEventListener("drop", dropHandler);
+    imgBoxRef.addEventListener("dragover", dragOverHandler);
+    return () => {
+      imgBoxRef.removeEventListener("drop", dropHandler);
+      imgBoxRef.removeEventListener("dragover", dragOverHandler);
+    };
+  }, [imgBox]);
 
   const uploadHandler = () => {
     const newAlbum = { ...albumItem, imageUrl: uploadImg };
