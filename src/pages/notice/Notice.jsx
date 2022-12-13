@@ -130,7 +130,7 @@ const Notice = () => {
                         <Flex fd="row">
                           <Flex>
                             <StTitleDiv>{notice.partyName}</StTitleDiv>
-                            {notice.alarmType === "schedule" ? (
+                            {notice.alarmType === "SCHEDULE" ? (
                               <Flex fd="row">
                                 <StSpanWrap
                                   onClick={() => {

@@ -12,6 +12,7 @@ import ScheduleCreate from "../pages/schedule/component/ScheduleCreate";
 import ScheduleMain from "../pages/schedule/ScheduleMain";
 import NotFound from "../components/NotFound";
 import Error from "../components/Error";
+import Google from "../pages/home/component/Google";
 
 const Page = () => {
   return (

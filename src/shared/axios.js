@@ -9,6 +9,7 @@ import jwt_decode from "jwt-decode";
 const token = getCookie("token");
 const baseURL = process.env.REACT_APP_BASE_URL;
 const instance = axios.create({ baseURL });
+
 const errorHandler = (error) => {
   deleteCookie("token");
   deleteCookie("refreshToken");
@@ -54,16 +55,16 @@ instance.interceptors.response.use(
     if (error.status === 404) {
       return window.location.replace("/notfound");
     }
-    if (error.status === 504) {
-      return window.location.replace("/error");
-    }
-    if (error.status === 500) {
-      return window.location.replace("/error");
-    }
-    if (error.status === 400) {
-      return window.location.replace("/error");
-    }
-    return errorHandler(error);
+    // if (error.status === 504) {
+    //   return window.location.replace("/error");
+    // }
+    // if (error.status === 500) {
+    //   return window.location.replace("/error");
+    // }
+    // if (error.status === 400) {
+    //   return window.location.replace("/error");
+    // }
+    return window.location.replace("/error");
   }
 );
 
