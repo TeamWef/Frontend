@@ -1,10 +1,19 @@
 import axios from "axios";
-import { getCookie, setCookie } from "../redux/modules/customCookies";
+import {
+  deleteCookie,
+  getCookie,
+  setCookie,
+} from "../redux/modules/customCookies";
 import jwt_decode from "jwt-decode";
 
 const token = getCookie("token");
 const baseURL = process.env.REACT_APP_BASE_URL;
 const instance = axios.create({ baseURL });
+const errorHandler = (error) => {
+  deleteCookie("token");
+  deleteCookie("refreshToken");
+  window.location.replace("/error");
+};
 
 const setToken = async (config) => {
   const accesstoken = getCookie("token");
@@ -45,15 +54,16 @@ instance.interceptors.response.use(
     if (error.status === 404) {
       return window.location.replace("/notfound");
     }
-    //     if (response.status === 504) {
-    //       return window.location.replace("");
-    //     }
-    //     if (response.status === 400) {
-    //       return response;
-    //     }
-    return window.location.replace("/error");
-    //   }
-    // );
+    if (error.status === 504) {
+      return window.location.replace("/error");
+    }
+    if (error.status === 500) {
+      return window.location.replace("/error");
+    }
+    if (error.status === 400) {
+      return window.location.replace("/error");
+    }
+    return errorHandler(error);
   }
 );
 
