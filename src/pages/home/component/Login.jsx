@@ -14,7 +14,7 @@ import {
 } from "../../../elem";
 import { useInput } from "../../../hooks/useInput";
 import { __login } from "../../../redux/modules/membersSlice";
-import { KAKAO_AUTH_URL } from "../../../server";
+import { GOOGLE_AUTH_URL, KAKAO_AUTH_URL } from "../../../server";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -32,6 +32,10 @@ const Login = () => {
 
   const onKakaoLogin = () => {
     window.location.href = KAKAO_AUTH_URL;
+  };
+
+  const onGoogleLogin = () => {
+    window.location.href = GOOGLE_AUTH_URL;
   };
 
   return (
@@ -71,7 +75,7 @@ const Login = () => {
           <Span variant="smallBronze">SNS 계정으로 로그인</Span>
           <Flex fd="row">
             <Icon variant="kakao" onClick={onKakaoLogin} />
-            {/* <Icon variant="google" /> */}
+            <Icon variant="google" onClick={onGoogleLogin} />
           </Flex>
           <UnderLine onClick={() => navigate("/signup")}>
             <Span variant="small">
