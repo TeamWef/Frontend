@@ -143,7 +143,7 @@ export default KakaoMap;
 const StCotainer = styled.div`
   position: absolute;
   right: 10px;
-  top: 507px;
+  top: 623px;
   width: 318px;
   background-color: #fff;
   border: 1px solid #d9d3c7;
