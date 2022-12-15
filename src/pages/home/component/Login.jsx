@@ -15,7 +15,6 @@ import {
 import { useInput } from "../../../hooks/useInput";
 import { __login } from "../../../redux/modules/membersSlice";
 import { GOOGLE_AUTH_URL, KAKAO_AUTH_URL } from "../../../server";
-import Google from "./Google";
 
 const Login = () => {
   const dispatch = useDispatch();

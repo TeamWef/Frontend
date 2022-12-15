@@ -8,7 +8,7 @@ import {
 import { useDispatch } from "react-redux";
 import { googleLogin } from "../../../redux/modules/membersSlice";
 import { useNavigate } from "react-router-dom";
-import { Div, Icon } from "../../../elem";
+import { Div, Icon, Span } from "../../../elem";
 import { useEffect } from "react";
 
 const Google = () => {
@@ -18,7 +18,7 @@ const Google = () => {
 
   useEffect(() => {
     dispatch(googleLogin({ code, navigate }));
-  }, [dispatch, code]);
+  }, []);
 
   const login = useGoogleLogin({
     onSuccess: (res) => {
@@ -43,7 +43,7 @@ const Google = () => {
         onSuccess={onSuccess}
         onFailure={onFail}
       /> */}
-      Google Login...
+      <Span>Google Login...</Span>
     </Div>
   );
 };
