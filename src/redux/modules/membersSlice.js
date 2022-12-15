@@ -106,7 +106,7 @@ export const googleLogin = createAsyncThunk(
       return thunkAPI.fulfillWithValue();
     } catch (error) {
       // console.log(error);
-      alert("에러가 발생했습니다.");
+      alert(`${error.response.data}`);
       navigate("/");
     }
   }
