@@ -98,16 +98,16 @@ export const googleLogin = createAsyncThunk(
       const data = await axios.get(
         `${ServerUrl}/members/google/callback?code=${code}`
       );
-      console.log(data);
+      // console.log(data);
       setCookie("token", data.headers.authorization);
       setCookie("refresh-token", data.headers[`refresh-token`]);
       navigate("/");
       window.location.reload();
       return thunkAPI.fulfillWithValue();
     } catch (error) {
-      console.log(error);
-      // alert(`${error.response.data}`);
-      // navigate("/");
+      // console.log(error);
+      alert("에러가 발생했습니다.");
+      navigate("/");
     }
   }
 );

@@ -17,7 +17,7 @@ export const addAlbumApi = async ({ newAlbum, partyId }) => {
   const form = new FormData();
   form.append("content", newAlbum.content);
   form.append("place", newAlbum.place);
-  form.append("imageUrl", newAlbum.imageUrl);
+  form.append("image", newAlbum.imageUrl);
 
   const data = await instance.post(`/${partyId}/album`, form, {
     headers: {

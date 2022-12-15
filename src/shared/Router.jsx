@@ -6,7 +6,6 @@ import AlbumDetail from "../pages/album/component/AlbumDetail";
 import { Home } from "../pages/home/Home";
 import ScheduleDetail from "../pages/schedule/component/ScheduleDetail";
 import Kakao from "../pages/home/component/Kakao";
-import Notice from "../pages/notice/Notice";
 import GroupMain from "../pages/groupmain/GroupMain";
 import ScheduleCreate from "../pages/schedule/component/ScheduleCreate";
 import ScheduleMain from "../pages/schedule/ScheduleMain";
