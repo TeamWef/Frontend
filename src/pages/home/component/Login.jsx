@@ -76,7 +76,7 @@ const Login = () => {
           <Span variant="smallBronze">SNS 계정으로 로그인</Span>
           <Flex fd="row">
             <Icon variant="kakao" onClick={onKakaoLogin} />
-            {/* <Icon variant="google" onClick={onGoogleLogin} /> */}
+            <Icon variant="google" onClick={onGoogleLogin} />
           </Flex>
           <UnderLine onClick={() => navigate("/signup")}>
             <Span variant="small">
