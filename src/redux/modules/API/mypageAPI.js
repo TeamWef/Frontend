@@ -10,10 +10,10 @@ export const getMypageApi = async () => {
 export const updateMypageApi = async (payload) => {
   // 폼데이터
   const { memberName, uploadImg } = payload;
-  console.log(payload);
+  // console.log(payload);
   const form = new FormData();
   if (uploadImg !== null) {
-    form.append("profileImageUrl", uploadImg);
+    form.append("profileImage", uploadImg);
   }
   form.append("memberName", memberName);
   // console.log(payload);

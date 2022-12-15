@@ -2,11 +2,13 @@ import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import Mypage from "../pages/mypage/Mypage";
 import Svg from "../elem/Svg";
-import { Div } from "../elem";
+import { Div, Flex, Margin } from "../elem";
 import Notice from "../pages/notice/Notice";
 import { Invite } from "../pages/invite/Invite";
 import { Chat } from "../pages/chat/component/Chat";
 import { useState } from "react";
+import { useRef } from "react";
+import { useEffect } from "react";
 
 export const Header = () => {
   const navigate = useNavigate();

@@ -25,9 +25,10 @@ const AlbumMain = () => {
   }, [dispatch]);
 
   const albumList = useSelector((state) => state.album);
-  const { album, isLoding, error } = albumList;
+  const { album, isLoading, error } = albumList;
+  // console.log(albumList);
 
-  if (isLoding) {
+  if (isLoading) {
     return <Div variant="bodyContainer">로딩중</Div>;
   }
 

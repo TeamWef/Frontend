@@ -68,7 +68,7 @@ export const __login = createAsyncThunk(
     }
   }
 );
-
+//카카오로그인
 export const kakaoLogin = createAsyncThunk(
   "users/kakaoLogin",
   async ({ code, navigate }, thunkAPI) => {
@@ -76,7 +76,7 @@ export const kakaoLogin = createAsyncThunk(
       const data = await axios.get(
         `${ServerUrl}/members/kakao/callback?code=${code}`
       );
-      console.log(data);
+      // console.log(data);
       setCookie("token", data.headers.authorization);
       setCookie("refresh-token", data.headers[`refresh-token`]);
       navigate("/");
@@ -85,6 +85,28 @@ export const kakaoLogin = createAsyncThunk(
     } catch (error) {
       // console.log(error);
       alert(`${error.response.data}`);
+      navigate("/");
+    }
+  }
+);
+
+//구글로그인
+export const googleLogin = createAsyncThunk(
+  "users/googleLogin",
+  async ({ code, navigate }, thunkAPI) => {
+    try {
+      const data = await axios.get(
+        `${ServerUrl}/members/google/callback?code=${code}`
+      );
+      // console.log(data);
+      setCookie("token", data.headers.authorization);
+      setCookie("refresh-token", data.headers[`refresh-token`]);
+      navigate("/");
+      window.location.reload();
+      return thunkAPI.fulfillWithValue();
+    } catch (error) {
+      // console.log(error);
+      alert("에러가 발생했습니다.");
       navigate("/");
     }
   }

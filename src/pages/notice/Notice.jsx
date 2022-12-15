@@ -53,12 +53,10 @@ const Notice = () => {
         }
       });
 
-      sse.addEventListener("error", (e) => {
-        if (e) {
-          // console.log(e);
-        }
-        // return () => source.close();
-      });
+      sse.onerror = (e) => {
+        // console.log(e);
+      };
+
       return () => {
         if (token) {
           sse.close();
@@ -124,15 +122,15 @@ const Notice = () => {
               </StBtn>
             </Flex>
             <Flex fd="row">
-              {noticeList.length !== 0 ? (
+              {noticeList?.length !== 0 ? (
                 <Div variant="scroll-y" width="360px" height="380px">
-                  {noticeList.map((notice) => {
+                  {noticeList?.map((notice) => {
                     return (
                       <StNoticeDiv key={notice.id}>
                         <Flex fd="row">
                           <Flex>
                             <StTitleDiv>{notice.partyName}</StTitleDiv>
-                            {notice.alarmType === "schedule" ? (
+                            {notice.alarmType === "SCHEDULE" ? (
                               <Flex fd="row">
                                 <StSpanWrap
                                   onClick={() => {

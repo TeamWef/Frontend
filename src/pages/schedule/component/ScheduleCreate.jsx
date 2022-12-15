@@ -116,7 +116,7 @@ const ScheduleCreate = () => {
             <Flex fd="row" ai="center" jc="left" margin="20px 0px 0px 0px">
               <Svg variant="time" />
               <StTimeInput>
-                <input type="time" name="meetTime" onChange={onChangeHandler} />
+                <Input type="time" name="meetTime" onChange={onChangeHandler} />
               </StTimeInput>
             </Flex>
             <Flex fd="row" ai="center" jc="left" margin="20px 0px 0px 0px">
@@ -285,6 +285,13 @@ const StTimeInput = styled.div`
   margin-right: 20px;
   margin-left: 10px;
   cursor: pointer;
+  & input {
+    margin-top: 4px;
+    width: 300px;
+    height: 30px;
+    background-color: transparent;
+    border: none;
+  }
 `;
 
 const StSearchDiv = styled.div`

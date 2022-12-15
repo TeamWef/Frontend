@@ -21,53 +21,55 @@ import jwt_decode from "jwt-decode";
 import { getCookie } from "../../../redux/modules/customCookies";
 
 const SchdeleDetail = ({ scheduleId }) => {
-  const scheduleDetail = useSelector((state) => state.schedule?.scheduleDetail);
-
-  const participant = useSelector((state) => state.mypage?.myProfile);
-  const [isParticipant, setIsParticipant] = useState("");
-  const [InputText, setInputText] = useState("");
-  const [Place, setPlace] = useState("");
   const detailId = useParams().scheduleId;
   const partyId = useParams().partyId;
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [InputText, setInputText] = useState("");
+  const [kakaoPlace, setPlace] = useState("");
   const tokens = getCookie("token").replace("Bearer ", "");
   const decode = jwt_decode(tokens);
   const myId = decode.sub;
-  const joiner = scheduleDetail?.participantResponseDtoList;
   const [modal, openModal] = useModal();
-  const [map, openMap] = useModal();
+  const [map, openMap, setMap] = useModal();
   const [month, openMonth, setMonth] = useModal();
   const [value, setValue] = useState(new Date());
-  const [date, setDate] = useState("");
-  const [editSchedule, setEditSchedule] = useState({
-    title: scheduleDetail.title,
-    content: scheduleDetail.content,
-    meetTime: scheduleDetail.meetTime,
-    date: scheduleDetail.date,
-    place: {
-      placeName: scheduleDetail.placeName,
-      address: scheduleDetail.address,
-    },
-  });
+  const [monthDate, setMonthDate] = useState("");
+  useEffect(() => {
+    dispatch(__getScheduleDetail(detailId));
+    return () => {
+      if (!detailId) dispatch(initSchedule());
+    };
+  }, [dispatch, detailId]);
+
+  const scheduleDetail = useSelector((state) => state.schedule?.scheduleDetail);
+  const participant = useSelector((state) => state.mypage?.myProfile);
+  const [isParticipant, setIsParticipant] = useState("");
+  const { title, content, meetTime, date, placeName, address } = scheduleDetail;
+  const joiner = scheduleDetail?.participantResponseDtoList;
+  const [editSchedule, setEditSchedule] = useState("");
+  useEffect(() => {
+    if (scheduleDetail) {
+      setIsParticipant(scheduleDetail.isParticipant);
+      setEditSchedule({
+        title: title,
+        content: content,
+        meetTime: meetTime,
+        date: date,
+        place: {
+          placeName: placeName,
+          address: address,
+        },
+      });
+    }
+  }, [scheduleDetail]);
+
+  // console.log("Detail", scheduleDetail);
 
   const onChangeHandler = (e) => {
     const { name, value } = e.target;
     setEditSchedule({ ...editSchedule, [name]: value });
   };
-
-  useEffect(() => {
-    dispatch(__getScheduleDetail(detailId));
-    return () => {
-      dispatch(initSchedule());
-    };
-  }, [dispatch]);
-
-  useEffect(() => {
-    if (scheduleDetail) {
-      setIsParticipant(scheduleDetail.isParticipant);
-    }
-  }, [scheduleDetail]);
 
   const onEditScheduleHandler = (e) => {
     e.preventDefault();
@@ -93,7 +95,7 @@ const SchdeleDetail = ({ scheduleId }) => {
   const onClickHandler = (value, event) => {
     openMonth();
     const day = moment(value).format("YYYY-MM-DD");
-    setDate(day);
+    setMonthDate(day);
     setEditSchedule({ ...editSchedule, date: day });
   };
 
@@ -252,6 +254,8 @@ const SchdeleDetail = ({ scheduleId }) => {
                     type="button"
                     onClick={() => {
                       openModal();
+                      setMonth(false);
+                      setMap(false);
                     }}
                   >
                     뒤로가기
@@ -292,7 +296,7 @@ const SchdeleDetail = ({ scheduleId }) => {
                     </StDateButton>
                   ) : (
                     <StSearchDiv>
-                      <Span variant="other">{date}</Span>
+                      <Span variant="other">{editSchedule.date}</Span>
                       <StDateBtn type="button" onClick={openMonth}>
                         ⏐ 다시 찾기
                       </StDateBtn>
@@ -305,7 +309,9 @@ const SchdeleDetail = ({ scheduleId }) => {
                         maxDetail="month" // 상단 네비게이션에서 '월' 단위만 보이게 설정
                         calendarType="US"
                         locale="en-EN"
-                        formatDay={(locale, date) => moment(date).format("DD")}
+                        // formatDay={(locale, date) =>
+                        //   moment(monthDate).format("DD")
+                        // }
                         value={value}
                         name="date"
                         next2Label={null}
@@ -385,7 +391,7 @@ const SchdeleDetail = ({ scheduleId }) => {
         {map && (
           <>
             <EditKakaoMap
-              searchPlace={Place}
+              searchPlace={kakaoPlace}
               setEditSchedule={setEditSchedule}
               editSchedule={editSchedule}
               openMap={openMap}
@@ -488,7 +494,7 @@ const StMainDiv = styled.div`
   height: 700px;
   background-color: #f8f5f0;
   position: fixed;
-  top: -600px;
+  top: -450px;
 `;
 
 const StTimeInput = styled.input`
@@ -548,6 +554,7 @@ const StDateBtn = styled.button`
   background-color: transparent;
   border: none;
   color: #a4a19d;
+  cursor: pointer;
 `;
 
 const StKakaoDiv = styled.div`
