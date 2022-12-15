@@ -60,7 +60,7 @@ export const __getNoticeCount = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const data = await noticeApis.newNotice();
-      console.log(data);
+      // console.log(data);
       return thunkAPI.fulfillWithValue(data?.data);
     } catch (err) {
       return console.log(err);
