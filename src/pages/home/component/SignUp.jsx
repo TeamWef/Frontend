@@ -33,15 +33,6 @@ const SignUp = () => {
   const [openNumInput, setOpenNumInput] = useState(false);
   const [repeat, setRepeat] = useState(false);
   const { email, name, password, passwordCheck } = values;
-  // const focusOut = (e) => {
-  //   setFailed("");
-  // };
-  // useEffect(() => {
-  //   if (failed) document.addEventListener("focusout", focusOut);
-  //   return () => {
-  //     document.removeEventListener("focusout", focusOut);
-  //   };
-  // });
 
   const onSendEmail = () => {
     if (!email) {
@@ -55,7 +46,6 @@ const SignUp = () => {
   };
 
   const onCertify = () => {
-    // 인증결과가 완료라면 IsCertified는 true로 openNumInput은 false로
     resetNumber();
     dispatch(
       __checkNumber({

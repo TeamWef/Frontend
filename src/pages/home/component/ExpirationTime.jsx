@@ -14,6 +14,8 @@ const ExpirationTime = (repeat) => {
     setIsExpired(false);
   }, [repeat]);
 
+  //console.log(time)
+
   useEffect(() => {
     if (time > 0) {
       const timer = setInterval(() => {
