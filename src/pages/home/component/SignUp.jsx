@@ -3,9 +3,15 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { Button, Div, Flex, Input, Margin, Span, Svg } from "../../../elem";
-import { useInputs } from "../../../hooks/useInput";
-import { __emailCheck, __signup } from "../../../redux/modules/membersSlice";
+import { useInput, useInputs } from "../../../hooks/useInput";
+import {
+  __checkNumber,
+  __emailCheck,
+  __sendEmail,
+  __signup,
+} from "../../../redux/modules/membersSlice";
 import { checkAll, checkName, checkEmail, checkPassword } from "./check";
+import ExpirationTime from "./ExpirationTime";
 
 const SignUp = () => {
   const dispatch = useDispatch();
@@ -16,29 +22,40 @@ const SignUp = () => {
     password: "",
     passwordCheck: "",
   });
+  const [emailNumber, onChangeNumber, resetNumber] = useInput("");
   const [failed, setFailed] = useState({
     name: "",
     email: "",
     password: "",
   });
   const [isChecked, setIsChecked] = useState(false);
+  const [isCertified, setIsCertified] = useState(false);
+  const [openNumInput, setOpenNumInput] = useState(false);
+  const [repeat, setRepeat] = useState(false);
   const { email, name, password, passwordCheck } = values;
-  // const focusOut = (e) => {
-  //   setFailed("");
-  // };
-  // useEffect(() => {
-  //   if (failed) document.addEventListener("focusout", focusOut);
-  //   return () => {
-  //     document.removeEventListener("focusout", focusOut);
-  //   };
-  // });
-  const oncheckEmail = () => {
+
+  const onSendEmail = () => {
     if (!email) {
       return alert("Email을 입력해주세요!");
     } else if (failed.email === "Email") {
       return alert("Email 형식이 올바르지 않습니다");
+    } else {
+      setOpenNumInput(true);
+      dispatch(__sendEmail({ email, setIsChecked, setOpenNumInput }));
     }
-    dispatch(__emailCheck({ email, setIsChecked }));
+  };
+
+  const onCertify = () => {
+    resetNumber();
+    dispatch(
+      __checkNumber({
+        email,
+        emailNumber,
+        setIsCertified,
+        setOpenNumInput,
+        setRepeat,
+      })
+    );
   };
 
   const onSignup = (e) => {
@@ -51,9 +68,10 @@ const SignUp = () => {
       reset();
       navigate("/");
     } else {
-      alert("Email 중복 확인이 필요합니다.");
+      alert("Email 인증이 필요합니다.");
     }
   };
+
   return (
     <Div variant="sign">
       <Flex>
@@ -84,7 +102,7 @@ const SignUp = () => {
           {failed.name === "Name" && name && (
             <Span variant="warning">2~4자리 한글을 입력해주세요.</Span>
           )}
-          <StDiv>
+          <Flex posi="relative">
             <Input
               variant="large"
               bd={failed.email === "Email" && email ? "2px solid red" : ""}
@@ -94,16 +112,56 @@ const SignUp = () => {
                 onChange(e);
                 setFailed({ ...failed, email: checkEmail(e.target.value) });
                 setIsChecked(false);
+                setIsCertified(false);
+                setOpenNumInput(false);
               }}
               placeholder="Email"
             />
             {failed.email === "Email" && email && (
               <Span variant="warning">Email 형식이 올바르지 않습니다.</Span>
             )}
-            <StBtn variant="large" type="button" onClick={oncheckEmail}>
-              중복확인
-            </StBtn>
-          </StDiv>
+            {!isChecked ? (
+              <StBtn variant="large" type="button" onClick={onSendEmail}>
+                메일 인증
+              </StBtn>
+            ) : (
+              <>
+                {!isCertified ? (
+                  <StBtn
+                    variant="large"
+                    type="button"
+                    onClick={() => {
+                      setRepeat(!repeat);
+                      dispatch(
+                        __sendEmail({ email, setIsChecked, setOpenNumInput })
+                      );
+                    }}
+                  >
+                    재전송
+                  </StBtn>
+                ) : (
+                  <StDiv variant="large" type="button" onClick={onCertify}>
+                    인증완료
+                  </StDiv>
+                )}
+              </>
+            )}
+          </Flex>
+          {openNumInput && (
+            <Flex width="375px" posi="relative">
+              <Input
+                variant="large"
+                placeholder="인증번호 입력"
+                width="285px"
+                value={emailNumber}
+                onChange={onChangeNumber}
+              />
+              <StBtn type="button" right="105px" onClick={onCertify}>
+                확인
+              </StBtn>
+              <ExpirationTime repeat={repeat} />
+            </Flex>
+          )}
           <Input
             variant="large"
             bd={
@@ -169,24 +227,31 @@ const Box = styled.div`
   align-items: flex-start;
 `;
 
-const StDiv = styled.div`
-  display: flex;
-  position: relative;
-  flex-direction: column;
-  align-items: flex-start;
-`;
-
 const StBtn = styled.button`
   padding-left: 10px;
   position: absolute;
   top: 20px;
-  right: 15px;
+  right: ${({ right }) => (right ? right : "15px")};
   font-size: 16px;
   color: #bfbfbf;
   border: 0px;
   border-left: solid 1px #bfbfbf;
   background-color: transparent;
   cursor: pointer;
+  :hover {
+    color: #a4a19d;
+  }
+`;
+
+const StDiv = styled.div`
+  padding-left: 10px;
+  position: absolute;
+  top: 20px;
+  right: 15px;
+  width: 80px;
+  font-size: 16px;
+  color: #dbdbdb;
+  border-left: solid 1px #dbdbdb;
 `;
 
 const UnderLine = styled.div`

@@ -13,6 +13,10 @@ const StBtn = styled.button`
   font-weight: ${({ fw }) => (fw ? fw : "")};
   margin: ${({ margin }) => (margin ? margin : "")};
   border-bottom: ${({ bb }) => (bb ? bb : "")};
+  position: ${({ posi }) => (posi ? posi : "")};
+  top: ${({ top }) => (top ? top : "")};
+  right: ${({ right }) => (right ? right : "")};
+
   transition: 0.3s;
   :hover {
     opacity: 0.5;
