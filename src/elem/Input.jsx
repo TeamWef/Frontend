@@ -11,13 +11,12 @@ const StInput = styled.input`
   border-radius: 5px;
   display: flex;
   padding-left: 16px;
-  width: ${({ width }) => (width ? width : "")};
+  width: ${({ width }) => (width ? width : "375px")};
 
   ${({ variant }) => {
     switch (variant) {
       case "large":
         return css`
-          width: 375px;
           height: 55px;
           font-size: 20px;
           margin-bottom: 12px;
