@@ -23,7 +23,6 @@ const Notice = () => {
   const noticeCount = useSelector((state) => state.notice?.newNoti);
   const [modal, openModal, setModal] = useModal();
 
-  // console.log(noticeCount);
   const ref = useRef(null);
   const EventSource = EventSourcePolyfill || NativeEventSource;
   const token = getCookie("token");

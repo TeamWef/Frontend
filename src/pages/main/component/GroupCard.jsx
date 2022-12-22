@@ -14,7 +14,7 @@ import Svg from "../../../elem/Svg";
 import { Button, Div, Flex, Margin, Span } from "../../../elem";
 import { getCookie } from "../../../redux/modules/customCookies";
 import jwt_decode from "jwt-decode";
-import { useInput, useInputs } from "../../../hooks/useInput";
+import { useInputs } from "../../../hooks/useInput";
 import { __delGroupSchedule } from "../../../redux/modules/scheduleSlice";
 import { useRef } from "react";
 
